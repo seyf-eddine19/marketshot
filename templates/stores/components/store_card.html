@@ -1,0 +1,89 @@
+{% load i18n %}
+
+<article class="group bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm hover:shadow-md transition duration-300 flex flex-col justify-between">
+    <div>
+        <!-- Store Top Graphic Card Banner Panel -->
+        <div class="h-28 bg-slate-100 dark:bg-slate-800 relative overflow-hidden">
+            {% if store.banner %}
+                <img src="{{ store.banner.url }}" alt="{{ store.name }} Banner" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+            {% else %}
+                <div class="w-full h-full bg-gradient-to-r from-slate-800 to-primary opacity-80"></div>
+            {% endif %}
+            
+            {% if store.is_featured %}
+                <!-- Optimized Circular Premium Badge -->
+                <span class="absolute top-3 {% if request.LANGUAGE_CODE == 'ar' %}left-3{% else %}right-3{% endif %} w-7 h-7 bg-amber-500 text-white rounded-full flex items-center justify-center shadow-sm group-hover:ring-4 group-hover:ring-amber-500/20 transition-all duration-300" title="{% trans 'Featured Store' %}">
+                     <span class="material-symbols-outlined text-[16px] select-none" style="font-variation-settings: 'FILL' 1;">stars</span>
+                </span>
+            {% endif %}
+        </div>
+
+        <!-- Main Core Info Blocks Content Row -->
+        <!-- Fixed: Changed items-center to clear alignment across responsive breakpoints -->
+        <div class="px-5 pb-4 relative flex flex-col items-center {% if request.LANGUAGE_CODE == 'ar' %}md:items-end{% else %}md:items-start{% endif %}">
+            
+            <!-- Floating circular localized Logo Box aspect -->
+            <div class="w-16 h-16 relative bg-white dark:bg-slate-900 p-1 rounded-xl shadow-md border-4 border-slate-50 dark:border-slate-900 -mt-8 shrink-0 z-10">
+                <!-- Inner mask container to safely isolate image overflows without clipping the absolute badge below -->
+                <div class="w-full h-full rounded-lg overflow-hidden">
+                    {% if store.logo %}
+                        <img src="{{ store.logo.url }}" alt="{{ store.name }} Logo" class="w-full h-full object-contain">
+                    {% else %}
+                        <div class="w-full h-full bg-indigo-50 dark:bg-slate-800 text-indigo-600 dark:text-indigo-400 font-bold flex items-center justify-center text-xl">
+                            {{ store.name|slice:":1" }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <!-- Verified Badge with micro-offset alignment and dark mode contrast ring -->
+                {% if store.is_verified %}
+                    <span class="absolute -bottom-2 -end-2 flex items-center justify-center text-white dark:text-slate-900 bg-primary rounded-full p-0.5 shadow-sm select-none group-hover:ring-4 group-hover:ring-primary/20 transition-all duration-300" title="{% trans 'Verified Vendor' %}">
+                        <span class="material-symbols-outlined text-[18px] text-white block">verified</span>
+                    </span>
+                {% endif %}
+            </div>
+
+            <!-- Content Details Container Layout Box -->
+            <div class="mt-3 text-start w-full">
+                <!-- Fixed: Handled responsive alignment logic safely depending on the active locale context -->
+                <div class="flex items-center justify-start gap-1">
+                    <h3 class="font-extrabold text-slate-900 dark:text-white text-base group-hover:text-primary transition-colors">
+                        {{ store.name }}
+                    </h3>
+                </div>
+                
+                {% if store.tagline %}
+                    <p class="text-xs text-slate-900 dark:text-white font-semibold mt-0.5 line-clamp-1">{{ store.tagline }}</p>
+                {% endif %}
+                
+                {% if store.description %}
+                    <p class="text-xs text-slate-400 mt-2 line-clamp-2 leading-relaxed">{{ store.description }}</p>
+                {% endif %}
+                
+                <!-- Assigned Industry Loop Tags -->
+                <!-- Fixed: Re-aligned the tags layout wrapper to match details blocks text rules natively -->
+                <div class="flex items-center justify-start gap-1 flex-wrap pt-3 relative z-20">
+                    {% for store_cat in store.categories.all %}
+                        <span class="text-[10px] bg-slate-50 dark:bg-slate-950 border border-slate-100 dark:border-slate-800 text-slate-400 font-medium px-2 py-0.5 rounded-md whitespace-nowrap">
+                            {{ store_cat.name }}
+                        </span>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Action Strip Panel -->
+    <div class="px-5 py-3.5 bg-slate-50/50 dark:bg-slate-800/30 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-xs font-semibold">
+        <span class="inline-flex items-center gap-1.5 text-slate-400">
+            <span class="material-symbols-outlined text-[16px]">inventory_2</span>
+            <span class="font-mono">{{ store.products_count }}</span> {% trans "Products" %}
+        </span>
+        
+        <a href="{% url 'stores:store_detail' pk=store.pk %}" 
+           class="inline-flex items-center gap-1 text-primary dark:text-primary hover:gap-2 transition-all">
+            {% trans "Visit Store" %}
+            <span class="material-symbols-outlined text-[14px] transform {% if request.LANGUAGE_CODE == 'ar' %}rotate-180{% endif %}">arrow_forward</span>
+        </a>
+    </div>
+</article>

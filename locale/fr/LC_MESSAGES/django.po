@@ -1,0 +1,3133 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-06-03 19:46+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: .\accounts\forms.py:9 .\accounts\models.py:11 .\stores\models.py:55
+#: .\templates\dashboard\stores\form.html:72
+msgid "Store Owner"
+msgstr "Propriétaire de la boutique"
+
+#: .\accounts\forms.py:9 .\accounts\models.py:12 .\stores\models.py:355
+#: .\stores\models.py:376 .\templates\dashboard\studio\bookings\list.html:57
+#: .\templates\dashboard\studio\bookings\list.html:88
+msgid "Customer"
+msgstr "Client"
+
+#: .\accounts\forms.py:10
+msgid "Register as"
+msgstr "S'inscrire en tant que"
+
+#: .\accounts\forms.py:18
+msgid "Username"
+msgstr "Nom d'utilisateur"
+
+#: .\accounts\forms.py:19
+msgid "Password"
+msgstr "Mot de passe"
+
+#: .\accounts\models.py:8
+msgid "Admin"
+msgstr "Administrateur"
+
+#: .\accounts\models.py:9
+msgid "Studio Team"
+msgstr "Équipe Studio"
+
+#: .\accounts\models.py:10
+msgid "Marketing Team"
+msgstr "Équipe Marketing"
+
+#: .\accounts\models.py:14
+msgid "User Role"
+msgstr "Rôle de l'utilisateur"
+
+#: .\accounts\models.py:17
+msgid "First Name (AR)"
+msgstr "Prénom (AR)"
+
+#: .\accounts\models.py:18
+msgid "Last Name (AR)"
+msgstr "Nom de famille (AR)"
+
+#: .\accounts\models.py:21
+msgid "Company Name"
+msgstr "Nom de l'entreprise"
+
+#: .\accounts\models.py:41
+msgid "Bio (EN)"
+msgstr "Biographie (EN)"
+
+#: .\accounts\models.py:42
+msgid "Bio (AR)"
+msgstr "Biographie (AR)"
+
+#: .\accounts\models.py:43
+msgid "Bio (FR)"
+msgstr "Biographie (FR)"
+
+#: .\accounts\models.py:46
+msgid "City (EN)"
+msgstr "Ville (EN)"
+
+#: .\accounts\models.py:47
+msgid "City (AR)"
+msgstr "Ville (AR)"
+
+#: .\accounts\models.py:48
+msgid "City (FR)"
+msgstr "Ville (FR)"
+
+#: .\accounts\models.py:50 .\stores\models.py:417
+msgid "Address"
+msgstr "Adresse"
+
+#: .\accounts\models.py:53
+msgid "Website"
+msgstr "Site web"
+
+#: .\accounts\models.py:54
+msgid "Instagram"
+msgstr "Instagram"
+
+#: .\accounts\models.py:55
+msgid "LinkedIn"
+msgstr "LinkedIn"
+
+#: .\accounts\models.py:58
+msgid "Verified Account"
+msgstr "Compte vérifié"
+
+#: .\accounts\models.py:59
+msgid "Active Account"
+msgstr "Compte actif"
+
+#: .\accounts\models.py:61 .\stores\models.py:85 .\stores\models.py:162
+#: .\stores\models.py:212 .\stores\models.py:358 .\stores\models.py:382
+#: .\stores\models.py:400 .\stores\models.py:423 .\stores\models.py:450
+#: .\stores\models.py:464 .\studio\models.py:20 .\studio\models.py:58
+#: .\studio\models.py:76 .\studio\models.py:117 .\studio\models.py:162
+#: .\studio\models.py:246 .\studio\models.py:295
+msgid "Created At"
+msgstr "Créé le"
+
+#: .\accounts\models.py:62 .\stores\models.py:86 .\stores\models.py:163
+#: .\stores\models.py:213 .\stores\models.py:383 .\stores\models.py:401
+#: .\stores\models.py:424 .\studio\models.py:163 .\studio\models.py:247
+#: .\studio\models.py:296
+msgid "Updated At"
+msgstr "Mis à jour le"
+
+#: .\dashboard\forms.py:51 .\dashboard\forms.py:63
+#: .\templates\dashboard\manage_categories.html:137
+msgid "English Name"
+msgstr "Nom en anglais"
+
+#: .\dashboard\forms.py:52 .\dashboard\forms.py:64
+#: .\templates\dashboard\manage_categories.html:155
+msgid "Arabic Name"
+msgstr "Nom en arabe"
+
+#: .\dashboard\forms.py:53 .\dashboard\forms.py:65
+#: .\templates\dashboard\manage_categories.html:173
+msgid "French Name"
+msgstr "Nom en français"
+
+#: .\dashboard\forms.py:54 .\templates\dashboard\manage_categories.html:191
+msgid "Slug"
+msgstr "Slug"
+
+#: .\dashboard\forms.py:91 .\stores\models.py:57
+#: .\templates\dashboard\stores\form.html:89
+msgid "Subdomain"
+msgstr "Sous-domaine"
+
+#: .\dashboard\forms.py:92 .\stores\models.py:62
+msgid "Store Name (EN)"
+msgstr "Nom de la boutique (EN)"
+
+#: .\dashboard\forms.py:93 .\stores\models.py:63
+msgid "Store Name (AR)"
+msgstr "Nom de la boutique (AR)"
+
+#: .\dashboard\forms.py:94 .\stores\models.py:64
+msgid "Store Name (FR)"
+msgstr "Nom de la boutique (FR)"
+
+#: .\dashboard\forms.py:95
+msgid "Store Description (EN)"
+msgstr "Description de la boutique (EN)"
+
+#: .\dashboard\forms.py:96
+msgid "Store Description (AR)"
+msgstr "Description de la boutique (AR)"
+
+#: .\dashboard\forms.py:97
+msgid "Store Description (FR)"
+msgstr "Description de la boutique (FR)"
+
+#: .\dashboard\forms.py:98 .\stores\models.py:70
+msgid "Tagline (EN)"
+msgstr "Slogan (EN)"
+
+#: .\dashboard\forms.py:99 .\stores\models.py:71
+msgid "Tagline (AR)"
+msgstr "Slogan (AR)"
+
+#: .\dashboard\forms.py:100 .\stores\models.py:72
+msgid "Tagline (FR)"
+msgstr "Slogan (FR)"
+
+#: .\dashboard\forms.py:103 .\stores\models.py:78
+msgid "WhatsApp Number"
+msgstr "Numéro WhatsApp"
+
+#: .\dashboard\forms.py:104 .\stores\models.py:79
+msgid "Facebook URL"
+msgstr "URL Facebook"
+
+#: .\dashboard\forms.py:105 .\stores\models.py:80
+msgid "Instagram URL"
+msgstr "URL Instagram"
+
+#: .\dashboard\forms.py:106 .\stores\models.py:81
+msgid "Twitter URL"
+msgstr "URL Twitter"
+
+#: .\dashboard\forms.py:107 .\stores\models.py:82
+msgid "LinkedIn URL"
+msgstr "URL LinkedIn"
+
+#: .\dashboard\forms.py:108 .\stores\models.py:83
+msgid "Website URL"
+msgstr "URL du site web"
+
+#: .\dashboard\forms.py:129 .\stores\models.py:195
+msgid "Product Name (EN)"
+msgstr "Nom du produit (EN)"
+
+#: .\dashboard\forms.py:130 .\stores\models.py:196
+msgid "Product Name (AR)"
+msgstr "Nom du produit (AR)"
+
+#: .\dashboard\forms.py:131 .\stores\models.py:197
+msgid "Product Name (FR)"
+msgstr "Nom du produit (FR)"
+
+#: .\dashboard\forms.py:132 .\stores\models.py:199
+msgid "Product Description (EN)"
+msgstr "Description du produit (EN)"
+
+#: .\dashboard\forms.py:133 .\stores\models.py:200
+msgid "Product Description (AR)"
+msgstr "Description du produit (AR)"
+
+#: .\dashboard\forms.py:134 .\stores\models.py:201
+msgid "Product Description (FR)"
+msgstr "Description du produit (FR)"
+
+#: .\dashboard\forms.py:135 .\stores\models.py:203 .\studio\models.py:154
+#: .\templates\dashboard\products\form.html:257
+#: .\templates\dashboard\studio\packages\form.html:127
+msgid "Base Price"
+msgstr "Prix de base"
+
+#: .\dashboard\forms.py:136 .\stores\models.py:204
+msgid "Discount %"
+msgstr "Remise %"
+
+#: .\dashboard\forms.py:150 .\stores\models.py:326
+#: .\templates\dashboard\products\form.html:159
+msgid "Price Override"
+msgstr "Prix personnalisé"
+
+#: .\dashboard\forms.py:151
+msgid "Stock Quantity"
+msgstr "Quantité en stock"
+
+#: .\dashboard\forms.py:152 .\stores\models.py:328
+#: .\templates\dashboard\products\form.html:151
+msgid "SKU"
+msgstr "Référence SKU"
+
+#: .\dashboard\forms.py:162 .\stores\models.py:343
+#: .\templates\dashboard\products\form.html:226
+msgid "Alt Text"
+msgstr "Texte alternatif"
+
+#: .\dashboard\forms.py:178
+msgid "Label (EN)"
+msgstr "Libellé (EN)"
+
+#: .\dashboard\forms.py:179
+msgid "Label (AR)"
+msgstr "Libellé (AR)"
+
+#: .\dashboard\forms.py:180
+msgid "Label (FR)"
+msgstr "Libellé (FR)"
+
+#: .\dashboard\forms.py:181 .\stores\models.py:151
+msgid "Value (EN)"
+msgstr "Valeur (EN)"
+
+#: .\dashboard\forms.py:182 .\stores\models.py:152
+msgid "Value (AR)"
+msgstr "Valeur (AR)"
+
+#: .\dashboard\forms.py:183 .\stores\models.py:153
+msgid "Value (FR)"
+msgstr "Valeur (FR)"
+
+#: .\dashboard\forms.py:184
+msgid "Color Code (Hex)"
+msgstr "Code couleur (Hex)"
+
+#: .\dashboard\views.py:55
+msgid "Category updated successfully!"
+msgstr "Catégorie mise à jour avec succès !"
+
+#: .\dashboard\views.py:57
+msgid "New category created successfully!"
+msgstr "Nouvelle catégorie créée avec succès !"
+
+#: .\dashboard\views.py:61
+msgid "Please correct the errors below."
+msgstr "Veuillez corriger les erreurs ci-dessous."
+
+#: .\dashboard\views_studio.py:159
+msgid "Project created successfully."
+msgstr "Projet créé avec succès."
+
+#: .\dashboard\views_studio.py:161
+msgid "Failed to create project."
+msgstr "Échec de la création du projet."
+
+#: .\dashboard\views_studio.py:175
+msgid "Project updated successfully."
+msgstr "Projet mis à jour avec succès."
+
+#: .\dashboard\views_studio.py:177
+msgid "Failed to update project."
+msgstr "Échec de la mise à jour du projet."
+
+#: .\dashboard\views_studio.py:186
+msgid "Project deleted successfully."
+msgstr "Projet supprimé avec succès."
+
+#: .\dashboard\views_studio.py:230
+msgid "Service updated successfully."
+msgstr "Service mis à jour avec succès."
+
+#: .\dashboard\views_studio.py:235
+msgid "Service created successfully."
+msgstr "Service créé avec succès."
+
+#: .\dashboard\views_studio.py:242
+msgid "Failed to save service."
+msgstr "Échec de l'enregistrement du service."
+
+#: .\dashboard\views_studio.py:260
+msgid "Service deleted successfully."
+msgstr "Service supprimé avec succès."
+
+#: .\dashboard\views_studio.py:292
+msgid "Package created successfully."
+msgstr "Forfait créé avec succès."
+
+#: .\dashboard\views_studio.py:319
+msgid "Package updated successfully."
+msgstr "Forfait mis à jour avec succès."
+
+#: .\dashboard\views_studio.py:330
+msgid "Package deleted successfully."
+msgstr "Forfait supprimé avec succès."
+
+#: .\dashboard\views_studio.py:381
+msgid "Message marked as unread."
+msgstr "Message marqué comme non lu."
+
+#: .\dashboard\views_studio.py:385
+msgid "Message marked as read."
+msgstr "Message marqué comme lu."
+
+#: .\marketshot\settings.py:120 .\templates\dashboard\stores\form.html:222
+msgid "Arabic"
+msgstr "Arabe"
+
+#: .\marketshot\settings.py:121 .\templates\dashboard\stores\form.html:215
+msgid "English"
+msgstr "Anglais"
+
+#: .\marketshot\settings.py:122 .\templates\dashboard\stores\form.html:227
+msgid "French"
+msgstr "Français"
+
+#: .\stores\admin.py:57
+msgid "Identity"
+msgstr "Identité"
+
+#: .\stores\admin.py:58
+msgid "Localization EN"
+msgstr "Localisation EN"
+
+#: .\stores\admin.py:59
+msgid "Localization AR"
+msgstr "Localisation AR"
+
+#: .\stores\admin.py:60
+msgid "Localization FR"
+msgstr "Localisation FR"
+
+#: .\stores\admin.py:61
+msgid "Social & Contact"
+msgstr "Réseaux sociaux & Contact"
+
+#: .\stores\admin.py:62 .\studio\models.py:243 .\studio\models.py:294
+#: .\templates\dashboard\products\form.html:284
+#: .\templates\dashboard\stores\form.html:286
+#: .\templates\dashboard\studio\bookings\list.html:91
+msgid "Status"
+msgstr "Statut"
+
+#: .\stores\admin.py:78
+msgid "General Info"
+msgstr "Informations générales"
+
+#: .\stores\admin.py:79
+msgid "Names"
+msgstr "Noms"
+
+#: .\stores\admin.py:80 .\templates\dashboard\products\form.html:254
+#: .\templates\dashboard\studio\packages\list.html:19
+msgid "Pricing"
+msgstr "Tarification"
+
+#: .\stores\admin.py:81
+msgid "Flags"
+msgstr "Indicateurs"
+
+#: .\stores\models.py:10 .\stores\models.py:34
+#: .\templates\dashboard\products\form.html:81
+#: .\templates\dashboard\stores\form.html:107
+msgid "Name (EN)"
+msgstr "Nom (EN)"
+
+#: .\stores\models.py:11 .\stores\models.py:35
+#: .\templates\dashboard\products\form.html:85
+#: .\templates\dashboard\stores\form.html:112
+msgid "Name (AR)"
+msgstr "Nom (AR)"
+
+#: .\stores\models.py:12 .\stores\models.py:36
+#: .\templates\dashboard\products\form.html:89
+#: .\templates\dashboard\stores\form.html:117
+msgid "Name (FR)"
+msgstr "Nom (FR)"
+
+#: .\stores\models.py:13 .\stores\models.py:37
+msgid "Icon Image"
+msgstr "Icône"
+
+#: .\stores\models.py:17
+msgid "Store Category"
+msgstr "Catégorie de boutique"
+
+#: .\stores\models.py:40 .\stores\models.py:193
+msgid "Product Category"
+msgstr "Catégorie de produit"
+
+#: .\stores\models.py:41
+msgid "Product Categories"
+msgstr "Catégories de produits"
+
+#: .\stores\models.py:56 .\templates\dashboard\manage_categories.html:42
+msgid "Store Categories"
+msgstr "Catégories de boutiques"
+
+#: .\stores\models.py:59 .\templates\dashboard\stores\form.html:143
+msgid "Store Logo"
+msgstr "Logo de la boutique"
+
+#: .\stores\models.py:60 .\templates\dashboard\stores\form.html:178
+msgid "Store Banner"
+msgstr "Bannière de la boutique"
+
+#: .\stores\models.py:66 .\templates\dashboard\products\form.html:96
+msgid "Description (EN)"
+msgstr "Description (EN)"
+
+#: .\stores\models.py:67 .\templates\dashboard\products\form.html:100
+msgid "Description (AR)"
+msgstr "Description (AR)"
+
+#: .\stores\models.py:68 .\templates\dashboard\products\form.html:104
+msgid "Description (FR)"
+msgstr "Description (FR)"
+
+#: .\stores\models.py:74
+msgid "Is Verified"
+msgstr "Est vérifié"
+
+#: .\stores\models.py:75 .\stores\models.py:207 .\studio\models.py:57
+#: .\studio\models.py:114 .\studio\models.py:161
+msgid "Is Active"
+msgstr "Est actif"
+
+#: .\stores\models.py:76 .\stores\models.py:208
+msgid "Is Featured"
+msgstr "Mis en avant"
+
+#: .\stores\models.py:89 .\stores\models.py:192 .\stores\models.py:377
+#: .\templates\dashboard\manage_categories.html:21
+#: .\templates\dashboard\products\form.html:70
+msgid "Store"
+msgstr "Boutique"
+
+#: .\stores\models.py:90 .\templates\dashboard\base.html:289
+#: .\templates\dashboard\base.html:333 .\templates\dashboard\stores\list.html:4
+#: .\templates\dashboard\stores\list.html:21
+#: .\templates\stores\store_list.html:12 .\templates\studio\base.html:180
+msgid "Stores"
+msgstr "Boutiques"
+
+#: .\stores\models.py:129 .\studio\models.py:112
+#: .\templates\dashboard\products\form.html:332
+#: .\templates\dashboard\studio\services\manage.html:230
+msgid "Color"
+msgstr "Couleur"
+
+#: .\stores\models.py:130 .\templates\dashboard\products\form.html:333
+msgid "Size"
+msgstr "Taille"
+
+#: .\stores\models.py:131 .\templates\dashboard\products\form.html:334
+msgid "Material"
+msgstr "Matériau"
+
+#: .\stores\models.py:132 .\templates\dashboard\products\form.html:335
+msgid "Storage"
+msgstr "Stockage"
+
+#: .\stores\models.py:133
+msgid "Voltage"
+msgstr "Tension"
+
+#: .\stores\models.py:134
+msgid "Other"
+msgstr "Autre"
+
+#: .\stores\models.py:141
+msgid "Attribute Category"
+msgstr "Catégorie d'attribut"
+
+#: .\stores\models.py:146
+msgid "Custom Label (EN)"
+msgstr "Libellé personnalisé (EN)"
+
+#: .\stores\models.py:147
+msgid "Custom Label (AR)"
+msgstr "Libellé personnalisé (AR)"
+
+#: .\stores\models.py:148
+msgid "Custom Label (FR)"
+msgstr "Libellé personnalisé (FR)"
+
+#: .\stores\models.py:160
+msgid "HEX Code e.g. #000000 (Only for Colors)"
+msgstr "Code HEX ex: #000000 (Uniquement pour les couleurs)"
+
+#: .\stores\models.py:160
+msgid "Color HEX Code"
+msgstr "Code HEX de la couleur"
+
+#: .\stores\models.py:166
+msgid "Product Attribute"
+msgstr "Attribut de produit"
+
+#: .\stores\models.py:167
+msgid "Product Attributes"
+msgstr "Attributs de produits"
+
+#: .\stores\models.py:205 .\studio\models.py:19
+#: .\templates\dashboard\products\form.html:269
+#: .\templates\dashboard\studio\projects\form.html:127
+msgid "Main Image"
+msgstr "Image principale"
+
+#: .\stores\models.py:209
+msgid "Is New Arrival"
+msgstr "Est une nouveauté"
+
+#: .\stores\models.py:210
+msgid "Is On Sale"
+msgstr "Est en promotion"
+
+#: .\stores\models.py:216 .\stores\models.py:341 .\stores\models.py:354
+#: .\stores\models.py:395
+msgid "Product"
+msgstr "Produit"
+
+#: .\stores\models.py:217 .\templates\dashboard\base.html:286
+#: .\templates\dashboard\products\list.html:4
+#: .\templates\dashboard\products\list.html:19
+#: .\templates\dashboard\products\list.html:44
+#: .\templates\stores\components\store_card.html:80
+#: .\templates\stores\store_detail.html:109
+msgid "Products"
+msgstr "Produits"
+
+#: .\stores\models.py:301
+msgid "Sale"
+msgstr "En solde"
+
+#: .\stores\models.py:306 .\templates\dashboard\products\detail.html:66
+#: .\templates\dashboard\products\list.html:120
+msgid "New"
+msgstr "Nouveau"
+
+#: .\stores\models.py:311 .\templates\dashboard\products\detail.html:58
+#: .\templates\dashboard\products\form.html:290
+#: .\templates\dashboard\products\list.html:113
+#: .\templates\dashboard\stores\form.html:303
+#: .\templates\dashboard\stores\list.html:155
+#: .\templates\dashboard\studio\packages\form.html:154
+#: .\templates\dashboard\studio\packages\list.html:85
+msgid "Featured"
+msgstr "Mis en avant"
+
+#: .\stores\models.py:322
+msgid "Base Product"
+msgstr "Produit de base"
+
+#: .\stores\models.py:324
+msgid "Attribute Values"
+msgstr "Valeurs d'attributs"
+
+#: .\stores\models.py:327 .\templates\dashboard\products\form.html:155
+#: .\templates\dashboard\products\list.html:193
+msgid "Stock"
+msgstr "Stock"
+
+#: .\stores\models.py:331 .\stores\models.py:396
+msgid "Product Variant"
+msgstr "Variante de produit"
+
+#: .\stores\models.py:332
+msgid "Product Variants"
+msgstr "Variantes de produits"
+
+#: .\stores\models.py:342 .\studio\models.py:46
+#: .\templates\dashboard\products\form.html:222
+msgid "Image"
+msgstr "Image"
+
+#: .\stores\models.py:346
+msgid "Product Image"
+msgstr "Image du produit"
+
+#: .\stores\models.py:347
+msgid "Product Images"
+msgstr "Images du produit"
+
+#: .\stores\models.py:356 .\studio\models.py:56
+msgid "Rating"
+msgstr "Note"
+
+#: .\stores\models.py:356 .\studio\models.py:56
+msgid "Rating from 1 to 5"
+msgstr "Note de 1 à 5"
+
+#: .\stores\models.py:357
+msgid "Comment"
+msgstr "Commentaire"
+
+#: .\stores\models.py:361
+msgid "Product Review"
+msgstr "Avis produit"
+
+#: .\stores\models.py:362
+msgid "Product Reviews"
+msgstr "Avis produits"
+
+#: .\stores\models.py:368 .\stores\models.py:441 .\studio\models.py:279
+#: .\templates\dashboard\dashboard.html:80
+#: .\templates\dashboard\studio\bookings\list.html:113
+msgid "Pending"
+msgstr "En attente"
+
+#: .\stores\models.py:369 .\studio\models.py:280
+#: .\templates\dashboard\studio\bookings\list.html:111
+msgid "Confirmed"
+msgstr "Confirmé"
+
+#: .\stores\models.py:370
+msgid "Processing"
+msgstr "En traitement"
+
+#: .\stores\models.py:371
+msgid "Shipped"
+msgstr "Expédié"
+
+#: .\stores\models.py:372
+msgid "Delivered"
+msgstr "Livré"
+
+#: .\stores\models.py:373 .\studio\models.py:232 .\studio\models.py:283
+#: .\templates\dashboard\studio\bookings\list.html:115
+msgid "Cancelled"
+msgstr "Annulé"
+
+#: .\stores\models.py:374
+msgid "Refunded"
+msgstr "Remboursé"
+
+#: .\stores\models.py:378 .\stores\models.py:461
+msgid "Order Status"
+msgstr "Statut de la commande"
+
+#: .\stores\models.py:379 .\studio\models.py:292
+msgid "Total Price"
+msgstr "Prix total"
+
+#: .\stores\models.py:380 .\studio\models.py:293
+#: .\templates\dashboard\studio\bookings\list.html:72
+msgid "Notes"
+msgstr "Notes"
+
+#: .\stores\models.py:386 .\stores\models.py:394 .\stores\models.py:445
+#: .\stores\models.py:460 .\templates\dashboard\studio\services\manage.html:242
+msgid "Order"
+msgstr "Commande"
+
+#: .\stores\models.py:387
+msgid "Orders"
+msgstr "Commandes"
+
+#: .\stores\models.py:397 .\templates\stores\product_detail.html:113
+msgid "Quantity"
+msgstr "Quantité"
+
+#: .\stores\models.py:398
+msgid "Price at purchase time"
+msgstr "Prix au moment de l'achat"
+
+#: .\stores\models.py:404
+msgid "Order Item"
+msgstr "Article de commande"
+
+#: .\stores\models.py:405
+msgid "Order Items"
+msgstr "Articles de commande"
+
+#: .\stores\models.py:414
+msgid "Full Name"
+msgstr "Nom complet"
+
+#: .\stores\models.py:415
+msgid "Phone"
+msgstr "Téléphone"
+
+#: .\stores\models.py:418
+msgid "City"
+msgstr "Ville"
+
+#: .\stores\models.py:419
+msgid "State"
+msgstr "Wilaya / État"
+
+#: .\stores\models.py:420
+msgid "Postal Code"
+msgstr "Code postal"
+
+#: .\stores\models.py:421
+msgid "Country"
+msgstr "Pays"
+
+#: .\stores\models.py:427 .\templates\stores\checkout.html:9
+msgid "Shipping Address"
+msgstr "Adresse de livraison"
+
+#: .\stores\models.py:428
+msgid "Shipping Addresses"
+msgstr "Adresses de livraison"
+
+#: .\stores\models.py:435
+msgid "Cash on Delivery"
+msgstr "Paiement à la livraison"
+
+#: .\stores\models.py:436
+msgid "Card"
+msgstr "Carte bancaire"
+
+#: .\stores\models.py:437
+msgid "CCP"
+msgstr "CCP"
+
+#: .\stores\models.py:438
+msgid "BaridiMob"
+msgstr "BaridiMob"
+
+#: .\stores\models.py:442
+msgid "Paid"
+msgstr "Payé"
+
+#: .\stores\models.py:443
+msgid "Failed"
+msgstr "Échoué"
+
+#: .\stores\models.py:446 .\templates\stores\checkout.html:22
+msgid "Payment Method"
+msgstr "Mode de paiement"
+
+#: .\stores\models.py:447
+msgid "Payment Status"
+msgstr "Statut du paiement"
+
+#: .\stores\models.py:448
+msgid "Transaction ID"
+msgstr "Identifiant de transaction"
+
+#: .\stores\models.py:453
+msgid "Payment"
+msgstr "Paiement"
+
+#: .\stores\models.py:454
+msgid "Payments"
+msgstr "Paiements"
+
+#: .\stores\models.py:462
+msgid "Note"
+msgstr "Note"
+
+#: .\stores\models.py:467
+msgid "Order Status History"
+msgstr "Historique des statuts de commande"
+
+#: .\stores\models.py:468
+msgid "Order Status Histories"
+msgstr "Historiques des statuts de commande"
+
+#: .\studio\models.py:11 .\studio\models.py:103 .\studio\models.py:146
+#: .\templates\dashboard\studio\packages\form.html:90
+#: .\templates\dashboard\studio\projects\form.html:89
+msgid "Title (Arabic)"
+msgstr "Titre (Arabe)"
+
+#: .\studio\models.py:12 .\studio\models.py:104 .\studio\models.py:147
+#: .\templates\dashboard\studio\packages\form.html:85
+#: .\templates\dashboard\studio\projects\form.html:84
+msgid "Title (English)"
+msgstr "Titre (Anglais)"
+
+#: .\studio\models.py:13 .\studio\models.py:105 .\studio\models.py:148
+#: .\templates\dashboard\studio\packages\form.html:95
+#: .\templates\dashboard\studio\projects\form.html:94
+msgid "Title (French)"
+msgstr "Titre (Français)"
+
+#: .\studio\models.py:15 .\studio\models.py:107 .\studio\models.py:150
+#: .\templates\dashboard\studio\packages\form.html:111
+#: .\templates\dashboard\studio\projects\form.html:110
+msgid "Description (Arabic)"
+msgstr "Description (Arabe)"
+
+#: .\studio\models.py:16 .\studio\models.py:108 .\studio\models.py:151
+#: .\templates\dashboard\studio\packages\form.html:106
+#: .\templates\dashboard\studio\projects\form.html:105
+msgid "Description (English)"
+msgstr "Description (Anglais)"
+
+#: .\studio\models.py:17 .\studio\models.py:109 .\studio\models.py:152
+#: .\templates\dashboard\studio\packages\form.html:116
+#: .\templates\dashboard\studio\projects\form.html:115
+msgid "Description (French)"
+msgstr "Description (Français)"
+
+#: .\studio\models.py:23 .\studio\models.py:45
+#: .\templates\dashboard\studio\projects\form.html:31
+#: .\templates\dashboard\studio\projects\list.html:19
+#: .\templates\studio\index.html:148
+msgid "Project"
+msgstr "Projet"
+
+#: .\studio\models.py:24 .\templates\dashboard\base.html:259
+#: .\templates\dashboard\studio\projects\form.html:19
+#: .\templates\dashboard\studio\projects\list.html:15
+#: .\templates\dashboard\studio\projects\list.html:43
+msgid "Projects"
+msgstr "Projets"
+
+#: .\studio\models.py:47
+msgid "Caption"
+msgstr "Légende"
+
+#: .\studio\models.py:54 .\templates\dashboard\studio\testimonials\list.html:24
+#: .\templates\studio\index.html:398
+msgid "Client"
+msgstr "Client"
+
+#: .\studio\models.py:55
+msgid "Feedback"
+msgstr "Retour client"
+
+#: .\studio\models.py:61
+msgid "Testimonial"
+msgstr "Témoignage"
+
+#: .\studio\models.py:62 .\templates\dashboard\base.html:274
+#: .\templates\dashboard\studio\testimonials\list.html:5
+#: .\templates\dashboard\studio\testimonials\list.html:28
+msgid "Testimonials"
+msgstr "Témoignages"
+
+#: .\studio\models.py:70 .\templates\studio\index.html:551
+msgid "Name"
+msgstr "Nom"
+
+#: .\studio\models.py:71 .\templates\studio\index.html:565
+msgid "Email"
+msgstr "E-mail"
+
+#: .\studio\models.py:72 .\templates\studio\index.html:582
+msgid "Subject"
+msgstr "Sujet"
+
+#: .\studio\models.py:73 .\templates\studio\index.html:598
+msgid "Message"
+msgstr "Message"
+
+#: .\studio\models.py:75
+msgid "Is Read"
+msgstr "Est lu"
+
+#: .\studio\models.py:87
+msgid "Photography"
+msgstr "Photographie"
+
+#: .\studio\models.py:88
+msgid "Video"
+msgstr "Vidéo"
+
+#: .\studio\models.py:89
+msgid "UGC"
+msgstr "UGC (Contenu utilisateur)"
+
+#: .\studio\models.py:90
+msgid "Marketing"
+msgstr "Marketing"
+
+#: .\studio\models.py:91
+msgid "Design"
+msgstr "Design"
+
+#: .\studio\models.py:92
+msgid "Voice Over"
+msgstr "Voix-off"
+
+#: .\studio\models.py:93
+msgid "Field Shooting"
+msgstr "Tournage sur le terrain"
+
+#: .\studio\models.py:94
+msgid "Studio Rental"
+msgstr "Location de studio"
+
+#: .\studio\models.py:95 .\templates\studio\base.html:176
+msgid "Platform"
+msgstr "Plateforme"
+
+#: .\studio\models.py:99
+msgid "Primary"
+msgstr "Primaire"
+
+#: .\studio\models.py:100
+msgid "Secondary"
+msgstr "Secondaire"
+
+#: .\studio\models.py:111 .\templates\dashboard\studio\services\manage.html:217
+msgid "Icon"
+msgstr "Icône"
+
+#: .\studio\models.py:115 .\studio\models.py:160
+#: .\templates\dashboard\studio\packages\form.html:137
+msgid "Display Order"
+msgstr "Ordre d'affichage"
+
+#: .\studio\models.py:120 .\studio\models.py:287
+#: .\templates\dashboard\studio\bookings\list.html:61
+#: .\templates\dashboard\studio\bookings\list.html:89
+msgid "Service"
+msgstr "Service"
+
+#: .\studio\models.py:121 .\templates\dashboard\base.html:262
+#: .\templates\dashboard\studio\services\manage.html:24
+#: .\templates\studio\base.html:78 .\templates\studio\base.html:118
+#: .\templates\studio\base.html:178
+msgid "Services"
+msgstr "Services"
+
+#: .\studio\models.py:155
+msgid "Discount"
+msgstr "Remise"
+
+#: .\studio\models.py:157
+msgid "Is Highlighted"
+msgstr "Est mis en évidence"
+
+#: .\studio\models.py:158 .\templates\dashboard\studio\packages\form.html:142
+msgid "Button Link"
+msgstr "Lien du bouton"
+
+#: .\studio\models.py:166 .\studio\models.py:237
+#: .\templates\dashboard\studio\packages\form.html:32
+msgid "Package"
+msgstr "Forfait"
+
+#: .\studio\models.py:167 .\templates\dashboard\base.html:268
+#: .\templates\dashboard\studio\packages\form.html:20
+#: .\templates\dashboard\studio\packages\list.html:4
+#: .\templates\dashboard\studio\packages\list.html:15
+#: .\templates\dashboard\studio\packages\list.html:21
+#: .\templates\dashboard\studio\packages\list.html:43
+#: .\templates\studio\base.html:81 .\templates\studio\base.html:119
+msgid "Packages"
+msgstr "Forfaits"
+
+#: .\studio\models.py:198
+msgid "Text (Arabic)"
+msgstr "Texte (Arabe)"
+
+#: .\studio\models.py:199
+msgid "Text (English)"
+msgstr "Texte (Anglais)"
+
+#: .\studio\models.py:200
+msgid "Text (French)"
+msgstr "Texte (Français)"
+
+#: .\studio\models.py:202
+msgid "Is Included"
+msgstr "Est inclus"
+
+#: .\studio\models.py:205
+msgid "Package Feature"
+msgstr "Fonctionnalité du forfait"
+
+#: .\studio\models.py:206
+msgid "Package Features"
+msgstr "Fonctionnalités des forfaits"
+
+#: .\studio\models.py:225
+msgid "Monthly"
+msgstr "Mensuel"
+
+#: .\studio\models.py:226
+msgid "Yearly"
+msgstr "Annuel"
+
+#: .\studio\models.py:230 .\templates\dashboard\products\form.html:289
+#: .\templates\dashboard\stores\form.html:293
+#: .\templates\dashboard\studio\packages\form.html:159
+#: .\templates\dashboard\studio\packages\list.html:134
+#: .\templates\dashboard\studio\services\manage.html:255
+#: .\templates\dashboard\studio\testimonials\list.html:123
+msgid "Active"
+msgstr "Actif"
+
+#: .\studio\models.py:231
+msgid "Paused"
+msgstr "En pause"
+
+#: .\studio\models.py:233
+msgid "Expired"
+msgstr "Expiré"
+
+#: .\studio\models.py:236 .\studio\models.py:286
+msgid "User"
+msgstr "Utilisateur"
+
+#: .\studio\models.py:239
+msgid "Start Date"
+msgstr "Date de début"
+
+#: .\studio\models.py:240
+msgid "End Date"
+msgstr "Date de fin"
+
+#: .\studio\models.py:242
+#: .\templates\dashboard\studio\subscriptions\list.html:103
+msgid "Duration"
+msgstr "Durée"
+
+#: .\studio\models.py:245
+#: .\templates\dashboard\studio\subscriptions\list.html:129
+msgid "Auto Renew"
+msgstr "Renouvellement automatique"
+
+#: .\studio\models.py:250
+msgid "Subscription"
+msgstr "Abonnement"
+
+#: .\studio\models.py:251 .\templates\dashboard\base.html:271
+#: .\templates\dashboard\studio\subscriptions\list.html:4
+#: .\templates\dashboard\studio\subscriptions\list.html:19
+msgid "Subscriptions"
+msgstr "Abonnements"
+
+#: .\studio\models.py:281
+msgid "In Progress"
+msgstr "En cours"
+
+#: .\studio\models.py:282
+msgid "Completed"
+msgstr "Terminé"
+
+#: .\studio\models.py:288
+msgid "Booking Date"
+msgstr "Date de réservation"
+
+#: .\studio\models.py:289
+msgid "Booking Time"
+msgstr "Heure de réservation"
+
+#: .\studio\models.py:290
+msgid "Duration (Minutes)"
+msgstr "Durée (Minutes)"
+
+#: .\studio\models.py:291 .\templates\studio\index.html:527
+msgid "Location"
+msgstr "Lieu"
+
+#: .\studio\models.py:299 .\templates\dashboard\studio\bookings\list.html:17
+msgid "Booking"
+msgstr "Réservation"
+
+#: .\studio\models.py:300 .\templates\dashboard\base.html:265
+msgid "Bookings"
+msgstr "Réservations"
+
+#: .\studio\views.py:29
+msgid "Your message has been sent successfully."
+msgstr "Votre message a été envoyé avec succès."
+
+#: .\templates\dashboard\base.html:234 .\templates\stores\base.html:81
+msgid "Creative Ecosystem"
+msgstr "Écosystème Créatif"
+
+#: .\templates\dashboard\base.html:255
+msgid "Dashboard"
+msgstr "Tableau de bord"
+
+#: .\templates\dashboard\base.html:257 .\templates\dashboard\base.html:330
+#: .\templates\dashboard\dashboard.html:17 .\templates\stores\base.html:90
+#: .\templates\studio\base.html:79 .\templates\studio\base.html:121
+msgid "Studio"
+msgstr "Studio"
+
+#: .\templates\dashboard\base.html:277
+msgid "Contacts"
+msgstr "Contacts"
+
+#: .\templates\dashboard\base.html:280
+msgid "Commerce"
+msgstr "Commerce"
+
+#: .\templates\dashboard\base.html:283
+#: .\templates\dashboard\manage_categories.html:21
+#: .\templates\dashboard\stores\form.html:274
+#: .\templates\stores\components\sidebar_filters.html:28
+msgid "Categories"
+msgstr "Catégories"
+
+#: .\templates\dashboard\base.html:292
+msgid "Settings"
+msgstr "Paramètres"
+
+#: .\templates\dashboard\base.html:295
+msgid "Users"
+msgstr "Utilisateurs"
+
+#: .\templates\dashboard\base.html:303
+msgid "Logout"
+msgstr "Déconnexion"
+
+#: .\templates\dashboard\base.html:322
+#: .\templates\dashboard\manage_categories.html:18
+msgid "Administration"
+msgstr "Administration"
+
+#: .\templates\dashboard\base.html:368
+msgid "Signed in as"
+msgstr "Connecté en tant que"
+
+#: .\templates\dashboard\base.html:394
+msgid "All rights reserved."
+msgstr "Tous droits réservés."
+
+#: .\templates\dashboard\dashboard.html:4
+msgid "Studio Dashboard"
+msgstr "Tableau de bord Studio"
+
+#: .\templates\dashboard\dashboard.html:14
+msgid "Analytics Center"
+msgstr "Centre d'analyses"
+
+#: .\templates\dashboard\dashboard.html:19
+msgid "Pulse"
+msgstr "Activité"
+
+#: .\templates\dashboard\dashboard.html:23
+msgid "Real-time overview of your projects, bookings, and studio health."
+msgstr ""
+"Aperçu en temps réel de vos projets, réservations et de la santé du studio."
+
+#: .\templates\dashboard\dashboard.html:35
+msgid "Total Revenue"
+msgstr "Revenu total"
+
+#: .\templates\dashboard\dashboard.html:48
+msgid "Active Fleet"
+msgstr "Flotte active"
+
+#: .\templates\dashboard\dashboard.html:50
+msgid "Total Projects managed"
+msgstr "Total des projets gérés"
+
+#: .\templates\dashboard\dashboard.html:62
+msgid "Catalog"
+msgstr "Catalogue"
+
+#: .\templates\dashboard\dashboard.html:64
+msgid "Live studio services"
+msgstr "Services de studio en ligne"
+
+#: .\templates\dashboard\dashboard.html:76
+#: .\templates\dashboard\studio\bookings\list.html:32
+msgid "Reservations"
+msgstr "Réservations"
+
+#: .\templates\dashboard\dashboard.html:99
+msgid "Schedule"
+msgstr "Planning"
+
+#: .\templates\dashboard\dashboard.html:100
+msgid "Next 7 Days"
+msgstr "7 prochains jours"
+
+#: .\templates\dashboard\dashboard.html:122
+msgid "No upcoming bookings"
+msgstr "Aucune réservation à venir"
+
+#: .\templates\dashboard\dashboard.html:131
+msgid "Recent Works"
+msgstr "Travaux récents"
+
+#: .\templates\dashboard\dashboard.html:132
+msgid "View Gallery"
+msgstr "Voir la galerie"
+
+#: .\templates\dashboard\dashboard.html:143
+msgid "Studio Project"
+msgstr "Projet de studio"
+
+#: .\templates\dashboard\dashboard.html:157
+msgid "Memberships"
+msgstr "Abonnements membres"
+
+#: .\templates\dashboard\dashboard.html:161
+msgid "Total Active"
+msgstr "Total Actifs"
+
+#: .\templates\dashboard\dashboard.html:168
+msgid "Retention"
+msgstr "Rétention"
+
+#: .\templates\dashboard\dashboard.html:169
+#: .\templates\dashboard\studio\subscriptions\list.html:30
+#: .\templates\stores\checkout.html:74
+msgid "Total"
+msgstr "Total"
+
+#: .\templates\dashboard\dashboard.html:176
+msgid "Top Services"
+msgstr "Meilleurs Services"
+
+#: .\templates\dashboard\dashboard.html:195
+msgid "Inbox"
+msgstr "Boîte de réception"
+
+#: .\templates\dashboard\manage_categories.html:4
+msgid "Manage Categories"
+msgstr "Gérer les catégories"
+
+#: .\templates\dashboard\manage_categories.html:24
+msgid ""
+"Define your marketplace structure. Organize how users discover stores and "
+"products."
+msgstr ""
+"Définissez la structure de votre marché. Organisez la façon dont les "
+"utilisateurs découvrent les boutiques et les produits."
+
+#: .\templates\dashboard\manage_categories.html:53
+#: .\templates\dashboard\studio\services\manage.html:73
+msgid "Edit Mode"
+msgstr "Mode Édition"
+
+#: .\templates\dashboard\manage_categories.html:53
+msgid "New Entry"
+msgstr "Nouvelle entrée"
+
+#: .\templates\dashboard\manage_categories.html:93
+#: .\templates\dashboard\manage_categories.html:357
+msgid "Update Category"
+msgstr "Mettre à jour la catégorie"
+
+#: .\templates\dashboard\manage_categories.html:95
+msgid "Create New Category"
+msgstr "Créer une nouvelle catégorie"
+
+#: .\templates\dashboard\manage_categories.html:100
+msgid "Configure category names, visuals and linked product types."
+msgstr ""
+"Configurez les noms de catégories, les visuels et les types de produits liés."
+
+#: .\templates\dashboard\manage_categories.html:110
+#: .\templates\dashboard\stores\form.html:55
+#: .\templates\dashboard\studio\services\manage.html:155
+msgid "Cancel Editing"
+msgstr "Annuler l'édition"
+
+#: .\templates\dashboard\manage_categories.html:211
+msgid "Product Subcategories"
+msgstr "Sous-catégories de produits"
+
+#: .\templates\dashboard\manage_categories.html:215
+msgid "Add product types linked to this store category."
+msgstr "Ajoutez des types de produits liés à cette catégorie de boutique."
+
+#: .\templates\dashboard\manage_categories.html:227
+msgid "Add Subcategory"
+msgstr "Ajouter une sous-catégorie"
+
+#: .\templates\dashboard\manage_categories.html:247
+#: .\templates\dashboard\studio\packages\form.html:206
+msgid "Delete"
+msgstr "Supprimer"
+
+#: .\templates\dashboard\manage_categories.html:263
+msgid "Subcategory"
+msgstr "Sous-catégorie"
+
+#: .\templates\dashboard\manage_categories.html:267
+msgid "Product classification"
+msgstr "Classification de produit"
+
+#: .\templates\dashboard\manage_categories.html:317
+msgid "Category Icon"
+msgstr "Icône de catégorie"
+
+#: .\templates\dashboard\manage_categories.html:336
+msgid "Upload Icon"
+msgstr "Télécharger l'icône"
+
+#: .\templates\dashboard\manage_categories.html:340
+msgid "Recommended size 512x512px"
+msgstr "Taille recommandée 512x512px"
+
+#: .\templates\dashboard\manage_categories.html:359
+msgid "Create Category"
+msgstr "Créer la catégorie"
+
+#: .\templates\dashboard\manage_categories.html:429
+msgid "Delete category?"
+msgstr "Supprimer la catégorie ?"
+
+#: .\templates\dashboard\manage_categories.html:449
+msgid "Subcategories"
+msgstr "Sous-catégories"
+
+#: .\templates\dashboard\manage_categories.html:483
+msgid "No Categories Yet"
+msgstr "Aucune catégorie pour le moment"
+
+#: .\templates\dashboard\manage_categories.html:487
+msgid ""
+"Start building your marketplace structure by creating your first category."
+msgstr ""
+"Commencez à construire la structure de votre marché en créant votre première "
+"catégorie."
+
+#: .\templates\dashboard\products\delete.html:4
+#: .\templates\dashboard\products\delete.html:18
+#: .\templates\dashboard\stores\delete.html:4
+#: .\templates\dashboard\stores\delete.html:16
+msgid "Delete Store"
+msgstr "Supprimer la boutique"
+
+#: .\templates\dashboard\products\delete.html:22
+#: .\templates\dashboard\stores\delete.html:20
+msgid "Are you sure you want to delete this store?"
+msgstr "Êtes-vous sûr de vouloir supprimer cette boutique ?"
+
+#: .\templates\dashboard\products\delete.html:46
+#: .\templates\dashboard\stores\delete.html:44
+msgid "Yes, Delete"
+msgstr "Oui, supprimer"
+
+#: .\templates\dashboard\products\delete.html:53
+#: .\templates\dashboard\products\form.html:386
+#: .\templates\dashboard\stores\delete.html:51
+#: .\templates\dashboard\studio\packages\form.html:228
+#: .\templates\dashboard\studio\projects\form.html:154
+msgid "Cancel"
+msgstr "Annuler"
+
+#: .\templates\dashboard\products\detail.html:105
+#: .\templates\stores\product_detail.html:63
+msgid "reviews"
+msgstr "avis"
+
+#: .\templates\dashboard\products\detail.html:171
+msgid "items in stock"
+msgstr "articles en stock"
+
+#: .\templates\dashboard\products\detail.html:184
+#: .\templates\dashboard\stores\form.html:209
+#: .\templates\stores\product_detail.html:160
+msgid "Description"
+msgstr "Description"
+
+#: .\templates\dashboard\products\detail.html:203
+#: .\templates\dashboard\products\form.html:118
+#: .\templates\dashboard\products\list.html:212
+msgid "Variants"
+msgstr "Variantes"
+
+#: .\templates\dashboard\products\detail.html:270
+msgid "Customer Reviews"
+msgstr "Avis clients"
+
+#: .\templates\dashboard\products\detail.html:331
+msgid "No reviews yet."
+msgstr "Aucun avis pour le moment."
+
+#: .\templates\dashboard\products\form.html:6
+#: .\templates\dashboard\products\form.html:33
+msgid "Edit Product"
+msgstr "Modifier le produit"
+
+#: .\templates\dashboard\products\form.html:8
+#: .\templates\dashboard\products\form.html:35
+msgid "Create Product"
+msgstr "Créer un produit"
+
+#: .\templates\dashboard\products\form.html:39
+msgid "Manage product information, variants, pricing and media."
+msgstr ""
+"Gérez les informations sur les produits, les variantes, les prix et les "
+"médias."
+
+#: .\templates\dashboard\products\form.html:45
+msgid "Save Product"
+msgstr "Enregistrer le produit"
+
+#: .\templates\dashboard\products\form.html:63
+msgid "Product Information"
+msgstr "Informations produit"
+
+#: .\templates\dashboard\products\form.html:64
+msgid "Basic product details and multilingual content."
+msgstr "Détails de base du produit et contenu multilingue."
+
+#: .\templates\dashboard\products\form.html:74
+msgid "Category"
+msgstr "Catégorie"
+
+#: .\templates\dashboard\products\form.html:119
+msgid "Manage stock, SKU and multiple attributes per variant."
+msgstr "Gérez le stock, les SKU et les attributs multiples par variante."
+
+#: .\templates\dashboard\products\form.html:124
+msgid "Add Variant"
+msgstr "Ajouter une variante"
+
+#: .\templates\dashboard\products\form.html:139
+#: .\templates\dashboard\products\form.html:448
+msgid "Variant"
+msgstr "Variante"
+
+#: .\templates\dashboard\products\form.html:144
+msgid "Delete Variant"
+msgstr "Supprimer la variante"
+
+#: .\templates\dashboard\products\form.html:167
+msgid "Assigned Attributes & Features"
+msgstr "Attributs & Caractéristiques assignés"
+
+#: .\templates\dashboard\products\form.html:170
+msgid "Add Attribute"
+msgstr "Ajouter un attribut"
+
+#: .\templates\dashboard\products\form.html:181
+#: .\templates\dashboard\products\form.html:453
+#: .\templates\dashboard\products\form.html:706
+msgid "No attributes assigned to this variant yet."
+msgstr "Aucun attribut n'a encore été assigné à cette variante."
+
+#: .\templates\dashboard\products\form.html:202
+msgid "Gallery"
+msgstr "Galerie"
+
+#: .\templates\dashboard\products\form.html:203
+msgid "Additional product images."
+msgstr "Images supplémentaires du produit."
+
+#: .\templates\dashboard\products\form.html:208
+msgid "Add Image"
+msgstr "Ajouter une image"
+
+#: .\templates\dashboard\products\form.html:235
+msgid "Delete Image"
+msgstr "Supprimer l'image"
+
+#: .\templates\dashboard\products\form.html:261
+#: .\templates\dashboard\studio\packages\form.html:132
+#, python-format
+msgid "Discount %%"
+msgstr "Remise %%"
+
+#: .\templates\dashboard\products\form.html:291
+msgid "New Arrival"
+msgstr "Nouveauté"
+
+#: .\templates\dashboard\products\form.html:292
+msgid "On Sale"
+msgstr "En promotion"
+
+#: .\templates\dashboard\products\form.html:320
+msgid "Add Attribute Variant"
+msgstr "Ajouter un attribut de variante"
+
+#: .\templates\dashboard\products\form.html:330
+msgid "Attribute Group / Type"
+msgstr "Groupe / Type d'attribut"
+
+#: .\templates\dashboard\products\form.html:336
+msgid "Other Custom Property"
+msgstr "Autre propriété personnalisée"
+
+#: .\templates\dashboard\products\form.html:342
+msgid "Choose Value"
+msgstr "Choisir la valeur"
+
+#: .\templates\dashboard\products\form.html:358
+msgid "Custom Parameter Name"
+msgstr "Nom du paramètre personnalisé"
+
+#: .\templates\dashboard\products\form.html:364
+msgid "Value / Spec"
+msgstr "Valeur / Spécification"
+
+#: .\templates\dashboard\products\form.html:370
+msgid "Select Color Tone"
+msgstr "Sélectionner la teinte de couleur"
+
+#: .\templates\dashboard\products\form.html:389
+msgid "Append Attribute"
+msgstr "Ajouter l'attribut"
+
+#: .\templates\dashboard\products\form.html:589
+#: .\templates\dashboard\products\form.html:602
+msgid "Create New Value"
+msgstr "Créer une nouvelle valeur"
+
+#: .\templates\dashboard\products\form.html:683
+msgid "Please insert a valid value spec."
+msgstr "Veuillez insérer une spécification de valeur valide."
+
+#: .\templates\dashboard\products\list.html:15
+msgid "Catalog Management"
+msgstr "Gestion du catalogue"
+
+#: .\templates\dashboard\products\list.html:23
+msgid ""
+"Manage inventory, variants, pricing and product catalog across all stores."
+msgstr ""
+"Gérez les stocks, les variantes, les prix et le catalogue de produits pour "
+"toutes les boutiques."
+
+#: .\templates\dashboard\products\list.html:72
+msgid "Search products..."
+msgstr "Rechercher des produits..."
+
+#: .\templates\dashboard\products\list.html:80
+#: .\templates\dashboard\stores\list.html:97
+msgid "Search"
+msgstr "Rechercher"
+
+#: .\templates\dashboard\products\list.html:232
+msgid "Available Colors"
+msgstr "Couleurs disponibles"
+
+#: .\templates\dashboard\products\list.html:280
+msgid "Gallery Images"
+msgstr "Images de la galerie"
+
+#: .\templates\dashboard\products\list.html:321
+msgid "No Products Found"
+msgstr "Aucun produit trouvé"
+
+#: .\templates\dashboard\products\list.html:326
+msgid "No products currently exist in the catalog."
+msgstr "Aucun produit n'existe actuellement dans le catalogue."
+
+#: .\templates\dashboard\products\list.html:347
+#: .\templates\dashboard\stores\list.html:352
+#: .\templates\stores\components\pagination.html:18
+msgid "Previous"
+msgstr "Précédent"
+
+#: .\templates\dashboard\products\list.html:364
+#: .\templates\dashboard\stores\list.html:369
+#: .\templates\stores\components\pagination.html:26
+msgid "Next"
+msgstr "Suivant"
+
+#: .\templates\dashboard\stores\form.html:4
+msgid "Store Form"
+msgstr "Formulaire de boutique"
+
+#: .\templates\dashboard\stores\form.html:38
+msgid "Update Store"
+msgstr "Mettre à jour la boutique"
+
+#: .\templates\dashboard\stores\form.html:40
+msgid "Create New Store"
+msgstr "Créer une nouvelle boutique"
+
+#: .\templates\dashboard\stores\form.html:45
+msgid "Configure store identity, branding and online presence."
+msgstr ""
+"Configurez l'identité de la boutique, son image de marque et sa présence en "
+"ligne."
+
+#: .\templates\dashboard\stores\form.html:68
+msgid "Owner"
+msgstr "Propriétaire"
+
+#: .\templates\dashboard\stores\form.html:81
+msgid "Store Identity"
+msgstr "Identité de la boutique"
+
+#: .\templates\dashboard\stores\form.html:97
+#: .\templates\stores\store_detail.html:95
+msgid "WhatsApp"
+msgstr "WhatsApp"
+
+#: .\templates\dashboard\stores\form.html:128
+msgid "Branding"
+msgstr "Branding"
+
+#: .\templates\dashboard\stores\form.html:240
+msgid "Tagline"
+msgstr "Slogan"
+
+#: .\templates\dashboard\stores\form.html:256
+msgid "Social Links"
+msgstr "Liens sociaux"
+
+#: .\templates\dashboard\stores\form.html:298
+#: .\templates\dashboard\stores\list.html:142
+msgid "Verified"
+msgstr "Vérifié"
+
+#: .\templates\dashboard\stores\form.html:315
+msgid "Save Store"
+msgstr "Enregistrer la boutique"
+
+#: .\templates\dashboard\stores\list.html:14
+msgid "Marketplace Management"
+msgstr "Gestion du marché"
+
+#: .\templates\dashboard\stores\list.html:19
+msgid "Merchant"
+msgstr "Commerçant"
+
+#: .\templates\dashboard\stores\list.html:27
+msgid "Manage and monitor all stores, merchants and marketplace activities."
+msgstr ""
+"Gérez et supervisez toutes les boutiques, commerçants et activités du marché."
+
+#: .\templates\dashboard\stores\list.html:53
+msgid "Total Stores"
+msgstr "Total des boutiques"
+
+#: .\templates\dashboard\stores\list.html:67
+msgid "New Store"
+msgstr "Nouvelle boutique"
+
+#: .\templates\dashboard\stores\list.html:91
+msgid "Search stores..."
+msgstr "Rechercher des boutiques..."
+
+#: .\templates\dashboard\stores\list.html:242
+msgid "No categories"
+msgstr "Aucune catégorie"
+
+#: .\templates\dashboard\stores\list.html:327
+msgid "No Stores Found"
+msgstr "Aucune boutique trouvée"
+
+#: .\templates\dashboard\stores\list.html:331
+msgid "Try changing filters or create a new store."
+msgstr "Essayez de modifier les filtres ou créez une nouvelle boutique."
+
+#: .\templates\dashboard\studio\bookings\list.html:4
+msgid "Bookings Calendar"
+msgstr "Calendrier des réservations"
+
+#: .\templates\dashboard\studio\bookings\list.html:14
+msgid "Studio Management"
+msgstr "Gestion du studio"
+
+#: .\templates\dashboard\studio\bookings\list.html:18
+msgid "Calendar"
+msgstr "Calendrier"
+
+#: .\templates\dashboard\studio\bookings\list.html:21
+msgid "Manage your schedule and client sessions for"
+msgstr "Gérez votre emploi du temps et vos sessions clients pour"
+
+#: .\templates\dashboard\studio\bookings\list.html:48
+msgid "Reservation Details"
+msgstr "Détails de la réservation"
+
+#: .\templates\dashboard\studio\bookings\list.html:67
+msgid "Appointment Date & Time"
+msgstr "Date & Heure du rendez-vous"
+
+#: .\templates\dashboard\studio\bookings\list.html:82
+msgid "All Bookings"
+msgstr "Toutes les réservations"
+
+#: .\templates\dashboard\studio\bookings\list.html:90
+msgid "Date & Time"
+msgstr "Date & Heure"
+
+#: .\templates\dashboard\studio\bookings\list.html:92
+msgid "Actions"
+msgstr "Actions"
+
+#: .\templates\dashboard\studio\bookings\list.html:127
+msgid "No bookings found."
+msgstr "Aucune réservation trouvée."
+
+#: .\templates\dashboard\studio\contacts\list.html:5
+#: .\templates\dashboard\studio\contacts\list.html:21
+msgid "Messages"
+msgstr "Messages"
+
+#: .\templates\dashboard\studio\contacts\list.html:16
+msgid "Communication Center"
+msgstr "Centre de communication"
+
+#: .\templates\dashboard\studio\contacts\list.html:19
+#: .\templates\studio\base.html:82 .\templates\studio\base.html:122
+#: .\templates\studio\base.html:184
+msgid "Contact"
+msgstr "Contact"
+
+#: .\templates\dashboard\studio\contacts\list.html:25
+msgid "Manage, review, and toggle the read status of client inquiries."
+msgstr "Gérez, examinez et modifiez le statut de lecture des demandes clients."
+
+#: .\templates\dashboard\studio\contacts\list.html:39
+msgid "Total Messages"
+msgstr "Total des messages"
+
+#: .\templates\dashboard\studio\contacts\list.html:87
+msgid "Read"
+msgstr "Lu"
+
+#: .\templates\dashboard\studio\contacts\list.html:91
+msgid "Unread"
+msgstr "Non lu"
+
+#: .\templates\dashboard\studio\contacts\list.html:101
+msgid "Mark as unread"
+msgstr "Marquer comme non lu"
+
+#: .\templates\dashboard\studio\contacts\list.html:101
+msgid "Mark as read"
+msgstr "Marquer comme lu"
+
+#: .\templates\dashboard\studio\contacts\list.html:106
+msgid "Mark Unread"
+msgstr "Marquer Non Lu"
+
+#: .\templates\dashboard\studio\contacts\list.html:106
+msgid "Mark Read"
+msgstr "Marquer Lu"
+
+#: .\templates\dashboard\studio\contacts\list.html:132
+msgid "No messages found"
+msgstr "Aucun message trouvé"
+
+#: .\templates\dashboard\studio\contacts\list.html:134
+msgid ""
+"Everything looks clean! There are no client interactions to display right "
+"now."
+msgstr ""
+"Tout est à jour ! Il n'y a aucune interaction client à afficher pour le "
+"moment."
+
+#: .\templates\dashboard\studio\packages\form.html:6
+msgid "Edit Package"
+msgstr "Modifier le forfait"
+
+#: .\templates\dashboard\studio\packages\form.html:8
+#: .\templates\dashboard\studio\packages\form.html:237
+msgid "Create Package"
+msgstr "Créer un forfait"
+
+#: .\templates\dashboard\studio\packages\form.html:26
+#: .\templates\dashboard\studio\projects\form.html:25
+msgid "Edit"
+msgstr "Modifier"
+
+#: .\templates\dashboard\studio\packages\form.html:28
+#: .\templates\dashboard\studio\projects\form.html:27
+msgid "Create"
+msgstr "Créer"
+
+#: .\templates\dashboard\studio\packages\form.html:38
+msgid "Define pricing packages with multilingual content and features."
+msgstr ""
+"Définissez des forfaits tarifaires avec du contenu et des fonctionnalités "
+"multilingues."
+
+#: .\templates\dashboard\studio\packages\form.html:62
+#: .\templates\dashboard\studio\packages\form.html:235
+msgid "Update Package"
+msgstr "Mettre à jour le forfait"
+
+#: .\templates\dashboard\studio\packages\form.html:64
+#: .\templates\dashboard\studio\packages\list.html:53
+msgid "New Package"
+msgstr "Nouveau forfait"
+
+#: .\templates\dashboard\studio\packages\form.html:69
+msgid "Configure pricing, translations, and visibility settings."
+msgstr "Configurez les prix, les traductions et les paramètres de visibilité."
+
+#: .\templates\dashboard\studio\packages\form.html:169
+msgid "Features"
+msgstr "Fonctionnalités"
+
+#: .\templates\dashboard\studio\packages\form.html:174
+msgid "Add Feature"
+msgstr "Ajouter une fonctionnalité"
+
+#: .\templates\dashboard\studio\packages\form.html:288
+msgid "Remove"
+msgstr "Supprimer"
+
+#: .\templates\dashboard\studio\packages\list.html:26
+msgid "Manage subscription packages and pricing plans."
+msgstr "Gérez les forfaits d'abonnement et les plans tarifaires."
+
+#: .\templates\dashboard\studio\packages\list.html:100
+#: .\templates\studio\index.html:265
+msgid "month"
+msgstr "mois"
+
+#: .\templates\dashboard\studio\packages\list.html:107
+msgid "discount"
+msgstr "remise"
+
+#: .\templates\dashboard\studio\packages\list.html:134
+msgid "Inactive"
+msgstr "Inactif"
+
+#: .\templates\dashboard\studio\packages\list.html:159
+msgid "No Packages Yet"
+msgstr "Aucun forfait pour le moment"
+
+#: .\templates\dashboard\studio\packages\list.html:160
+msgid "Create your first pricing package."
+msgstr "Créer votre premier forfait tarifaire."
+
+#: .\templates\dashboard\studio\projects\form.html:6
+msgid "Edit Project"
+msgstr "Modifier le projet"
+
+#: .\templates\dashboard\studio\projects\form.html:8
+#: .\templates\dashboard\studio\projects\form.html:163
+msgid "Create Project"
+msgstr "Créer un projet"
+
+#: .\templates\dashboard\studio\projects\form.html:37
+msgid "Fill project details and upload media to build your portfolio."
+msgstr ""
+"Remplissez les détails du projet et téléchargez des médias pour construire "
+"votre portfolio."
+
+#: .\templates\dashboard\studio\projects\form.html:61
+#: .\templates\dashboard\studio\projects\form.html:161
+msgid "Update Project"
+msgstr "Mettre à jour le projet"
+
+#: .\templates\dashboard\studio\projects\form.html:63
+#: .\templates\dashboard\studio\projects\list.html:51
+msgid "New Project"
+msgstr "Nouveau projet"
+
+#: .\templates\dashboard\studio\projects\form.html:68
+msgid "Provide multilingual titles and descriptions."
+msgstr "Fournissez des titres et des descriptions multilingues."
+
+#: .\templates\dashboard\studio\projects\form.html:137
+msgid "Upload project cover image (JPG, PNG, WEBP)"
+msgstr "Télécharger l'image de couverture du projet (JPG, PNG, WEBP)"
+
+#: .\templates\dashboard\studio\projects\list.html:4
+msgid "Manage Projects"
+msgstr "Gérer les projets"
+
+#: .\templates\dashboard\studio\projects\list.html:21
+msgid "List"
+msgstr "Liste"
+
+#: .\templates\dashboard\studio\projects\list.html:26
+msgid "Manage all your active and archived projects in one place."
+msgstr "Gérez tous vos projets actifs et archivés au même endroit."
+
+#: .\templates\dashboard\studio\projects\list.html:125
+msgid "No description available"
+msgstr "Aucune description disponible"
+
+#: .\templates\dashboard\studio\projects\list.html:141
+msgid "Images"
+msgstr "Images"
+
+#: .\templates\dashboard\studio\projects\list.html:185
+msgid "No Projects Yet"
+msgstr "Aucun projet pour le moment"
+
+#: .\templates\dashboard\studio\projects\list.html:189
+msgid "Create your first project to start building your portfolio."
+msgstr ""
+"Créiez votre premier projet pour commencer à construire votre portfolio."
+
+#: .\templates\dashboard\studio\services\manage.html:4
+msgid "Manage Services"
+msgstr "Gérer les services"
+
+#: .\templates\dashboard\studio\services\manage.html:18
+msgid "Studio Administration"
+msgstr "Administration du studio"
+
+#: .\templates\dashboard\studio\services\manage.html:22
+msgid "Manage"
+msgstr "Gérer"
+
+#: .\templates\dashboard\studio\services\manage.html:29
+msgid "Create and organize your services for customers."
+msgstr "Créez et organisez vos services pour les clients."
+
+#: .\templates\dashboard\studio\services\manage.html:55
+msgid "Total Services"
+msgstr "Total des services"
+
+#: .\templates\dashboard\studio\services\manage.html:75
+msgid "New Service"
+msgstr "Nouveau service"
+
+#: .\templates\dashboard\studio\services\manage.html:130
+#: .\templates\dashboard\studio\services\manage.html:308
+msgid "Update Service"
+msgstr "Mettre à jour le service"
+
+#: .\templates\dashboard\studio\services\manage.html:132
+#: .\templates\dashboard\studio\services\manage.html:310
+msgid "Create Service"
+msgstr "Créer le service"
+
+#: .\templates\dashboard\studio\services\manage.html:139
+msgid "Configure service information and visibility."
+msgstr "Configurez les informations sur le service et sa visibilité."
+
+#: .\templates\dashboard\studio\services\manage.html:177
+msgid "English Title"
+msgstr "Titre en anglais"
+
+#: .\templates\dashboard\studio\services\manage.html:188
+msgid "Arabic Title"
+msgstr "Titre en arabe"
+
+#: .\templates\dashboard\studio\services\manage.html:199
+msgid "French Title"
+msgstr "Titre en français"
+
+#: .\templates\dashboard\studio\services\manage.html:271
+msgid "English Description"
+msgstr "Description en anglais"
+
+#: .\templates\dashboard\studio\services\manage.html:282
+msgid "Arabic Description"
+msgstr "Description en arabe"
+
+#: .\templates\dashboard\studio\services\manage.html:290
+msgid "French Description"
+msgstr "Description en français"
+
+#: .\templates\dashboard\studio\services\manage.html:398
+msgid "No Services Yet"
+msgstr "Aucun service pour le moment"
+
+#: .\templates\dashboard\studio\services\manage.html:404
+msgid "Start by creating your first service."
+msgstr "Commencez par créer votre premier service."
+
+#: .\templates\dashboard\studio\subscriptions\list.html:15
+msgid "CRM"
+msgstr "CRM"
+
+#: .\templates\dashboard\studio\subscriptions\list.html:23
+msgid "Monitor all active, expired and recurring subscriptions in real time."
+msgstr ""
+"Supervisez tous les abonnements actifs, expirés et récurrents en temps réel."
+
+#: .\templates\dashboard\studio\subscriptions\list.html:93
+msgid "Start"
+msgstr "Début"
+
+#: .\templates\dashboard\studio\subscriptions\list.html:98
+msgid "End"
+msgstr "Fin"
+
+#: .\templates\dashboard\studio\subscriptions\list.html:108
+msgid "Remaining"
+msgstr "Restant"
+
+#: .\templates\dashboard\studio\subscriptions\list.html:117
+msgid "Price"
+msgstr "Prix"
+
+#: .\templates\dashboard\studio\subscriptions\list.html:143
+msgid "No Subscriptions Yet"
+msgstr "Aucun abonnement pour le moment"
+
+#: .\templates\dashboard\studio\testimonials\list.html:19
+msgid "Customer Feedback"
+msgstr "Retours clients"
+
+#: .\templates\dashboard\studio\testimonials\list.html:35
+msgid "Monitor customer reviews and ratings."
+msgstr "Supervisez les avis et les notes des clients."
+
+#: .\templates\dashboard\studio\testimonials\list.html:62
+#: .\templates\stores\product_detail.html:163
+#: .\templates\stores\store_detail.html:112
+msgid "Reviews"
+msgstr "Avis"
+
+#: .\templates\dashboard\studio\testimonials\list.html:131
+msgid "Hidden"
+msgstr "Masqué"
+
+#: .\templates\dashboard\studio\testimonials\list.html:145
+msgid "No testimonials found."
+msgstr "Aucun témoignage trouvé."
+
+#: .\templates\stores\base.html:93 .\templates\stores\base.html:181
+#: .\templates\stores\store_list.html:4
+msgid "Explore Stores"
+msgstr "Explorer les boutiques"
+
+#: .\templates\stores\base.html:102
+msgid "Search..."
+msgstr "Rechercher..."
+
+#: .\templates\stores\base.html:178 .\templates\stores\product_detail.html:10
+#: .\templates\studio\base.html:77 .\templates\studio\base.html:117
+#: .\templates\studio\pages\services.html:4
+msgid "Home"
+msgstr "Accueil"
+
+#: .\templates\stores\base.html:218 .\templates\studio\base.html:70
+#: .\templates\studio\base.html:166
+msgid "Photography & Digital Marketing"
+msgstr "Photographie & Marketing Digital"
+
+#: .\templates\stores\base.html:224
+msgid ""
+"Empowering local businesses through digital transformation and professional "
+"visual identity."
+msgstr ""
+"Autonomiser les entreprises locales grâce à la transformation digitale et à "
+"une identité visuelle professionnelle."
+
+#: .\templates\stores\base.html:229
+msgid "Navigation"
+msgstr "Navigation"
+
+#: .\templates\stores\base.html:231
+msgid "How it works"
+msgstr "Comment ça marche"
+
+#: .\templates\stores\base.html:232
+msgid "Browse Categories"
+msgstr "Parcourir les catégories"
+
+#: .\templates\stores\base.html:238
+msgid "Weekly Digest"
+msgstr "Sélection hebdomadaire"
+
+#: .\templates\stores\base.html:239
+msgid "New stores and tips in your inbox."
+msgstr "Nouvelles boutiques et conseils dans votre boîte mail."
+
+#: .\templates\stores\checkout.html:2
+msgid "Complete Your Order"
+msgstr "Finaliser votre commande"
+
+#: .\templates\stores\checkout.html:29
+msgid "Cash"
+msgstr "Espèces"
+
+#: .\templates\stores\checkout.html:44
+msgid "Order Summary"
+msgstr "Récapitulatif de la commande"
+
+#: .\templates\stores\checkout.html:66
+msgid "Subtotal"
+msgstr "Sous-total"
+
+#: .\templates\stores\checkout.html:70
+msgid "Shipping"
+msgstr "Livraison"
+
+#: .\templates\stores\checkout.html:71
+msgid "Calculated next"
+msgstr "Calculé à l'étape suivante"
+
+#: .\templates\stores\checkout.html:80
+msgid "Place Order"
+msgstr "Passer la commande"
+
+#: .\templates\stores\components\pagination.html:8
+msgid "Showing page"
+msgstr "Affichage de la page"
+
+#: .\templates\stores\components\pagination.html:8
+msgid "of"
+msgstr "sur"
+
+#: .\templates\stores\components\product_card.html:44
+#: .\templates\stores\index.html:211 .\templates\stores\index.html:295
+msgid "Quick Add"
+msgstr "Ajout rapide"
+
+#: .\templates\stores\components\product_card.html:95
+#: .\templates\stores\index.html:240 .\templates\stores\index.html:346
+msgid "In Stock"
+msgstr "En stock"
+
+#: .\templates\stores\components\sidebar_filters.html:10
+#: .\templates\stores\store_list.html:79
+msgid "Refine Catalog"
+msgstr "Affiner le catalogue"
+
+#: .\templates\stores\components\sidebar_filters.html:15
+#: .\templates\stores\store_list.html:85
+msgid "Clear"
+msgstr "Effacer"
+
+#: .\templates\stores\components\sidebar_filters.html:31
+msgid "Show All Products"
+msgstr "Afficher tous les produits"
+
+#: .\templates\stores\components\sidebar_filters.html:53
+msgid "Price Limits (DA)"
+msgstr "Limites de prix (DA)"
+
+#: .\templates\stores\components\sidebar_filters.html:102
+#: .\templates\stores\store_list.html:137
+msgid "Apply Adjustments"
+msgstr "Appliquer les ajustements"
+
+#: .\templates\stores\components\store_card.html:15
+msgid "Featured Store"
+msgstr "Boutique à la une"
+
+#: .\templates\stores\components\store_card.html:40
+#: .\templates\stores\store_detail.html:45
+msgid "Verified Vendor"
+msgstr "Vendeur vérifié"
+
+#: .\templates\stores\components\store_card.html:85
+msgid "Visit Store"
+msgstr "Visiter la boutique"
+
+#: .\templates\stores\components\topbar_filter.html:11
+msgid "Search item name..."
+msgstr "Rechercher un article..."
+
+#: .\templates\stores\components\topbar_filter.html:23
+msgid "Sort By"
+msgstr "Trier par"
+
+#: .\templates\stores\components\topbar_filter.html:26
+msgid "New Arrivals"
+msgstr "Nouveautés"
+
+#: .\templates\stores\components\topbar_filter.html:27
+msgid "Price: Low to High"
+msgstr "Prix : Du - cher au + cher"
+
+#: .\templates\stores\components\topbar_filter.html:28
+msgid "Price: High to Low"
+msgstr "Prix : Du + cher au - cher"
+
+#: .\templates\stores\components\topbar_filter.html:37
+msgid "Filter Panel"
+msgstr "Panneau de filtrage"
+
+#: .\templates\stores\components\topbar_filter.html:42
+msgid "items discovered"
+msgstr "articles découverts"
+
+#: .\templates\stores\index.html:15
+msgid "SaaS Storefront Builder Platform"
+msgstr "Plateforme SaaS de création de boutiques"
+
+#: .\templates\stores\index.html:19
+msgid "Discover Premium Local Stores & Creative Creators"
+msgstr "Découvrez les meilleures boutiques locales & créateurs"
+
+#: .\templates\stores\index.html:22
+msgid ""
+"Browse unified catalogs across tailored stores. Secure communication "
+"directly via automated WhatsApp lines and social links."
+msgstr ""
+"Parcourez des catalogues unifiés à travers des boutiques sur mesure. "
+"Communiquez en toute sécurité directement via des lignes WhatsApp "
+"automatisées et des liens sociaux."
+
+#: .\templates\stores\index.html:28
+msgid "Search for specific items, tech, clothes..."
+msgstr "Rechercher des articles spécifiques, tech, vêtements..."
+
+#: .\templates\stores\index.html:32
+msgid "Explore"
+msgstr "Explorer"
+
+#: .\templates\stores\index.html:45
+msgid "Browse Core Niches"
+msgstr "Parcourir nos catégories clés"
+
+#: .\templates\stores\index.html:46
+msgid "Tailored marketplace categories filter layout"
+msgstr "Disposition des filtres par catégories du marché sur mesure"
+
+#: .\templates\stores\index.html:64
+msgid "No catalog niches found."
+msgstr "Aucune catégorie de catalogue trouvée."
+
+#: .\templates\stores\index.html:75
+msgid "Verified Creators & Top Stores"
+msgstr "Créateurs vérifiés & Meilleures boutiques"
+
+#: .\templates\stores\index.html:76
+msgid "Active vendors sorted by production catalogs sizes"
+msgstr "Vendeurs actifs triés par taille de catalogue de production"
+
+#: .\templates\stores\index.html:84
+msgid "No active storefront vendors showcased at the moment."
+msgstr "Aucun vendeur actif mis en avant pour le moment."
+
+#: .\templates\stores\index.html:95
+msgid "Trending Featured Releases"
+msgstr "Sorties populaires à la une"
+
+#: .\templates\stores\index.html:96
+msgid ""
+"Hand-picked high conversion premium solutions curated by platforms "
+"administrators"
+msgstr ""
+"Solutions premium à forte conversion sélectionnées avec soin par les "
+"administrateurs de la plateforme"
+
+#: .\templates\stores\index.html:114 .\templates\stores\product_list.html:43
+#: .\templates\stores\store_detail.html:159
+msgid "No Active Inventory Matches"
+msgstr "Aucun article correspondant en stock"
+
+#: .\templates\stores\index.html:115 .\templates\stores\product_list.html:44
+#: .\templates\stores\store_detail.html:160
+msgid "There are no products listing inside the targeted filters right now."
+msgstr ""
+"Il n'y a aucun produit répertorié dans les filtres ciblés pour le moment."
+
+#: .\templates\stores\index.html:118 .\templates\stores\product_list.html:47
+#: .\templates\stores\store_detail.html:163
+#: .\templates\stores\store_list.html:160
+msgid "Clear Filters"
+msgstr "Effacer les filtres"
+
+#: .\templates\stores\index.html:132
+msgid "Curated Selection"
+msgstr "Sélection exclusive"
+
+#: .\templates\stores\index.html:133
+msgid "Trending Now"
+msgstr "Tendances actuelles"
+
+#: .\templates\stores\index.html:168
+msgid "BEST SELLER"
+msgstr "MEILLEURE VENTE"
+
+#: .\templates\stores\index.html:363
+msgid "No trending products available at the moment."
+msgstr "Aucun produit tendance disponible pour le moment."
+
+#: .\templates\stores\product_detail.html:53
+msgid "Sold by"
+msgstr "Vendu par"
+
+#: .\templates\stores\product_detail.html:128
+msgid "Add to Cart"
+msgstr "Ajouter au panier"
+
+#: .\templates\stores\product_detail.html:139
+msgid "Delivery"
+msgstr "Livraison"
+
+#: .\templates\stores\product_detail.html:140
+msgid "58 States"
+msgstr "58 Wilayas"
+
+#: .\templates\stores\product_detail.html:149
+msgid "Warranty"
+msgstr "Garantie"
+
+#: .\templates\stores\product_detail.html:150
+msgid "Authentic Gear"
+msgstr "Équipement authentique"
+
+#: .\templates\stores\product_detail.html:175
+msgid "No description available."
+msgstr "Aucune description disponible."
+
+#: .\templates\stores\product_detail.html:208
+msgid "No customer stories submitted for this item yet."
+msgstr "Aucun retour client n'a encore été soumis pour cet article."
+
+#: .\templates\stores\product_detail.html:216
+msgid "Related Products"
+msgstr "Produits similaires"
+
+#: .\templates\stores\product_detail.html:226
+msgid "No related premium gear found in this category."
+msgstr "Aucun équipement premium associé trouvé dans cette catégorie."
+
+#: .\templates\stores\store_detail.html:4
+msgid "MarketShot Showcase"
+msgstr "Vitrine MarketShot"
+
+#: .\templates\stores\store_detail.html:12
+msgid "Banner"
+msgstr "Bannière"
+
+#: .\templates\stores\store_detail.html:28
+msgid "Logo"
+msgstr "Logo"
+
+#: .\templates\stores\store_detail.html:84
+msgid "Member since"
+msgstr "Membre depuis"
+
+#: .\templates\stores\store_detail.html:101
+#: .\templates\stores\store_list.html:60
+msgid "Filters"
+msgstr "Filtres"
+
+#: .\templates\stores\store_detail.html:115
+msgid "About Store"
+msgstr "À propos de la boutique"
+
+#: .\templates\stores\store_list.html:12
+msgid "Discover"
+msgstr "Découvrir"
+
+#: .\templates\stores\store_list.html:15
+msgid ""
+"Support creative entrepreneurs and local businesses building our community "
+"ecosystem."
+msgstr ""
+"Soutenez les entrepreneurs créatifs et les entreprises locales qui "
+"construisent notre écosystème communautaire."
+
+#: .\templates\stores\store_list.html:21
+msgid "stores"
+msgstr "boutiques"
+
+#: .\templates\stores\store_list.html:25
+msgid "verified ecosystem sellers"
+msgstr "vendeurs vérifiés de l'écosystème"
+
+#: .\templates\stores\store_list.html:38
+msgid "All Ecosystem"
+msgstr "Tout l'écosystème"
+
+#: .\templates\stores\store_list.html:101
+msgid "Keyword Search"
+msgstr "Recherche par mot-clé"
+
+#: .\templates\stores\store_list.html:107
+msgid "Search name, tags..."
+msgstr "Rechercher un nom, des tags..."
+
+#: .\templates\stores\store_list.html:114
+msgid "Store Status"
+msgstr "Statut de la boutique"
+
+#: .\templates\stores\store_list.html:121
+msgid "Verified Sellers Only"
+msgstr "Vendeurs vérifiés uniquement"
+
+#: .\templates\stores\store_list.html:129
+msgid "Featured Stores"
+msgstr "Boutiques à la une"
+
+#: .\templates\stores\store_list.html:156
+msgid "No matching stores located"
+msgstr "Aucune boutique correspondante trouvée"
+
+#: .\templates\stores\store_list.html:157
+msgid "Try modifying search parameters or clearing filters."
+msgstr ""
+"Essayez de modifier les paramètres de recherche ou d'effacer les filtres."
+
+#: .\templates\studio\base.html:80 .\templates\studio\base.html:120
+#: .\templates\studio\base.html:179
+msgid "Portfolio"
+msgstr "Portfolio"
+
+#: .\templates\studio\base.html:172
+msgid ""
+"The creative ecosystem for brands that want to lead the market through high-"
+"end production and performance marketing."
+msgstr ""
+"L'écosystème créatif pour les marques qui veulent dominer le marché grâce à "
+"une production haut de gamme et un marketing de performance."
+
+#: .\templates\studio\booking.html:11
+msgid "Book Your Studio Session"
+msgstr "Réservez votre session studio"
+
+#: .\templates\studio\booking.html:15
+msgid "Choose your service and proceed to booking."
+msgstr "Choisissez votre service et procédez à la réservation."
+
+#: .\templates\studio\index.html:4
+msgid "MarketShot | Creative Production & Digital Marketing"
+msgstr "MarketShot | Production Créative & Marketing Digital"
+
+#: .\templates\studio\index.html:12
+msgid "Creative Content & Digital Growth Studio"
+msgstr "Studio de Contenu Créatif & Croissance Digitale"
+
+#: .\templates\studio\index.html:15
+msgid "Create. Produce."
+msgstr "Créez. Produisez."
+
+#: .\templates\studio\index.html:16
+msgid "Scale your brand"
+msgstr "Propulsez votre marque"
+
+#: .\templates\studio\index.html:17
+msgid "with Marketshot"
+msgstr "avec Marketshot"
+
+#: .\templates\studio\index.html:20
+msgid ""
+"We help businesses, creators, and brands produce high-quality visual "
+"content, professional photography, UGC videos, advertising creatives, and "
+"digital marketing campaigns — all in one integrated ecosystem."
+msgstr ""
+"Nous aidons les entreprises, les créateurs et les marques à produire du "
+"contenu visuel de haute qualité, de la photographie professionnelle, des "
+"vidéos UGC, des créations publicitaires et des campagnes de marketing "
+"digital — le tout dans un écosystème intégré."
+
+#: .\templates\studio\index.html:24
+msgid "Get Started"
+msgstr "Commencer"
+
+#: .\templates\studio\index.html:27
+msgid "Explore Services"
+msgstr "Explorer les services"
+
+#: .\templates\studio\index.html:34
+msgid "Professional studio environment"
+msgstr "Environnement studio professionnel"
+
+#: .\templates\studio\index.html:37
+msgid "High-end camera setup"
+msgstr "Matériel de tournage haut de gamme"
+
+#: .\templates\studio\index.html:50
+msgid "Our Services"
+msgstr "Nos Services"
+
+#: .\templates\studio\index.html:53
+msgid ""
+"End-to-end creative and digital solutions for brands, businesses, and "
+"content creators."
+msgstr ""
+"Solutions créatives et digitales de bout en bout pour les marques, les "
+"entreprises et les créateurs de contenu."
+
+#: .\templates\studio\index.html:78
+msgid "Book a Creative Session Today"
+msgstr "Réservez une session créative aujourd'hui"
+
+#: .\templates\studio\index.html:81
+msgid "Photography, video, and content production tailored for your business."
+msgstr ""
+"Photographie, vidéo et production de contenu adaptés à votre entreprise."
+
+#: .\templates\studio\index.html:87
+msgid "Book Now"
+msgstr "Réserver maintenant"
+
+#: .\templates\studio\index.html:103
+msgid "Featured Portfolio"
+msgstr "Portfolio à la une"
+
+#: .\templates\studio\index.html:107
+msgid ""
+"A selection of recent projects that showcase our commitment to excellence "
+"and creative innovation."
+msgstr ""
+"Une sélection de projets récents qui témoignent de notre engagement envers "
+"l'excellence et l'innovation créative."
+
+#: .\templates\studio\index.html:114
+msgid "View All Works"
+msgstr "Voir tous nos travaux"
+
+#: .\templates\studio\index.html:171
+msgid "No projects available"
+msgstr "Aucun projet disponible"
+
+#: .\templates\studio\index.html:172
+msgid "Projects will appear here once added."
+msgstr "Les projets s'afficheront ici une fois ajoutés."
+
+#: .\templates\studio\index.html:184
+msgid "The Studio"
+msgstr "Le Studio"
+
+#: .\templates\studio\index.html:186
+msgid "Where magic happens."
+msgstr "Là où la magie opère."
+
+#: .\templates\studio\index.html:188
+msgid ""
+"Our 5,000 sq. ft. studio space in the heart of the city is designed for "
+"maximum creativity. From sound-treated rooms to natural light stages, we "
+"have everything your brand needs under one roof."
+msgstr ""
+"Notre studio de 450 m² au cœur de la ville est conçu pour une créativité "
+"maximale. Des pièces traitées acoustiquement aux plateaux en lumière "
+"naturelle, nous avons tout ce dont votre marque a besoin sous un même toit."
+
+#: .\templates\studio\index.html:192
+msgid "24/7"
+msgstr "24/7"
+
+#: .\templates\studio\index.html:193
+msgid "Member Access"
+msgstr "Accès Membres"
+
+#: .\templates\studio\index.html:196
+msgid "4K"
+msgstr "4K"
+
+#: .\templates\studio\index.html:197
+msgid "Editing Suites"
+msgstr "Suites de montage"
+
+#: .\templates\studio\index.html:201
+msgid "Take a Virtual Tour"
+msgstr "Faire une visite virtuelle"
+
+#: .\templates\studio\index.html:206
+msgid "Studio lighting"
+msgstr "Éclairage de studio"
+
+#: .\templates\studio\index.html:209
+msgid "Audio suite"
+msgstr "Suite audio"
+
+#: .\templates\studio\index.html:212
+msgid "Meeting area"
+msgstr "Espace de réunion"
+
+#: .\templates\studio\index.html:215
+msgid "Design station"
+msgstr "Station de design"
+
+#: .\templates\studio\index.html:225
+msgid "Flexible Packages"
+msgstr "Forfaits flexibles"
+
+#: .\templates\studio\index.html:226
+msgid "Choose the right production tier for your brand's growth phase."
+msgstr ""
+"Choisissez le bon niveau de production pour la phase de croissance de votre "
+"marque."
+
+#: .\templates\studio\index.html:245
+msgid "Most Popular"
+msgstr "Le plus populaire"
+
+#: .\templates\studio\index.html:268
+msgid "Custom"
+msgstr "Sur mesure"
+
+#: .\templates\studio\index.html:321
+msgid "Select Growth"
+msgstr "Sélectionner Croissance"
+
+#: .\templates\studio\index.html:323
+msgid "Choose Starter"
+msgstr "Choisir Starter"
+
+#: .\templates\studio\index.html:325
+msgid "Custom Quote"
+msgstr "Devis personnalisé"
+
+#: .\templates\studio\index.html:347
+msgid "Client Testimonials"
+msgstr "Témoignages clients"
+
+#: .\templates\studio\index.html:351
+msgid "See what our clients say about working with MarketShot."
+msgstr ""
+"Découvrez ce que disent nos clients de leur collaboration avec MarketShot."
+
+#: .\templates\studio\index.html:411
+msgid "No testimonials available yet."
+msgstr "Aucun témoignage disponible pour le moment."
+
+#: .\templates\studio\index.html:427
+msgid "Ready to scale your legacy?"
+msgstr "Prêt à propulser votre image ?"
+
+#: .\templates\studio\index.html:430
+msgid ""
+"Let's build something extraordinary together. Book your discovery session "
+"today and transform your brand's digital presence."
+msgstr ""
+"Construisons quelque chose d'extraordinaire ensemble. Réservez votre session "
+"découverte dès aujourd'hui et transformez la présence digitale de votre "
+"marque."
+
+#: .\templates\studio\index.html:435
+msgid "Book a Session"
+msgstr "Réservez une session"
+
+#: .\templates\studio\index.html:439 .\templates\studio\index.html:465
+msgid "Contact Us"
+msgstr "Contactez-nous"
+
+#: .\templates\studio\index.html:445
+msgid "Abstract gradient"
+msgstr "Dégradé abstrait"
+
+#: .\templates\studio\index.html:469
+msgid "Let's build something amazing"
+msgstr "Construisons quelque chose d'incroyable"
+
+#: .\templates\studio\index.html:473
+msgid ""
+"Have a project in mind? Send us a message and our team will get back to you."
+msgstr ""
+"Vous avez un projet en tête ? Envoyez-nous un message et notre équipe "
+"reviendra vers vous."
+
+#: .\templates\studio\index.html:491
+msgid "Email Us"
+msgstr "Écrivez-nous"
+
+#: .\templates\studio\index.html:509
+msgid "Call Us"
+msgstr "Appelez-nous"
+
+#: .\templates\studio\index.html:531
+msgid "Tlemcen, Algeria"
+msgstr "Tlemcen, Algérie"
+
+#: .\templates\studio\index.html:559
+msgid "Your name"
+msgstr "Votre nom"
+
+#: .\templates\studio\index.html:573
+msgid "Your email"
+msgstr "Votre e-mail"
+
+#: .\templates\studio\index.html:590
+msgid "Project subject"
+msgstr "Sujet du projet"
+
+#: .\templates\studio\index.html:606
+msgid "Tell us about your project..."
+msgstr "Parlez-nous de votre projet..."
+
+#: .\templates\studio\index.html:615
+msgid "Send Message"
+msgstr "Envoyer le message"
+
+#~ msgid "MarketShot | All-in-One Creative Production & Marketing"
+#~ msgstr "MarketShot | Production créative & Marketing tout-en-un"
+
+#~ msgid "The All-in-One Digital Solution"
+#~ msgstr "La solution digitale tout-en-un"
+
+#~ msgid "Capture. Market."
+#~ msgstr "Capturez. Vendez."
+
+#~ msgid "Dominate the Market"
+#~ msgstr "Dominez le marché"
+
+#~ msgid "with MarketShot"
+#~ msgstr "avec MarketShot"
+
+#~ msgid ""
+#~ "We solve your visual and marketing challenges. From professional studio "
+#~ "shoots to high-converting ad campaigns and our exclusive digital showcase "
+#~ "platform."
+#~ msgstr ""
+#~ "Nous résolvons vos défis visuels et marketing. Des shootings "
+#~ "professionnels en studio aux campagnes publicitaires à fort taux de "
+#~ "conversion, en passant par notre plateforme exclusive de vitrine digitale."
+
+#~ msgid "Start Your Project"
+#~ msgstr "Démarrer votre projet"
+
+#~ msgid "Visit Our Platform"
+#~ msgstr "Visiter notre plateforme"
+
+#~ msgid "MarketShot Studio"
+#~ msgstr "Studio MarketShot"
+
+#~ msgid "Professional Content"
+#~ msgstr "Contenu professionnel"
+
+#~ msgid "Our Integrated Services"
+#~ msgstr "Nos services intégrés"
+
+#~ msgid "Everything you need to grow your digital presence in one place."
+#~ msgstr ""
+#~ "Tout ce dont vous avez besoin pour développer votre présence digitale au "
+#~ "même endroit."
+
+#~ msgid "Professional Production"
+#~ msgstr "Production professionnelle"
+
+#~ msgid ""
+#~ "Studio product shoots & field photography for restaurants, clinics, and "
+#~ "real estate with pro lighting."
+#~ msgstr ""
+#~ "Shootings de produits en studio & photographie de terrain pour "
+#~ "restaurants, cliniques, et immobilier avec éclairage pro."
+
+#~ msgid "MarketShot Platform"
+#~ msgstr "Plateforme MarketShot"
+
+#~ msgid ""
+#~ "Display your products on our digital platform with a seamless booking "
+#~ "system for your clients."
+#~ msgstr ""
+#~ "Affichez vos produits sur notre plateforme digitale avec un système de "
+#~ "réservation fluide pour vos clients."
+
+#~ msgid "Ads & Voice Over"
+#~ msgstr "Publicités & Voix-off"
+
+#~ msgid ""
+#~ "Targeted ad campaigns combined with professional voice-overs to maximize "
+#~ "engagement and sales."
+#~ msgstr ""
+#~ "Campagnes publicitaires ciblées combinées à des voix-off professionnelles "
+#~ "pour maximiser l'engagement et les ventes."
+
+#~ msgid "Rent Our Professional Studio"
+#~ msgstr "Louez notre studio professionnel"
+
+#~ msgid ""
+#~ "Fully equipped space for content creators and brands. Book by the hour."
+#~ msgstr ""
+#~ "Espace entièrement équipé pour les créateurs de contenu et les marques. "
+#~ "Réservez à l'heure."
+
+#~ msgid "Check Availability"
+#~ msgstr "Vérifier la disponibilité"
+
+#~ msgid "Choose Your Growth Plan"
+#~ msgstr "Choisissez votre plan de croissance"
+
+#~ msgid "Flexible pricing for artisans, merchants, and corporations."
+#~ msgstr ""
+#~ "Tarification flexible pour les artisans, commerçants et entreprises."
+
+#~ msgid "Essential Shot"
+#~ msgstr "Shot Essentiel"
+
+#~ msgid "Flexible"
+#~ msgstr "Flexible"
+
+#~ msgid "Product Photography"
+#~ msgstr "Photographie de produit"
+
+#~ msgid "Basic Video Editing"
+#~ msgstr "Montage vidéo basique"
+
+#~ msgid "Platform Listing"
+#~ msgstr "Référencement sur la plateforme"
+
+#~ msgid "Get Quote"
+#~ msgstr "Obtenir un devis"
+
+#~ msgid "Best Value"
+#~ msgstr "Meilleur rapport qualité-prix"
+
+#~ msgid "Business Accelerator"
+#~ msgstr "Accélérateur Business"
+
+#~ msgid "Field & Studio Shooting"
+#~ msgstr "Shooting terrain & studio"
+
+#~ msgid "Pro Ads Management"
+#~ msgstr "Gestion publicitaire pro"
+
+#~ msgid "Voice Over Included"
+#~ msgstr "Voix-off incluse"
+
+#~ msgid "Premium Platform Shop"
+#~ msgstr "Boutique de plateforme premium"
+
+#~ msgid "Start Growing"
+#~ msgstr "Commencer à grandir"
+
+#~ msgid "Enterprise Core"
+#~ msgstr "Noyau Entreprise"
+
+#~ msgid "Full Digital Identity"
+#~ msgstr "Identité digitale complète"
+
+#~ msgid "Unlimited Content Production"
+#~ msgstr "Production de contenu illimitée"
+
+#~ msgid "24/7 Dedicated Support"
+#~ msgstr "Support dédié 24/7"
+
+#~ msgid "Contact Sales"
+#~ msgstr "Contacter le service commercial"
+
+#~ msgid "The MarketShot Hub"
+#~ msgstr "Le MarketShot Hub"
+
+#~ msgid "Built for Content."
+#~ msgstr "Conçu pour le contenu."
+
+#~ msgid ""
+#~ "Our studio is not just a room; it's a productivity machine. Equipped with "
+#~ "high-end lighting, backdrops, and acoustic treatment for the perfect "
+#~ "voice-over and video production."
+#~ msgstr ""
+#~ "Notre studio n'est pas qu'une simple pièce ; c'est une machine à "
+#~ "productivité. Équipé d'un éclairage haut de gamme, de fonds et d'un "
+#~ "traitement acoustique pour une production vidéo et voix-off parfaite."
+
+#~ msgid "Pro"
+#~ msgstr "Pro"
+
+#~ msgid "Lighting & Gear"
+#~ msgstr "Éclairage & Équipement"
+
+#~ msgid "Easy"
+#~ msgstr "Facile"
+
+#~ msgid "Online Booking"
+#~ msgstr "Réservation en ligne"
+
+#~ msgid "Studio gear"
+#~ msgstr "Matériel de studio"
+
+#~ msgid "Shooting area"
+#~ msgstr "Espace de tournage"
+
+#~ msgid "Post-production"
+#~ msgstr "Post-production"
+
+#~ msgid "Product setup"
+#~ msgstr "Mise en scène produit"
+
+#~ msgid "Ready to Stand Out?"
+#~ msgstr "Prêt à vous démarquer ?"
+
+#~ msgid ""
+#~ "Stop losing sales due to low-quality content. Join MarketShot and let's "
+#~ "create a digital presence that reflects your true value."
+#~ msgstr ""
+#~ "Arrêtez de perdre des ventes à cause d'un contenu de faible qualité. "
+#~ "Rejoignez MarketShot et créons une présence digitale qui reflète votre "
+#~ "véritable valeur."
+
+#~ msgid "Start My Journey"
+#~ msgstr "Commencer mon aventure"
+
+#~ msgid "MarketShot Marketplace | The Curator"
+#~ msgstr "MarketShot Marketplace | Le Curateur"
+
+#~ msgid "The Curator"
+#~ msgstr "Le Curateur"
+
+#~ msgid "Shop"
+#~ msgstr "Boutique"
+
+#~ msgid "Deals"
+#~ msgstr "Bonnes affaires"
+
+#~ msgid "Collections"
+#~ msgstr "Collections"
+
+#~ msgid "Search boutiques..."
+#~ msgstr "Rechercher des boutiques..."
+
+#~ msgid "Language"
+#~ msgstr "Langue"
+
+#~ msgid "Toggle Theme"
+#~ msgstr "Changer de thème"
+
+#~ msgid "User profile"
+#~ msgstr "Profil utilisateur"
+
+#~ msgid "Luxury interior"
+#~ msgstr "Intérieur de luxe"
+
+#~ msgid "Featured Boutique"
+#~ msgstr "Boutique à la une"
+
+#~ msgid "The Maison"
+#~ msgstr "La Maison"
+
+#~ msgid "of Industry."
+#~ msgstr "de l'Industrie."
+
+#~ msgid ""
+#~ "Explore curated collections from the world's most innovative artisans. "
+#~ "From avant-garde electronics to heritage fashion."
+#~ msgstr ""
+#~ "Explorez des collections sélectionnées avec soin auprès des artisans les "
+#~ "plus innovants du monde. De l'électronique d'avant-garde à la mode "
+#~ "héritage."
+
+#~ msgid "Explore Atelier"
+#~ msgstr "Explorer l'atelier"
+
+#~ msgid "View Lookbook"
+#~ msgstr "Voir le Lookbook"
+
+#~ msgid "Curator's Pick"
+#~ msgstr "Le choix du curateur"
+
+#~ msgid "Modernist Vase"
+#~ msgstr "Vase moderniste"
+
+#~ msgid "Available Now"
+#~ msgstr "Disponible maintenant"
+
+#~ msgid "All Collections"
+#~ msgstr "Toutes les collections"
+
+#~ msgid "Electronics"
+#~ msgstr "Électronique"
+
+#~ msgid "Fashion"
+#~ msgstr "Mode"
+
+#~ msgid "Interior"
+#~ msgstr "Intérieur"
+
+#~ msgid "Literature"
+#~ msgstr "Littérature"
+
+#~ msgid "Fine Art"
+#~ msgstr "Beaux-arts"
+
+#~ msgid "Lifestyle"
+#~ msgstr "Art de vivre"
+
+#~ msgid "Trending Creations"
+#~ msgstr "Créations du moment"
+
+#~ msgid "The most coveted pieces in the marketplace right now."
+#~ msgstr "Les pièces les plus convoitées du marché actuellement."
+
+#~ msgid "View Catalog"
+#~ msgstr "Voir le catalogue"
+
+#~ msgid "Onyx Horizon Lamp"
+#~ msgstr "Lampe Onyx Horizon"
+
+#~ msgid "Premium Collection"
+#~ msgstr "Collection Premium"
+
+#~ msgid "by"
+#~ msgstr "par"
+
+#~ msgid "Vanguard Knit Sneakers"
+#~ msgstr "Baskets en maille Vanguard"
+
+#~ msgid "Sonic Pure Headphones"
+#~ msgstr "Casque Sonic Pure"
+
+#~ msgid "Heritage Weekend Bag"
+#~ msgstr "Sac de week-end Heritage"
+
+#~ msgid "Precision"
+#~ msgstr "Précision"
+
+#~ msgid "Chronos Shift Watch"
+#~ msgstr "Montre Chronos Shift"
+
+#~ msgid "Featured Boutiques"
+#~ msgstr "Boutiques à la une"
+
+#~ msgid "Stay ahead of"
+#~ msgstr "Restez en"
+
+#~ msgid "the curve."
+#~ msgstr "avance."
+
+#~ msgid ""
+#~ "Subscribe to The Curator's journal for weekly releases, artisan "
+#~ "spotlights, and exclusive marketplace drops."
+#~ msgstr ""
+#~ "Abonnez-vous au journal du Curateur pour les sorties hebdomadaires, les "
+#~ "focus sur les artisans et les exclusivités de la marketplace."
+
+#~ msgid "curator@example.com"
+#~ msgstr "curator@example.com"
+
+#~ msgid "Join Now"
+#~ msgstr "Rejoindre maintenant"
+
+#~ msgid ""
+#~ "Connecting discerning collectors with the world's finest boutique "
+#~ "creators through a seamless digital experience."
+#~ msgstr ""
+#~ "Connecter les collectionneurs exigeants avec les meilleurs créateurs de "
+#~ "boutiques au monde à travers une expérience digitale fluide."
+
+#~ msgid "Marketplace"
+#~ msgstr "Marketplace"
+
+#~ msgid "Curated categories"
+#~ msgstr "Catégories sélectionnées"
+
+#~ msgid "Vendor portal"
+#~ msgstr "Portail vendeur"
+
+#~ msgid "Sustainability"
+#~ msgstr "Écoresponsabilité"
+
+#~ msgid "Support"
+#~ msgstr "Support"
+
+#~ msgid "Privacy policy"
+#~ msgstr "Politique de confidentialité"
+
+#~ msgid "Terms of service"
+#~ msgstr "Conditions d'utilisation"
+
+#~ msgid "Questions about a specific atelier?"
+#~ msgstr "Des questions sur un atelier spécifique ?"
+
+#~ msgid "Concierge Desk"
+#~ msgstr "Service Conciergerie"
+
+#~ msgid "The Curator Marketplace. All rights reserved."
+#~ msgstr "The Curator Marketplace. Tous droits réservés."
+
+#~ msgid "All Products"
+#~ msgstr "Tous les produits"
+
+#~ msgid "Apply Filters"
+#~ msgstr "Appliquer les filtres"
+
+#~ msgid "Clear All"
+#~ msgstr "Tout effacer"
+
+#~ msgid "Found"
+#~ msgstr "Trouvé"
+
+#~ msgid "Items"
+#~ msgstr "Articles"
+
+#~ msgid "High-End Marketplace"
+#~ msgstr "Marché haut de gamme"
+
+#~ msgid "Curating"
+#~ msgstr "Sélection de"
+
+#~ msgid "Pure Excellence"
+#~ msgstr "L'Excellence Pure"
+
+#~ msgid ""
+#~ "Discover an editorial selection of the world's most innovative tech, "
+#~ "fashion, and home essentials."
+#~ msgstr ""
+#~ "Découvrez une sélection éditoriale des produits technologiques, de mode "
+#~ "et de maison les plus innovants au monde."
+
+#~ msgid "Explore Collection"
+#~ msgstr "Explorer la collection"
+
+#~ msgid "No products found in this category."
+#~ msgstr "Aucun produit trouvé dans cette catégorie."
+
+#~ msgid "The global destination for premium commerce."
+#~ msgstr "La destination mondiale pour le commerce haut de gamme."
+
+#~ msgid "About Us"
+#~ msgstr "À propos"
+
+#~ msgid "Vendor Portal"
+#~ msgstr "Portail vendeur"
+
+#~ msgid "Newsletter"
+#~ msgstr "Newsletter"

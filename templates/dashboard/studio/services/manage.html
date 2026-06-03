@@ -1,0 +1,416 @@
+{% extends 'dashboard/base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Manage Services" %}{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 lg:px-6">
+
+<!-- HEADER -->
+<div class="mb-10 flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
+
+    <div class="space-y-4">
+
+        <nav class="flex items-center gap-2 text-primary font-bold text-xs uppercase tracking-widest">
+            <span class="material-symbols-outlined text-sm">
+                dashboard_customize
+            </span>
+            {% trans "Studio Administration" %}
+        </nav>
+
+        <h1 class="text-4xl lg:text-6xl font-black tracking-tight text-slate-900 dark:text-white">
+            {% trans "Manage" %}
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-500">
+                {% trans "Services" %}
+            </span>
+        </h1>
+
+        <p class="text-slate-500 dark:text-slate-400 max-w-xl text-lg">
+            {% trans "Create and organize your services for customers." %}
+        </p>
+
+    </div>
+
+    <div>
+
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl px-4 py-4 shadow-sm">
+
+            <div class="flex items-center gap-4">
+
+                <div class="w-14 h-14 rounded-2xl bg-primary/10 text-primary flex items-center justify-center">
+
+                    <span class="material-symbols-outlined">
+                        design_services
+                    </span>
+
+                </div>
+
+                <div>
+
+                    <h3 class="text-3xl font-black leading-none">
+                        {{ services.count }}
+                    </h3>
+
+                    <p class="mt-1 text-[10px] uppercase tracking-[0.2em] font-black text-slate-400">
+                        {% trans "Total Services" %}
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="flex items-center gap-2 mt-4 px-3 py-1 rounded-full {% if is_editing %}bg-amber-100 text-amber-700{% else %}bg-emerald-100 text-emerald-700{% endif %} text-[11px] font-black uppercase">
+
+                <span class="relative flex h-2 w-2">
+
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-current opacity-75"></span>
+
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-current"></span>
+
+                </span>
+
+                {% if is_editing %}
+                    {% trans "Edit Mode" %}
+                {% else %}
+                    {% trans "New Service" %}
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- FORM -->
+
+<div class="mb-14">
+
+<form method="post"
+      enctype="multipart/form-data"
+      class="overflow-hidden rounded-[2.5rem] border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-2xl">
+
+{% csrf_token %}
+
+<!-- FORM HEADER -->
+
+<div class="relative overflow-hidden border-b border-slate-100 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-800/20 px-8 lg:px-10 py-8">
+
+<div class="absolute inset-0">
+
+<div class="absolute -top-16 -right-16 w-52 h-52 bg-primary/10 rounded-full blur-3xl"></div>
+
+</div>
+
+<div class="relative flex justify-between items-center">
+
+<div class="flex gap-5 items-center">
+
+<div class="w-20 h-20 rounded-[2rem] bg-primary text-white flex items-center justify-center">
+
+<span class="material-symbols-outlined text-4xl">
+
+{% if is_editing %}
+edit_square
+{% else %}
+add_business
+{% endif %}
+
+</span>
+
+</div>
+
+<div>
+
+<h2 class="text-3xl font-black text-slate-900 dark:text-white">
+
+{% if is_editing %}
+{% trans "Update Service" %}
+{% else %}
+{% trans "Create Service" %}
+{% endif %}
+
+</h2>
+
+<p class="mt-2 text-sm text-slate-400">
+
+{% trans "Configure service information and visibility." %}
+
+</p>
+
+</div>
+
+</div>
+
+{% if is_editing %}
+<a href="{% url 'dashboard:service-add' %}"
+class="inline-flex items-center gap-2 px-5 py-3 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700">
+
+<span class="material-symbols-outlined text-[18px]">
+close
+</span>
+
+{% trans "Cancel Editing" %}
+
+</a>
+{% endif %}
+
+</div>
+
+</div>
+
+
+<!-- BODY -->
+
+<div class="p-8 lg:p-10">
+
+<div class="grid lg:grid-cols-2 gap-8">
+
+<!-- TITLES -->
+
+<div class="space-y-6">
+
+<div>
+<label class="text-sm font-black">
+{% trans "English Title" %}
+</label>
+
+<div class="input-wrapper">
+{{ form.title_en }}
+</div>
+</div>
+
+
+<div>
+<label class="text-sm font-black">
+{% trans "Arabic Title" %}
+</label>
+
+<div class="input-wrapper">
+{{ form.title_ar }}
+</div>
+</div>
+
+
+<div>
+<label class="text-sm font-black">
+{% trans "French Title" %}
+</label>
+
+<div class="input-wrapper">
+{{ form.title_fr }}
+</div>
+</div>
+
+</div>
+
+
+<!-- OPTIONS -->
+
+<div class="space-y-6">
+
+<div>
+
+<label class="text-sm font-black">
+{% trans "Icon" %}
+</label>
+
+<div class="input-wrapper">
+{{ form.icon }}
+</div>
+
+</div>
+
+
+<div>
+
+<label class="text-sm font-black">
+{% trans "Color" %}
+</label>
+
+<div class="input-wrapper">
+{{ form.color_class }}
+</div>
+
+</div>
+
+<div>
+
+<label class="text-sm font-black">
+{% trans "Order" %}
+</label>
+
+<div class="input-wrapper">
+{{ form.order }}
+</div>
+
+</div>
+
+<div class="flex items-center gap-5">
+
+<label class="flex gap-2 items-center">
+{{ form.is_active }}
+<span>{% trans "Active" %}</span>
+</label>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- DESCRIPTIONS -->
+
+<div class="space-y-6 mt-10">
+
+<div>
+
+<label class="text-sm font-black">
+{% trans "English Description" %}
+</label>
+
+{{ form.description_en }}
+
+</div>
+
+<div class="grid md:grid-cols-2 gap-6">
+
+<div>
+<label class="text-sm font-black">
+{% trans "Arabic Description" %}
+</label>
+
+{{ form.description_ar }}
+</div>
+
+<div>
+<label class="text-sm font-black">
+{% trans "French Description" %}
+</label>
+
+{{ form.description_fr }}
+</div>
+
+</div>
+
+</div>
+
+<button type="submit"
+class="mt-8 w-full h-16 rounded-2xl bg-gradient-to-r from-primary to-blue-700 text-white font-black uppercase tracking-[0.18em]">
+
+<span class="material-symbols-outlined mr-2">
+save
+</span>
+
+{% if is_editing %}
+{% trans "Update Service" %}
+{% else %}
+{% trans "Create Service" %}
+{% endif %}
+
+</button>
+
+</div>
+
+</form>
+
+</div>
+
+
+<!-- SERVICES LIST -->
+
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+
+{% for service in services %}
+
+<div class="rounded-[2rem] border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6">
+
+<div class="flex justify-between">
+
+<div>
+
+<div class="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center">
+
+<span class="material-symbols-outlined text-{{ service.color_class }}">
+
+{{ service.icon }}
+
+</span>
+
+</div>
+
+<h3 class="mt-4 text-xl font-black">
+
+{{ service.title }}
+
+</h3>
+
+<p class="text-sm text-slate-400 mt-2 line-clamp-2">
+
+{{ service.description|truncatechars:100 }}
+
+</p>
+
+</div>
+
+<div class="flex gap-2">
+
+<a href="{% url 'dashboard:service-edit' service.id %}"
+   class="w-11 h-11 rounded-2xl bg-slate-100 dark:bg-slate-800 hover:bg-primary hover:text-white flex items-center justify-center transition-all">
+
+    <span class="material-symbols-outlined text-[18px]">
+        edit
+    </span>
+
+</a>
+
+<a href="{% url 'dashboard:service-delete' service.id %}"
+class="w-11 h-11 rounded-2xl bg-red-100 text-red-500 hover:bg-red-500 hover:text-white flex justify-center items-center">
+
+<span class="material-symbols-outlined text-[18px]">
+delete
+</span>
+
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+{% empty %}
+
+<div class="col-span-full rounded-[3rem] border-2 border-dashed border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-20 text-center">
+
+<div class="w-24 h-24 mx-auto rounded-full bg-primary/10 flex justify-center items-center mb-6">
+
+<span class="material-symbols-outlined text-5xl text-primary">
+design_services
+</span>
+
+</div>
+
+<h3 class="text-3xl font-black">
+
+{% trans "No Services Yet" %}
+
+</h3>
+
+<p class="mt-4 text-slate-400">
+
+{% trans "Start by creating your first service." %}
+
+</p>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+</div>
+
+{% endblock %}

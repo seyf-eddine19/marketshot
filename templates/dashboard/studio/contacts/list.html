@@ -1,0 +1,143 @@
+{% extends 'dashboard/base.html' %}
+{% load i18n %}
+
+{% block title %}
+{% trans "Messages" %}
+{% endblock %}
+
+{% block content %}
+
+<div class="px-4 lg:px-6 pb-20">
+    <!-- HEADER & STATS BLOCK -->
+    <div class="mb-12 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+
+        <div>
+            <span class="text-primary uppercase text-xs font-black tracking-[0.3em] block mb-2">
+                {% trans "Communication Center" %}
+            </span>
+            <h1 class="text-4xl lg:text-5xl font-black tracking-tight text-slate-900 dark:text-white">
+                {% trans "Contact" %}
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-600">
+                    {% trans "Messages" %}
+                </span>
+            </h1>
+            <p class="mt-2 text-slate-500 dark:text-slate-400 text-sm">
+                {% trans "Manage, review, and toggle the read status of client inquiries." %}
+            </p>
+        </div>
+
+        <!-- STAT COUNTER CARD -->
+        <div class="rounded-2xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-4 shadow-sm flex items-center gap-4 min-w-[180px]">
+            <div class="w-12 h-12 rounded-xl bg-blue-50 dark:bg-blue-950/50 text-blue-600 dark:text-blue-400 flex items-center justify-center shrink-0">
+                <span class="material-symbols-outlined text-2xl">mail</span>
+            </div>
+            <div>
+                <h3 class="text-2xl font-black text-slate-900 dark:text-white leading-none">
+                    {{ contact_messages.count }}
+                </h3>
+                <p class="text-xs uppercase font-bold text-slate-400 mt-1">
+                    {% trans "Total Messages" %}
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- MESSAGES STREAM -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        {% for contact in contact_messages %}
+            <div class="relative overflow-hidden rounded-2xl bg-white dark:bg-slate-900 border {% if not contact.is_read %}border-primary/20 shadow-md dark:border-primary/30{% else %}border-slate-100 dark:border-slate-800/60 shadow-sm{% endif %} transition duration-200">
+                
+                <!-- Unread status highlight strip -->
+                {% if not contact.is_read %}
+                    <div class="absolute top-0 bottom-0 left-0 w-1.5 bg-primary"></div>
+                {% endif %}
+
+                <div class="p-6 lg:p-8">
+                    
+                    <!-- HEADER INFO LAYER -->
+                    <div class="flex flex-col sm:flex-row justify-between items-start gap-4 pb-4 border-b border-slate-100 dark:border-slate-800">
+                        
+                        <div class="space-y-1">
+                            <div class="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                                <h2 class="text-lg font-bold text-slate-900 dark:text-white">
+                                    {{ contact.name }}
+                                </h2>
+                                <a href="mailto:{{ contact.email }}" class="text-xs text-slate-400 dark:text-slate-500 hover:underline">
+                                    {{ contact.email }}
+                                </a>
+                            </div>
+                            
+                            <h3 class="text-sm font-black uppercase tracking-wider text-slate-400 dark:text-slate-500 pt-1">
+                                {{ contact.subject }}
+                            </h3>
+                        </div>
+
+                        <!-- META & ACTIONS -->
+                        <div class="flex sm:flex-col items-center sm:items-end justify-between sm:justify-start w-full sm:w-auto gap-3 shrink-0">
+                            
+                            <div class="flex items-center gap-3">
+                                <span class="text-xs font-medium text-slate-400 dark:text-slate-500">
+                                    {{ contact.created_at|date:"d M Y" }}
+                                </span>
+
+                                {% if contact.is_read %}
+                                    <span class="px-2.5 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 text-[10px] font-bold tracking-wide uppercase">
+                                        {% trans "Read" %}
+                                    </span>
+                                {% else %}
+                                    <span class="px-2.5 py-0.5 rounded-full bg-red-50 dark:bg-red-950/40 text-red-600 dark:text-red-400 text-[10px] font-bold tracking-wide uppercase animate-pulse">
+                                        {% trans "Unread" %}
+                                    </span>
+                                {% endif %}
+                            </div>
+
+                            {% if contact.pk %}
+                                <form method="post" action="{% url 'dashboard:contact-toggle-read' contact.pk %}" class="m-0">
+                                    {% csrf_token %}
+                                    <button type="submit" 
+                                            class="inline-flex items-center justify-center gap-2 px-3 py-1.5 rounded-xl text-xs font-bold transition border {% if contact.is_read %}bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:bg-slate-100{% else %}bg-primary text-white border-transparent hover:bg-primary/90 shadow-sm{% endif %}"
+                                            title="{% if contact.is_read %}{% trans 'Mark as unread' %}{% else %}{% trans 'Mark as read' %}{% endif %}">
+                                        <span class="material-symbols-outlined text-base leading-none">
+                                            {% if contact.is_read %}visibility_off{% else %}visibility{% endif %}
+                                        </span>
+                                        <span>
+                                            {% if contact.is_read %}{% trans "Mark Unread" %}{% else %}{% trans "Mark Read" %}{% endif %}
+                                        </span>
+                                    </button>
+                                </form>
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+
+                    <!-- MESSAGE CONTENT LAYER -->
+                    <div class="mt-4">
+                        <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed whitespace-pre-line">
+                            {{ contact.message }}
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+        {% empty %}
+            <!-- EMPTY STATE UI -->
+            <div class="text-center py-20 rounded-[2rem] bg-white dark:bg-slate-900 border border-dashed border-slate-200 dark:border-slate-800">
+                <div class="w-16 h-16 mx-auto rounded-2xl bg-slate-50 dark:bg-slate-800 text-slate-400 flex items-center justify-center mb-4">
+                    <span class="material-symbols-outlined text-3xl">mark_email_read</span>
+                </div>
+                <h3 class="text-lg font-bold text-slate-900 dark:text-white">{% trans "No messages found" %}</h3>
+                <p class="text-sm text-slate-400 mt-1 max-w-xs mx-auto">
+                    {% trans "Everything looks clean! There are no client interactions to display right now." %}
+                </p>
+            </div>
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock %}

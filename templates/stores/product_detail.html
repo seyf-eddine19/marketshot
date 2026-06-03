@@ -1,0 +1,287 @@
+{% extends 'stores/base.html' %}
+{% load i18n static %}
+
+{% block title %}{{ product.name }} | MarketShot{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-6 py-12">
+    <nav class="flex mb-6 text-xs font-bold uppercase tracking-widest text-slate-400" aria-label="Breadcrumb">
+        <ol class="flex items-center gap-2">
+            <li><a href="{% url 'studio:home' %}" class="hover:text-primary transition-colors">{% trans "Home" %}</a></li>
+            <li><span class="material-symbols-outlined text-[14px]">chevron_right</span></li>
+            <li><a href="{% url 'stores:stores' %}" class="hover:text-primary transition-colors">{{ product.store.name }}</a></li>
+            <li><span class="material-symbols-outlined text-[14px]">chevron_right</span></li>
+            <li class="text-slate-900 dark:text-white">{{ product.name }}</li>
+        </ol>
+    </nav>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+
+        <div class="lg:col-span-7 flex flex-col md:flex-row gap-4">
+            <div class="flex md:flex-col gap-3 order-2 md:order-1 overflow-x-auto md:overflow-y-auto scrollbar-hide shrink-0">
+                <div class="w-16 h-16 rounded-lg overflow-hidden border-2 border-primary cursor-pointer transition-all bg-white dark:bg-slate-900 shadow-sm thumbnail-wrapper thumbnail-active">
+                    <img src="{{ product.main_image.url }}" class="w-full h-full object-cover" onclick="updateMainImage(this)" alt="{{ product.name }}">
+                </div>
+
+                {% for img in product.images.all %}
+                <div class="w-16 h-16 rounded-lg overflow-hidden border border-slate-100 dark:border-slate-800 hover:border-primary/60 cursor-pointer transition-all thumbnail-wrapper bg-white dark:bg-slate-900 shadow-sm">
+                    <img src="{{ img.image.url }}" class="w-full h-full object-cover" onclick="updateMainImage(this)" alt="{{ img.alt_text|default:product.name }}">
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="flex-grow order-1 md:order-2 rounded-2xl bg-white dark:bg-slate-900 overflow-hidden relative h-[380px] md:h-[540px] flex items-center justify-center border border-slate-100 dark:border-slate-800 shadow-lg shadow-on-surface/5">
+                <img id="main-display-image" src="{{ product.main_image.url }}" class="w-full h-full object-cover transition-all duration-300 transform" alt="{{ product.name }}">
+                
+                <button type="button" class="absolute top-4 right-4 bg-white/90 dark:bg-slate-800/90 backdrop-blur-md p-2.5 rounded-full shadow-md hover:scale-110 active:scale-95 transition-all">
+                    <span class="material-symbols-outlined text-primary dark:text-primary font-bold text-xl">fullscreen</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="lg:col-span-5 flex flex-col space-y-5">
+            <div class="space-y-1.5">
+                <span class="inline-block px-2.5 py-0.5 bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider rounded-full">
+                    {{ product.category.name }}
+                </span>
+                <h1 class="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-tight">
+                    {{ product.name }}
+                </h1>
+
+                <div class="flex items-center flex-wrap gap-3 pt-0.5 text-sm">
+                    <p class="text-slate-500 dark:text-slate-400 flex items-center gap-1">
+                        {% translate "Sold by" %}
+                        <a href="{% url 'stores:store_detail' product.store.pk %}" class="text-primary font-bold hover:underline flex items-center gap-1">
+                            {{ product.store.name }}
+                            <span class="material-symbols-outlined text-[16px] text-primary" style="font-variation-settings: 'FILL' 1;">verified</span>
+                        </a>
+                    </p>
+                    <div class="w-px h-4 bg-slate-200 dark:bg-slate-700"></div>
+                    <div class="flex items-center gap-1.5 px-2.5 py-1 bg-slate-100 dark:bg-slate-800 rounded-lg border border-slate-200/50 dark:border-slate-700/50">
+                        <span class="material-symbols-outlined text-secondary text-[18px]" style="font-variation-settings:'FILL' 1;">star</span>
+                        <span class="font-bold text-slate-800 dark:text-slate-200 text-sm">{{ product.annotated_avg_rating|default:"0.0"|floatformat:1 }}</span>
+                        <span class="text-slate-400 text-xs">({{ product.annotated_reviews_count }} {% translate "reviews" %})</span>
+                    </div>
+                </div>
+            </div>
+                        
+            <div class="p-4 rounded-xl bg-slate-500/5 dark:bg-slate-800/40 border border-slate-100 dark:border-slate-800 shadow-sm relative flex items-baseline flex-wrap gap-3">
+                <span class="text-3xl font-extrabold text-primary tracking-tighter leading-none">
+                    {{ product.discounted_price|floatformat:2 }} <span class="text-lg font-bold">DZD</span>
+                </span>
+                {% if product.discount %}
+                <span class="text-base text-slate-400 line-through font-medium">
+                    {{ product.base_price|floatformat:2 }}
+                </span>
+                <span class="absolute top-3 right-3 px-2 py-0.5 bg-secondary text-white text-xs font-bold rounded-md shadow-sm">
+                    -{{ product.discount|floatformat:0 }}%
+                </span>
+                {% endif %}
+            </div>
+
+            <form method="post" action="{% url 'stores:product_detail' product.id %}" class="space-y-4">
+                {% csrf_token %}
+                
+                {% regroup attributes by category as attr_list %}
+                {% for cat in attr_list %}
+                    <div class="space-y-1.5">
+                        <label class="text-xs font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500 block">
+                            {{ cat.list.0.display_label }}
+                        </label>
+                        <div class="flex flex-wrap gap-2">
+                            {% for attr in cat.list %}
+                                {% if attr.category == 'COLOR' %}
+                                    <label class="relative cursor-pointer select-none">
+                                        <input type="radio" name="attr_{{ cat.grouper }}" value="{{ attr.id }}" class="peer sr-only" required>
+                                        <div class="w-9 h-9 rounded-full border-[3px] border-white dark:border-slate-900 shadow-sm ring-1 ring-slate-200 dark:ring-slate-700 peer-checked:ring-primary peer-checked:ring-2 transition-all hover:scale-105" data-color="{{ attr.color_code|default:'#cccccc' }}" title="{{ attr.value }}"></div>
+                                        <span class="sr-only">{{ attr.value }}</span>
+                                    </label>
+                                {% else %}
+                                    <label class="cursor-pointer select-none">
+                                        <input type="radio" name="attr_{{ cat.grouper }}" value="{{ attr.id }}" class="peer sr-only" required>
+                                        <div class="px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-bold text-xs hover:border-primary/50 peer-checked:bg-primary peer-checked:text-white peer-checked:border-primary transition-all text-center min-w-[60px]">
+                                            {{ attr.value }}
+                                        </div>
+                                    </label>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endfor %}
+
+                <div class="space-y-1.5">
+                    <label class="text-xs font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500 block">{% trans "Quantity" %}</label>
+                    <div class="flex items-center bg-slate-100 dark:bg-slate-800 rounded-lg px-2 py-0.5 h-11 w-32 justify-between border border-slate-200/50 dark:border-slate-700/50 shadow-inner">
+                        <button type="button" onclick="changeQty(-1)" class="w-7 h-7 flex items-center justify-center rounded-md hover:bg-white dark:hover:bg-slate-700 hover:shadow-sm transition-colors text-slate-770 dark:text-slate-300">
+                            <span class="material-symbols-outlined text-[16px] font-bold">remove</span>
+                        </button>
+                        <input type="number" id="quantity" name="quantity" value="1" min="1" class="w-8 bg-transparent border-none text-center font-extrabold text-base focus:ring-0 focus:outline-none text-slate-900 dark:text-white">
+                        <button type="button" onclick="changeQty(1)" class="w-7 h-7 flex items-center justify-center rounded-md hover:bg-white dark:hover:bg-slate-700 hover:shadow-sm transition-colors text-slate-700 dark:text-slate-300">
+                            <span class="material-symbols-outlined text-[16px] font-bold">add</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="pt-2">
+                    <button type="submit" class="w-full h-14 cta-gradient text-white rounded-xl font-extrabold text-sm uppercase tracking-wider hover:shadow-lg hover:shadow-primary/20 active:scale-[0.99] transition-all flex items-center justify-center gap-2">
+                        <span class="material-symbols-outlined text-[20px]">shopping_cart</span>
+                        {% translate "Add to Cart" %}
+                    </button>
+                </div>
+            </form>
+            
+            <div class="pt-4 border-t border-slate-200 dark:border-slate-800 grid grid-cols-2 gap-3">
+                <div class="flex gap-2 items-center">
+                    <div class="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-primary shrink-0">
+                        <span class="material-symbols-outlined text-[18px]">local_shipping</span>
+                    </div>
+                    <div>
+                        <p class="font-bold text-xs text-slate-800 dark:text-white">{% translate "Delivery" %}</p>
+                        <p class="text-slate-400 text-[11px]">{% translate "58 States" %}</p>
+                    </div>
+                </div>
+
+                <div class="flex gap-2 items-center border-l border-slate-200 dark:border-slate-800 pl-3 ltr:border-l rtl:border-l-0 rtl:border-r rtl:pl-0 rtl:pr-3">
+                    <div class="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-primary shrink-0">
+                        <span class="material-symbols-outlined text-[18px]">verified_user</span>
+                    </div>
+                    <div>
+                        <p class="font-bold text-xs text-slate-800 dark:text-white">{% translate "Warranty" %}</p>
+                        <p class="text-slate-400 text-[11px]">{% translate "Authentic Gear" %}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-12">
+        <div class="flex border-b border-slate-200 dark:border-slate-800 gap-8 mb-4">
+            <button type="button" onclick="switchContentTab('description')" id="tab-btn-description" class="pb-2 text-sm font-extrabold tracking-wider uppercase border-b-2 border-primary text-primary transition-all">
+                {% translate "Description" %}
+            </button>
+            <button type="button" onclick="switchContentTab('reviews')" id="tab-btn-reviews" class="pb-2 text-sm font-bold tracking-wider uppercase border-b-2 border-transparent text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300 transition-all">
+                {% translate "Reviews" %} ({{ product.annotated_reviews_count|default:"0" }})
+            </button>
+        </div>
+
+        <div class="min-h-[150px]">
+            <div id="pane-description" class="tab-pane-element block">
+                {% if product.description %}
+                <div class="prose prose-slate dark:prose-invert max-w-none text-slate-600 dark:text-slate-300 text-sm leading-relaxed font-medium">
+                     {{ product.description|safe }}
+                </div>
+                {% else %}
+                <div class="py-6 text-center text-slate-400 dark:text-slate-500 text-xs italic">
+                    {% translate "No description available." %}
+                </div>
+                {% endif %}
+            </div>
+
+            <div id="pane-reviews" class="tab-pane-element hidden">
+                {% if product.reviews.all %}
+                <div class="space-y-3 max-w-3xl">
+                    {% for review in product.reviews.all %}
+                    <div class="p-4 rounded-xl border border-slate-100 dark:border-slate-800 bg-slate-500/5 dark:bg-slate-800/10">
+                        <div class="flex justify-between items-start mb-2">
+                            <div>
+                                <div class="font-bold text-xs text-slate-800 dark:text-slate-200">{{ review.customer.username }}</div>
+                                <div class="text-[10px] text-slate-400 mt-0.5">{{ review.created_at|date:"Y-m-d" }}</div>
+                            </div>
+                            <div class="flex text-amber-400">
+                                {% for i in "12345" %}
+                                    {% if review.rating >= forloop.counter %}
+                                        <!-- Filled Star -->
+                                        <span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+                                    {% else %}
+                                        <!-- Outlined Star -->
+                                        <span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 0;">star</span>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed font-medium">{{ review.comment }}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="py-6 text-center text-slate-400 dark:text-slate-500 text-xs italic">
+                    {% translate "No customer stories submitted for this item yet." %}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-12 border-t border-slate-100 dark:border-slate-800 pt-6">
+        <h3 class="text-xl font-extrabold tracking-tight mb-6 text-slate-900 dark:text-white">{% translate "Related Products" %}</h3>
+
+        {% if related_products %}
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {% for related_product in related_products %}
+                {% include "stores/components/product_card.html" with product=related_product %}
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="py-10 text-center text-slate-400 dark:text-slate-500 font-medium text-sm">
+            {% translate "No related premium gear found in this category." %}
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<script>
+    function updateMainImage(thumb) {
+        document.getElementById('main-display-image').src = thumb.src;
+        
+        document.querySelectorAll('.thumbnail-wrapper').forEach(el => {
+            el.classList.remove('border-primary', 'border-2', 'thumbnail-active');
+            el.classList.add('border', 'border-slate-100', 'dark:border-slate-800');
+        });
+        
+        const currentWrapper = thumb.parentElement;
+        currentWrapper.classList.remove('border', 'border-slate-100', 'dark:border-slate-800');
+        currentWrapper.classList.add('border-2', 'border-primary', 'thumbnail-active');
+    }
+
+    function changeQty(amt) {
+        const input = document.getElementById('quantity');
+        let newVal = parseInt(input.value) + amt;
+        if (isNaN(newVal) || newVal < 1) newVal = 1;
+        input.value = newVal;
+    }
+
+    // Dynamic Client-side Switcher for Description vs Review Panes
+    function switchContentTab(tabIdentifier) {
+        // 1. Hide all text viewport panels cleanly
+        document.querySelectorAll('.tab-pane-element').forEach(pane => {
+            pane.classList.remove('block');
+            pane.classList.add('hidden');
+        });
+        
+        // 2. Clear out active stylistic configurations from headers
+        const tabs = [document.getElementById('tab-btn-description'), document.getElementById('tab-btn-reviews')];
+        tabs.forEach(tab => {
+            if (tab) {
+                tab.classList.remove('border-primary', 'text-primary', 'font-extrabold');
+                tab.classList.add('border-transparent', 'text-slate-400', 'dark:text-slate-500', 'font-bold');
+            }
+        });
+
+        // 3. Mount target active panel view and highlight heading
+        document.getElementById(`pane-${tabIdentifier}`).classList.remove('hidden');
+        document.getElementById(`pane-${tabIdentifier}`).classList.add('block');
+        
+        const targetBtn = document.getElementById(`tab-btn-${tabIdentifier}`);
+        targetBtn.classList.remove('border-transparent', 'text-slate-400', 'dark:text-slate-500', 'font-bold');
+        targetBtn.classList.add('border-primary', 'text-primary', 'font-extrabold');
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+        document.querySelectorAll('[data-color]').forEach(el => {
+            if(el.dataset.color) {
+                el.style.backgroundColor = el.dataset.color;
+            }
+        });
+    });
+</script>
+{% endblock %}

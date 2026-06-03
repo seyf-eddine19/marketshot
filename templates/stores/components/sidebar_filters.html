@@ -1,0 +1,106 @@
+{% load i18n %}
+
+<!-- COMPONENT: SIDEBAR FILTER COMPONENT COLUMN (FIXED MOBILE SCROLLING) -->
+<aside id="filter-drawer" 
+       class="fixed inset-y-0 left-0 w-full max-w-xs bg-white dark:bg-slate-900 z-50 p-6 shadow-2xl transform -translate-x-full transition-transform duration-300 ease-in-out overflow-y-auto h-screen
+              lg:static lg:h-auto lg:w-72 lg:max-w-none lg:z-auto lg:p-6 lg:shadow-sm lg:transform-none lg:rounded-[2rem] lg:border lg:border-slate-200 lg:dark:border-slate-800">
+    <div class="flex items-center justify-between lg:border-b lg:border-slate-100 lg:dark:border-slate-800/60 lg:pb-4 mb-6 lg:mb-0">
+        <h3 class="font-bold text-slate-800 dark:text-slate-200 text-sm flex items-center gap-2">
+            <span class="material-symbols-outlined text-[18px]">tune</span>
+            {% trans "Refine Catalog" %}
+        </h3>
+        <div class="flex items-center gap-3">
+            {% if request.GET.category_id or request.GET.min_price or request.GET.max_price or request.GET.attributes or request.GET.q %}
+                <a href="?{% if request.GET.sort %}sort={{ request.GET.sort }}{% endif %}" class="text-xs text-primary hover:underline font-semibold">
+                    {% trans "Clear" %}
+                </a>
+            {% endif %}
+            <button type="button" onclick="toggleFilterDrawer(false)" class="lg:hidden p-1 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition flex items-center">
+                <span class="material-symbols-outlined text-[20px]">close</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Structural Sidebar Matrix Stack Panel Slots -->
+    <div class="space-y-6">
+        <!-- Category Submenu Navigation Component -->
+        <div class="space-y-2.5">
+            <label class="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">{% trans "Categories" %}</label>
+            <div class="space-y-1 max-h-64 overflow-y-auto pr-1 text-xs custom-scrollbar">
+                <button type="button" onclick="selectCategoryTree('')" class="w-full text-left py-2 px-2.5 rounded-lg font-semibold transition flex items-center justify-between {% if not request.GET.category_id %}bg-primary/10 text-primary font-bold{% else %}text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-900{% endif %}">
+                    <span>{% trans "Show All Products" %}</span>
+                </button>
+                
+                {% for block in category_tree %}
+                    <div class="pt-2 space-y-0.5">
+                        <span class="px-2.5 text-[10px] font-black text-slate-400/80 dark:text-slate-500 uppercase flex items-center gap-1.5 tracking-wider">
+                            <span class="material-symbols-outlined text-[12px]">folder_open</span>
+                            {{ block.store_category.name }}
+                        </span>
+                        {% for item in block.product_categories %}
+                            <button type="button" onclick="selectCategoryTree('{{ item.id }}')" class="w-full text-left py-2 pl-6 pr-2.5 rounded-lg font-medium transition flex items-center justify-between {% if request.GET.category_id == item.id|slugify %}bg-primary/10 text-primary font-bold{% else %}text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-900{% endif %}">
+                                <span class="truncate pr-2">{{ item.name }}</span>
+                                <span class="text-[10px] font-mono opacity-60 bg-slate-100 dark:bg-slate-900 px-1.5 py-0.5 rounded">({{ item.product_count }})</span>
+                            </button>
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Financial Bounds Currency Inputs Module Component -->
+        <div class="space-y-3 pt-4 border-t border-slate-100 dark:border-slate-900">
+            <label class="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider block">{% trans "Price Limits (DA)" %}</label>
+            <div class="grid grid-cols-2 gap-2">
+                <div class="space-y-1">
+                    <span class="text-[10px] text-slate-400 dark:text-slate-500 font-medium">Min</span>
+                    <input type="number" name="min_price" value="{{ request.GET.min_price|default:'' }}" placeholder="{{ price_min|floatformat:0 }}" class="w-full text-xs bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-2.5 py-2 text-slate-800 dark:text-slate-200 focus:ring-primary focus:border-primary">
+                </div>
+                <div class="space-y-1">
+                    <span class="text-[10px] text-slate-400 dark:text-slate-500 font-medium">Max</span>
+                    <input type="number" name="max_price" value="{{ request.GET.max_price|default:'' }}" placeholder="{{ price_max|floatformat:0 }}" class="w-full text-xs bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-2.5 py-2 text-slate-800 dark:text-slate-200 focus:ring-primary focus:border-primary">
+                </div>
+            </div>
+        </div>
+
+        <!-- Attribute Filters Matrix Component Segment Area Loop -->
+        {% for group_key, group in grouped_attributes.items %}
+        <div>
+            <label class="block text-[10px] font-black text-slate-500 dark:text-slate-400 mb-4 uppercase">{{ group.label }}</label>
+            
+            {% if group_key == "COLOR" %}
+            <!-- Horizontal Scroll Context Area for Color Swatches -->
+            <div class="flex flex-nowrap gap-3 overflow-x-auto p-1 custom-scrollbar mask-gradient-x">
+                {% for attr in group.items %}
+                <label class="cursor-pointer flex-shrink-0">
+                    <input type="checkbox" name="attributes" value="{{ attr.id }}" {% if attr.id in selected_attributes %}checked{% endif %} class="hidden peer">
+                    <div class="w-8 h-8 rounded-full border-2 border-white dark:border-slate-800 shadow-sm ring-1 ring-slate-200 dark:ring-slate-700 peer-checked:ring-2 peer-checked:ring-primary peer-checked:ring-offset-2 dark:peer-checked:ring-offset-slate-900 transition-all" 
+                         data-color="{{ attr.color_code|default:'#cccccc' }}"
+                         title="{{ attr.value }}"></div>
+                </label>
+                {% endfor %}
+            </div>
+            
+            {% else %}
+            <!-- Vertical Scroll Context Area for Standard Attribute Checkboxes -->
+            <div class="space-y-3 max-h-48 overflow-y-auto pr-2 custom-scrollbar">
+                {% for attr in group.items %}
+                <label class="flex items-center gap-3 cursor-pointer group select-none">
+                    <input type="checkbox" name="attributes" value="{{ attr.id }}" {% if attr.id in selected_attributes %}checked{% endif %}
+                           class="w-5 h-5 rounded-lg border-slate-300 dark:bg-slate-800 dark:border-slate-700 text-primary focus:ring-primary/20 transition-all">
+                    <span class="text-xs font-bold text-slate-600 dark:text-slate-300 group-hover:text-primary transition-colors">{{ attr.value }}</span>
+                </label>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+        {% endfor %}
+
+        <!-- Submission Action Panel Confirmation Block -->
+        <div class="pt-2">
+            <button type="submit" class="w-full py-3 bg-primary hover:bg-primary/95 text-white text-xs font-bold rounded-xl transition shadow-md shadow-primary/10 tracking-wide uppercase">
+                {% trans "Apply Adjustments" %}
+            </button>
+        </div>
+    </div>
+</aside>

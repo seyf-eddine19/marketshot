@@ -1,0 +1,364 @@
+{% extends '../base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Store Form" %}{% endblock %}
+
+{% block content %}
+<div class="max-w-5xl mx-auto px-6">
+
+<form method="post" enctype="multipart/form-data"
+      class="bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-200 dark:border-slate-800 shadow-xl overflow-hidden">
+
+    {% csrf_token %}
+
+    <!-- HEADER -->
+    <div class="relative overflow-hidden border-b border-slate-100 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-800/20 px-8 lg:px-10 py-8">
+
+        <div class="absolute inset-0 overflow-hidden">
+            <div class="absolute -top-16 -right-16 w-52 h-52 bg-primary/10 rounded-full blur-3xl"></div>
+        </div>
+
+        <div class="relative flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+
+            <div class="flex items-center gap-5">
+
+                <div class="w-20 h-20 rounded-[2rem] bg-primary text-white flex items-center justify-center shadow-xl shadow-primary/20">
+                    <span class="material-symbols-outlined text-4xl">
+                        {% if object %}
+                            edit_square
+                        {% else %}
+                            add_business
+                        {% endif %}
+                    </span>
+                </div>
+
+                <div>
+                    <h2 class="text-3xl font-black tracking-tight text-slate-900 dark:text-white">
+                        {% if object %}
+                            {% trans "Update Store" %}
+                        {% else %}
+                            {% trans "Create New Store" %}
+                        {% endif %}
+                    </h2>
+
+                    <p class="mt-2 text-sm text-slate-500 dark:text-slate-400">
+                        {% trans "Configure store identity, branding and online presence." %}
+                    </p>
+                </div>
+
+            </div>
+
+            {% if object %}
+            <a href="{% url 'dashboard:stores' %}"
+               class="inline-flex items-center gap-2 px-5 py-3 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-sm font-black hover:border-primary hover:text-primary transition-all">
+                <span class="material-symbols-outlined text-[18px]">close</span>
+                {% trans "Cancel Editing" %}
+            </a>
+            {% endif %}
+
+        </div>
+
+    </div>
+
+    <div class="p-8 lg:p-10 space-y-12">
+
+        <!-- ================= OWNER ================= -->
+        <div>
+            <h2 class="text-lg font-black mb-5 text-slate-900 dark:text-white flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary">person</span>{% trans "Owner" %}
+            </h2>
+
+            <div>
+                <label class="text-xs font-black uppercase text-slate-400">{% trans "Store Owner" %}</label>
+                {{ form.owner }}
+            </div>
+        </div>
+
+        <!-- ================= IDENTITY ================= -->
+        <div>
+            <h2 class="text-lg font-black mb-5 flex items-center gap-2 text-slate-900 dark:text-white">
+                <span class="material-symbols-outlined text-primary">store</span>
+                {% trans "Store Identity" %}
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                <div>
+                    <label class="text-xs font-black uppercase text-slate-400 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-[16px]">link</span>
+                        {% trans "Subdomain" %}
+                    </label>
+                    {{ form.subdomain }}
+                </div>
+
+                <div>
+                    <label class="text-xs font-black uppercase text-slate-400 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-[16px]">call</span>
+                        {% trans "WhatsApp" %}
+                    </label>
+                    {{ form.watsapp_number }}
+                </div>
+
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+
+                <div>
+                    <label class="text-xs font-black uppercase text-slate-400">{% trans "Name (EN)" %}</label>
+                    {{ form.name_en }}
+                </div>
+
+                <div>
+                    <label class="text-xs font-black uppercase text-slate-400">{% trans "Name (AR)" %}</label>
+                    {{ form.name_ar }}
+                </div>
+
+                <div>
+                    <label class="text-xs font-black uppercase text-slate-400">{% trans "Name (FR)" %}</label>
+                    {{ form.name_fr }}
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ================= MEDIA ================= -->
+        <div>
+            <h2 class="text-lg font-black mb-6 flex items-center gap-2 text-slate-900 dark:text-white">
+                <span class="material-symbols-outlined text-primary">image</span>
+                {% trans "Branding" %}
+            </h2>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+                <!-- ================= LOGO ================= -->
+                <div class="rounded-[2rem] border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/30 p-6">
+
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-14 h-14 rounded-2xl bg-primary text-white flex items-center justify-center shadow-lg shadow-primary/20">
+                            <span class="material-symbols-outlined">account_box</span>
+                        </div>
+
+                        <div>
+                            <h3 class="font-black text-lg text-slate-900 dark:text-white">
+                                {% trans "Store Logo" %}
+                            </h3>
+                            <p class="text-xs text-slate-400">PNG, JPG • 1:1</p>
+                        </div>
+                    </div>
+
+                    <!-- PREVIEW -->
+                    <div class="mb-6 flex justify-center">
+                        {% if object.logo %}
+                            <img id="logoPreview"
+                                src="{{ object.logo.url }}"
+                                class="w-24 h-24 rounded-full object-cover border-4 border-white dark:border-slate-900 shadow-xl">
+                        {% else %}
+                            <img id="logoPreview"
+                                class="hidden w-24 h-24 rounded-full object-cover border-4 border-white dark:border-slate-900 shadow-xl">
+                        {% endif %}
+                    </div>
+
+                    <div class="file-input-wrapper">
+                        {{ form.logo }}
+                    </div>
+
+                </div>
+
+
+                <!-- ================= BANNER ================= -->
+                <div class="rounded-[2rem] border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/30 p-6">
+
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-14 h-14 rounded-2xl bg-primary text-white flex items-center justify-center shadow-lg shadow-primary/20">
+                            <span class="material-symbols-outlined">photo</span>
+                        </div>
+
+                        <div>
+                            <h3 class="font-black text-lg text-slate-900 dark:text-white">
+                                {% trans "Store Banner" %}
+                            </h3>
+                            <p class="text-xs text-slate-400">JPG, PNG • 16:9</p>
+                        </div>
+                    </div>
+
+                    <!-- PREVIEW -->
+                    <div class="mb-6">
+                        {% if object.banner %}
+                            <img id="bannerPreview"
+                                src="{{ object.banner.url }}"
+                                class="w-full h-40 object-cover rounded-2xl border border-slate-200 dark:border-slate-700 shadow-lg">
+                        {% else %}
+                            <img id="bannerPreview"
+                                class="hidden w-full h-40 object-cover rounded-2xl border border-slate-200 dark:border-slate-700 shadow-lg">
+                        {% endif %}
+                    </div>
+
+                    <div class="file-input-wrapper">
+                        {{ form.banner }}
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ================= DESCRIPTION ================= -->
+        <div>
+            <h2 class="text-lg font-black mb-5 flex items-center gap-2 text-slate-900 dark:text-white">
+                <span class="material-symbols-outlined text-primary">description</span>
+                {% trans "Description" %}
+            </h2>
+
+            <div class="space-y-6">
+
+                <div>
+                    <label class="text-xs font-black uppercase text-slate-400">{% trans "English" %}</label>
+                    {{ form.description_en }}
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                    <div>
+                        <label class="text-xs font-black uppercase text-slate-400">{% trans "Arabic" %}</label>
+                        {{ form.description_ar }}
+                    </div>
+
+                    <div>
+                        <label class="text-xs font-black uppercase text-slate-400">{% trans "French" %}</label>
+                        {{ form.description_fr }}
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ================= TAGLINE ================= -->
+        <div>
+            <h2 class="text-lg font-black mb-5 flex items-center gap-2 text-slate-900 dark:text-white">
+                <span class="material-symbols-outlined text-primary">auto_awesome</span>
+                {% trans "Tagline" %}
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+                <div>{{ form.tagline_en }}</div>
+                <div>{{ form.tagline_ar }}</div>
+                <div>{{ form.tagline_fr }}</div>
+
+            </div>
+        </div>
+
+        <!-- ================= SOCIAL ================= -->
+        <div>
+            <h2 class="text-lg font-black mb-5 flex items-center gap-2 text-slate-900 dark:text-white">
+                <span class="material-symbols-outlined text-primary">public</span>
+                {% trans "Social Links" %}
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                {{ form.facebook_url }}
+                {{ form.instagram_url }}
+                {{ form.twitter_url }}
+                {{ form.linkedin_url }}
+                {{ form.website_url }}
+
+            </div>
+        </div>
+
+        <!-- ================= CATEGORIES ================= -->
+        <div>
+            <h2 class="text-lg font-black mb-5 flex items-center gap-2 text-slate-900 dark:text-white">
+                <span class="material-symbols-outlined text-primary">category</span>
+                {% trans "Categories" %}
+            </h2>
+
+            <div class="input-wrapper">
+                {{ form.categories }}
+            </div>
+        </div>
+
+        <!-- ================= STATUS ================= -->
+        <div>
+            <h2 class="text-lg font-black mb-5 flex items-center gap-2 text-slate-900 dark:text-white">
+                <span class="material-symbols-outlined text-primary">verified</span>
+                {% trans "Status" %}
+            </h2>
+
+            <div class="md:col-span-2 grid grid-cols-3 gap-4 mt-2">
+
+                <label class="flex items-center gap-2 p-4 rounded-2xl border">
+                    {{ form.is_active }}
+                    <span class="text-sm font-bold">{% trans "Active" %}</span>
+                </label>
+
+                <label class="flex items-center gap-2 p-4 rounded-2xl border">
+                    {{ form.is_verified }}
+                    <span class="text-sm font-bold">{% trans "Verified" %}</span>
+                </label>
+
+                <label class="flex items-center gap-2 p-4 rounded-2xl border">
+                    {{ form.is_featured }}
+                    <span class="text-sm font-bold">{% trans "Featured" %}</span>
+                </label>
+
+            </div>
+        </div>
+
+        <!-- ================= SUBMIT ================= -->
+        <button type="submit"
+                class="w-full h-14 rounded-2xl bg-primary hover:bg-blue-700 text-white font-black tracking-wide transition-all flex items-center justify-center gap-2">
+
+            <span class="material-symbols-outlined">save</span>
+
+            {% trans "Save Store" %}
+        </button>
+
+    </div>
+
+</form>
+
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    function previewImage(input, previewId) {
+        const file = input.files && input.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+
+        reader.onload = function (e) {
+            const img = document.getElementById(previewId);
+            if (!img) return;
+
+            img.src = e.target.result;
+            img.classList.remove("hidden");
+        };
+
+        reader.readAsDataURL(file);
+    }
+
+    // LOGO
+    const logoInput = document.querySelector("input[name='logo']");
+    if (logoInput) {
+        logoInput.addEventListener("change", function () {
+            previewImage(this, "logoPreview");
+        });
+    }
+
+    // BANNER
+    const bannerInput = document.querySelector("input[name='banner']");
+    if (bannerInput) {
+        bannerInput.addEventListener("change", function () {
+            previewImage(this, "bannerPreview");
+        });
+    }
+
+});
+</script>
+{% endblock %}

@@ -1,0 +1,549 @@
+{% extends './base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Manage Categories" %}{% endblock %}
+
+{% block extra_styles %}
+
+{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 lg:px-6">
+
+    <!-- HEADER -->
+    <div class="mb-10 flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
+        <div class="space-y-4">
+            <nav class="flex items-center gap-2 text-primary font-bold text-xs uppercase tracking-widest">
+                <span class="material-symbols-outlined text-sm">settings_suggest</span>
+                {% trans "Administration" %}
+            </nav>
+            <h1 class="text-4xl lg:text-6xl font-black text-slate-900 dark:text-white tracking-tight">
+                {% trans "Store" %} <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-500">{% trans "Categories" %}</span>
+            </h1>
+            <p class="text-slate-500 dark:text-slate-400 max-w-xl text-lg leading-relaxed">
+                {% trans "Define your marketplace structure. Organize how users discover stores and products." %}
+            </p>
+        </div>
+
+        <div class="flex items-center gap-4">
+            <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl px-4 py-4 shadow-sm">
+                <div class="flex items-center gap-4">
+
+                    <div class="w-14 h-14 rounded-2xl bg-primary/10 text-primary flex items-center justify-center">
+                        <span class="material-symbols-outlined">category</span>
+                    </div>
+
+                    <div>
+                        <h3 class="text-3xl font-black leading-none">
+                            {{ store_categories.count }}
+                        </h3>
+
+                        <p class="mt-1 text-[10px] uppercase tracking-[0.2em] font-black text-slate-400">
+                            {% trans "Store Categories" %}
+                        </p>
+                    </div>
+                    
+
+                </div>
+                <div class="flex items-center gap-2 mt-4 px-3 py-1 rounded-full {% if is_editing %}bg-amber-100 text-amber-700{% else %}bg-emerald-100 text-emerald-700{% endif %} text-[11px] font-black uppercase">
+                    <span class="relative flex h-2 w-2">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-current opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-current"></span>
+                    </span>
+                    {% if is_editing %}{% trans "Edit Mode" %}{% else %}{% trans "New Entry" %}{% endif %}
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- FORM -->
+    <div class="mb-14">
+        <form method="post"
+              enctype="multipart/form-data"
+              id="main-category-form"
+              class="overflow-hidden rounded-[2.5rem] border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-2xl shadow-slate-200/40 dark:shadow-black/20">
+
+            {% csrf_token %}
+
+            <!-- FORM HEADER -->
+            <div class="relative overflow-hidden border-b border-slate-100 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-800/20 px-8 lg:px-10 py-8">
+
+                <div class="absolute inset-0 overflow-hidden">
+                    <div class="absolute -top-16 -right-16 w-52 h-52 bg-primary/10 rounded-full blur-3xl"></div>
+                </div>
+
+                <div class="relative flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+
+                    <div class="flex items-center gap-5">
+
+                        <div class="w-20 h-20 rounded-[2rem] bg-primary text-white flex items-center justify-center shadow-xl shadow-primary/20">
+                            <span class="material-symbols-outlined text-4xl">
+                                {% if is_editing %}
+                                    edit_square
+                                {% else %}
+                                    add_business
+                                {% endif %}
+                            </span>
+                        </div>
+
+                        <div>
+                            <h2 class="text-3xl font-black tracking-tight text-slate-900 dark:text-white">
+                                {% if is_editing %}
+                                    {% trans "Update Category" %}
+                                {% else %}
+                                    {% trans "Create New Category" %}
+                                {% endif %}
+                            </h2>
+
+                            <p class="mt-2 text-sm text-slate-500 dark:text-slate-400">
+                                {% trans "Configure category names, visuals and linked product types." %}
+                            </p>
+                        </div>
+
+                    </div>
+
+                    {% if is_editing %}
+                    <a href="{% url 'dashboard:manage-categories' %}"
+                       class="inline-flex items-center gap-2 px-5 py-3 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-sm font-black hover:border-primary hover:text-primary transition-all">
+                        <span class="material-symbols-outlined text-[18px]">close</span>
+                        {% trans "Cancel Editing" %}
+                    </a>
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+            <!-- FORM BODY -->
+            <div class="p-8 lg:p-10">
+
+                <!-- MAIN FIELDS -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+
+                    <!-- LEFT -->
+                    <div class="lg:col-span-8 space-y-8">
+
+                        <!-- NAMES -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                            <!-- EN -->
+                            <div class="space-y-3 md:col-span-2">
+                                <label class="flex items-center gap-2 text-sm font-black tracking-wide text-slate-700 dark:text-slate-300">
+                                    <span class="material-symbols-outlined text-primary text-[18px]">
+                                        language
+                                    </span>
+
+                                    {% trans "English Name" %}
+                                </label>
+
+                                <div class="input-wrapper">
+                                    {{ form.name_en }}
+                                </div>
+                                {% for error in form.name_en.errors %}
+                                    <p class="text-red-500 text-xs mt-1">{{ error }}</p>
+                                {% endfor %}
+                            </div>
+
+                            <!-- AR -->
+                            <div class="space-y-3">
+                                <label class="flex items-center gap-2 text-sm font-black tracking-wide text-slate-700 dark:text-slate-300">
+                                    <span class="material-symbols-outlined text-primary text-[18px]">
+                                        translate
+                                    </span>
+
+                                    {% trans "Arabic Name" %}
+                                </label>
+
+                                <div class="input-wrapper">
+                                    {{ form.name_ar }}
+                                </div>
+                                {% for error in form.name_ar.errors %}
+                                    <p class="text-red-500 text-xs mt-1">{{ error }}</p>
+                                {% endfor %}
+                            </div>
+
+                            <!-- FR -->
+                            <div class="space-y-3">
+                                <label class="flex items-center gap-2 text-sm font-black tracking-wide text-slate-700 dark:text-slate-300">
+                                    <span class="material-symbols-outlined text-primary text-[18px]">
+                                        public
+                                    </span>
+
+                                    {% trans "French Name" %}
+                                </label>
+
+                                <div class="input-wrapper">
+                                    {{ form.name_fr }}
+                                </div>
+                                {% for error in form.name_fr.errors %}
+                                    <p class="text-red-500 text-xs mt-1">{{ error }}</p>
+                                {% endfor %}
+                            </div>
+
+                            <!-- SLUG -->
+                            <div class="space-y-3 md:col-span-2">
+                                <label class="flex items-center gap-2 text-sm font-black tracking-wide text-slate-700 dark:text-slate-300">
+                                    <span class="material-symbols-outlined text-primary text-[18px]">
+                                        link
+                                    </span>
+
+                                    {% trans "Slug" %}
+                                </label>
+
+                                <div class="input-wrapper">
+                                    {{ form.slug }}
+                                </div>
+                                {% for error in form.slug.errors %}
+                                    <p class="text-red-500 text-xs mt-1">{{ error }}</p>
+                                {% endfor %}
+                            </div>
+
+                        </div>
+
+                        <!-- SUBCATEGORIES -->
+                        <div class="rounded-[2rem] border border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-800/30 p-6 lg:p-8">
+
+                            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
+
+                                <div>
+                                    <h3 class="text-2xl font-black text-slate-900 dark:text-white">
+                                        {% trans "Product Subcategories" %}
+                                    </h3>
+
+                                    <p class="mt-2 text-sm text-slate-400">
+                                        {% trans "Add product types linked to this store category." %}
+                                    </p>
+                                </div>
+
+                                <button type="button"
+                                        id="add-formset-row"
+                                        class="h-12 px-6 rounded-2xl bg-primary hover:bg-blue-700 text-white text-sm font-black tracking-wide transition-all flex items-center justify-center gap-2 shadow-lg shadow-primary/20 hover:scale-105 active:scale-95">
+
+                                    <span class="material-symbols-outlined text-[18px]">
+                                        add
+                                    </span>
+
+                                    {% trans "Add Subcategory" %}
+
+                                </button>
+
+                            </div>
+
+                            {{ formset.management_form }}
+
+                            <!-- FORMSET -->
+                            <div id="formset-container"
+                                class="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+                                {% for subform in formset %}
+                                <div class="subform-row relative rounded-[1.8rem] border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 p-5 space-y-4 shadow-sm">
+
+                                    {% if subform.instance.pk %}
+                                    <div class="absolute top-4 right-4">
+
+                                        <label class="flex items-center gap-2 text-red-500 text-xs font-black cursor-pointer">
+                                            {{ subform.DELETE }}
+                                            {% trans "Delete" %}
+                                        </label>
+
+                                    </div>
+                                    {% endif %}
+
+                                    <div class="flex items-center gap-3">
+
+                                        <div class="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center">
+                                            <span class="material-symbols-outlined">
+                                                category
+                                            </span>
+                                        </div>
+
+                                        <div>
+                                            <h4 class="font-black text-slate-900 dark:text-white">
+                                                {% trans "Subcategory" %}
+                                            </h4>
+
+                                            <p class="text-xs text-slate-400">
+                                                {% trans "Product classification" %}
+                                            </p>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="space-y-3">
+
+                                        {{ subform.name_en }}
+
+                                        <div class="grid grid-cols-2 gap-3">
+                                            {{ subform.name_ar }}
+                                            {{ subform.name_fr }}
+                                        </div>
+
+                                        <div class="file-input-wrapper">
+                                            {{ subform.icon }}
+                                        </div>
+
+                                    </div>
+
+                                    {% for hidden in subform.hidden_fields %}
+                                        {{ hidden }}
+                                    {% endfor %}
+
+                                </div>
+                                {% endfor %}
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- RIGHT -->
+                    <div class="lg:col-span-4">
+
+                        <!-- ICON -->
+                        <div class="sticky top-8 rounded-[2rem] border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/30 p-6">
+
+                            <div class="flex items-center gap-3 mb-6">
+
+                                <div class="w-14 h-14 rounded-2xl bg-primary text-white flex items-center justify-center shadow-lg shadow-primary/20">
+                                    <span class="material-symbols-outlined">
+                                        image
+                                    </span>
+                                </div>
+
+                                <div>
+                                    <h3 class="font-black text-lg text-slate-900 dark:text-white">
+                                        {% trans "Category Icon" %}
+                                    </h3>
+
+                                    <p class="text-xs text-slate-400">
+                                        PNG, SVG, JPG
+                                    </p>
+                                </div>
+
+                            </div>
+
+                            <div class="rounded-[1.8rem] border-2 border-dashed border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 p-8 text-center hover:border-primary/50 transition-all">
+
+                                <div class="w-24 h-24 rounded-full bg-primary/10 text-primary flex items-center justify-center mx-auto mb-5">
+                                    <span class="material-symbols-outlined text-5xl">
+                                        cloud_upload
+                                    </span>
+                                </div>
+
+                                <h4 class="font-black text-lg mb-2 text-slate-900 dark:text-white">
+                                    {% trans "Upload Icon" %}
+                                </h4>
+
+                                <p class="text-sm text-slate-400 mb-6">
+                                    {% trans "Recommended size 512x512px" %}
+                                </p>
+
+                                <div class="file-input-wrapper">
+                                    {{ form.icon }}
+                                </div>
+
+                            </div>
+
+                            <button type="submit"
+                                    class="mt-8 w-full h-16 rounded-2xl bg-gradient-to-r from-primary to-blue-700 hover:opacity-90 text-white font-black uppercase tracking-[0.18em] shadow-2xl shadow-primary/20 transition-all flex items-center justify-center gap-3 active:scale-[0.98]">
+
+                                <span class="material-symbols-outlined">
+                                    save
+                                </span>
+
+                                {% if is_editing %}
+                                    {% trans "Update Category" %}
+                                {% else %}
+                                    {% trans "Create Category" %}
+                                {% endif %}
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </form>
+    </div>
+ 
+
+    <!-- CATEGORY LIST -->
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+
+        {% for category in store_categories %}
+        <div class="group rounded-[2rem] border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 hover:shadow-xl hover:shadow-slate-200/40 dark:hover:shadow-black/20 transition-all duration-300">
+
+            <div class="flex items-start justify-between gap-4">
+
+                <div class="flex items-center gap-4 min-w-0">
+
+                    <div class="w-16 h-16 rounded-2xl overflow-hidden bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shrink-0">
+                        {% if category.icon %}
+                            <img src="{{ category.icon.url }}"
+                                 class="w-full h-full object-cover">
+                        {% else %}
+                            <div class="w-full h-full flex items-center justify-center">
+                                <span class="material-symbols-outlined text-slate-400">
+                                    storefront
+                                </span>
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="min-w-0">
+                        <h3 class="text-xl font-black truncate text-slate-900 dark:text-white">
+                            {{ category.name }}
+                        </h3>
+
+                        <p class="mt-1 text-xs font-bold uppercase tracking-[0.15em] text-slate-400 truncate">
+                            {{ category.slug }}
+                        </p>
+                    </div>
+
+                </div>
+                
+
+                <div class="flex items-center gap-2">
+
+                    <a href="{% url 'dashboard:manage-categories-detail' category.pk %}"
+                       class="w-11 h-11 rounded-2xl bg-slate-100 dark:bg-slate-800 hover:bg-primary hover:text-white flex items-center justify-center transition-all">
+
+                        <span class="material-symbols-outlined text-[18px]">
+                            edit
+                        </span>
+
+                    </a>
+
+                    <form method="post"
+                          action="{% url 'dashboard:manage-categories-detail' category.pk %}">
+
+                        {% csrf_token %}
+
+                        <button type="submit"
+                                name="delete_store"
+                                onclick="return confirm('{% trans "Delete category?" %}')"
+                                class="w-11 h-11 rounded-2xl bg-red-50 dark:bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white flex items-center justify-center transition-all">
+
+                            <span class="material-symbols-outlined text-[18px]">
+                                delete
+                            </span>
+
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+            <div class="mt-6 pt-5 border-t border-slate-100 dark:border-slate-800">
+
+                <div class="flex items-center justify-between">
+
+                    <p class="text-xs uppercase tracking-[0.15em] font-black text-slate-400">
+                        {% trans "Subcategories" %}
+                    </p>
+
+                    <div class="px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-xs font-black">
+                        {{ category.product_types.count }}
+                    </div>
+                </div>
+
+                {% if category.product_types.all %}
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 mt-4">
+                        {% for product in category.product_types.all %}
+                        <div class="flex items-center gap-2 p-2 rounded-2xl bg-slate-50/50 dark:bg-slate-800/30 border border-slate-100 dark:border-slate-800">
+                            <div class=" h-8 rounded-lg bg-white dark:bg-slate-900 flex items-center justify-center shrink-0 shadow-sm">
+                                {% if product.icon %}<img src="{{ product.icon.url }}" class="w-full h-full object-cover rounded-lg">{% else %}<span class="material-symbols-outlined text-xs">category</span>{% endif %}
+                            </div>
+                            <span class="text-xs font-bold text-slate-700 dark:text-slate-300 truncate">{{ product.name }}</span>
+                        </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+        </div>
+        {% empty %}
+
+        <div class="col-span-full rounded-[3rem] border-2 border-dashed border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-20 text-center">
+
+            <div class="w-24 h-24 mx-auto rounded-full bg-primary/10 text-primary flex items-center justify-center mb-6">
+                <span class="material-symbols-outlined text-5xl">
+                    category
+                </span>
+            </div>
+
+            <h3 class="text-3xl font-black text-slate-900 dark:text-white">
+                {% trans "No Categories Yet" %}
+            </h3>
+
+            <p class="mt-4 text-slate-400 max-w-lg mx-auto">
+                {% trans "Start building your marketplace structure by creating your first category." %}
+            </p>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    const addButton = document.getElementById('add-formset-row');
+    const container = document.getElementById('formset-container');
+    const totalForms = document.querySelector('input[id$="-TOTAL_FORMS"]');
+
+    if (!addButton || !container || !totalForms) return;
+
+    addButton.addEventListener('click', function (e) {
+        e.preventDefault();
+
+        const formCount = parseInt(totalForms.value);
+        const prefix = totalForms.name.replace('-TOTAL_FORMS', '');
+
+        const html = `
+            <div class="subform-row relative rounded-[2rem] border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/40 p-5 animate-in fade-in slide-in-from-top-3 duration-300">
+                <div class="space-y-4">
+
+                    <input type="text"
+                           name="${prefix}-${formCount}-name_en"
+                           placeholder="Subcategory Name (EN)">
+
+                    <div class="grid grid-cols-2 gap-3">
+
+                        <input type="text"
+                               name="${prefix}-${formCount}-name_ar"
+                               placeholder="Arabic">
+
+                        <input type="text"
+                               name="${prefix}-${formCount}-name_fr"
+                               placeholder="French">
+
+                    </div>
+
+                    <input type="file"
+                           name="${prefix}-${formCount}-icon">
+
+                </div>
+            </div>
+        `;
+
+        container.insertAdjacentHTML('beforeend', html);
+
+        totalForms.value = formCount + 1;
+    });
+
+});
+</script>
+{% endblock %}

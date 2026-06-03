@@ -1,0 +1,155 @@
+{% extends 'dashboard/base.html' %}
+{% load i18n %}
+
+{% block title %}
+{% trans "Testimonials" %}
+{% endblock %}
+
+{% block content %}
+
+<div class="max-w-7xl mx-auto px-4 lg:px-6 pb-20">
+
+    <!-- HEADER -->
+
+    <div class="mb-10 flex flex-col lg:flex-row justify-between gap-6">
+
+        <div>
+
+            <span class="text-primary uppercase text-xs font-black tracking-[0.3em]">
+                {% trans "Customer Feedback" %}
+            </span>
+
+            <h1 class="mt-4 text-5xl lg:text-7xl font-black">
+
+                {% trans "Client" %}
+
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-600">
+
+                    {% trans "Testimonials" %}
+
+                </span>
+
+            </h1>
+
+            <p class="mt-4 text-slate-500 dark:text-slate-400">
+                {% trans "Monitor customer reviews and ratings." %}
+            </p>
+
+        </div>
+
+        <div class="rounded-[2rem] bg-white dark:bg-slate-900 border dark:border-slate-800 p-6 shadow">
+
+            <div class="flex gap-4 items-center">
+
+                <div class="w-14 h-14 rounded-2xl bg-yellow-100 text-yellow-600 flex items-center justify-center">
+
+                    <span class="material-symbols-outlined">
+                        star
+                    </span>
+
+                </div>
+
+                <div>
+
+                    <h3 class="text-3xl font-black">
+
+                        {{ testimonials.count }}
+
+                    </h3>
+
+                    <p class="text-xs uppercase font-black text-slate-400">
+
+                        {% trans "Reviews" %}
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
+
+        {% for testimonial in testimonials %}
+
+        <div class="rounded-[2rem] bg-white dark:bg-slate-900 border dark:border-slate-800 shadow p-6">
+
+            <div class="flex justify-between items-center">
+
+                <div>
+
+                    <h3 class="font-black text-lg">
+
+                        {{ testimonial.client.username }}
+
+                    </h3>
+
+                    <p class="text-xs text-slate-400">
+
+                        {{ testimonial.created_at|date:"d M Y" }}
+
+                    </p>
+
+                </div>
+
+                <span class="bg-yellow-100 text-yellow-600 px-4 py-2 rounded-xl font-black">
+
+                    ⭐ {{ testimonial.rating }}/5
+
+                </span>
+
+            </div>
+
+            <div class="mt-5">
+
+                <p class="text-slate-500 dark:text-slate-300">
+
+                    {{ testimonial.feedback }}
+
+                </p>
+
+            </div>
+
+            <div class="mt-6">
+
+                {% if testimonial.is_active %}
+
+                <span class="px-3 py-1 rounded-xl bg-green-100 text-green-600 text-xs font-black">
+
+                    {% trans "Active" %}
+
+                </span>
+
+                {% else %}
+
+                <span class="px-3 py-1 rounded-xl bg-red-100 text-red-600 text-xs font-black">
+
+                    {% trans "Hidden" %}
+
+                </span>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+        {% empty %}
+
+        <div class="col-span-full text-center py-20 text-slate-400">
+
+            {% trans "No testimonials found." %}
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock %}

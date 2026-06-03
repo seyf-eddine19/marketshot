@@ -1,0 +1,101 @@
+{% extends 'stores/base.html' %}
+{% load i18n static %}
+
+{% block content %}
+<!-- Main Workspace Layout Container Grid -->
+<div class="max-w-7xl mx-auto px-4 sm:px-6 py-6 md:py-10">
+    
+    <!-- Centralized Parameter Context Form Mapping -->
+    <form method="get" action="." id="master-filter-form">
+        <!-- Hidden Parameter Inputs for State Sync Maintenance -->
+        <input type="hidden" name="category_id" id="form-category-id" value="{{ request.GET.category_id|default:'' }}">
+        <input type="hidden" name="sort" id="form-sort-id" value="{{ request.GET.sort|default:'newest' }}">
+
+        <!-- MOUNT COMPONENT 1: TOP FILTER BAR -->
+        {% include "stores/components/topbar_filter.html" %}
+
+        <!-- Master Interface Split Layout Context Grid Row -->
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-8 items-start relative">
+            
+            <!-- Mobile Navigation Canvas Drawer Backdrop Mask Item Layer -->
+            <div id="drawer-backdrop" onclick="toggleFilterDrawer(false)" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-40 hidden lg:hidden opacity-0 transition-opacity duration-300"></div>
+
+            <!-- MOUNT COMPONENT 2: SIDEBAR FILTERS -->
+            {% include "stores/components/sidebar_filters.html" %}
+    </form>
+
+        <!-- Product Presentation Workspace Content Column -->
+        <div class="lg:col-span-3 space-y-8">
+            {% if products %}
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                {% for product in products %}
+                    {% include "stores/components/product_card.html" with product=product %}
+                {% endfor %}
+            </div>
+
+            <!-- MOUNT COMPONENT 3: STATE-PRESERVED PAGINATION -->
+            {% include "stores/components/pagination.html" %}
+
+            {% else %}
+            <!-- Fallback Frame Blank Slate Empty State Layout Component -->
+            <div class="text-center py-24 bg-white dark:bg-slate-900 border border-dashed border-slate-200 dark:border-slate-800/80 rounded-3xl p-6 shadow-sm">
+                <span class="material-symbols-outlined text-[48px] text-slate-300 dark:text-slate-700">inventory_2</span>
+                <h3 class="text-sm font-bold mt-3 text-slate-800 dark:text-slate-200">{% trans "No Active Inventory Matches" %}</h3>
+                <p class="text-xs text-slate-400 mt-1 max-w-xs mx-auto">{% trans "There are no products listing inside the targeted filters right now." %}</p>
+                {% if request.GET.urlencode %}
+                    <a href="?{% if request.GET.sort %}sort={{ request.GET.sort }}{% endif %}" class="inline-block mt-4 text-xs bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold px-4 py-2 rounded-xl hover:bg-slate-200 dark:hover:bg-slate-700 transition">
+                        {% trans "Clear Filters" %}
+                    </a>
+                {% endif %}
+            </div>
+            {% endif %}
+        </div>
+
+</div>
+<script>
+
+function selectCategoryTree(id) {
+    document.getElementById('form-category-id').value = id;
+    document.getElementById('master-filter-form').submit();
+}
+
+function applySorting(value) {
+    document.getElementById('form-sort-id').value = value;
+    document.getElementById('master-filter-form').submit();
+}
+
+function clearSearchInput() {
+    const form = document.getElementById('master-filter-form');
+    const searchInput = form.querySelector('input[name="q"]');
+    if (searchInput) {
+        searchInput.value = '';
+        form.submit();
+    }
+}
+
+function toggleFilterDrawer(isOpen) {
+    const sidebar = document.getElementById('filter-drawer');
+    const backdrop = document.getElementById('drawer-backdrop');
+    
+    if (isOpen) {
+        backdrop.classList.remove('hidden');
+        setTimeout(() => {
+            backdrop.classList.remove('opacity-0');
+            sidebar.classList.remove('-translate-x-full');
+        }, 10);
+        document.body.style.overflow = 'hidden';
+    } else {
+        sidebar.classList.add('-translate-x-full');
+        backdrop.classList.add('opacity-0');
+        document.body.style.overflow = '';
+        setTimeout(() => {
+            backdrop.classList.add('hidden');
+        }, 300);
+    }
+}
+
+document.querySelectorAll('[data-color]').forEach(el => {
+    el.style.backgroundColor = el.dataset.color;
+});
+</script>
+{% endblock %}

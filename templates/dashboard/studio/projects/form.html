@@ -1,0 +1,173 @@
+{% extends 'dashboard/base.html' %}
+{% load i18n %}
+
+{% block title %}
+    {% if form.instance.pk %}
+        {% trans "Edit Project" %}
+    {% else %}
+        {% trans "Create Project" %}
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="mx-auto px-4 lg:px-6">
+
+    <!-- HEADER -->
+    <div class="mb-10 space-y-4">
+        <nav class="flex items-center gap-2 text-primary font-bold text-xs uppercase tracking-widest">
+            <span class="material-symbols-outlined text-sm">work</span>
+            {% trans "Projects" %}
+        </nav>
+
+        <h1 class="text-4xl lg:text-6xl font-black text-slate-900 dark:text-white tracking-tight">
+
+            {% if form.instance.pk %}
+                {% trans "Edit" %}
+            {% else %}
+                {% trans "Create" %}
+            {% endif %}
+
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-500">
+                {% trans "Project" %}
+            </span>
+
+        </h1>
+
+        <p class="text-slate-500 dark:text-slate-400 max-w-xl text-lg">
+            {% trans "Fill project details and upload media to build your portfolio." %}
+        </p>
+
+    </div>
+
+
+    <!-- FORM CARD -->
+    <form method="post" enctype="multipart/form-data"
+          class="rounded-[2.5rem] border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-2xl overflow-hidden">
+
+        {% csrf_token %}
+
+        <!-- FORM HEADER -->
+        <div class="p-8 lg:p-10 border-b border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/20">
+
+            <div class="flex items-center gap-5">
+
+                <div class="w-16 h-16 rounded-2xl bg-primary text-white flex items-center justify-center shadow-lg">
+                    <span class="material-symbols-outlined text-3xl">work</span>
+                </div>
+
+                <div>
+                    <h2 class="text-2xl font-black text-slate-900 dark:text-white">
+                        {% if form.instance.pk %}
+                            {% trans "Update Project" %}
+                        {% else %}
+                            {% trans "New Project" %}
+                        {% endif %}
+                    </h2>
+
+                    <p class="text-sm text-slate-500 dark:text-slate-400">
+                        {% trans "Provide multilingual titles and descriptions." %}
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- FORM BODY -->
+        <div class="p-8 lg:p-10 space-y-10">
+
+            <!-- TITLES -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                <div class="space-y-2">
+                    <label class="text-sm font-black">{% trans "Title (English)" %}</label>
+                    {{ form.title_en }}
+                </div>
+
+                <div class="space-y-2">
+                    <label class="text-sm font-black">{% trans "Title (Arabic)" %}</label>
+                    {{ form.title_ar }}
+                </div>
+
+                <div class="space-y-2 md:col-span-2">
+                    <label class="text-sm font-black">{% trans "Title (French)" %}</label>
+                    {{ form.title_fr }}
+                </div>
+
+            </div>
+
+
+            <!-- DESCRIPTIONS -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                <div class="space-y-2">
+                    <label class="text-sm font-black">{% trans "Description (English)" %}</label>
+                    {{ form.description_en }}
+                </div>
+
+                <div class="space-y-2">
+                    <label class="text-sm font-black">{% trans "Description (Arabic)" %}</label>
+                    {{ form.description_ar }}
+                </div>
+
+                <div class="space-y-2 md:col-span-2">
+                    <label class="text-sm font-black">{% trans "Description (French)" %}</label>
+                    {{ form.description_fr }}
+                </div>
+
+            </div>
+
+
+            <!-- IMAGE -->
+            <div class="space-y-3">
+
+                <label class="text-sm font-black flex items-center gap-2">
+                    <span class="material-symbols-outlined text-primary text-[18px]">image</span>
+                    {% trans "Main Image" %}
+                </label>
+
+                <div class="rounded-3xl border-2 border-dashed border-slate-200 dark:border-slate-700 p-8 text-center bg-slate-50/50 dark:bg-slate-800/20">
+
+                    <span class="material-symbols-outlined text-5xl text-primary mb-4">
+                        cloud_upload
+                    </span>
+
+                    <p class="text-sm text-slate-500 mb-4">
+                        {% trans "Upload project cover image (JPG, PNG, WEBP)" %}
+                    </p>
+
+                    {{ form.image }}
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- FOOTER -->
+        <div class="p-8 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
+
+            <a href="{% url 'dashboard:project-list' %}"
+               class="px-6 py-3 rounded-2xl bg-slate-100 dark:bg-slate-800 text-sm font-black hover:bg-slate-200 dark:hover:bg-slate-700 transition">
+                {% trans "Cancel" %}
+            </a>
+
+            <button type="submit"
+                    class="px-8 py-4 rounded-2xl bg-gradient-to-r from-primary to-blue-700 text-white font-black shadow-lg hover:scale-105 transition">
+
+                {% if form.instance.pk %}
+                    {% trans "Update Project" %}
+                {% else %}
+                    {% trans "Create Project" %}
+                {% endif %}
+
+            </button>
+
+        </div>
+
+    </form>
+
+</div>
+{% endblock %}

@@ -1,0 +1,198 @@
+{% extends 'dashboard/base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Manage Projects" %}{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 lg:px-6">
+
+    <!-- HEADER -->
+    <div class="mb-10 flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
+
+        <div class="space-y-4">
+            <nav class="flex items-center gap-2 text-primary font-bold text-xs uppercase tracking-widest">
+                <span class="material-symbols-outlined text-sm">work</span>
+                {% trans "Projects" %}
+            </nav>
+
+            <h1 class="text-4xl lg:text-6xl font-black text-slate-900 dark:text-white tracking-tight">
+                {% trans "Project" %}
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-500">
+                    {% trans "List" %}
+                </span>
+            </h1>
+
+            <p class="text-slate-500 dark:text-slate-400 max-w-xl text-lg leading-relaxed">
+                {% trans "Manage all your active and archived projects in one place." %}
+            </p>
+        </div>
+
+
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl px-4 py-4 shadow-sm">
+            <div class="flex items-center gap-4">
+
+                <div class="w-14 h-14 rounded-2xl bg-primary/10 text-primary flex items-center justify-center">
+                    <span class="material-symbols-outlined">work</span>
+                </div>
+
+                <div>
+                    <h3 class="text-3xl font-black leading-none">
+                        {{ projects.count }}
+                    </h3>
+                    <p class="mt-1 text-[10px] uppercase tracking-[0.2em] font-black text-slate-400">
+                        {% trans "Projects" %}
+                    </p>
+                </div>
+
+            </div>
+            <a href="{% url 'dashboard:project-add' %}"
+            class="h-10 mt-4 px-6 rounded-xl bg-primary text-white font-black flex items-center gap-2 shadow-lg hover:scale-105 transition">
+                <span class="material-symbols-outlined">add</span>
+                {% trans "New Project" %}
+            </a>
+        </div>
+
+    </div>
+
+    <!-- LIST -->
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-7">
+
+    {% for project in projects %}
+    <div class="group overflow-hidden rounded-[2rem] border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:shadow-2xl hover:shadow-slate-200/50 dark:hover:shadow-black/20 transition-all duration-500 hover:-translate-y-1">
+
+        <!-- IMAGE -->
+        <div class="relative h-56 overflow-hidden">
+
+            {% if project.image %}
+                <img src="{{ project.image.url }}"
+                    alt="{{ project.title }}"
+                    class="w-full h-full object-cover transition duration-700 group-hover:scale-110">
+            {% else %}
+                <div class="w-full h-full bg-gradient-to-br from-primary via-blue-600 to-indigo-700 flex items-center justify-center">
+
+                    <span class="material-symbols-outlined text-white text-6xl opacity-80">
+                        work
+                    </span>
+
+                </div>
+            {% endif %}
+
+            <!-- Overlay -->
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+
+            <!-- Images Count -->
+            <div class="absolute top-4 right-4 px-3 py-2 rounded-xl bg-white/90 backdrop-blur text-xs font-black text-slate-800 flex items-center gap-2">
+
+                <span class="material-symbols-outlined text-[15px]">
+                    photo_library
+                </span>
+
+                {{ project.images.count }}
+
+            </div>
+
+        </div>
+
+
+        <!-- CONTENT -->
+        <div class="p-6">
+
+            <!-- Title -->
+            <div class="mb-4">
+
+                <h3 class="text-2xl font-black text-slate-900 dark:text-white line-clamp-1">
+
+                    {{ project.title }}
+
+                </h3>
+
+                <div class="flex items-center gap-2 mt-2 text-slate-400 text-xs">
+
+                    <span class="material-symbols-outlined text-[15px]">
+                        calendar_month
+                    </span>
+
+                    {{ project.created_at|date:"M d, Y" }}
+
+                </div>
+
+            </div>
+
+
+            <!-- Description -->
+            <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed line-clamp-3 min-h-[50px]">
+
+                {{ project.description|default:_("No description available") }}
+
+            </p>
+
+
+            <!-- Footer -->
+            <div class="mt-4 pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
+
+                <!-- Gallery Count -->
+                <div class="flex items-center gap-2 text-sm font-bold text-slate-500">
+
+                    <span class="material-symbols-outlined text-primary text-[18px]">
+                        collections
+                    </span>
+
+                    {{ project.images.count }}
+                    {% trans "Images" %}
+
+                </div>
+
+
+                <!-- Actions -->
+                <div class="flex items-center gap-2">
+
+                    <a href="{% url 'dashboard:project-edit' project.pk %}"
+                    class="w-11 h-11 rounded-2xl bg-slate-100 dark:bg-slate-800 hover:bg-primary hover:text-white flex items-center justify-center transition-all duration-300">
+
+                        <span class="material-symbols-outlined text-[18px]">
+                            edit
+                        </span>
+
+                    </a>
+                    <a href="{% url 'dashboard:project-delete' project.pk %}"
+                        class="w-11 h-11 rounded-2xl bg-red-50 text-red-500 hover:bg-red-500 hover:text-white flex items-center justify-center transition-all duration-300">
+
+                        <span class="material-symbols-outlined text-[18px]">
+                            delete
+                        </span>
+                    </a>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {% empty %}
+
+    <div class="col-span-full rounded-[3rem] border-2 border-dashed border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-20 text-center">
+
+        <div class="w-24 h-24 mx-auto rounded-full bg-primary/10 text-primary flex items-center justify-center mb-6">
+
+            <span class="material-symbols-outlined text-5xl">
+                work
+            </span>
+
+        </div>
+
+        <h3 class="text-3xl font-black text-slate-900 dark:text-white">
+            {% trans "No Projects Yet" %}
+        </h3>
+
+        <p class="mt-4 text-slate-400 max-w-lg mx-auto">
+            {% trans "Create your first project to start building your portfolio." %}
+        </p>
+
+    </div>
+
+    {% endfor %}
+
+    </div>
+</div>
+{% endblock %}

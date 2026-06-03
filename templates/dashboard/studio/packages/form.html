@@ -1,0 +1,299 @@
+{% extends 'dashboard/base.html' %}
+{% load i18n %}
+
+{% block title %}
+    {% if form.instance.pk %}
+        {% trans "Edit Package" %}
+    {% else %}
+        {% trans "Create Package" %}
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="mx-auto px-4 lg:px-6">
+
+    <!-- HEADER -->
+    <div class="mb-10 space-y-4">
+
+        <nav class="flex items-center gap-2 text-primary font-bold text-xs uppercase tracking-widest">
+            <span class="material-symbols-outlined text-sm">inventory_2</span>
+            {% trans "Packages" %}
+        </nav>
+
+        <h1 class="text-4xl lg:text-6xl font-black text-slate-900 dark:text-white tracking-tight">
+
+            {% if form.instance.pk %}
+                {% trans "Edit" %}
+            {% else %}
+                {% trans "Create" %}
+            {% endif %}
+
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-500">
+                {% trans "Package" %}
+            </span>
+
+        </h1>
+
+        <p class="text-slate-500 dark:text-slate-400 max-w-xl text-lg">
+            {% trans "Define pricing packages with multilingual content and features." %}
+        </p>
+
+    </div>
+
+
+    <!-- FORM CARD -->
+    <form method="post"
+          class="rounded-[2.5rem] border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-2xl overflow-hidden">
+
+        {% csrf_token %}
+
+        <!-- FORM HEADER -->
+        <div class="p-8 lg:p-10 border-b border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/20">
+
+            <div class="flex items-center gap-5">
+
+                <div class="w-16 h-16 rounded-2xl bg-primary text-white flex items-center justify-center shadow-lg">
+                    <span class="material-symbols-outlined text-3xl">inventory_2</span>
+                </div>
+
+                <div>
+                    <h2 class="text-2xl font-black text-slate-900 dark:text-white">
+                        {% if form.instance.pk %}
+                            {% trans "Update Package" %}
+                        {% else %}
+                            {% trans "New Package" %}
+                        {% endif %}
+                    </h2>
+
+                    <p class="text-sm text-slate-500 dark:text-slate-400">
+                        {% trans "Configure pricing, translations, and visibility settings." %}
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- FORM BODY -->
+        <div class="p-8 lg:p-10 space-y-10">
+
+            <!-- TITLES -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+
+                <div class="space-y-2">
+                    <label class="text-sm font-black">{% trans "Title (English)" %}</label>
+                    {{ form.title_en }}
+                </div>
+
+                <div class="space-y-2">
+                    <label class="text-sm font-black">{% trans "Title (Arabic)" %}</label>
+                    {{ form.title_ar }}
+                </div>
+
+                <div class="space-y-2">
+                    <label class="text-sm font-black">{% trans "Title (French)" %}</label>
+                    {{ form.title_fr }}
+                </div>
+
+            </div>
+
+
+            <!-- DESCRIPTIONS -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+
+                <div class="space-y-2">
+                    <label class="text-sm font-black">{% trans "Description (English)" %}</label>
+                    {{ form.description_en }}
+                </div>
+
+                <div class="space-y-2">
+                    <label class="text-sm font-black">{% trans "Description (Arabic)" %}</label>
+                    {{ form.description_ar }}
+                </div>
+
+                <div class="space-y-2">
+                    <label class="text-sm font-black">{% trans "Description (French)" %}</label>
+                    {{ form.description_fr }}
+                </div>
+
+            </div>
+
+
+            <!-- PRICING -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
+
+                <div class="space-y-2">
+                    <label class="text-sm font-black">{% trans "Base Price" %}</label>
+                    {{ form.base_price }}
+                </div>
+
+                <div class="space-y-2">
+                    <label class="text-sm font-black">{% trans "Discount %" %}</label>
+                    {{ form.discount }}
+                </div>
+
+                <div class="space-y-2">
+                    <label class="text-sm font-black">{% trans "Display Order" %}</label>
+                    {{ form.order }}
+                </div>
+
+                <div class="space-y-2">
+                    <label class="text-sm font-black">{% trans "Button Link" %}</label>
+                    {{ form.button_link }}
+                </div>
+
+            </div>
+
+
+            <!-- SWITCHES -->
+            <div class="flex gap-8">
+
+                <label class="flex items-center gap-2 text-sm font-black">
+                    {{ form.is_highlighted }}
+                    {% trans "Featured" %}
+                </label>
+
+                <label class="flex items-center gap-2 text-sm font-black">
+                    {{ form.is_active }}
+                    {% trans "Active" %}
+                </label>
+
+            </div>
+
+
+        <!-- ================= FEATURES ================= -->
+        <div class="border-t pt-8">
+
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="text-xl font-black">{% trans "Features" %}</h3>
+
+                <button type="button"
+                        id="add-feature"
+                        class="px-5 py-2 bg-primary text-white rounded-xl font-black">
+                    + {% trans "Add Feature" %}
+                </button>
+            </div>
+
+            {{ formset.management_form }}
+
+            <div id="feature-container" class="grid md:grid-cols-2 gap-4">
+
+                {% for f in formset %}
+                <div class="feature-item p-4 pt-2 rounded-2xl border-2 border-dashed border-primary/30 bg-primary/5 animate-in fade-in slide-in-from-bottom-4 duration-300">
+                    {{ f.id }}
+                    <div>
+                        <label class="text-[10px] font-black text-primary uppercase">New Feature (English)</label>
+                        <div>{{ f.text_en }}</div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="text-[10px] font-black text-slate-400 uppercase">Arabic</label>
+                            <div>{{ f.text_ar }}</div>
+                        </div>
+                        <div>
+                            <label class="text-[10px] font-black text-slate-400 uppercase">French</label>
+                            <div>{{ f.text_fr }}</div>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between pt-2">
+                        <label class="flex items-center gap-2 text-xs font-bold">
+                            {{ f.is_included }} Included
+                        </label>
+                        <!-- DELETE -->
+                        {% if f.instance.pk %}
+                        <label class="flex items-center gap-2 text-red-500 text-xs font-black">
+                            {{ f.DELETE }} {% trans "Delete" %}
+                        </label>
+                        {% endif %}
+
+                        {% for hidden in f.hidden_fields %}
+                            {{ hidden }}
+                        {% endfor %}
+                        
+                    </div>
+                </div>
+                {% endfor %}
+
+            </div>
+        </div>
+        </div>
+
+
+        <!-- FOOTER -->
+        <div class="p-8 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
+
+            <a href="{% url 'dashboard:packages' %}"
+               class="px-6 py-3 rounded-2xl bg-slate-100 dark:bg-slate-800 text-sm font-black">
+                {% trans "Cancel" %}
+            </a>
+
+            <button type="submit"
+                    class="px-8 py-4 rounded-2xl bg-gradient-to-r from-primary to-blue-700 text-white font-black shadow-lg hover:scale-105 transition">
+
+                {% if form.instance.pk %}
+                    {% trans "Update Package" %}
+                {% else %}
+                    {% trans "Create Package" %}
+                {% endif %}
+
+            </button>
+
+        </div>
+
+    </form>
+
+</div>
+{% endblock %}
+{% block extra_js %}
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const addBtn = document.getElementById("add-feature");
+    const container = document.getElementById("feature-container");
+
+    const totalFormsInput = document.querySelector("input[name$='-TOTAL_FORMS']");
+
+    if (!addBtn || !container || !totalFormsInput) {
+        console.warn("Formset missing elements");
+        return;
+    }
+
+    addBtn.addEventListener("click", function () {
+
+        let index = parseInt(totalFormsInput.value || "0");
+        const prefix = totalFormsInput.name.replace("-TOTAL_FORMS", "");
+
+        const html = `
+        <div class="feature-item p-4 pt-2 rounded-2xl border-2 border-dashed border-secondary/30 bg-primary/5 animate-in fade-in slide-in-from-bottom-4 duration-300">
+            <div>
+                <label class="text-[10px] font-black text-primary uppercase">New Feature (EN)</label>
+                <input type="text" name="${prefix}-${index}-text_en" class="w-full">
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+                <div>
+                    <label class="text-[10px] font-black text-slate-400 uppercase">Arabic</label>
+                    <input type="text" name="${prefix}-${index}-text_ar" class="w-full">
+                </div>
+                <div>
+                    <label class="text-[10px] font-black text-slate-400 uppercase">French</label>
+                    <input type="text" name="${prefix}-${index}-text_fr" class="w-full">
+                </div>
+            </div>
+            <div class="flex items-center justify-between pt-2">
+                <label class="flex items-center gap-2 text-xs font-bold">
+                    <input type="checkbox" name="${prefix}-${index}-is_included" checked> Included
+                </label>
+                <button type="button" onclick="this.closest('.feature-item').remove()" class="text-red-500 text-[10px] font-black uppercase">
+                    {% trans "Remove" %}
+                </button>
+            </div>
+        </div>`;
+
+        container.insertAdjacentHTML("beforeend", html);
+        totalFormsInput.value = index + 1;
+    });
+
+});
+</script>
+{% endblock %}

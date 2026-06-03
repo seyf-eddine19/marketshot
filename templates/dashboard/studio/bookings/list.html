@@ -1,0 +1,208 @@
+{% extends 'dashboard/base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Bookings Calendar" %}{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 lg:px-6 pb-20">
+
+    <!-- HEADER SECTION -->
+    <div class="mb-10 flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8">
+        <div class="space-y-4">
+            <nav class="flex items-center gap-2 text-primary font-bold text-xs uppercase tracking-[0.3em]">
+                <span class="material-symbols-outlined text-[18px]">calendar_today</span>
+                {% trans "Studio Management" %}
+            </nav>
+            <h1 class="text-5xl lg:text-7xl font-black text-slate-900 dark:text-white tracking-tighter">
+                {% trans "Booking" %}
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-600">{% trans "Calendar" %}</span>
+            </h1>
+            <p class="text-slate-500 dark:text-slate-400 text-lg max-w-2xl">
+                {% trans "Manage your schedule and client sessions for" %} <span class="font-bold text-slate-900 dark:text-slate-200">May 2026</span>.
+            </p>
+        </div>
+
+        <!-- STAT CARD -->
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-sm flex items-center gap-4">
+            <div class="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center">
+                <span class="material-symbols-outlined">confirmation_number</span>
+            </div>
+            <div>
+                <h3 class="text-2xl font-black leading-none">{{ bookings.count }}</h3>
+                <p class="mt-1 text-[10px] uppercase tracking-widest font-black text-slate-400">{% trans "Reservations" %}</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- CALENDAR CONTAINER -->
+    <div class="rounded-[2.5rem] overflow-hidden border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-2xl">
+        <div class="p-4 md:p-8">
+            <div id="calendar" class="min-h-[700px]"></div>
+        </div>
+    </div>
+
+    <!-- MODAL -->
+    <div id="booking-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md hidden items-center justify-center z-[100] p-4 opacity-0 transition-opacity duration-300">
+        <div class="w-full max-w-xl rounded-[2.5rem] bg-white dark:bg-slate-900 shadow-2xl overflow-hidden transform scale-95 transition-transform duration-300">
+            <div class="p-8 border-b border-slate-100 dark:border-slate-800 flex justify-between items-center">
+                <h3 class="text-2xl font-black italic">{% trans "Reservation Details" %}</h3>
+                <button onclick="closeModal()" class="w-12 h-12 rounded-2xl bg-slate-100 dark:bg-slate-800 hover:bg-red-500 hover:text-white transition-colors flex items-center justify-center">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+            
+            <div class="p-8 space-y-6">
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/50">
+                        <span class="text-[10px] font-black uppercase text-primary tracking-widest">{% trans "Customer" %}</span>
+                        <p id="modal-user" class="text-lg font-bold mt-1 text-slate-900 dark:text-white">-</p>
+                    </div>
+                    <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/50">
+                        <span class="text-[10px] font-black uppercase text-slate-400 tracking-widest">{% trans "Service" %}</span>
+                        <p id="modal-service" class="text-lg font-bold mt-1 text-slate-900 dark:text-white">-</p>
+                    </div>
+                </div>
+
+                <div class="p-4 rounded-2xl border border-slate-100 dark:border-slate-800">
+                    <span class="text-[10px] font-black uppercase text-slate-400 tracking-widest">{% trans "Appointment Date & Time" %}</span>
+                    <p id="modal-date" class="text-xl font-black text-primary mt-1">-</p>
+                </div>
+
+                <div id="modal-notes-container" class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/50 hidden">
+                    <span class="text-[10px] font-black uppercase text-slate-400 tracking-widest">{% trans "Notes" %}</span>
+                    <p id="modal-notes" class="text-sm text-slate-600 dark:text-slate-300 mt-1 italic"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TABLE SECTION -->
+    <div class="mt-12 rounded-[2.5rem] border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-xl overflow-hidden">
+        <div class="p-6 border-b border-slate-100 dark:border-slate-800">
+            <h3 class="text-2xl font-black text-slate-900 dark:text-white">{% trans "All Bookings" %}</h3>
+        </div>
+        <div class="overflow-x-auto">
+            <table class="min-w-full text-sm">
+                <thead class="bg-slate-50 dark:bg-slate-800/40 text-xs uppercase tracking-widest text-slate-500">
+                    <tr>
+                        <th class="px-6 py-4 text-left">{% trans "Customer" %}</th>
+                        <th class="px-6 py-4 text-left">{% trans "Service" %}</th>
+                        <th class="px-6 py-4 text-left">{% trans "Date & Time" %}</th>
+                        <th class="px-6 py-4 text-left">{% trans "Status" %}</th>
+                        <th class="px-6 py-4 text-right">{% trans "Actions" %}</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+                    {% for booking in bookings %}
+                    <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/40 transition">
+                        <td class="px-6 py-4 font-bold text-slate-900 dark:text-white">
+                            {{ booking.user.get_full_name|default:booking.user.username }}
+                        </td>
+                        <td class="px-6 py-4 text-slate-600 dark:text-slate-300">
+                            {{ booking.service.title }}
+                        </td>
+                        <td class="px-6 py-4">
+                            <span class="px-3 py-1 rounded-xl bg-primary/10 text-primary font-bold text-xs">
+                                {{ booking.booking_date|date:"d M Y" }} @ {{ booking.booking_time|time:"H:i" }}
+                            </span>
+                        </td>
+                        <td class="px-6 py-4">
+                            {% if booking.status == "confirmed" %}
+                                <span class="px-3 py-1 rounded-xl bg-green-100 text-green-700 text-xs font-black">{% trans "Confirmed" %}</span>
+                            {% elif booking.status == "pending" %}
+                                <span class="px-3 py-1 rounded-xl bg-yellow-100 text-yellow-700 text-xs font-black">{% trans "Pending" %}</span>
+                            {% elif booking.status == "cancelled" %}
+                                <span class="px-3 py-1 rounded-xl bg-red-100 text-red-600 text-xs font-black">{% trans "Cancelled" %}</span>
+                            {% else %}
+                                <span class="px-3 py-1 rounded-xl bg-slate-200 text-slate-600 text-xs font-black">{{ booking.get_status_display }}</span>
+                            {% endif %}
+                        </td>
+                        <td class="px-6 py-4 text-right flex justify-end gap-2">
+                             <a href="#" class="w-10 h-10 flex items-center justify-center rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-primary hover:text-white transition">
+                                <span class="material-symbols-outlined text-[18px]">visibility</span>
+                            </a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr><td colspan="5" class="text-center py-16 text-slate-400">{% trans "No bookings found." %}</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<style>
+    .fc { --fc-border-color: rgba(226, 232, 240, 0.1); --fc-today-bg-color: rgba(59, 130, 246, 0.05); }
+    .fc .fc-toolbar-title { font-weight: 900; font-style: italic; font-size: 1.5rem; text-transform: uppercase; color: #0f172a; }
+    .dark .fc .fc-toolbar-title { color: #fff; }
+    .fc .fc-button-primary { background: #0f172a; border: none; font-weight: 700; text-transform: uppercase; font-size: 0.7rem; letter-spacing: 0.1em; padding: 0.75rem 1.25rem; border-radius: 1rem; }
+    .fc-event { border: none !important; padding: 4px 8px !important; border-radius: 8px !important; font-weight: 700 !important; cursor: pointer !important; }
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const calendarEl = document.getElementById("calendar");
+    const modal = document.getElementById("booking-modal");
+
+    const calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: "dayGridMonth",
+        locale: '{{ request.LANGUAGE_CODE|default:"en" }}',
+        headerToolbar: {
+            left: "prev,next today",
+            center: "title",
+            right: "dayGridMonth,timeGridWeek"
+        },
+        events: [
+            {% for booking in bookings %}
+            {
+                id: "{{ booking.id }}",
+                title: "{{ booking.user.username|escapejs }} - {{ booking.service.title|escapejs }}",
+                start: "{{ booking.booking_date|date:'Y-m-d' }}T{{ booking.booking_time|time:'H:i:s' }}",
+                // Status-based coloring
+                backgroundColor: "{% if booking.status == 'confirmed' %}#10b981{% elif booking.status == 'pending' %}#f59e0b{% elif booking.status == 'cancelled' %}#ef4444{% else %}#3b82f6{% endif %}",
+                extendedProps: {
+                    user: "{{ booking.user.get_full_name|default:booking.user.username|escapejs }}",
+                    service: "{{ booking.service.title|escapejs }}",
+                    full_date: "{{ booking.booking_date|date:'d M Y' }} @ {{ booking.booking_time|time:'H:i' }}",
+                    notes: "{{ booking.notes|default:''|escapejs }}"
+                }
+            }{% if not forloop.last %},{% endif %}
+            {% endfor %}
+        ],
+        eventClick: function (info) {
+            const props = info.event.extendedProps;
+            document.getElementById("modal-user").textContent = props.user;
+            document.getElementById("modal-service").textContent = props.service;
+            document.getElementById("modal-date").textContent = props.full_date;
+            
+            const notesCont = document.getElementById("modal-notes-container");
+            if (props.notes) {
+                notesCont.classList.remove("hidden");
+                document.getElementById("modal-notes").textContent = props.notes;
+            } else {
+                notesCont.classList.add("hidden");
+            }
+
+            modal.classList.remove("hidden");
+            modal.classList.add("flex");
+            setTimeout(() => modal.classList.add("opacity-100"), 10);
+        }
+    });
+    calendar.render();
+});
+
+function closeModal() {
+    const modal = document.getElementById("booking-modal");
+    modal.classList.remove("opacity-100");
+    setTimeout(() => {
+        modal.classList.add("hidden");
+        modal.classList.remove("flex");
+    }, 300);
+}
+</script>
+{% endblock %}

@@ -1,0 +1,151 @@
+{% extends 'dashboard/base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Subscriptions" %}{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 lg:px-6">
+
+    <!-- HEADER -->
+    <div class="mb-10 flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
+
+        <div class="space-y-3">
+            <nav class="flex items-center gap-2 text-primary font-bold text-xs uppercase tracking-widest">
+                <span class="material-symbols-outlined text-sm">subscriptions</span>
+                {% trans "CRM" %}
+            </nav>
+
+            <h1 class="text-4xl lg:text-6xl font-black text-slate-900 dark:text-white">
+                {% trans "Subscriptions" %}
+            </h1>
+
+            <p class="text-slate-500 max-w-xl">
+                {% trans "Monitor all active, expired and recurring subscriptions in real time." %}
+            </p>
+        </div>
+
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl px-6 py-5 shadow-sm">
+
+            <p class="text-xs uppercase tracking-widest text-slate-400 font-black">
+                {% trans "Total" %}
+            </p>
+
+            <h3 class="text-3xl font-black text-primary">
+                {{ subscriptions.count }}
+            </h3>
+
+        </div>
+
+    </div>
+
+    <!-- GRID -->
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+
+        {% for s in subscriptions %}
+        <div class="group rounded-[2rem] border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 hover:shadow-xl transition-all duration-300">
+
+            <!-- HEADER -->
+            <div class="flex items-start justify-between">
+
+                <div class="flex items-center gap-4">
+
+                    <div class="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center text-primary">
+                        <span class="material-symbols-outlined">person</span>
+                    </div>
+
+                    <div class="min-w-0">
+                        <h3 class="font-black text-lg truncate">
+                            {{ s.user.username }}
+                        </h3>
+                        <p class="text-xs text-slate-400 truncate">
+                            {{ s.user.email }}
+                        </p>
+                    </div>
+
+                </div>
+
+                <!-- STATUS -->
+                <span class="px-3 py-1 rounded-full text-xs font-black
+                    {% if s.status == 'active' %}bg-emerald-100 text-emerald-700
+                    {% elif s.status == 'paused' %}bg-amber-100 text-amber-700
+                    {% elif s.status == 'cancelled' %}bg-red-100 text-red-600
+                    {% else %}bg-slate-200 text-slate-700{% endif %}">
+                    {{ s.get_status_display }}
+                </span>
+
+            </div>
+
+            <!-- PACKAGE -->
+            <div class="mt-5">
+                <h4 class="font-black text-slate-900 dark:text-white">
+                    {{ s.package.title }}
+                </h4>
+
+                <p class="text-sm text-slate-500 mt-1">
+                    {{ s.package.description|truncatechars:90 }}
+                </p>
+            </div>
+
+            <!-- INFO GRID -->
+            <div class="grid grid-cols-2 gap-4 mt-5 text-sm">
+
+                <div>
+                    <p class="text-xs text-slate-400 uppercase">{% trans "Start" %}</p>
+                    <p class="font-bold">{{ s.start_date }}</p>
+                </div>
+
+                <div>
+                    <p class="text-xs text-slate-400 uppercase">{% trans "End" %}</p>
+                    <p class="font-bold">{{ s.end_date }}</p>
+                </div>
+
+                <div>
+                    <p class="text-xs text-slate-400 uppercase">{% trans "Duration" %}</p>
+                    <p class="font-bold">{{ s.get_duration_display }}</p>
+                </div>
+
+                <div>
+                    <p class="text-xs text-slate-400 uppercase">{% trans "Remaining" %}</p>
+                    <p class="font-bold text-primary">{{ s.remaining_days }}d</p>
+                </div>
+
+            </div>
+
+            <!-- PRICE -->
+            <div class="mt-5 flex items-center justify-between border-t pt-4 border-slate-100 dark:border-slate-800">
+
+                <p class="text-sm text-slate-400">{% trans "Price" %}</p>
+
+                <p class="text-xl font-black text-primary">
+                    {{ s.price }}
+                </p>
+
+            </div>
+
+            <!-- AUTO RENEW -->
+            <div class="mt-4 flex items-center justify-between">
+
+                <span class="text-xs text-slate-400 font-bold uppercase">
+                    {% trans "Auto Renew" %}
+                </span>
+
+                <span class="text-xs font-black px-3 py-1 rounded-full
+                    {% if s.auto_renew %}bg-green-100 text-green-700{% else %}bg-slate-200 text-slate-700{% endif %}">
+                    {{ s.auto_renew|yesno:"Yes,No" }}
+                </span>
+
+            </div>
+
+        </div>
+        {% empty %}
+
+        <div class="col-span-full text-center py-20 border-2 border-dashed rounded-[3rem] border-slate-200 dark:border-slate-800">
+            <h3 class="text-2xl font-black">{% trans "No Subscriptions Yet" %}</h3>
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+{% endblock %}

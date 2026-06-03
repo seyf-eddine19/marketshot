@@ -1,0 +1,379 @@
+{% extends "dashboard/base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Stores" %}{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 lg:px-6 pb-20">
+
+    <!-- HEADER -->
+    <div class="mb-12 flex flex-col lg:flex-row justify-between gap-6">
+
+        <div>
+            <span class="text-primary uppercase text-xs font-black tracking-[0.3em]">
+                {% trans "Marketplace Management" %}
+            </span>
+
+            <h1 class="mt-4 text-5xl lg:text-7xl font-black leading-none">
+
+                {% trans "Merchant" %}
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-600">
+                    {% trans "Stores" %}
+                </span>
+
+            </h1>
+
+            <p class="mt-4 max-w-xl text-slate-500 dark:text-slate-400">
+                {% trans "Manage and monitor all stores, merchants and marketplace activities." %}
+            </p>
+
+        </div>
+
+
+        <!-- STATS -->
+        <div class="rounded-3xl bg-white dark:bg-slate-900 border dark:border-slate-800 p-5 shadow-sm">
+
+            <div class="flex items-center gap-4">
+
+                <div class="w-14 h-14 rounded-2xl bg-primary/10 text-primary flex items-center justify-center">
+
+                    <span class="material-symbols-outlined text-3xl">
+                        storefront
+                    </span>
+
+                </div>
+
+                <div>
+
+                    <h3 class="text-3xl font-black">
+                        {{ page_obj.paginator.count }}
+                    </h3>
+
+                    <p class="uppercase text-xs tracking-[0.2em] text-slate-400 font-black">
+                        {% trans "Total Stores" %}
+                    </p>
+
+                </div>
+
+            </div>
+
+            <a href="{% url 'dashboard:store-add' %}"
+               class="mt-5 h-11 rounded-xl bg-primary text-white font-black px-6 flex items-center justify-center gap-2 hover:scale-[1.03] transition">
+
+                <span class="material-symbols-outlined">
+                    add
+                </span>
+
+                {% trans "New Store" %}
+
+            </a>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- SEARCH -->
+    <div class="mb-8 rounded-3xl bg-white dark:bg-slate-900 border dark:border-slate-800 p-5">
+
+        <form method="get" class="flex flex-col sm:flex-row gap-3">
+
+            <div class="relative flex-1">
+
+                <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
+                    search
+                </span>
+
+                <input type="text"
+                       name="q"
+                       value="{{ request.GET.q }}"
+                       placeholder="{% trans 'Search stores...' %}"
+                       class="w-full h-12 pl-12 pr-4 rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800">
+
+            </div>
+
+            <button class="h-12 px-6 rounded-2xl bg-primary text-white font-black">
+                {% trans "Search" %}
+            </button>
+
+        </form>
+
+    </div>
+
+
+
+    <!-- GRID -->
+    <div class="grid sm:grid-cols-2 xl:grid-cols-3 gap-6">
+
+        {% for store in stores %}
+
+        <div class="group overflow-hidden rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm hover:shadow-2xl transition duration-500">
+
+
+            <!-- BANNER -->
+            <div class="relative h-36">
+
+                {% if store.banner %}
+
+                <img src="{{ store.banner.url }}"
+                     class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
+
+                {% else %}
+
+                <div class="w-full h-full bg-gradient-to-r from-primary via-blue-500 to-indigo-600"></div>
+
+                {% endif %}
+
+                <div class="absolute inset-0 bg-black/20"></div>
+
+
+                <!-- STATUS BADGES -->
+
+                <div class="absolute top-4 right-4 flex gap-2">
+
+                    {% if store.is_verified %}
+                    <span class="bg-blue-500 text-white px-3 py-1 rounded-xl text-[10px] font-black flex items-center gap-1">
+
+                        <span class="material-symbols-outlined text-xs">
+                            verified
+                        </span>
+
+                        {% trans "Verified" %}
+
+                    </span>
+                    {% endif %}
+
+
+                    {% if store.is_featured %}
+                    <span class="bg-yellow-500 text-white px-3 py-1 rounded-xl text-[10px] font-black flex items-center gap-1">
+
+                        <span class="material-symbols-outlined text-xs">
+                            star
+                        </span>
+
+                        {% trans "Featured" %}
+
+                    </span>
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+
+            <!-- CONTENT -->
+            <div class="relative p-6">
+
+
+                <!-- LOGO -->
+                <div class="-mt-14 mb-4">
+
+                    {% if store.logo %}
+
+                    <img src="{{ store.logo.url }}"
+                         class="w-20 h-20 rounded-3xl object-cover border-4 border-white dark:border-slate-900 shadow-lg">
+
+                    {% else %}
+
+                    <div class="w-20 h-20 rounded-3xl bg-white dark:bg-slate-800 border-4 border-white dark:border-slate-900 flex items-center justify-center shadow-lg">
+
+                        <span class="material-symbols-outlined text-primary text-4xl">
+                            storefront
+                        </span>
+
+                    </div>
+
+                    {% endif %}
+
+                </div>
+
+
+                <!-- TITLE -->
+
+                <h2 class="text-xl font-black dark:text-white">
+
+                    {{ store.name }}
+
+                </h2>
+
+                <p class="text-sm text-slate-400 mt-1">
+                    @{{ store.subdomain }}
+                </p>
+
+
+                <!-- OWNER -->
+
+                <div class="mt-4 flex items-center gap-2 text-sm text-slate-500">
+
+                    <span class="material-symbols-outlined text-primary">
+                        person
+                    </span>
+
+                    {{ store.owner.username }}
+
+                </div>
+
+
+                <!-- CATEGORIES -->
+
+                <div class="flex flex-wrap gap-2 mt-5">
+
+                    {% for cat in store.categories.all %}
+
+                    <span class="px-3 py-1 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs flex items-center gap-1">
+
+                        {% if cat.icon %}
+                        <img src="{{ cat.icon.url }}"
+                             class="w-4 h-4 object-contain">
+                        {% else %}
+                        <span class="material-symbols-outlined text-[14px]">
+                            category
+                        </span>
+                        {% endif %}
+
+                        {{ cat.name }}
+
+                    </span>
+
+                    {% empty %}
+
+                    <span class="text-xs text-slate-400">
+                        {% trans "No categories" %}
+                    </span>
+
+                    {% endfor %}
+
+                </div>
+
+
+
+                <!-- FOOTER -->
+
+                <div class="mt-6 pt-5 border-t border-slate-100 dark:border-slate-800 flex justify-between items-center">
+
+
+                    <!-- SOCIAL -->
+
+                    <div class="flex gap-3">
+
+                        {% if store.website_url %}
+                        <a href="{{ store.website_url }}" target="_blank">
+                            <span class="material-symbols-outlined text-[18px] hover:text-primary transition">
+                                public
+                            </span>
+                        </a>
+                        {% endif %}
+
+                        {% if store.instagram_url %}
+                        <a href="{{ store.instagram_url }}" target="_blank">
+                            <span class="material-symbols-outlined text-[18px] hover:text-pink-500 transition">
+                                instagram
+                            </span>
+                        </a>
+                        {% endif %}
+
+                        {% if store.whatsapp_number %}
+                        <a href="https://wa.me/{{store.whatsapp_number}}" target="_blank">
+                            <span class="material-symbols-outlined text-[18px] hover:text-green-500 transition">
+                                chat
+                            </span>
+                        </a>
+                        {% endif %}
+
+                    </div>
+
+
+                    <!-- ACTIONS -->
+
+                    <div class="flex gap-2">
+
+                        <a href="{% url 'dashboard:store-edit' store.pk %}"
+                           class="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-primary hover:text-white flex items-center justify-center transition">
+
+                            <span class="material-symbols-outlined text-[18px]">
+                                edit
+                            </span>
+
+                        </a>
+
+
+                        <a href="{% url 'dashboard:store-delete' store.pk %}"
+                           class="w-10 h-10 rounded-xl bg-red-100 text-red-500 hover:bg-red-500 hover:text-white flex items-center justify-center transition">
+
+                            <span class="material-symbols-outlined text-[18px]">
+                                delete
+                            </span>
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% empty %}
+
+        <div class="col-span-full py-24 text-center">
+
+            <span class="material-symbols-outlined text-7xl text-slate-300">
+                storefront
+            </span>
+
+            <h3 class="text-2xl font-black mt-4">
+                {% trans "No Stores Found" %}
+            </h3>
+
+            <p class="mt-2 text-slate-400">
+                {% trans "Try changing filters or create a new store." %}
+            </p>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+
+
+    <!-- PAGINATION -->
+
+    {% if page_obj.paginator.num_pages > 1 %}
+
+    <div class="mt-12 flex justify-center gap-2">
+
+        {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}"
+           class="px-5 py-3 rounded-xl bg-slate-100 dark:bg-slate-800">
+
+            {% trans "Previous" %}
+
+        </a>
+        {% endif %}
+
+        <span class="px-5 py-3 font-bold">
+
+            {{ page_obj.number }}
+            /
+            {{ page_obj.paginator.num_pages }}
+
+        </span>
+
+        {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}"
+           class="px-5 py-3 rounded-xl bg-slate-100 dark:bg-slate-800">
+
+            {% trans "Next" %}
+
+        </a>
+        {% endif %}
+
+    </div>
+
+    {% endif %}
+
+</div>
+{% endblock %}

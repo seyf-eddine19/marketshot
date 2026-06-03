@@ -1,0 +1,630 @@
+{% extends "./base.html" %}
+{% load static i18n %}
+
+{% block title %}{% trans "MarketShot | Creative Production & Digital Marketing" %}{% endblock %}
+
+{% block content %}
+
+<section id="hero" class="relative min-h-[90vh] flex items-center overflow-hidden px-6 pb-12 bg-background dark:bg-slate-950 transition-colors duration-300">
+    <div class="max-w-7xl mx-auto w-full grid lg:grid-cols-2 gap-12 items-center py-12">
+        <div class="z-10">
+            <div class="inline-flex items-center px-4 py-1.5 rounded-full bg-primary-fixed text-primary text-xs font-bold tracking-widest uppercase mb-8 dark:bg-primary/20 dark:text-primary-fixed">
+                {% trans "Creative Content & Digital Growth Studio" %}
+            </div>
+            <h1 class="text-5xl md:text-7xl font-black tracking-tighter leading-[1.05] mb-8 text-on-background dark:text-white">
+                {% trans "Create. Produce." %} <br>
+                <span class="text-primary">{% trans "Scale your brand" %}</span> <br>
+                {% trans "with Marketshot" %}
+            </h1>
+            <p class="text-lg text-tertiary dark:text-slate-400 max-w-xl mb-10 leading-relaxed">
+                {% trans "We help businesses, creators, and brands produce high-quality visual content, professional photography, UGC videos, advertising creatives, and digital marketing campaigns — all in one integrated ecosystem." %}
+            </p>
+            <div class="flex flex-wrap gap-4">
+                <button class="px-8 py-4 rounded-xl cta-gradient text-white font-bold text-lg shadow-xl shadow-primary/30 hover:scale-[1.02] transition-transform">
+                    {% trans "Get Started" %}
+                </button>
+                <button class="px-8 py-4 rounded-xl bg-white dark:bg-slate-800 text-on-background dark:text-white border border-slate-200 dark:border-slate-700 font-bold text-lg hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
+                    {% trans "Explore Services" %}
+                </button>
+            </div>
+        </div>
+        
+        <div class="relative m-auto">
+            <div class="relative w-full max-w-[800px] aspect-square rounded-[3rem] overflow-hidden shadow-2xl rotate-3 scale-105 z-10 border-8 border-white dark:border-slate-900">
+                <img alt="{% trans 'Professional studio environment' %}" class="w-full h-full object-cover" src="{% static 'img/hero-img-1.png' %}"/>
+            </div>
+            <div class="absolute -bottom-10 -left-10 w-64 h-64 rounded-2xl overflow-hidden shadow-2xl -rotate-6 border-8 border-white dark:border-slate-800 z-20">
+                <img alt="{% trans 'High-end camera setup' %}" class="w-full h-full object-cover" src="{% static 'img/hero-img-2.png' %}"/>
+            </div>
+            <div class="absolute -top-20 -right-20 w-72 h-72 bg-secondary/20 blur-[100px] rounded-full"></div>
+        </div>
+    </div>
+    <div class="absolute top-1/2 right-0 -translate-y-1/2 translate-x-1/2 w-[800px] h-[800px] bg-primary/5 dark:bg-primary/10 blur-[120px] rounded-full pointer-events-none"></div>
+</section>
+
+<section id="services" class="py-32 px-6 bg-slate-50 dark:bg-slate-900/50 transition-colors">
+    <div class="max-w-7xl mx-auto">
+        <!-- HEADER -->
+        <div class="mb-20">
+            <h2 class="text-4xl font-black tracking-tight mb-4 text-on-background dark:text-white">
+                {% trans "Our Services" %}
+            </h2>
+            <p class="text-tertiary dark:text-slate-400 text-lg max-w-2xl">
+                {% trans "End-to-end creative and digital solutions for brands, businesses, and content creators." %}
+            </p>
+        </div>
+
+        <!-- SERVICES GRID -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for service in services %}
+            <div class="group p-10 rounded-3xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 hover:shadow-2xl hover:shadow-primary/5 hover:-translate-y-2 transition-all duration-300">
+                <div class="w-14 h-14 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform
+                    {% if service.color_class == 'primary' %} bg-primary/10 {% else %} bg-secondary/10 {% endif %}">
+                    <span class="material-symbols-outlined text-3xl
+                        {% if service.color_class == 'primary' %} text-primary {% else %} text-secondary {% endif %}">
+                        {{ service.icon }}
+                    </span>
+                </div>
+                <h3 class="text-2xl font-bold mb-4 dark:text-white">{{ service.title }}</h3>
+                <p class="text-tertiary dark:text-slate-400 leading-relaxed">{{ service.description }}</p>
+            </div>
+            {% endfor %}
+        </div>
+        <!-- CTA BANNER -->
+        <div class="mt-16 p-10 rounded-3xl bg-on-background text-white flex flex-col md:flex-row items-center justify-between gap-8 border border-white/5 shadow-2xl">
+
+            <div class="text-center md:text-left">
+                <h3 class="text-3xl font-black mb-2">
+                    {% trans "Book a Creative Session Today" %}
+                </h3>
+                <p class="text-white/60">
+                    {% trans "Photography, video, and content production tailored for your business." %}
+                </p>
+            </div>
+
+            <a href="{% url 'studio:booking' %}"
+               class="whitespace-nowrap px-10 py-4 bg-white text-primary font-bold rounded-xl shadow-lg hover:bg-primary-fixed transition-colors">
+                {% trans "Book Now" %}
+            </a>
+
+        </div>
+
+    </div>
+</section>
+
+<section id="portfolio" class="py-32 px-6 dark:bg-slate-950">
+
+    <div class="max-w-7xl mx-auto">
+
+        <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+
+            <div>
+                <h2 class="text-4xl font-black tracking-tight mb-4 dark:text-white">
+                    {% trans "Featured Portfolio" %}
+                </h2>
+
+                <p class="text-tertiary dark:text-slate-400 text-lg max-w-xl">
+                    {% trans "A selection of recent projects that showcase our commitment to excellence and creative innovation." %}
+                </p>
+            </div>
+
+            <a href="#"
+               class="px-8 py-3 rounded-full border border-slate-200 dark:border-slate-700 text-on-background dark:text-white font-semibold hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+
+                {% trans "View All Works" %}
+            </a>
+
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-6 h-auto md:h-[800px]">
+            {% for project in projects %}
+            {% with c=forloop.counter %}
+            <div class="
+                {% if c == 1 or c == 4 or c == 5 or c == 8 or c == 9 or c == 12 or c == 13 %}
+                    md:col-span-8
+                {% else %}
+                    md:col-span-4
+                {% endif %}
+                h-80 md:h-auto rounded-3xl overflow-hidden relative group
+            ">
+            {% endwith %}
+                {% if project.image %}
+                    <img
+                        src="{{ project.image.url }}"
+                        alt="{{ project.title }}"
+                        class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    >
+                {% else %}
+                    <img
+                        src="{% static 'img/placeholder.jpg' %}"
+                        alt="{{ project.title }}"
+                        class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    >
+                {% endif %}
+
+                <div class="absolute inset-0 bg-gradient-to-t from-on-background/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-8 flex flex-col justify-end">
+
+                    <span class="text-primary-fixed text-sm font-bold uppercase mb-2">
+                        {% trans "Project" %}
+                    </span>
+
+                    <h4 class="
+                        text-white font-bold
+                        {% if forloop.first or forloop.counter|divisibleby:4 %}
+                            text-3xl
+                        {% else %}
+                            text-2xl
+                        {% endif %}
+                    ">
+                        {{ project.title }}
+                    </h4>
+
+                    <p class="text-white/70 text-sm mt-2 line-clamp-2">
+                        {{ project.description }}
+                    </p>
+
+                </div>
+
+            </div>
+            {% empty %}
+            <div class="col-span-12 text-center py-20">
+                <h3 class="text-2xl font-bold dark:text-white mb-4">{% trans "No projects available" %}</h3>
+                <p class="text-slate-500">{% trans "Projects will appear here once added." %}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section id="studio" class="py-32 px-6 bg-background dark:bg-slate-950 transition-colors">
+    <div class="max-w-7xl mx-auto">
+        <div class="grid lg:grid-cols-2 gap-20 items-center">
+            <div>
+                <div class="inline-flex items-center px-4 py-1.5 rounded-full bg-primary/10 text-primary text-xs font-bold tracking-widest uppercase mb-8">
+                    {% trans "The Studio" %}
+                </div>
+                <h2 class="text-5xl font-black tracking-tight mb-8 dark:text-white">{% trans "Where magic happens." %}</h2>
+                <p class="text-lg text-tertiary dark:text-slate-400 mb-10 leading-relaxed">
+                    {% trans "Our 5,000 sq. ft. studio space in the heart of the city is designed for maximum creativity. From sound-treated rooms to natural light stages, we have everything your brand needs under one roof." %}
+                </p>
+                <div class="grid grid-cols-2 gap-6 mb-12">
+                    <div class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800">
+                        <h4 class="text-3xl font-black mb-2 text-primary">{% trans "24/7" %}</h4>
+                        <p class="text-tertiary dark:text-slate-400 text-sm font-bold">{% trans "Member Access" %}</p>
+                    </div>
+                    <div class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800">
+                        <h4 class="text-3xl font-black mb-2 text-primary">{% trans "4K" %}</h4>
+                        <p class="text-tertiary dark:text-slate-400 text-sm font-bold">{% trans "Editing Suites" %}</p>
+                    </div>
+                </div>
+                <button class="px-8 py-4 rounded-xl bg-on-background dark:bg-white dark:text-on-background text-white font-bold hover:scale-[1.02] transition-transform">
+                    {% trans "Take a Virtual Tour" %}
+                </button>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div class="rounded-3xl overflow-hidden h-64 mt-12 shadow-lg">
+                    <img alt="{% trans 'Studio lighting' %}" class="w-full h-full object-cover" src="{% static 'img/studio-1.png' %}"/>
+                </div>
+                <div class="rounded-3xl overflow-hidden h-64 shadow-lg">
+                    <img alt="{% trans 'Audio suite' %}" class="w-full h-full object-cover" src="{% static 'img/studio-2.png' %}"/>
+                </div>
+                <div class="rounded-3xl overflow-hidden h-64 shadow-lg">
+                    <img alt="{% trans 'Meeting area' %}" class="w-full h-full object-cover" src="{% static 'img/studio-3.png' %}"/>
+                </div>
+                <div class="rounded-3xl overflow-hidden h-64 -mt-12 shadow-lg">
+                    <img alt="{% trans 'Design station' %}" class="w-full h-full object-cover" src="{% static 'img/studio-4.png' %}"/>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="packages" class="py-32 px-6 bg-background dark:bg-slate-900 transition-colors">
+    <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-20">
+            <h2 class="text-4xl font-black tracking-tight mb-4 dark:text-white">{% trans "Flexible Packages" %}</h2>
+            <p class="text-tertiary dark:text-slate-400 text-lg">{% trans "Choose the right production tier for your brand's growth phase." %}</p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+            {% for package in packages %}
+
+            <div class="
+                relative p-10 rounded-3xl transition-all duration-300 flex flex-col
+                
+                {% if package.is_highlighted %}
+                    bg-white dark:bg-slate-800 border-2 border-primary shadow-2xl scale-105 z-10
+                {% else %}
+                    bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 hover:shadow-xl
+                {% endif %}
+            ">
+
+                {% if package.is_highlighted %}
+                <div class="absolute top-0 right-10 -translate-y-1/2 bg-primary text-white text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-widest">
+                    {% trans "Most Popular" %}
+                </div>
+                {% endif %}
+
+                <!-- Package Title -->
+                <h3 class="text-xl font-bold mb-2 dark:text-white">
+                    {{ package.title }}
+                </h3>
+
+                <!-- Package Description -->
+                <p class="text-sm text-tertiary dark:text-slate-400 mb-6">
+                    {{ package.description }}
+                </p>
+
+                <!-- Price -->
+                <div class="text-4xl font-black mb-6 {% if package.is_highlighted %}text-primary{% else %}dark:text-white{% endif %}">
+                    
+                    {% if package.base_price %}
+                        ${{ package.get_price|floatformat:0 }}
+                        <span class="text-sm font-medium text-tertiary">
+                            /{% trans "month" %}
+                        </span>
+                    {% else %}
+                        {% trans "Custom" %}
+                    {% endif %}
+                    
+                </div>
+
+                <!-- Features -->
+                <ul class="space-y-4 mb-10 flex-grow">
+
+                    {% for feature in package.features.all %}
+
+                    <li class="flex items-center gap-3 
+                        {% if feature.is_included %}
+                            text-tertiary dark:text-slate-400
+                        {% else %}
+                            text-slate-400 opacity-60
+                        {% endif %}
+                    ">
+
+                        <span class="material-symbols-outlined text-xl
+                            {% if feature.is_included %}
+                                text-primary
+                            {% endif %}
+                        ">
+                            {% if feature.is_included %}
+                                check_circle
+                            {% else %}
+                                cancel
+                            {% endif %}
+                        </span>
+
+                        {{ feature.text }}
+
+                    </li>
+
+                    {% endfor %}
+
+                </ul>
+
+                <!-- Button -->
+                <a href="{{ package.button_link|default:'#' }}"
+                class="
+                w-full py-4 rounded-xl text-center font-bold transition-colors
+
+                {% if package.is_highlighted %}
+                        cta-gradient text-white shadow-lg shadow-primary/30
+                {% else %}
+                        bg-slate-100 dark:bg-slate-700
+                        text-on-background dark:text-white
+                        hover:bg-slate-200
+                {% endif %}
+                ">
+
+                    {% if package.is_highlighted %}
+                        {% trans "Select Growth" %}
+                    {% elif forloop.first %}
+                        {% trans "Choose Starter" %}
+                    {% else %}
+                        {% trans "Custom Quote" %}
+                    {% endif %}
+
+                </a>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+    </div>
+</section>
+
+<section class="py-32 px-6 bg-surface-container-high overflow-hidden relative">
+    <!-- Background blur effects -->
+    <div class="absolute top-0 left-0 w-72 h-72 bg-primary/10 blur-[120px] rounded-full"></div>
+    <div class="absolute bottom-0 right-0 w-72 h-72 bg-secondary/10 blur-[120px] rounded-full"></div>
+
+    <div class="max-w-7xl mx-auto relative z-10">
+
+        <div class="text-center mb-20">
+            <h2 class="text-4xl font-black tracking-tight mb-4 dark:text-white">
+                {% trans "Client Testimonials" %}
+            </h2>
+
+            <p class="text-lg text-tertiary dark:text-slate-400 max-w-2xl mx-auto">
+                {% trans "See what our clients say about working with MarketShot." %}
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+            {% for testimonial in testimonials %}
+
+            <div class="p-8 rounded-3xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300">
+
+                <!-- Rating -->
+                <div class="flex gap-1 text-primary mb-6">
+
+                    {% for i in "12345"|make_list %}
+                    <span class="material-symbols-outlined"
+                          style="font-variation-settings:'FILL' 1;">
+                        {% if forloop.counter <= testimonial.rating %}
+                            star
+                        {% else %}
+                            star_outline
+                        {% endif %}
+                    </span>
+                    {% endfor %}
+
+                </div>
+
+                <!-- Feedback -->
+                <p class="text-tertiary dark:text-slate-300 italic leading-relaxed mb-8">
+                    "{{ testimonial.feedback }}"
+                </p>
+
+                <!-- User -->
+                <div class="flex items-center gap-4">
+
+                    <div class="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white font-bold">
+
+                        {{ testimonial.client.username|slice:":1"|upper }}
+
+                    </div>
+
+                    <div>
+
+                        <div class="font-bold dark:text-white">
+                            {{ testimonial.client.get_full_name|default:testimonial.client.username }}
+                        </div>
+
+                        <div class="text-xs text-slate-500 dark:text-slate-400">
+                            {% trans "Client" %}
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            {% empty %}
+
+            <div class="col-span-full text-center py-12">
+                <p class="text-slate-500 dark:text-slate-400">
+                    {% trans "No testimonials available yet." %}
+                </p>
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</section>
+
+<section id="booking" class="py-32 px-6 bg-background dark:bg-slate-950 transition-colors">
+    <div class="max-w-5xl mx-auto rounded-[3rem] hero-gradient p-12 md:p-20 text-center text-white relative overflow-hidden shadow-2xl shadow-primary/20">
+        <div class="relative z-10">
+            <h2 class="text-4xl md:text-6xl font-black tracking-tighter mb-6">
+                {% trans "Ready to scale your legacy?" %}
+            </h2>
+            <p class="text-lg md:text-xl opacity-90 mb-12 max-w-2xl mx-auto leading-relaxed">
+                {% trans "Let's build something extraordinary together. Book your discovery session today and transform your brand's digital presence." %}
+            </p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="{% url 'studio:booking' %}" 
+                   class="px-10 py-4 bg-white text-primary font-bold rounded-xl text-lg shadow-xl shadow-black/10 hover:bg-slate-50 hover:scale-[1.02] transition-all">
+                    {% trans "Book a Session" %}
+                </a>
+                <a href="{% url 'studio:contact' %}" 
+                   class="px-10 py-4 bg-white/10 backdrop-blur-md border border-white/20 text-white font-bold rounded-xl text-lg hover:bg-white/20 transition-all">
+                    {% trans "Contact Us" %}
+                </a>
+            </div>
+        </div>
+        
+        <div class="absolute top-0 left-0 w-full h-full opacity-20 pointer-events-none">
+            <img alt="{% trans 'Abstract gradient' %}" 
+                 class="w-full h-full object-cover mix-blend-overlay" 
+                 src="{% static 'img/hero-img-2.png' %}">
+        </div>
+        
+        <div class="absolute -bottom-24 -right-24 w-64 h-64 bg-white/20 blur-[80px] rounded-full"></div>
+    </div>
+</section>
+
+<section id="contact" class="py-32 px-6 bg-background dark:bg-slate-950 overflow-hidden relative">
+
+    <!-- Background effects -->
+    <div class="absolute top-0 right-0 w-96 h-96 bg-primary/10 blur-[140px] rounded-full"></div>
+    <div class="absolute bottom-0 left-0 w-96 h-96 bg-secondary/10 blur-[140px] rounded-full"></div>
+
+    <div class="max-w-7xl mx-auto relative z-10">
+
+        <!-- Header -->
+        <div class="text-center mb-20">
+            <div class="inline-flex items-center px-4 py-1.5 rounded-full bg-primary/10 text-primary text-xs font-bold tracking-widest uppercase mb-6">
+                {% trans "Contact Us" %}
+            </div>
+
+            <h2 class="text-4xl md:text-5xl font-black tracking-tight mb-4 dark:text-white">
+                {% trans "Let's build something amazing" %}
+            </h2>
+
+            <p class="text-lg text-tertiary dark:text-slate-400 max-w-2xl mx-auto">
+                {% trans "Have a project in mind? Send us a message and our team will get back to you." %}
+            </p>
+        </div>
+
+        <div class="grid lg:grid-cols-5 gap-10">
+
+            <!-- Contact Info -->
+            <div class="lg:col-span-2 space-y-6">
+
+                <div class="p-8 rounded-3xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700">
+
+                    <div class="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mb-6">
+                        <span class="material-symbols-outlined text-primary text-3xl">
+                            mail
+                        </span>
+                    </div>
+
+                    <h3 class="text-xl font-bold mb-2 dark:text-white">
+                        {% trans "Email Us" %}
+                    </h3>
+
+                    <p class="text-tertiary dark:text-slate-400">
+                        hello@marketshot.com
+                    </p>
+
+                </div>
+
+                <div class="p-8 rounded-3xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700">
+
+                    <div class="w-14 h-14 rounded-2xl bg-secondary/10 flex items-center justify-center mb-6">
+                        <span class="material-symbols-outlined text-secondary text-3xl">
+                            call
+                        </span>
+                    </div>
+
+                    <h3 class="text-xl font-bold mb-2 dark:text-white">
+                        {% trans "Call Us" %}
+                    </h3>
+
+                    <p class="text-tertiary dark:text-slate-400">
+                        +213 XXX XX XX XX
+                    </p>
+
+                </div>
+
+                <div class="p-8 rounded-3xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700">
+
+                    <div class="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mb-6">
+                        <span class="material-symbols-outlined text-primary text-3xl">
+                            location_on
+                        </span>
+                    </div>
+
+                    <h3 class="text-xl font-bold mb-2 dark:text-white">
+                        {% trans "Location" %}
+                    </h3>
+
+                    <p class="text-tertiary dark:text-slate-400">
+                        {% trans "Tlemcen, Algeria" %}
+                    </p>
+
+                </div>
+
+            </div>
+
+            <!-- Contact Form -->
+            <div class="lg:col-span-3">
+
+                <div class="p-10 rounded-[2rem] bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 shadow-xl">
+
+                    <form method="POST">
+
+                        {% csrf_token %}
+
+                        <div class="grid md:grid-cols-2 gap-6 mb-6">
+
+                            <div>
+                                <label class="block mb-2 text-sm font-bold dark:text-white">
+                                    {% trans "Name" %}
+                                </label>
+
+                                <input
+                                    type="text"
+                                    name="name"
+                                    required
+                                    class="w-full px-5 py-4 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 focus:border-primary outline-none dark:text-white"
+                                    placeholder="{% trans 'Your name' %}"
+                                >
+                            </div>
+
+                            <div>
+                                <label class="block mb-2 text-sm font-bold dark:text-white">
+                                    {% trans "Email" %}
+                                </label>
+
+                                <input
+                                    type="email"
+                                    name="email"
+                                    required
+                                    class="w-full px-5 py-4 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 focus:border-primary outline-none dark:text-white"
+                                    placeholder="{% trans 'Your email' %}"
+                                >
+                            </div>
+
+                        </div>
+
+                        <div class="mb-6">
+
+                            <label class="block mb-2 text-sm font-bold dark:text-white">
+                                {% trans "Subject" %}
+                            </label>
+
+                            <input
+                                type="text"
+                                name="subject"
+                                required
+                                class="w-full px-5 py-4 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 focus:border-primary outline-none dark:text-white"
+                                placeholder="{% trans 'Project subject' %}"
+                            >
+
+                        </div>
+
+                        <div class="mb-8">
+
+                            <label class="block mb-2 text-sm font-bold dark:text-white">
+                                {% trans "Message" %}
+                            </label>
+
+                            <textarea
+                                rows="6"
+                                name="message"
+                                required
+                                class="w-full px-5 py-4 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 focus:border-primary outline-none dark:text-white"
+                                placeholder="{% trans 'Tell us about your project...' %}"
+                            ></textarea>
+
+                        </div>
+
+                        <button
+                            type="submit"
+                            class="w-full py-4 rounded-xl cta-gradient text-white font-bold shadow-xl shadow-primary/20 hover:scale-[1.01] transition-transform"
+                        >
+                            {% trans "Send Message" %}
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

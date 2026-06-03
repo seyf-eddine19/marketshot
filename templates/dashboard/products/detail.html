@@ -1,0 +1,343 @@
+{% extends "dashboard/base.html" %}
+{% load i18n %}
+
+{% block title %}
+{{ product.name }}
+{% endblock %}
+
+{% block content %}
+
+<div class="max-w-7xl mx-auto px-4 lg:px-6 pb-20">
+
+    <!-- TOP -->
+
+    <div class="grid lg:grid-cols-2 gap-10">
+
+        <!-- LEFT SIDE -->
+
+        <div>
+
+            <!-- MAIN IMAGE -->
+
+            <div class="rounded-3xl overflow-hidden bg-white dark:bg-slate-900 border dark:border-slate-800 shadow">
+
+                <img src="{{ product.main_image.url }}"
+                     class="w-full h-[450px] object-cover">
+
+            </div>
+
+            <!-- GALLERY -->
+
+            {% if product.images.all %}
+            <div class="grid grid-cols-4 gap-3 mt-4">
+
+                {% for image in product.images.all %}
+                <div class="rounded-2xl overflow-hidden border dark:border-slate-800">
+
+                    <img src="{{ image.image.url }}"
+                         class="w-full h-24 object-cover">
+
+                </div>
+                {% endfor %}
+
+            </div>
+            {% endif %}
+
+        </div>
+
+
+        <!-- RIGHT SIDE -->
+
+        <div>
+
+            <div class="flex flex-wrap gap-2 mb-5">
+
+                {% if product.is_featured %}
+                <span class="px-3 py-1 rounded-xl bg-yellow-100 text-yellow-700 text-xs font-black">
+
+                    {% trans "Featured" %}
+
+                </span>
+                {% endif %}
+
+                {% if product.is_new_arrival %}
+                <span class="px-3 py-1 rounded-xl bg-blue-100 text-blue-700 text-xs font-black">
+
+                    {% trans "New" %}
+
+                </span>
+                {% endif %}
+
+                {% if product.is_on_sale %}
+                <span class="px-3 py-1 rounded-xl bg-red-100 text-red-700 text-xs font-black">
+
+                    {{ product.discount }}% OFF
+
+                </span>
+                {% endif %}
+
+            </div>
+
+
+            <h1 class="text-4xl font-black text-slate-900 dark:text-white">
+
+                {{ product.name }}
+
+            </h1>
+
+
+            <div class="flex items-center gap-3 mt-3">
+
+                <span class="material-symbols-outlined text-yellow-500">
+
+                    star
+
+                </span>
+
+                <span class="font-bold">
+
+                    {{ avg_rating }}
+
+                </span>
+
+                <span class="text-slate-400">
+
+                    ({{ reviews_count }} {% trans "reviews" %})
+
+                </span>
+
+            </div>
+
+
+            <div class="mt-6">
+
+                <span class="text-4xl font-black text-primary">
+
+                    {{ product.discounted_price }}
+
+                </span>
+
+                {% if product.discount %}
+                <span class="ml-2 line-through text-slate-400">
+
+                    {{ product.base_price }}
+
+                </span>
+                {% endif %}
+
+            </div>
+
+
+            <!-- INFO -->
+
+            <div class="mt-8 space-y-4">
+
+                <div class="flex items-center gap-3">
+
+                    <span class="material-symbols-outlined text-primary">
+
+                        storefront
+
+                    </span>
+
+                    {{ product.store.name }}
+
+                </div>
+
+
+                <div class="flex items-center gap-3">
+
+                    <span class="material-symbols-outlined text-primary">
+
+                        category
+
+                    </span>
+
+                    {{ product.category.name }}
+
+                </div>
+
+
+                <div class="flex items-center gap-3">
+
+                    <span class="material-symbols-outlined text-primary">
+
+                        inventory
+
+                    </span>
+
+                    {{ product.stock }}
+
+                    {% trans "items in stock" %}
+
+                </div>
+
+            </div>
+
+
+            <!-- DESCRIPTION -->
+
+            <div class="mt-8">
+
+                <h3 class="font-black text-xl">
+
+                    {% trans "Description" %}
+
+                </h3>
+
+                <p class="mt-4 text-slate-500 leading-7">
+
+                    {{ product.description }}
+
+                </p>
+
+            </div>
+
+
+            <!-- VARIANTS -->
+
+            <div class="mt-8">
+
+                <h3 class="font-black text-xl mb-4">
+
+                    {% trans "Variants" %}
+
+                </h3>
+
+                <div class="space-y-3">
+
+                {% for variant in product.variants.all %}
+
+                <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800">
+
+                    <div class="flex justify-between">
+
+                        <div>
+
+                            {% for attr in variant.attribute_values.all %}
+
+                                {% if attr.category == "COLOR" %}
+
+                                <span class="inline-flex items-center gap-2 mr-3">
+
+                                    <span class="w-4 h-4 rounded-full border"
+                                          style="background:{{ attr.color_code }}"></span>
+
+                                    {{ attr.value }}
+
+                                </span>
+
+                                {% else %}
+
+                                <span class="mr-3">
+
+                                    {{ attr.value }}
+
+                                </span>
+
+                                {% endif %}
+
+                            {% endfor %}
+                        </div>
+
+                        <div class="font-bold">
+
+                            {{ variant.stock }}
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                {% endfor %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- REVIEWS -->
+
+    <div class="mt-16">
+
+        <h2 class="text-3xl font-black mb-8">
+
+            {% trans "Customer Reviews" %}
+            ({{ reviews_count }})
+
+        </h2>
+
+
+        <div class="space-y-4">
+
+            {% for review in reviews %}
+
+            <div class="p-6 rounded-3xl bg-white dark:bg-slate-900 border dark:border-slate-800">
+
+                <div class="flex justify-between">
+
+                    <div>
+
+                        <h4 class="font-black">
+
+                            {{ review.customer.username }}
+
+                        </h4>
+
+                        <p class="text-sm text-slate-400">
+
+                            {{ review.created_at|date:"d M Y" }}
+
+                        </p>
+
+                    </div>
+
+                    <div class="flex">
+
+                        {% for i in "12345" %}
+
+                            {% if forloop.counter <= review.rating %}
+                                <span class="material-symbols-outlined text-yellow-500">
+                                    star
+                                </span>
+                            {% else %}
+                                <span class="material-symbols-outlined text-slate-300">
+                                    star
+                                </span>
+                            {% endif %}
+
+                        {% endfor %}
+                    </div>
+
+                </div>
+
+                <p class="mt-4 text-slate-600 dark:text-slate-400">
+
+                    {{ review.comment }}
+
+                </p>
+
+            </div>
+
+            {% empty %}
+
+            <div class="text-center py-12 text-slate-400">
+
+                {% trans "No reviews yet." %}
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

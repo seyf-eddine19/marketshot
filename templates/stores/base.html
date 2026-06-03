@@ -1,0 +1,311 @@
+{% load i18n static %}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}" dir="{% if LANGUAGE_CODE == 'ar' %}rtl{% else %}ltr{% endif %}" class="scroll-smooth">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>{% block title %}MarketShot{% endblock %}</title>
+
+    <script src="{% static 'js/tailwind.min.js' %}"></script>
+    
+    <link rel="stylesheet" href="{% static 'css/fonts.css' %}">
+
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0052FF",
+                        "secondary": "#FF5C00",
+                        "tertiary": "#64748B",
+                        "background": "#fcf9f8",
+                        "on-background": "#0F172A",
+                        "surface-container-low": "#f6f3f2",
+                        "primary-fixed": "#DBEAFE",
+                    },
+                    borderRadius: { "xl": "1.5rem" }
+                },
+            },
+        }
+    </script>
+
+    <style>
+        body { 
+            font-family: 'Inter', sans-serif; 
+            scroll-behavior: smooth; 
+            background-color: #FCF9F8; 
+            color: #0F172A; 
+            transition: background-color 0.3s ease;
+        }
+        .glass-nav { 
+            background: rgba(255, 255, 255, 0.8); 
+            backdrop-filter: blur(12px); 
+            -webkit-backdrop-filter: blur(12px); 
+        }
+        .dark .glass-nav { 
+            background: rgba(15, 23, 42, 0.8); 
+            border-color: rgba(51, 65, 85, 0.5); 
+        }
+        .cta-gradient { background: linear-gradient(135deg, #0052FF 0%, #0044D6 100%); transition: all 0.3s ease; }
+        .cta-gradient:hover { opacity: 0.9; transform: translateY(-1px); }
+        .material-symbols-outlined { font-display: block; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .text-gradient { background: linear-gradient(135deg, #0052FF, #FF5C00); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        /* Prevent layout shift during theme switch */
+        .no-transition { transition: none !important; }
+    </style>
+    
+    <script>
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>    
+</head>
+
+<body class="bg-background dark:bg-slate-950 text-on-background dark:text-slate-200 antialiased overflow-x-hidden">
+
+    <nav class="fixed top-0 w-full z-50 glass-nav border-b border-slate-200/60 transition-colors">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+
+            <div class="flex items-center gap-8">
+                <a href="{% url 'studio:home' %}" class="flex items-center gap-3 group" dir="ltr">
+                    <div class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center group-hover:rotate-12 transition-transform duration-500">
+                        <img src="{% static 'img/logo.png' %}" alt="Logo" class="w-full h-full object-contain">
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="text-xl font-black tracking-tighter leading-none">
+                            <span class="text-primary">Market</span><span class="text-secondary">Shot</span>
+                        </span>
+                        <span class="text-[7px] font-bold tracking-[0.2em] text-slate-400 uppercase mt-1">{% trans "Creative Ecosystem" %}</span>
+                    </div>
+                </a>
+
+                <div class="hidden lg:flex items-center gap-1 bg-slate-100/50 dark:bg-slate-800/50 p-1 rounded-full border border-slate-200/50 dark:border-slate-700/50">
+                    {% url 'studio:home' as home_url %}
+                    {% url 'stores:stores' as stores_url %}
+                    
+                    <a href="{{ home_url }}" class="px-5 py-2 text-xs font-bold rounded-xl transition-all {% if request.path == home_url %}bg-white dark:bg-slate-900 shadow-sm text-primary{% else %}text-slate-500 hover:text-slate-900 dark:hover:text-white{% endif %}">
+                        {% trans "Studio" %}
+                    </a>
+                    <a href="{{ stores_url }}" class="px-5 py-2 text-xs font-bold rounded-xl transition-all {% if stores_url in request.path %}bg-white dark:bg-slate-900 shadow-sm text-primary{% else %}text-slate-500 hover:text-slate-900 dark:hover:text-white{% endif %}">
+                        {% trans "Explore Stores" %}
+                    </a>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-2 md:gap-4">
+                
+                <div class="hidden lg:flex items-center bg-slate-100 dark:bg-slate-800 rounded-full px-4 py-1 w-64 border border-slate-200/50 dark:border-slate-700/50 focus-within:border-primary/20">
+                    <span class="material-symbols-outlined text-slate-400 text-[20px]">search</span>
+                    <input type="text" placeholder="{% trans 'Search...' %}" class="bg-transparent border-none focus:ring-0 text-sm w-full px-2">
+                </div>
+
+                <div class="hidden lg:flex items-center gap-3">
+                    <form action="{% url 'set_language' %}" method="post" class="flex items-center bg-slate-100/50 dark:bg-slate-800 p-1.5 rounded-xl border border-slate-200 dark:border-slate-700">
+                        {% csrf_token %}
+                        <input name="next" type="hidden" value="{{ request.get_full_path }}">
+                        {% get_current_language as CURRENT_LANG %}
+                        {% get_available_languages as LANGUAGES %}
+                        {% for lang_code, lang_name in LANGUAGES %}
+                            <button type="submit" name="language" value="{{ lang_code }}" 
+                                    class="px-2.5 py-1 text-[10px] font-bold rounded-lg transition-all {% if CURRENT_LANG == lang_code %}text-primary bg-white dark:bg-slate-900 shadow-sm ring-1 ring-slate-200 dark:ring-slate-700{% else %}text-slate-400 hover:text-slate-600 dark:hover:text-slate-300{% endif %}">
+                                {{ lang_code|upper }}
+                            </button>
+                        {% endfor %}
+                    </form>
+
+                    <button id="theme-toggle" class="w-10 h-10 flex items-center justify-center rounded-xl bg-slate-100/50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all border border-slate-200 dark:border-slate-700">
+                        <span class="theme-toggle-dark-icon hidden material-symbols-outlined text-[20px]">dark_mode</span>
+                        <span class="theme-toggle-light-icon hidden material-symbols-outlined text-[20px]">light_mode</span>
+                    </button>
+
+                    <a href="{% url 'stores:cart' %}" class="relative w-10 h-10 flex items-center justify-center rounded-xl bg-slate-100/50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all border border-slate-200 dark:border-slate-700">
+                        <span class="material-symbols-outlined text-[22px]">shopping_cart</span>
+                        {% if cart_items_count %}
+                            <span class="absolute -top-1 -right-1 bg-secondary text-white text-[9px] w-4 h-4 flex items-center justify-center rounded-full font-bold">
+                                {{ cart_items_count }}
+                            </span>
+                        {% endif %}
+                    </a>
+                </div>
+
+                <div class="relative">
+                    {% if user.is_authenticated %}
+                        <button id="user-menu-btn" class="w-10 h-10 rounded-full overflow-hidden ring-2 ring-primary/20 transition-transform active:scale-90">
+                            <img src="https://ui-avatars.com/api/?name={{ user.username }}&background=0052FF&color=fff" alt="User">
+                        </button>
+                        <div id="user-dropdown" class="hidden absolute right-0 mt-3 w-52 bg-white dark:bg-slate-900 rounded-xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden py-1">
+                            <div class="px-4 py-3 border-b border-slate-100 dark:border-slate-800">
+                                <p class="text-sm font-bold truncate">{{ user.username }}</p>
+                                <p class="text-[10px] text-slate-400 truncate">{{ user.email }}</p>
+                            </div>
+                            <a href="{% url 'dashboard:dashboard' %}" class="block px-4 py-2 text-sm hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">Dashboard</a>
+                            <a href="{% url 'profile' %}" class="block px-4 py-2 text-sm hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">Profile</a>
+                            <form method="post" action="{% url 'logout' %}">
+                                {% csrf_token %}
+                                <button type="submit" class="w-full text-left px-4 py-2 text-sm text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors">
+                                    Logout
+                                </button>
+                            </form>
+                        </div>
+                    {% else %}
+                        <div class="hidden lg:flex items-center gap-2">
+                            <a href="{% url 'login' %}" class="text-xs font-bold text-slate-500 hover:text-primary transition-colors">Login</a>
+                            <a href="{% url 'signup' %}" class="px-5 py-2 bg-primary text-white rounded-full text-xs font-bold shadow-lg shadow-primary/20 hover:scale-105 transition-all">Signup</a>
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="flex lg:hidden items-center gap-2">
+                    <a href="{% url 'stores:cart' %}" class="relative w-10 h-10 flex items-center justify-center rounded-xl bg-slate-100 dark:bg-slate-800">
+                        <span class="material-symbols-outlined text-[20px]">shopping_cart</span>
+                        {% if cart_items_count %}
+                            <span class="absolute -top-1 -right-1 bg-secondary text-white text-[9px] w-4 h-4 flex items-center justify-center rounded-full font-bold">{{ cart_items_count }}</span>
+                        {% endif %}
+                    </a>
+                    <button id="mobile-menu-toggle" class="w-10 h-10 flex items-center justify-center rounded-xl bg-slate-100 dark:bg-slate-800">
+                        <span class="material-symbols-outlined">menu</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="hidden absolute top-20 left-0 w-full bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 lg:hidden z-40">
+            <div class="p-6 flex flex-col gap-5">
+                <a href="{% url 'studio:home' %}" class="flex items-center gap-3 text-lg font-bold">
+                    <span class="material-symbols-outlined text-primary">home</span> {% trans "Home" %}
+                </a>
+                <a href="{% url 'stores:stores' %}" class="flex items-center gap-3 text-lg font-bold">
+                    <span class="material-symbols-outlined text-primary">storefront</span> {% trans "Explore Stores" %}
+                </a>
+
+                <div class="flex items-center justify-between border-t border-slate-100 dark:border-slate-800 pt-5">
+                    <div class="flex gap-2">
+                         <button id="theme-toggle-mobile" class="w-11 h-11 flex items-center justify-center rounded-xl bg-slate-100 dark:bg-slate-800">
+                            <span class="theme-toggle-dark-icon hidden material-symbols-outlined">dark_mode</span>
+                            <span class="theme-toggle-light-icon hidden material-symbols-outlined">light_mode</span>
+                        </button>
+                    </div>
+                    {% if not user.is_authenticated %}
+                    <div class="flex gap-2">
+                        <a href="{% url 'login' %}" class="px-4 py-2 text-sm font-bold">Login</a>
+                        <a href="{% url 'signup' %}" class="px-4 py-2 bg-primary text-white rounded-xl text-sm font-bold">Signup</a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="pt-20 min-h-screen">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="bg-white dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800 transition-colors mt-20">
+        <div class="max-w-7xl mx-auto px-6 py-16 grid grid-cols-1 md:grid-cols-12 gap-12">
+            <div class="md:col-span-5 space-y-6">
+                <div class="flex">
+                    <a href="{% url 'studio:home' %}" class="flex items-center gap-2" dir="ltr">
+                        <img src="{% static 'img/logo.png' %}" alt="Logo" class="w-10 h-10 object-contain">
+                        <div class="flex flex-col">
+                            <div class="flex items-center leading-none">
+                                <span class="text-xl font-black text-primary">Market</span>
+                                <span class="text-xl font-black text-secondary">Shot</span>
+                            </div>
+                            <span class="text-[6px] font-black tracking-[0.25em] text-slate-400 uppercase mt-0.5">
+                                {% trans "Photography & Digital Marketing" %}
+                            </span>
+                        </div>
+                    </a>
+                </div>
+                <p class="text-slate-400 max-w-sm text-sm leading-relaxed">
+                    {% trans "Empowering local businesses through digital transformation and professional visual identity." %}
+                </p>
+            </div>
+            
+            <div class="md:col-span-3">
+                <h4 class="font-black text-slate-900 dark:text-white mb-6 uppercase tracking-widest text-xs">{% trans "Navigation" %}</h4>
+                <ul class="space-y-4 text-sm font-bold text-slate-500">
+                    <li><a href="#" class="hover:text-primary transition-colors">{% trans "How it works" %}</a></li>
+                    <li><a href="{% url 'stores:stores' %}" class="hover:text-primary transition-colors">{% trans "Browse Categories" %}</a></li>
+                </ul>
+            </div>
+
+            <div class="md:col-span-4">
+                <div class="p-6 bg-slate-50 dark:bg-slate-800 rounded-3xl border border-slate-100 dark:border-slate-700">
+                    <h4 class="font-black mb-1">{% trans "Weekly Digest" %}</h4>
+                    <p class="text-xs text-slate-500 mb-4">{% trans "New stores and tips in your inbox." %}</p>
+                    <form class="flex gap-2">
+                        <input type="email" placeholder="Email" class="w-full bg-white dark:bg-slate-900 border-none rounded-xl text-xs focus:ring-2 focus:ring-primary/20">
+                        <button type="submit" class="p-3 bg-primary text-white rounded-xl shadow-lg shadow-primary/20">
+                            <span class="material-symbols-outlined text-sm">send</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // DOM Elements
+        const mobileBtn = document.getElementById('mobile-menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const userBtn = document.getElementById('user-menu-btn');
+        const userDropdown = document.getElementById('user-dropdown');
+
+        // Toggle mobile menu
+        mobileBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isHidden = mobileMenu.classList.toggle('hidden');
+            mobileBtn.querySelector('.material-symbols-outlined').textContent = isHidden ? 'menu' : 'close';
+            if (userDropdown) userDropdown.classList.add('hidden'); // Close user menu if open
+        });
+
+        // Toggle user dropdown
+        if (userBtn) {
+            userBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                userDropdown.classList.toggle('hidden');
+                mobileMenu.classList.add('hidden'); // Close mobile menu if open
+            });
+        }
+
+        // Close everything on outside click
+        window.addEventListener('click', () => {
+            if (userDropdown) userDropdown.classList.add('hidden');
+            mobileMenu.classList.add('hidden');
+            mobileBtn.querySelector('.material-symbols-outlined').textContent = 'menu';
+        });
+
+        // Theme Toggle Logic
+        const themeToggleBtns = [document.getElementById('theme-toggle'), document.getElementById('theme-toggle-mobile')];
+        
+        function updateIcons() {
+            const isDark = document.documentElement.classList.contains('dark');
+            document.querySelectorAll('.theme-toggle-dark-icon').forEach(el => {
+                el.classList.toggle('hidden', isDark);
+            });
+            document.querySelectorAll('.theme-toggle-light-icon').forEach(el => {
+                el.classList.toggle('hidden', !isDark);
+            });
+        }
+
+        themeToggleBtns.forEach(btn => {
+            if (!btn) return;
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation(); // Prevent closing menu when clicking toggle
+                document.documentElement.classList.toggle('dark');
+                const isDark = document.documentElement.classList.contains('dark');
+                localStorage.setItem('color-theme', isDark ? 'dark' : 'light');
+                updateIcons();
+            });
+        });
+
+        // Initial icon state
+        updateIcons();
+    </script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

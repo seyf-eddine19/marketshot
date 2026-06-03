@@ -1,0 +1,375 @@
+{% extends "dashboard/base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Products" %}{% endblock %}
+
+{% block content %}
+
+<div class="max-w-7xl mx-auto px-4 lg:px-6 pb-20">
+
+    <!-- HEADER -->
+    <div class="mb-12 flex flex-col lg:flex-row justify-between gap-8">
+
+        <div>
+            <span class="text-primary uppercase text-xs font-black tracking-[0.3em]">
+                {% trans "Catalog Management" %}
+            </span>
+
+            <h1 class="mt-4 text-5xl lg:text-6xl font-black">
+                {% trans "Products" %}
+            </h1>
+
+            <p class="mt-4 text-slate-500 dark:text-slate-400 max-w-xl">
+                {% trans "Manage inventory, variants, pricing and product catalog across all stores." %}
+            </p>
+        </div>
+
+        <!-- STATS -->
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl px-5 py-5 shadow-sm">
+
+            <div class="flex items-center gap-4">
+
+                <div class="w-14 h-14 rounded-2xl bg-primary/10 text-primary flex items-center justify-center">
+                    <span class="material-symbols-outlined text-3xl">
+                        inventory_2
+                    </span>
+                </div>
+
+                <div>
+                    <h3 class="text-3xl font-black">
+                        {{ products.paginator.count }}
+                    </h3>
+
+                    <p class="text-[11px] uppercase font-black tracking-[0.2em] text-slate-400">
+                        {% trans "Products" %}
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- SEARCH -->
+    <div class="mb-8 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-4 shadow-sm">
+
+        <form method="get">
+
+            <div class="flex flex-col md:flex-row gap-3">
+
+                <div class="relative flex-1">
+
+                    <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
+                        search
+                    </span>
+
+                    <input
+                        type="text"
+                        name="q"
+                        value="{{ request.GET.q }}"
+                        placeholder="{% trans 'Search products...' %}"
+                        class="w-full pl-12 pr-4 py-3 rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:ring-2 focus:ring-primary focus:outline-none"
+                    >
+
+                </div>
+
+                <button class="px-6 py-3 rounded-2xl bg-primary text-white font-bold hover:opacity-90 transition">
+
+                    {% trans "Search" %}
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+
+
+    <!-- PRODUCTS GRID -->
+    <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
+
+        {% for product in products %}
+
+        <div class="rounded-3xl overflow-hidden bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-xl transition">
+
+            <!-- IMAGE -->
+            <div class="relative h-60 bg-slate-100 dark:bg-slate-800">
+
+                {% if product.main_image %}
+                    <img src="{{ product.main_image.url }}"
+                         class="w-full h-full object-cover">
+                {% endif %}
+
+                <!-- BADGES -->
+                <div class="absolute top-4 left-4 flex flex-wrap gap-2">
+
+                    {% if product.is_featured %}
+                    <span class="px-3 py-1 rounded-xl bg-yellow-100 text-yellow-700 text-xs font-black flex items-center gap-1">
+                        <span class="material-symbols-outlined text-sm">star</span>
+                        {% trans "Featured" %}
+                    </span>
+                    {% endif %}
+
+                    {% if product.is_new_arrival %}
+                    <span class="px-3 py-1 rounded-xl bg-blue-100 text-blue-700 text-xs font-black flex items-center gap-1">
+                        <span class="material-symbols-outlined text-sm">new_releases</span>
+                        {% trans "New" %}
+                    </span>
+                    {% endif %}
+
+                    {% if product.is_on_sale %}
+                    <span class="px-3 py-1 rounded-xl bg-red-100 text-red-700 text-xs font-black flex items-center gap-1">
+                        <span class="material-symbols-outlined text-sm">sell</span>
+                        {{ product.discount }}%
+                    </span>
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+            <!-- BODY -->
+            <div class="p-5">
+
+                <!-- PRODUCT NAME -->
+                <h3 class="text-xl font-black text-slate-900 dark:text-white truncate">
+                    {{ product.name }}
+                </h3>
+
+                <!-- STORE -->
+                <div class="mt-2 flex items-center gap-2 text-sm text-slate-500">
+
+                    <span class="material-symbols-outlined text-primary text-[18px]">
+                        storefront
+                    </span>
+
+                    {{ product.store.name }}
+
+                </div>
+
+                <!-- CATEGORY -->
+                <div class="mt-2 flex items-center gap-2 text-sm text-slate-500">
+
+                    <span class="material-symbols-outlined text-primary text-[18px]">
+                        category
+                    </span>
+
+                    {{ product.category.name }}
+
+                </div>
+
+
+                <!-- PRICE -->
+                <div class="mt-5 flex items-end gap-3">
+
+                    <span class="text-2xl font-black text-primary">
+                        {{ product.discounted_price }}
+                    </span>
+
+                    {% if product.discount %}
+                    <span class="line-through text-slate-400 text-sm">
+                        {{ product.base_price }}
+                    </span>
+                    {% endif %}
+
+                </div>
+
+
+                <!-- STOCK + VARIANTS -->
+                <div class="mt-5 grid grid-cols-2 gap-3">
+
+                    <div class="rounded-2xl bg-slate-50 dark:bg-slate-800 p-3">
+
+                        <div class="flex items-center gap-2 text-slate-500 text-sm">
+
+                            <span class="material-symbols-outlined text-[18px]">
+                                inventory
+                            </span>
+
+                            {% trans "Stock" %}
+                        </div>
+
+                        <div class="font-black text-xl mt-2">
+
+                            {{ product.stock }}
+
+                        </div>
+
+                    </div>
+
+                    <div class="rounded-2xl bg-slate-50 dark:bg-slate-800 p-3">
+
+                        <div class="flex items-center gap-2 text-slate-500 text-sm">
+
+                            <span class="material-symbols-outlined text-[18px]">
+                                view_in_ar
+                            </span>
+
+                            {% trans "Variants" %}
+                        </div>
+
+                        <div class="font-black text-xl mt-2">
+
+                            {{ product.variants.count }}
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- COLORS -->
+                {% with colors=product.get_unique_colors_with_stock %}
+                {% if colors %}
+                <div class="mt-5">
+
+                    <p class="text-xs uppercase font-black text-slate-400 mb-3">
+                        {% trans "Available Colors" %}
+                    </p>
+
+                    <div class="flex gap-2 flex-wrap">
+
+                        {% for color in colors %}
+
+                        <div
+                            title="{{ color.value }} ({{ color.total_stock }})"
+                            class="w-7 h-7 rounded-full border-2 border-white shadow"
+                            style="background:{{ color.color_code }}"
+                        ></div>
+
+                        {% endfor %}
+
+                    </div>
+
+                </div>
+                {% endif %}
+                {% endwith %}
+
+
+                <!-- ATTRIBUTES -->
+                {% with attrs=product.get_summary_attributes %}
+                {% if attrs %}
+                <div class="mt-5 flex flex-wrap gap-2">
+
+                    {% for attr in attrs %}
+
+                    <span class="px-3 py-1 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-semibold">
+
+                        {{ attr.display_label }}
+
+                    </span>
+
+                    {% endfor %}
+
+                </div>
+                {% endif %}
+                {% endwith %}
+
+
+                <!-- FOOTER -->
+                <div class="mt-6 pt-4 border-t dark:border-slate-800 flex justify-between items-center">
+
+                    <div class="text-xs text-slate-400">
+
+                        {{ product.images.count }}
+                        {% trans "Gallery Images" %}
+
+                    </div>
+
+                    <div class="flex gap-2">
+
+                        <a href="{% url 'dashboard:product-edit' product.pk %}"
+                           class="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-primary hover:text-white flex items-center justify-center transition">
+
+                            <span class="material-symbols-outlined text-[18px]">
+                                edit
+                            </span>
+
+                        </a>
+
+                        <a href="{% url 'dashboard:product-delete' product.pk %}"
+                           class="w-10 h-10 rounded-xl bg-red-100 text-red-500 hover:bg-red-500 hover:text-white flex items-center justify-center transition">
+
+                            <span class="material-symbols-outlined text-[18px]">
+                                delete
+                            </span>
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% empty %}
+
+        <div class="col-span-full text-center py-24">
+
+            <span class="material-symbols-outlined text-7xl text-slate-300">
+                inventory_2
+            </span>
+
+            <h3 class="text-2xl font-black mt-4">
+                {% trans "No Products Found" %}
+            </h3>
+
+            <p class="text-slate-400 mt-2">
+
+                {% trans "No products currently exist in the catalog." %}
+
+            </p>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+
+
+    <!-- PAGINATION -->
+    {% if page_obj.paginator.num_pages > 1 %}
+
+    <div class="mt-10 flex justify-center gap-2">
+
+        {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}"
+           class="px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800">
+
+            {% trans "Previous" %}
+
+        </a>
+        {% endif %}
+
+        <span class="px-4 py-2">
+
+            {{ page_obj.number }}
+            /
+            {{ page_obj.paginator.num_pages }}
+
+        </span>
+
+        {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}"
+           class="px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800">
+
+            {% trans "Next" %}
+
+        </a>
+        {% endif %}
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

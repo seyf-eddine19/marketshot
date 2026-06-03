@@ -1,0 +1,46 @@
+{% load i18n %}
+
+<!-- COMPONENT: TOP FILTERS NAVIGATION FILTER BAR -->
+<div class="flex flex-col lg:flex-row justify-between items-center bg-white dark:bg-slate-900 p-5 rounded-[2rem] border border-slate-200 dark:border-slate-800 mb-10 gap-4 shadow-sm">
+    
+    <!-- Left: Keyword Search Utility Block -->
+    <div class="w-full relative">
+        <div class="flex items-center bg-slate-50 dark:bg-slate-950 rounded-xl px-3 border border-slate-200/60 dark:border-slate-800">
+            <span class="material-symbols-outlined text-slate-400 text-[18px]">search</span>
+            <input type="text" name="q" value="{{ request.GET.q|default:'' }}" 
+                   placeholder="{% trans 'Search item name...' %}" 
+                   class="bg-transparent w-full border-none focus:ring-0 text-xs py-2.5 px-2 text-slate-800 dark:text-slate-200">
+            {% if request.GET.q %}
+                <button type="button" onclick="clearSearchInput()" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 flex items-center justify-center p-0.5">
+                    <span class="material-symbols-outlined text-[16px]">close</span>
+                </button>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Center: Consolidated Sorting Parameter Form Selection Element -->
+    <div class="flex items-center w-full gap-2 lg:w-auto justify-end">
+        <label class="text-xs font-semibold text-slate-400 hidden lg:inline whitespace-nowrap">{% trans "Sort By" %}:</label>
+        <select onchange="applySorting(this.value)" 
+                class="w-full lg:w-40 bg-slate-50 dark:bg-slate-950 border border-slate-200/60 dark:border-slate-800 rounded-xl text-xs font-bold px-3 py-2.5 text-slate-700 dark:text-slate-300 focus:ring-primary focus:border-primary cursor-pointer outline-none">
+            <option value="newest" {% if not request.GET.sort or request.GET.sort == 'newest' %}selected{% endif %}>{% trans "New Arrivals" %}</option>
+            <option value="price_low" {% if request.GET.sort == 'price_low' %}selected{% endif %}>{% trans "Price: Low to High" %}</option>
+            <option value="price_high" {% if request.GET.sort == 'price_high' %}selected{% endif %}>{% trans "Price: High to Low" %}</option>
+        </select>
+    </div>
+
+    <!-- Right: Context Operations Action Deck (Mobile Filter + Discovered Count) -->
+    <div class="flex items-center gap-3 lg:w-auto justify-between lg:justify-end">
+        <!-- Mobile Dropdown Canvas Panel Switch (Hidden on Large Screen Viewports) -->
+        <button type="button" onclick="toggleFilterDrawer(true)" class="w-full lg:hidden flex items-center gap-1.5 px-4 py-2.5 bg-slate-100 dark:bg-slate-950 border border-slate-200/60 dark:border-slate-800 rounded-xl text-xs font-bold text-slate-700 dark:text-slate-300 transition hover:bg-slate-200/50 dark:hover:bg-slate-800">
+            <span class="material-symbols-outlined text-[16px]">tune</span>
+            {% trans "Filter Panel" %}
+        </button>
+        
+        <!-- Discovered Items Counter Display -->
+        <div class="text-sm font-bold text-slate-600 dark:text-slate-300 px-2 text-center lg:text-left whitespace-nowrap lg:w-auto">
+            <span class="text-primary font-black">{{ paginator.count }}</span> {% trans "items discovered" %}
+        </div>
+    </div>
+
+</div>

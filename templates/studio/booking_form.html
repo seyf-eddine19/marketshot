@@ -1,0 +1,217 @@
+{% extends "studio/base.html" %}
+{% block content %}
+
+<header class="mb-12">
+    <span class="text-tertiary font-bold tracking-widest text-xs uppercase mb-2 block">
+        Premium Production Space
+    </span>
+
+    <h1 class="text-4xl md:text-5xl font-bold tracking-tight text-on-surface mb-4">
+        Studio Booking
+    </h1>
+
+    <p class="text-on-surface-variant max-w-2xl leading-relaxed">
+        Reserve our high-end studio spaces for your next project. Select your preferred environment, choose a date, and customize your production package.
+    </p>
+</header>
+
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-8">
+
+<!-- ================= LEFT SIDE ================= -->
+<div class="xl:col-span-8 space-y-12">
+
+<!-- ================= STEP 1 ================= -->
+<section>
+
+<div class="flex items-center justify-between mb-6">
+<h2 class="text-xl font-bold flex items-center gap-2">
+<span class="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">1</span>
+Select Studio
+</h2>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+{% for service in services %}
+
+<div class="group relative bg-surface-container-lowest rounded-xl overflow-hidden border transition-all cursor-pointer
+    {% if service.id == selected_service.id %} border-2 border-primary shadow-xl {% else %} border-transparent hover:border-primary/20 {% endif %}">
+
+    <div class="aspect-video relative overflow-hidden">
+        <img src="https://source.unsplash.com/800x600/?studio"
+             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+
+        {% if forloop.first %}
+        <div class="absolute top-4 right-4 bg-primary text-white px-3 py-1 rounded-full text-xs font-bold">
+            Popular
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="p-5">
+        <div class="flex justify-between items-start mb-2">
+            <h3 class="font-bold text-lg">{{ service.title }}</h3>
+            <span class="text-primary font-bold">$120/hr</span>
+        </div>
+
+        <p class="text-sm text-on-surface-variant mb-4">
+            {{ service.description|truncatechars:120 }}
+        </p>
+
+        <div class="flex gap-2">
+            <span class="px-2 py-1 bg-surface-container text-[10px] font-bold uppercase rounded text-secondary">
+                {{ service.get_icon_display }}
+            </span>
+        </div>
+    </div>
+
+</div>
+
+{% endfor %}
+
+</div>
+</section>
+
+<!-- ================= STEP 2 ================= -->
+<section>
+
+<h2 class="text-xl font-bold flex items-center gap-2 mb-6">
+<span class="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">2</span>
+Date & Time
+</h2>
+
+<div class="bg-surface-container-lowest rounded-xl p-6 shadow-sm flex flex-col md:flex-row gap-8">
+
+<!-- Calendar -->
+<div class="flex-1">
+
+<div class="flex items-center justify-between mb-4">
+<span class="font-bold text-on-background">October 2024</span>
+
+<div class="flex gap-1">
+<button class="p-1 hover:bg-surface-container rounded-lg">
+<span class="material-symbols-outlined text-secondary">chevron_left</span>
+</button>
+<button class="p-1 hover:bg-surface-container rounded-lg">
+<span class="material-symbols-outlined text-secondary">chevron_right</span>
+</button>
+</div>
+</div>
+
+<!-- STATIC CALENDAR (same UI) -->
+<div class="grid grid-cols-7 gap-1 text-center">
+{% for i in "123456789101112131415161718" %}
+<div class="h-10 flex items-center justify-center text-sm text-on-background">
+    {{ forloop.counter }}
+</div>
+{% endfor %}
+</div>
+
+</div>
+
+<!-- TIME SLOTS -->
+<div class="w-full md:w-64">
+
+<span class="block font-bold mb-4 text-sm text-on-background">
+Available Slots
+</span>
+
+<div class="space-y-2">
+
+{% for time in "09:00,11:30,14:00,16:30" %}
+
+<button class="w-full py-3 px-4 rounded-xl text-sm flex justify-between
+    {% if time == '11:30' %}
+        accent-gradient text-white font-bold
+    {% elif time == '16:30' %}
+        bg-surface-container opacity-50 cursor-not-allowed
+    {% else %}
+        border hover:border-primary hover:bg-primary/5
+    {% endif %}">
+
+    <span>{{ time }} {% if time != '16:30' %} AM {% endif %}</span>
+
+    <span class="text-[10px] uppercase">
+        {% if time == '16:30' %}Booked
+        {% elif time == '11:30' %}Selected
+        {% else %}Open{% endif %}
+    </span>
+
+</button>
+
+{% endfor %}
+
+</div>
+</div>
+
+</div>
+</section>
+
+<!-- ================= STEP 3 ================= -->
+<section>
+
+<h2 class="text-xl font-bold flex items-center gap-2 mb-6">
+<span class="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">3</span>
+Service Package
+</h2>
+
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+
+{% for package in packages %}
+
+<div class="bg-surface-container-lowest p-6 rounded-xl border transition-all cursor-pointer
+    {% if package.id == selected_package.id %} border-2 border-primary {% else %} border-outline-variant/30 hover:shadow-xl {% endif %}">
+
+    <h3 class="font-bold mb-2">{{ package.title }}</h3>
+
+    <p class="text-xs text-on-surface-variant mb-4">
+        {{ package.description|truncatechars:100 }}
+    </p>
+
+    <span class="text-lg font-bold text-primary">
+        {{ package.base_price }} DA
+    </span>
+
+</div>
+
+{% endfor %}
+
+</div>
+</section>
+
+</div>
+
+<!-- ================= RIGHT SUMMARY ================= -->
+<div class="xl:col-span-4">
+
+<div class="sticky top-28 bg-white rounded-xl p-8 border shadow-2xl">
+
+<h2 class="text-2xl font-bold mb-6">Summary</h2>
+
+<div class="space-y-4">
+
+<p><strong>Studio:</strong> {{ selected_service.title }}</p>
+<p><strong>Package:</strong> {{ selected_package.title }}</p>
+<p><strong>Date:</strong> -</p>
+<p><strong>Time:</strong> 11:30 AM</p>
+
+</div>
+
+<hr class="my-6">
+
+<div class="flex justify-between font-bold">
+<span>Total</span>
+<span class="text-tertiary">$462.50</span>
+</div>
+
+<button class="w-full mt-6 py-4 kinetic-gradient text-white rounded-xl font-bold">
+Proceed to Payment
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+{% endblock %}

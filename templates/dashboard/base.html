@@ -1,0 +1,440 @@
+{% load i18n static %}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}" dir="{% if LANGUAGE_CODE == 'ar' %}rtl{% else %}ltr{% endif %}">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Dashboard | MarketShot{% endblock %}</title>
+
+    <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#0052FF",
+                        secondary: "#FF5C00",
+                        background: "#FCF9F8",
+                    },
+                    borderRadius: {
+                        "xl": "1rem",
+                        "2xl": "1.5rem"
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .glass-header {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .dark .glass-header {
+            background: rgba(15, 23, 42, 0.9);
+            border-color: rgba(51, 65, 85, 0.5);
+        }
+        .sidebar-link {
+            display: flex; align-items: center; gap: 12px; padding: 12px 16px;
+            border-radius: 12px; font-weight: 600; font-size: 14px; transition: 0.2s;
+            color: #64748b;
+        }
+        .sidebar-link:hover { background: rgba(0, 82, 255, 0.05); color: #0052FF; }
+        .sidebar-active { background: #0052FF !important; color: white !important; box-shadow: 0 4px 12px rgba(0, 82, 255, 0.2); }
+        
+        /* Consistent Input Styling */
+        input[type="text"], input[type="email"], select, textarea {
+            border-radius: 1rem !important;
+            border: 1px solid #e2e8f0 !important;
+            font-weight: 500;
+        }
+        .dark input, .dark select, .dark textarea {
+            background: #1e293b !important;
+            border-color: #334155 !important;
+            color: white;
+        }
+    </style>
+
+
+<style>
+/* =========================
+   BASE INPUT SYSTEM
+========================= */
+
+input[type="text"],
+input[type="url"],
+input[type="email"],
+input[type="number"],
+textarea,
+select {
+    width: 100%;
+    min-height: 45px;
+    border-radius: 1rem!important;
+    border: 1px solid rgb(151, 153, 154)!important;
+    background: white;
+    padding: 0 1.25rem;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: rgb(15 23 42);
+    outline: none;
+    transition: all 0.25s ease;
+}
+
+/* DARK MODE */
+.dark input[type="text"],
+.dark input[type="url"],
+.dark input[type="email"],
+.dark input[type="number"],
+.dark textarea,
+.dark select {
+    background: rgb(15 23 42 / 0.7);
+    border-color: rgb(51 65 85);
+    color: white;
+}
+
+/* FOCUS STATE */
+input[type="text"]:focus,
+input[type="url"]:focus,
+input[type="email"]:focus,
+input[type="number"]:focus,
+textarea:focus,
+select:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 5px rgba(37,99,235,0.08);
+    transform: translateY(-1px);
+}
+
+/* PLACEHOLDER */
+input::placeholder,
+textarea::placeholder {
+    color: rgb(148 163 184);
+    font-weight: 600;
+}
+
+/* =========================
+   TEXTAREA FIX (IMPORTANT)
+========================= */
+
+textarea {
+    min-height: 140px;
+    padding: 1rem 1.25rem;
+    line-height: 1.6;
+    resize: vertical; /* allow resize but controlled */
+}
+
+
+/* =========================
+   SELECT FIX (SINGLE)
+========================= */
+
+select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='gray' viewBox='0 0 20 20'%3E%3Cpath d='M5 7l5 5 5-5H5z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 14px;
+    padding-right: 3rem;
+}
+
+/* =========================
+   MULTI SELECT (M2M FIX)
+========================= */
+
+select[multiple] {
+    min-height: 180px;
+    padding: 1rem;
+    background-image: none;
+    overflow-y: auto;
+}
+
+/* make options readable */
+select[multiple] option {
+    padding: 0.6rem 0.8rem;
+    border-radius: 0.75rem;
+    margin: 4px 0;
+    font-weight: 700;
+}
+
+/* hover feel (browser limited but still helps) */
+select[multiple] option:checked {
+    background: #2563eb;
+    color: white;
+}
+
+/* =========================
+   FILE INPUT
+========================= */
+
+input[type="file"] {
+    width: 100%;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: rgb(100 116 139);
+}
+
+input[type="file"]::file-selector-button {
+    border: none;
+    background: #2563eb;
+    color: white;
+    padding: 0.9rem 1.2rem;
+    border-radius: 1rem;
+    margin-right: 1rem;
+    cursor: pointer;
+    font-weight: 800;
+    transition: all 0.2s ease;
+}
+
+input[type="file"]::file-selector-button:hover {
+    opacity: 0.9;
+}
+
+/* =========================
+   INPUT SHADOW WRAPPER
+========================= */
+
+.input-wrapper input,
+.input-wrapper textarea,
+.input-wrapper select {
+    box-shadow:
+        0 1px 2px rgba(15,23,42,0.04),
+        0 4px 14px rgba(15,23,42,0.03);
+}
+
+.dark .input-wrapper input,
+.dark .input-wrapper textarea,
+.dark .input-wrapper select {
+    box-shadow: none;
+}
+</style>
+
+    {% block extra_styles %}{% endblock %}
+</head>
+
+<body class="bg-background dark:bg-[#020617] text-slate-800 dark:text-slate-200 antialiased">
+
+    <!-- MOBILE OVERLAY -->
+    <div id="overlay" class="fixed inset-0 bg-slate-900/40 z-[60] hidden lg:hidden transition-opacity"></div>
+
+    <!-- SIDEBAR -->
+    <aside id="sidebar" class="fixed top-0 left-0 z-[70] h-full w-72 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out">
+        <div class="h-20 flex items-center px-6 border-b border-slate-100 dark:border-slate-800">
+            <a href="{% url 'dashboard:dashboard' %}" class="flex items-center gap-3 group" dir="ltr">
+                <img src="{% static 'img/logo.png' %}" alt="Logo" class="w-10 h-10 object-contain group-hover:rotate-12 transition-transform">
+                <div class="flex flex-col">
+                    <span class="text-lg font-black tracking-tighter leading-none">
+                        <span class="text-primary">Market</span><span class="text-secondary">Shot</span>
+                    </span>
+                    <span class="text-[7px] font-bold tracking-[0.2em] text-slate-400 uppercase mt-1">{% trans "Creative Ecosystem" %}</span>
+                </div>
+            </a>
+        </div>
+
+        <div class="p-4 overflow-y-auto h-[calc(100%-80px)] flex flex-col gap-1">
+            {% url 'dashboard:dashboard' as dash %}
+            {% url 'dashboard:project-list' as proj %}
+            {% url 'dashboard:service-add' as serv %}
+            {% url 'dashboard:booking-list' as book %}
+            {% url 'dashboard:package-list' as pack %}
+            {% url 'dashboard:subscription-list' as sub %}
+            {% url 'dashboard:testimonial-list' as test %}
+            {% url 'dashboard:contact-list' as contacts %}
+            {% url 'dashboard:manage-categories' as cat %}
+            {% url 'dashboard:product-list' as prod %}
+            {% url 'dashboard:stores' as store %}
+            {% url 'dashboard:users' as users %}
+
+            
+            <a href="{{ dash }}" class="sidebar-link {% if request.path == dash %}sidebar-active{% endif %}">
+                <span class="material-symbols-outlined">dashboard</span> {% trans "Dashboard" %}
+            </a>
+            <div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-4 mb-2 mt-4">{% trans "Studio" %}</div>
+            <a href="{{ proj }}" class="sidebar-link {% if request.path == proj %}sidebar-active{% endif %}">
+                <span class="material-symbols-outlined">gallery_thumbnail</span> {% trans "Projects" %}
+            </a>
+            <a href="{{ serv }}" class="sidebar-link {% if request.path == serv %}sidebar-active{% endif %}">
+                <span class="material-symbols-outlined">design_services</span> {% trans "Services" %}
+            </a>
+            <a href="{{ book }}" class="sidebar-link {% if request.path == book %}sidebar-active{% endif %}">
+                <span class="material-symbols-outlined">event_available</span> {% trans "Bookings" %}
+            </a>
+            <a href="{{ pack }}" class="sidebar-link {% if request.path == pack %}sidebar-active{% endif %}">
+                <span class="material-symbols-outlined">workspace_premium</span> {% trans "Packages" %}
+            </a>
+            <a href="{{ sub }}" class="sidebar-link {% if request.path == sub %}sidebar-active{% endif %}">
+                <span class="material-symbols-outlined">subscriptions</span> {% trans "Subscriptions" %}
+            </a>
+            <a href="{{ test }}" class="sidebar-link {% if request.path == test %}sidebar-active{% endif %}">
+                <span class="material-symbols-outlined">star</span> {% trans "Testimonials" %}
+            </a>
+            <a href="{{ contacts }}" class="sidebar-link {% if request.path == contacts %}sidebar-active{% endif %}">
+                <span class="material-symbols-outlined">contacts</span> {% trans "Contacts" %}
+            </a>
+
+            <div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-4 mb-2 mt-4">{% trans "Commerce" %}</div>
+            
+            <a href="{{ cat }}" class="sidebar-link {% if request.path == cat %}sidebar-active{% endif %}">
+                <span class="material-symbols-outlined">grid_view</span> {% trans "Categories" %}
+            </a>
+            <a href="{{ prod }}" class="sidebar-link {% if request.path == prod %}sidebar-active{% endif %}">
+                <span class="material-symbols-outlined">inventory_2</span> {% trans "Products" %}
+            </a>
+            <a href="{{ store }}" class="sidebar-link {% if request.path == store %}sidebar-active{% endif %}">
+                <span class="material-symbols-outlined">store</span> {% trans "Stores" %}
+            </a>
+
+            <div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-4 mb-2 mt-4">{% trans "Settings" %}</div>
+
+            <a href="{{ users }}" class="sidebar-link {% if request.path == users %}sidebar-active{% endif %}">
+                <span class="material-symbols-outlined">group</span> {% trans "Users" %}
+            </a>
+
+            <hr class="my-6 border-slate-100 dark:border-slate-800">
+
+            <form action="{% url 'logout' %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="sidebar-link text-red-500 hover:bg-red-50 dark:hover:bg-red-900/10 w-full">
+                    <span class="material-symbols-outlined">logout</span> {% trans "Logout" %}
+                </button>
+            </form>
+        </div>
+    </aside>
+
+    <!-- MAIN CONTENT AREA -->
+    <div class="lg:ml-72 min-h-screen flex flex-col transition-all duration-300">
+        
+        <!-- TOP NAVBAR -->
+        <header class="glass-header sticky top-0 z-50 border-b border-slate-200 dark:border-slate-800 h-16">
+            <div class="h-full px-4 md:px-8 flex items-center justify-between">
+                
+                <!-- Left: Toggle & Title -->
+                <div class="flex items-center gap-4">
+                    <button id="menu-btn" class="lg:hidden w-10 h-10 flex items-center justify-center rounded-xl bg-slate-100 dark:bg-slate-800">
+                        <span class="material-symbols-outlined">menu</span>
+                    </button>
+                    <div class="hidden sm:block">
+                        <span class="text-[10px] text-primary font-bold uppercase tracking-tighter">{% trans "Administration" %}</span>
+                        <h1 class="text-lg font-black dark:text-white leading-none">{% block page_title %}Overview{% endblock %}</h1>
+                    </div>
+                </div>
+
+                <!-- Center: Global Links (Optional) -->                
+                <div class="flex items-center gap-1 bg-slate-100/50 dark:bg-slate-800/50 p-1 rounded-full border border-slate-200/50 dark:border-slate-700/50">
+                    <a href="{% url 'studio:home' %}" class="px-5 py-2 text-xs font-bold rounded-xl transition-all hover:bg-white hover:dark:bg-slate-900 hover:shadow-sm hover:text-primary">
+                        {% trans "Studio" %}
+                    </a>
+                    <a href="{% url 'stores:stores' %}" class="px-5 py-2 text-xs font-bold rounded-xl transition-all hover:bg-white hover:dark:bg-slate-900 hover:shadow-sm hover:text-primary">
+                        {% trans "Stores" %}
+                    </a>
+                </div>
+
+                <!-- Right: Actions & Profile -->
+                <div class="flex items-center gap-2 md:gap-4">
+
+                    <!-- Lang Toggle -->
+                    <form action="{% url 'set_language' %}" method="post" class="flex items-center bg-slate-100/50 dark:bg-slate-800 p-1.5 rounded-xl border border-slate-200 dark:border-slate-700">
+                        {% csrf_token %}
+                        <input name="next" type="hidden" value="{{ request.get_full_path }}">
+                        {% get_current_language as CURRENT_LANG %}
+                        {% get_available_languages as LANGUAGES %}
+                        {% for lang_code, lang_name in LANGUAGES %}
+                            <button type="submit" name="language" value="{{ lang_code }}" 
+                                    class="px-2.5 py-1 text-[10px] font-bold rounded-lg transition-all {% if CURRENT_LANG == lang_code %}text-primary bg-white dark:bg-slate-900 shadow-sm ring-1 ring-slate-200 dark:ring-slate-700{% else %}text-slate-400 hover:text-slate-600 dark:hover:text-slate-300{% endif %}">
+                                {{ lang_code|upper }}
+                            </button>
+                        {% endfor %}
+                    </form>
+
+                    <!-- Theme Toggle -->
+                    <button id="theme-toggle" class="w-10 h-10 flex items-center justify-center rounded-xl bg-slate-100/50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all border border-slate-200 dark:border-slate-700">
+                        <span class="material-symbols-outlined text-[20px]">dark_mode</span>
+                    </button>
+
+                    <!-- User Menu -->
+                    <div class="relative">
+                        <button id="user-menu-btn" class="flex items-center gap-2 p-1 pr-3 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-all border border-slate-200 dark:border-slate-700">
+                            <img src="https://ui-avatars.com/api/?name={{ user.username }}&background=0052FF&color=fff" class="w-8 h-8 rounded-full border-2 border-white dark:border-slate-600 shadow-sm">
+                            <span class="hidden md:block text-xs font-bold">{{ user.username }}</span>
+                        </button>
+                        <!-- User Dropdown -->
+                        <div id="user-dropdown" class="hidden absolute right-0 mt-3 w-52 bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-slate-100 dark:border-slate-800 overflow-hidden py-2 animate-in fade-in slide-in-from-top-2">
+                            <div class="px-4 py-2 border-b border-slate-50 dark:border-slate-800 mb-2">
+                                <p class="text-xs text-slate-400">{% trans "Signed in as" %}</p>
+                                <p class="text-sm font-bold truncate">{{ user.email }}</p>
+                            </div>
+                            <a href="{% url 'profile' %}" class="flex items-center gap-3 px-4 py-2 text-sm hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+                                <span class="material-symbols-outlined text-lg">person</span> Profile
+                            </a>
+                            <hr class="my-2 border-slate-50 dark:border-slate-800">
+                            <form method="post" action="{% url 'logout' %}">
+                                {% csrf_token %}
+                                <button type="submit" class="w-full text-left px-4 py-2 text-sm text-red-500 hover:bg-red-50 dark:hover:bg-red-900/10 flex items-center gap-3">
+                                    <span class="material-symbols-outlined text-lg">logout</span> Logout
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- PAGE CONTENT -->
+        <main class="p-4 md:p-8 flex-grow">
+            {% block content %}{% endblock %}
+        </main>
+
+        <!-- FOOTER -->
+        <footer class="p-6 text-center text-xs text-slate-400 border-t border-slate-200 dark:border-slate-800">
+            &copy; 2026 MarketShot Studio. {% trans "All rights reserved." %}
+        </footer>
+    </div>
+
+    <script>
+        // Sidebar logic
+        const sidebar = document.getElementById("sidebar");
+        const overlay = document.getElementById("overlay");
+        const menuBtn = document.getElementById("menu-btn");
+
+        menuBtn.addEventListener("click", () => {
+            sidebar.classList.remove("-translate-x-full");
+            overlay.classList.remove("hidden");
+        });
+
+        overlay.addEventListener("click", () => {
+            sidebar.classList.add("-translate-x-full");
+            overlay.classList.add("hidden");
+        });
+
+        // User Dropdown logic
+        const userBtn = document.getElementById("user-menu-btn");
+        const userDropdown = document.getElementById("user-dropdown");
+        
+        userBtn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            userDropdown.classList.toggle("hidden");
+        });
+
+        document.addEventListener("click", () => userDropdown.classList.add("hidden"));
+
+        // Dark Mode Logic
+        const themeBtn = document.getElementById("theme-toggle");
+        
+        if (localStorage.getItem("theme") === "dark") {
+            document.documentElement.classList.add("dark");
+        }
+
+        themeBtn.addEventListener("click", () => {
+            document.documentElement.classList.toggle("dark");
+            const isDark = document.documentElement.classList.contains("dark");
+            localStorage.setItem("theme", isDark ? "dark" : "light");
+        });
+    </script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

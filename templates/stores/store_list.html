@@ -1,0 +1,205 @@
+{% extends "stores/base.html" %}
+{% load i18n static %}
+
+{% block title %}{% trans "Explore Stores" %} | MarketShot{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 py-12 space-y-8">
+
+    <!-- Hero Section -->
+    <div class="text-center space-y-4 max-w-2xl mx-auto mb-10">
+        <h1 class="text-4xl font-extrabold tracking-tight sm:text-5xl text-slate-900 dark:text-white">
+            {% trans "Discover" %} <span class="text-gradient">{% trans "Stores" %}</span>
+        </h1>
+        <p class="text-slate-500 dark:text-slate-400 text-base">
+            {% trans "Support creative entrepreneurs and local businesses building our community ecosystem." %}
+        </p>
+        <!-- Quick Stats -->
+        <div class="flex justify-center gap-6 text-xs text-slate-400 pt-2">
+            <span class="flex items-center gap-1">
+                <span class="material-symbols-outlined text-[16px]">storefront</span>
+                <b class="text-primary">{{ stores|length }}</b> {% trans "stores" %}
+            </span>
+            <span class="flex items-center gap-1">
+                <span class="material-symbols-outlined text-[16px]">verified</span>
+                {% trans "verified ecosystem sellers" %}
+            </span>
+        </div>
+    </div>
+
+    <!-- Top Categories Quick Strip -->
+    <div class="border-b border-slate-100 dark:border-slate-800/60 pb-6 overflow-x-auto no-scrollbar">
+        <div class="flex items-center gap-2 whitespace-nowrap">
+            <button type="button"
+                    onclick="filterCategory('')"
+                    class="px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-1 transition-all
+                    {% if not selected_category %}bg-primary text-white shadow-md shadow-primary/10{% else %}bg-slate-50 dark:bg-slate-900 text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800{% endif %}">
+                <span class="material-symbols-outlined text-[16px]">apps</span>
+                {% trans "All Ecosystem" %}
+            </button>
+
+            {% for cat in categories %}
+            <button type="button"
+                    onclick="filterCategory('{{ cat.slug }}')"
+                    class="px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-1 transition-all
+                    {% if selected_category == cat.slug %}bg-primary text-white shadow-md shadow-primary/10{% else %}bg-slate-50 dark:bg-slate-900 text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800{% endif %}">
+                <span class="material-symbols-outlined text-[16px]">category</span>
+                {{ cat.name }}
+            </button>
+            {% endfor %}
+        </div>
+    </div>
+    
+    <div class="flex items-center justify-end gap-4">
+
+        <!-- Mobile-Only Filter Button Indicator -->
+        <button type="button" 
+                onclick="toggleMobileFilters(true)"
+                class="lg:hidden flex items-center gap-1.5 px-3.5 py-2 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-xl text-xs font-bold transition hover:bg-slate-200">
+            <span class="material-symbols-outlined text-[18px]">tune</span>
+            {% trans "Filters" %}
+        </button>
+    </div>
+    <!-- Main Layout Grid (Sidebar Filters + Results Container) -->
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-8 items-start">
+        
+        <!-- Backdrop Backdrop Overlay for Mobile Drawer -->
+        <div id="filter-backdrop" 
+             onclick="toggleMobileFilters(false)"
+             class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-40 hidden lg:hidden transition-opacity duration-300 opacity-0"></div>
+
+        <!-- Side Filter Panel (Responsive Mobile Drawer / Desktop Sticky) -->
+        <aside id="filter-sidebar" 
+               class="fixed inset-y-0 left-0 w-full max-w-xs bg-white dark:bg-slate-900 z-50 p-6 shadow-2xl transform -translate-x-full transition-transform duration-300 ease-in-out overflow-y-auto
+                      lg:static lg:w-auto lg:max-w-none lg:z-auto lg:p-6 lg:shadow-sm lg:transform-none lg:border lg:border-slate-200/60 lg:dark:border-slate-800/80 lg:rounded-3xl lg:sticky lg:top-24 lg:space-y-6">
+            
+            <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800/60 pb-4 mb-4 lg:mb-0">
+                <h3 class="font-bold text-slate-800 dark:text-slate-200 flex items-center gap-2 text-sm">
+                    <span class="material-symbols-outlined text-[18px]">tune</span>
+                        {% trans "Refine Catalog" %}
+                </h3>
+                
+                <div class="flex items-center gap-3">
+                    {% if search_query or selected_category or request.GET.verified_only or request.GET.featured_only %}
+                    <a href="{% url 'stores:stores' %}" class="text-xs text-primary hover:underline font-semibold">
+                        {% trans "Clear" %}
+                    </a>
+                    {% endif %}
+                    <!-- Close button visible only on Mobile Drawer -->
+                    <button type="button" onclick="toggleMobileFilters(false)" class="lg:hidden p-1 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
+                        <span class="material-symbols-outlined text-[22px]">close</span>
+                    </button>
+                </div>
+            </div>
+
+            <form method="get" action="{% url 'stores:stores' %}" id="filter-form" class="space-y-5">
+                <!-- Retain current category selection safely inside the form execution -->
+                <input type="hidden" name="category" id="category-input" value="{{ selected_category|default:'' }}">
+
+                <!-- Search Input Field -->
+                <div class="space-y-2">
+                    <label class="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">{% trans "Keyword Search" %}</label>
+                    <div class="flex items-center bg-slate-50 dark:bg-slate-950 rounded-xl px-3 border border-slate-200/60 dark:border-slate-800">
+                        <span class="material-symbols-outlined text-slate-400 text-[20px]">search</span>
+                        <input type="text"
+                               name="q"
+                               value="{{ search_query|default:'' }}"
+                               placeholder="{% trans 'Search name, tags...' %}"
+                               class="bg-transparent w-full border-none focus:ring-0 text-xs px-2 py-3 text-slate-900 dark:text-slate-200">
+                    </div>
+                </div>
+
+                <!-- Custom Inline Badges/Status Filter Checkboxes -->
+                <div class="space-y-2 pt-2 border-t border-slate-100 dark:border-slate-800/60">
+                    <label class="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">{% trans "Store Status" %}</label>
+                    <div class="space-y-3 pt-1">
+                        <label class="flex items-center gap-3 text-xs font-medium text-slate-600 dark:text-slate-300 cursor-pointer">
+                            <input type="checkbox" name="verified_only" value="1" {% if request.GET.verified_only %}checked{% endif %} onchange="this.form.submit()"
+                                   class="rounded-md border-slate-300 dark:border-slate-700 text-primary focus:ring-primary dark:bg-slate-950 w-4 h-4">
+                            <span class="flex items-center gap-1">
+                                <span class="material-symbols-outlined text-[16px] text-blue-500">verified</span>
+                                {% trans "Verified Sellers Only" %}
+                            </span>
+                        </label>
+                        <label class="flex items-center gap-3 text-xs font-medium text-slate-600 dark:text-slate-300 cursor-pointer">
+                            <input type="checkbox" name="featured_only" value="1" {% if request.GET.featured_only %}checked{% endif %} onchange="this.form.submit()"
+                                   class="rounded-md border-slate-300 dark:border-slate-700 text-primary focus:ring-primary dark:bg-slate-950 w-4 h-4">
+                            <span class="flex items-center gap-1">
+                                <span class="material-symbols-outlined text-[16px] text-amber-500">stars</span>
+                                {% trans "Featured Stores" %}
+                            </span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Action Button -->
+                <button type="submit" class="w-full py-3 bg-primary hover:bg-primary/95 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 shadow-lg shadow-primary/10 transition-all">
+                    {% trans "Apply Adjustments" %}
+                </button>
+            </form>
+        </aside>
+
+        <!-- Stores View Arena -->
+        <div class="lg:col-span-3 space-y-6">
+            {% if stores %}
+            <!-- Grid Matrix -->
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                {% for store in stores %}
+                    {% include "stores/components/store_card.html" with store=store %}
+                {% endfor %}
+            </div>
+            
+            {% else %}
+            <!-- Fallback Empty State -->
+            <div class="text-center py-24 bg-white dark:bg-slate-900 border border-dashed border-slate-200 dark:border-slate-800 rounded-3xl p-8">
+                <span class="material-symbols-outlined text-[56px] text-slate-300 dark:text-slate-700">search_off</span>
+                <h3 class="text-base font-bold mt-4 text-slate-800 dark:text-slate-200">{% trans "No matching stores located" %}</h3>
+                <p class="text-xs text-slate-400 mt-1">{% trans "Try modifying search parameters or clearing filters." %}</p>
+                {% if request.GET.urlencode %}
+                    <a href="{% url 'stores:stores' %}" class="inline-block mt-4 text-xs bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold px-4 py-2 rounded-xl hover:bg-slate-200 dark:hover:bg-slate-700 transition">
+                        {% trans "Clear Filters" %}
+                    </a>
+                {% endif %}
+            </div>
+            {% endif %}
+        </div>
+
+    </div>
+</div>
+
+<script>
+function filterCategory(slug) {
+    document.getElementById('category-input').value = slug;
+    document.getElementById('filter-form').submit();
+}
+</script>
+
+<script>
+function filterCategory(slug) {
+    document.getElementById('category-input').value = slug;
+    document.getElementById('filter-form').submit();
+}
+
+// Mobile Slide-out Canvas Handler
+function toggleMobileFilters(isOpen) {
+    const sidebar = document.getElementById('filter-sidebar');
+    const backdrop = document.getElementById('filter-backdrop');
+    
+    if (isOpen) {
+        backdrop.classList.remove('hidden');
+        setTimeout(() => {
+            backdrop.classList.remove('opacity-0');
+            sidebar.classList.remove('-translate-x-full');
+        }, 10);
+        document.body.style.overflow = 'hidden'; // Stop background scrolling
+    } else {
+        sidebar.classList.add('-translate-x-full');
+        backdrop.classList.add('opacity-0');
+        document.body.style.overflow = '';
+        setTimeout(() => {
+            backdrop.classList.add('hidden');
+        }, 300);
+    }
+}
+</script>
+{% endblock %}

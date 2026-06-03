@@ -1,0 +1,105 @@
+{% load i18n %}
+<div class="group relative bg-white dark:bg-slate-950 rounded-[2.5rem] p-3 transition-all duration-500 hover:shadow-[0_40px_80px_-20px_rgba(0,0,0,0.15)] dark:hover:shadow-primary/5 border border-slate-100 dark:border-slate-800/60 flex flex-col justify-between h-full">
+    
+    <!-- Image Wrapper Container -->
+    <div class="relative aspect-[4/5] rounded-[2rem] overflow-hidden bg-slate-100 dark:bg-slate-900 z-10">
+        <img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000 ease-in-out" 
+             src="{{ product.main_image.url }}" alt="{{ product.name }}" loading="lazy">
+
+        <!-- Top Badges Overlay -->
+        <div class="absolute top-4 inset-x-4 flex justify-between items-start z-30">
+            <div>
+            {% if product.discount %}
+                <span class="bg-blue-500 text-white text-[10px] font-black uppercase px-3 py-1.5 rounded-xl shadow-lg shadow-blue-500/20">-{{ product.discount|floatformat:0 }}%</span>
+            {% endif %}
+            {% if product.status_badge %}
+                <span class="{{ product.status_badge.class }} text-[9px] font-black uppercase px-3 py-1.5 rounded-xl shadow-lg">
+                    {{ product.status_badge.label }}
+                </span>
+            {% endif %}
+            </div>
+            <a href="#" class="relative z-40 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md px-2.5 py-1.5 rounded-xl border border-white/20 shadow-sm text-[8px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest hover:text-primary dark:hover:text-primary transition-colors">
+                {{ product.store.name }}
+            </a>
+        </div>
+
+        <!-- Hover Overlay Content (Attributes & Quick Actions) -->
+        <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-4 z-20">
+            <div class="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                
+                <!-- Grouped Card Attributes -->
+                <div class="flex flex-wrap gap-1.5 mb-3">
+                    {% for category, attrs in product.get_grouped_card_attributes_with_stock.items %}
+                        {% for attr in attrs|slice:":2" %}
+                        <span class="bg-white/10 backdrop-blur-md border border-white/10 text-white text-[8px] font-bold px-2 py-1 rounded-lg uppercase">
+                            {{ attr.value }}
+                        </span>
+                        {% endfor %}
+                    {% endfor %}
+                </div>
+                
+                <!-- Interactive Quick Add Button -->
+                <button type="button" class="relative z-40 w-full py-3 bg-primary text-white rounded-2xl text-[10px] font-black uppercase tracking-widest shadow-xl shadow-primary/20 hover:bg-white hover:text-primary transition-all duration-300 flex items-center justify-center gap-2">
+                    <span class="material-symbols-outlined text-sm">add_shopping_cart</span>
+                    {% trans "Quick Add" %}
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Product Meta Details Section -->
+    <div class="mt-4 px-2 pb-2 flex-grow flex flex-col justify-between">
+        <div>
+            <div class="flex items-center justify-between mb-1.5">
+                <span class="text-[10px] font-bold text-primary uppercase tracking-widest">{{ product.category.name }}</span>
+                
+                <!-- Color Swatches with Contextual Overflow Count -->
+                <div class="flex -space-x-1 rtl:space-x-reverse items-center">
+                    {% for color in product.get_unique_colors_with_stock|slice:":3" %}
+                    <div class="w-3.5 h-3.5 rounded-full border-2 border-white dark:border-slate-950 shadow-sm relative z-10" 
+                            data-color="{{ color.color_code|default:'#cccccc' }}"
+                            title="{{ color.name }}"></div>
+                    {% endfor %}
+                    
+                    {% if product.get_unique_colors_with_stock|length > 3 %}
+                    <div class="w-3.5 h-3.5 rounded-full bg-slate-100 dark:bg-slate-800 border-2 border-white dark:border-slate-950 flex items-center justify-center relative z-20">
+                        <span class="text-[7px] font-bold text-slate-500 dark:text-slate-400">+</span>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <h3 class="text-sm font-black text-slate-900 dark:text-white mb-3 line-clamp-1 group-hover:text-primary transition-colors">
+                {{ product.name }}
+            </h3>
+        </div>
+
+        <!-- Pricing & Inventory Alignment -->
+        <div class="flex items-end justify-between pt-2 border-t border-slate-100 dark:border-slate-900">
+            <div class="flex flex-col">
+                <span class="text-lg font-black text-slate-900 dark:text-white leading-none">
+                    {{ product.discounted_price|floatformat:0 }} <small class="text-[10px] font-bold opacity-60 uppercase">DA</small>
+                </span>
+                {% if product.discount %}
+                <span class="text-[10px] text-slate-400 line-through font-bold mt-0.5">{{ product.base_price|floatformat:0 }} DA</span>
+                {% endif %}
+            </div>
+            
+            <!-- Live Availability Stock Status Badge -->
+            <div class="flex items-center gap-1.5 bg-slate-50 dark:bg-slate-900 px-2 py-1 rounded-xl border border-slate-100 dark:border-slate-800/80">
+                <span class="relative flex h-1.5 w-1.5">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full {% if product.stock > 5 %}bg-green-400{% elif product.stock > 0 %}bg-orange-400{% else %}bg-red-400{% endif %} opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-1.5 w-1.5 {% if product.stock > 5 %}bg-green-500{% elif product.stock > 0 %}bg-orange-500{% else %}bg-red-500{% endif %}"></span>
+                </span>
+                <span class="text-[9px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-tight">
+                    {{ product.stock }} {% trans "In Stock" %}
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Master Base Link Configuration -->
+    <a href="{% url 'stores:product_detail' product.pk %}" class="absolute inset-0 z-0 rounded-[2.5rem]" aria-label="View {{ product.name }} details"></a>
+</div>
+
+

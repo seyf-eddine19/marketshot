@@ -1,0 +1,394 @@
+{% extends "stores/base.html" %}
+{% load i18n %}
+{% block content %}
+    <!-- ========================================== -->
+    <!-- 1. HERO SEARCH & DISCOVERY HEADER BANNER   -->
+    <!-- ========================================== -->
+    <header class="relative bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 overflow-hidden py-16 md:py-24">
+        <!-- Background Ambient Accents -->
+        <div class="absolute top-0 left-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute bottom-0 right-1/4 w-96 h-96 bg-orange-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            <span class="inline-flex items-center gap-1 px-3 py-1 bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 dark:text-indigo-400 rounded-full text-xs font-semibold mb-4 border border-indigo-100 dark:border-indigo-900/40">
+                <span class="material-symbols-outlined text-[14px]">rocket_launch</span>
+                {% trans "SaaS Storefront Builder Platform" %}
+            </span>
+            
+            <h1 class="text-4xl md:text-6xl font-black text-slate-900 dark:text-white tracking-tight max-w-4xl mx-auto leading-tight">
+                {% trans "Discover Premium Local Stores & Creative Creators" %}
+            </h1>
+            <p class="mt-4 text-base md:text-lg text-slate-500 dark:text-slate-400 max-w-2xl mx-auto">
+                {% trans "Browse unified catalogs across tailored stores. Secure communication directly via automated WhatsApp lines and social links." %}
+            </p>
+
+            <!-- Global Redirect Global Query Input -->
+            <form method="GET" action="{% url 'stores:products' %}" class="mt-8 max-w-xl mx-auto">
+                <div class="flex p-2 bg-slate-100 dark:bg-slate-800 rounded-2xl border border-slate-200/60 dark:border-slate-700 shadow-inner group focus-within:ring-2 focus-within:ring-indigo-500 transition-all">
+                    <input type="text" name="q" placeholder="{% trans 'Search for specific items, tech, clothes...' %}"
+                           class="w-full bg-transparent border-0 text-sm focus:ring-0 text-slate-900 dark:text-white px-3 placeholder:text-slate-400">
+                    <button type="submit" class="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-sm font-semibold shadow transition-colors flex items-center gap-2 shrink-0">
+                        <span class="material-symbols-outlined text-[18px]">search</span>
+                        <span class="hidden sm:inline">{% trans "Explore" %}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </header>
+
+    <!-- ========================================== -->
+    <!-- 2. HIGH-LEVEL HUBS CATEGORIES SECTION      -->
+    <!-- ========================================== -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="flex items-center justify-between mb-8">
+            <div>
+                <h2 class="text-xl md:text-2xl font-black text-slate-900 dark:text-white">{% trans "Browse Core Niches" %}</h2>
+                <p class="text-xs text-slate-400 mt-0.5">{% trans "Tailored marketplace categories filter layout" %}</p>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-8 gap-4">
+            {% for category in categories %}
+                <a href="?category_slug={{ category.slug }}" 
+                   class="group bg-white dark:bg-slate-900 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 text-center shadow-sm hover:shadow-md hover:border-indigo-500/40 dark:hover:border-indigo-400/40 transition duration-300">
+                    <div class="w-12 h-12 rounded-xl bg-slate-50 dark:bg-slate-800 text-indigo-600 dark:text-indigo-400 flex items-center justify-center mx-auto mb-3 font-semibold group-hover:scale-110 transition duration-300">
+                        <!-- Generates dynamic letter representations or utilize icon field if available -->
+                        {{ category.name|slice:":1" }}
+                    </div>
+                    <span class="text-xs font-bold text-slate-700 dark:text-slate-300 line-clamp-1 group-hover:text-indigo-600 dark:group-hover:text-indigo-400">
+                        {{ category.name }}
+                    </span>
+                </a>
+            {% empty %}
+                <div class="col-span-full py-6 text-center text-xs text-slate-400 font-medium">
+                    {% trans "No catalog niches found." %}
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- 3. FEATURED STORES GRID SECTION            -->
+    <!-- ========================================== -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 border-t border-slate-200/60 dark:border-slate-900">
+        <div class="mb-8">
+            <h2 class="text-xl md:text-2xl font-black text-slate-900 dark:text-white">{% trans "Verified Creators & Top Stores" %}</h2>
+            <p class="text-xs text-slate-400 mt-0.5">{% trans "Active vendors sorted by production catalogs sizes" %}</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {% for store in featured_stores %}
+                {% include "stores/components/store_card.html" with store=store %}
+            {% empty %}
+                <div class="col-span-full text-center py-12 text-xs text-slate-400 font-medium">
+                    {% trans "No active storefront vendors showcased at the moment." %}
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- 4. TRENDING RELEASES FEATURED PRODUCTS     -->
+    <!-- ========================================== -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 border-t border-slate-200/60 dark:border-slate-900">
+        <div class="mb-8">
+            <h2 class="text-xl md:text-2xl font-black text-slate-900 dark:text-white">{% trans "Trending Featured Releases" %}</h2>
+            <p class="text-xs text-slate-400 mt-0.5">{% trans "Hand-picked high conversion premium solutions curated by platforms administrators" %}</p>
+        </div>
+
+
+        {% if featured_products %}
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+            {% for product in featured_products %}
+                {% include "stores/components/product_card.html" with product=product %}
+            {% endfor %}
+        </div>
+
+        <!-- MOUNT COMPONENT 3: STATE-PRESERVED PAGINATION -->
+        {% include "stores/components/pagination.html" %}
+
+        {% else %}
+        <!-- Fallback Frame Blank Slate Empty State Layout Component -->
+        <div class="text-center py-24 bg-white dark:bg-slate-900 border border-dashed border-slate-200 dark:border-slate-800/80 rounded-3xl p-6 shadow-sm">
+            <span class="material-symbols-outlined text-[48px] text-slate-300 dark:text-slate-700">inventory_2</span>
+            <h3 class="text-sm font-bold mt-3 text-slate-800 dark:text-slate-200">{% trans "No Active Inventory Matches" %}</h3>
+            <p class="text-xs text-slate-400 mt-1 max-w-xs mx-auto">{% trans "There are no products listing inside the targeted filters right now." %}</p>
+            {% if request.GET.urlencode %}
+                <a href="?{% if request.GET.sort %}sort={{ request.GET.sort }}{% endif %}" class="inline-block mt-4 text-xs bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold px-4 py-2 rounded-xl hover:bg-slate-200 dark:hover:bg-slate-700 transition">
+                    {% trans "Clear Filters" %}
+                </a>
+            {% endif %}
+        </div>
+        {% endif %}
+    </section>
+
+
+<!-- Trending Slider Section -->
+<section class="py-20 px-6 bg-surface-container-lowest">
+<div class="max-w-7xl mx-auto">
+    <!-- Header Block Navigation Actions Area -->
+    <div class="flex items-end justify-between mb-12">
+        <div>
+            <span class="text-secondary font-bold uppercase tracking-[0.2em] text-xs">{% trans "Curated Selection" %}</span>
+            <h2 class="text-4xl font-black mt-2 tracking-tighter text-slate-900 dark:text-white">{% trans "Trending Now" %}</h2>
+        </div>
+        <div class="flex gap-3">
+            <button class="trending-prev p-4 rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:bg-primary hover:text-white transition-all shadow-sm">
+                <span class="material-symbols-outlined">arrow_back</span>
+            </button>
+            <button class="trending-next p-4 rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:bg-primary hover:text-white transition-all shadow-sm">
+                <span class="material-symbols-outlined">arrow_forward</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Master Swiper Engine Block Container -->
+    <div class="swiper trending-swiper overflow-visible">
+        <div class="swiper-wrapper">
+            {% for product in featured_products %}
+                {% if forloop.counter0|divisibleby:5 %}
+                <div class="swiper-slide">
+                    <div class="grid grid-cols-1 md:grid-cols-4 md:grid-rows-2 gap-6">
+                {% endif %}
+
+                    {% if forloop.counter0|divisibleby:5 %}
+                    <!-- ========================================== -->
+                    <!-- A. HERO HIGHLIGHT COMPONENT (1/5 PATTERN)  -->
+                    <!-- ========================================== -->
+                    <div class="md:col-span-2 md:row-span-2 group relative bg-white dark:bg-slate-950 rounded-[2.5rem] p-3 transition-all duration-500 hover:shadow-[0_40px_80px_-20px_rgba(0,0,0,0.15)] dark:hover:shadow-primary/5 border border-slate-100 dark:border-slate-800/60 flex flex-col justify-between min-h-[500px]">
+                        
+                        <!-- Image Wrapper Container -->
+                        <div class="relative flex-grow rounded-[2rem] overflow-hidden bg-slate-100 dark:bg-slate-900 z-10">
+                            <img class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000 ease-in-out" 
+                                 src="{{ product.main_image.url }}" alt="{{ product.name }}" loading="lazy">
+
+                            <!-- Top Badges Overlay -->
+                            <div class="absolute top-6 inset-x-6 flex justify-between items-start z-30">
+                                <div class="flex flex-col gap-1.5">
+                                    <span class="bg-secondary text-white w-fit px-4 py-1.5 rounded-xl text-[10px] font-black tracking-widest shadow-lg uppercase">{% trans "BEST SELLER" %}</span>
+                                    {% if product.discount %}
+                                        <span class="bg-blue-500 text-white text-[10px] font-black uppercase px-3 py-1.5 rounded-xl shadow-lg shadow-blue-500/20 w-fit">-{{ product.discount|floatformat:0 }}%</span>
+                                    {% endif %}
+                                    {% if product.status_badge %}
+                                        <span class="{{ product.status_badge.class }} text-[9px] font-black uppercase px-3 py-1.5 rounded-xl shadow-lg w-fit">
+                                            {{ product.status_badge.label }}
+                                        </span>
+                                    {% endif %}
+                                </div>
+                                <a href="#" class="relative z-40 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md px-3 py-2 rounded-xl border border-white/20 shadow-sm text-[9px] font-black text-slate-600 dark:text-slate-400 uppercase tracking-widest hover:text-primary dark:hover:text-primary transition-colors">
+                                    {{ product.store.name }}
+                                </a>
+                            </div>
+
+                            <!-- Gradient Bottom Shadow Meta Frame Overlay -->
+                            <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent p-8 flex flex-col justify-end z-20">
+                                
+                                <!-- Grouped Card Attributes (Rendered above title in hero view) -->
+                                <div class="flex flex-wrap gap-1.5 mb-4 transform translate-y-2 group-hover:translate-y-0 opacity-80 group-hover:opacity-100 transition-all duration-500">
+                                    {% for category, attrs in product.get_grouped_card_attributes_with_stock.items %}
+                                        {% for attr in attrs|slice:":3" %}
+                                        <span class="bg-white/10 backdrop-blur-md border border-white/10 text-white text-[9px] font-bold px-2.5 py-1 rounded-lg uppercase">
+                                            {{ attr.value }}
+                                        </span>
+                                        {% endfor %}
+                                    {% endfor %}
+                                </div>
+
+                                <h3 class="text-4xl font-black text-white mb-2 leading-tight tracking-tight">{{ product.name }}</h3>
+                                
+                                <div class="flex items-baseline gap-2 mb-6">
+                                    <p class="text-white font-black text-3xl leading-none">
+                                        {{ product.discounted_price|floatformat:0 }} <span class="text-sm font-bold opacity-80">DA</span>
+                                    </p>
+                                    {% if product.discount %}
+                                        <span class="text-sm text-white/50 line-through font-bold">{{ product.base_price|floatformat:0 }} DA</span>
+                                    {% endif %}
+                                </div>
+
+                                <!-- Interactive Quick Add Button -->
+                                <button type="button" class="relative z-40 w-full md:w-auto px-8 py-4 bg-white text-slate-950 rounded-2xl text-[11px] font-black uppercase tracking-widest shadow-2xl hover:bg-primary hover:text-white transition-all duration-300 flex items-center justify-center gap-2 self-start">
+                                    <span class="material-symbols-outlined text-sm">add_shopping_cart</span>
+                                    {% trans "Quick Add" %}
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Secondary Row: Meta Color & Real-Time Stock Engine Info Box -->
+                        <div class="mt-4 px-3 pb-2 flex items-center justify-between z-10">
+                            <!-- Unique Color Trackers Grid Layout -->
+                            <div class="flex -space-x-1 rtl:space-x-reverse items-center">
+                                {% for color in product.get_unique_colors_with_stock|slice:":4" %}
+                                <div class="w-4 h-4 rounded-full border-2 border-white dark:border-slate-950 shadow-sm relative z-10" 
+                                     data-color="{{ color.color_code|default:'#cccccc' }}"
+                                     title="{{ color.name }}"></div>
+                                {% endfor %}
+                                
+                                {% if product.get_unique_colors_with_stock|length > 4 %}
+                                <div class="w-4 h-4 rounded-full bg-slate-100 dark:bg-slate-800 border-2 border-white dark:border-slate-950 flex items-center justify-center relative z-20">
+                                    <span class="text-[8px] font-bold text-slate-500 dark:text-slate-400">+</span>
+                                </div>
+                                {% endif %}
+                            </div>
+
+                            <!-- Live Stock Status Pulse Layout component -->
+                            <div class="flex items-center gap-1.5 bg-slate-50 dark:bg-slate-900 px-2.5 py-1 rounded-xl border border-slate-100 dark:border-slate-800/80">
+                                <span class="relative flex h-1.5 w-1.5">
+                                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full {% if product.stock > 5 %}bg-green-400{% elif product.stock > 0 %}bg-orange-400{% else %}bg-red-400{% endif %} opacity-75"></span>
+                                    <span class="relative inline-flex rounded-full h-1.5 w-1.5 {% if product.stock > 5 %}bg-green-500{% elif product.stock > 0 %}bg-orange-500{% else %}bg-red-500{% endif %}"></span>
+                                </span>
+                                <span class="text-[9px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-tight">
+                                    {{ product.stock }} {% trans "In Stock" %}
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Invisible Dynamic Master Absolute Anchor -->
+                        <a href="{% url 'stores:product_detail' product.pk %}" class="absolute inset-0 z-0 rounded-[2.5rem]" aria-label="View {{ product.name }} details"></a>
+                    </div>
+
+                    {% else %}
+                    <!-- ========================================== -->
+                    <!-- B. REGULAR PRODUCT CARD ITEMS GRID CELL     -->
+                    <!-- ========================================== -->
+                    <div class="group relative bg-white dark:bg-slate-950 rounded-[2.5rem] p-3 transition-all duration-500 hover:shadow-[0_40px_80px_-20px_rgba(0,0,0,0.15)] dark:hover:shadow-primary/5 border border-slate-100 dark:border-slate-800/60 flex flex-row justify-between h-full">
+                        
+                        <!-- Image Wrapper Container Frame -->
+                        <div class="relative aspect-[2/1] rounded-[2rem] overflow-hidden bg-slate-100 dark:bg-slate-900 z-10">
+                            <img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000 ease-in-out" 
+                                 src="{{ product.main_image.url }}" alt="{{ product.name }}" loading="lazy">
+
+                            <!-- Top Badges Overlay Frame Grid -->
+                            <div class="absolute top-4 inset-x-4 flex justify-between items-start z-30">
+                                <div class="flex flex-col gap-1">
+                                    {% if product.discount %}
+                                        <span class="bg-blue-500 text-white text-[10px] font-black uppercase px-3 py-1.5 rounded-xl shadow-lg shadow-blue-500/20 w-fit">-{{ product.discount|floatformat:0 }}%</span>
+                                    {% endif %}
+                                    {% if product.status_badge %}
+                                        <span class="{{ product.status_badge.class }} text-[9px] font-black uppercase px-3 py-1.5 rounded-xl shadow-lg w-fit">
+                                            {{ product.status_badge.label }}
+                                        </span>
+                                    {% endif %}
+                                </div>
+                                <a href="#" class="relative z-40 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md px-2.5 py-1.5 rounded-xl border border-white/20 shadow-sm text-[8px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest hover:text-primary dark:hover:text-primary transition-colors">
+                                    {{ product.store.name }}
+                                </a>
+                            </div>
+
+                            <!-- Hover Hidden Action Layout Panel Box -->
+                            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-4 z-20">
+                                <div class="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                                    
+                                    <!-- Dynamic Grouped Attributes -->
+                                    <div class="flex flex-wrap gap-1.5 mb-3">
+                                        {% for category, attrs in product.get_grouped_card_attributes_with_stock.items %}
+                                            {% for attr in attrs|slice:":2" %}
+                                            <span class="bg-white/10 backdrop-blur-md border border-white/10 text-white text-[8px] font-bold px-2 py-1 rounded-lg uppercase">
+                                                {{ attr.value }}
+                                            </span>
+                                            {% endfor %}
+                                        {% endfor %}
+                                    </div>
+                                    
+                                    <!-- Add Shopping Interactive Action Trigger -->
+                                    <button type="button" class="relative z-40 w-full py-3 bg-primary text-white rounded-2xl text-[10px] font-black uppercase tracking-widest shadow-xl shadow-primary/20 hover:bg-white hover:text-primary transition-all duration-300 flex items-center justify-center gap-2">
+                                        <span class="material-symbols-outlined text-sm">add_shopping_cart</span>
+                                        {% trans "Quick Add" %}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Meta Description Context Detail Block -->
+                        <div class="mt-4 px-2 pb-2 flex-grow flex flex-col justify-between z-10">
+                            <div>
+                                <div class="flex items-center justify-between mb-1.5">
+                                    <span class="text-[10px] font-bold text-primary uppercase tracking-widest">{{ product.category.name }}</span>
+                                    
+                                    <!-- Context Swatch Tracking Overflow -->
+                                    <div class="flex -space-x-1 rtl:space-x-reverse items-center">
+                                        {% for color in product.get_unique_colors_with_stock|slice:":3" %}
+                                        <div class="w-3.5 h-3.5 rounded-full border-2 border-white dark:border-slate-950 shadow-sm relative z-10" 
+                                             data-color="{{ color.color_code|default:'#cccccc' }}"
+                                             title="{{ color.name }}"></div>
+                                        {% endfor %}
+                                        
+                                        {% if product.get_unique_colors_with_stock|length > 3 %}
+                                        <div class="w-3.5 h-3.5 rounded-full bg-slate-100 dark:bg-slate-800 border-2 border-white dark:border-slate-950 flex items-center justify-center relative z-20">
+                                            <span class="text-[7px] font-bold text-slate-500 dark:text-slate-400">+</span>
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+                                <h3 class="text-sm font-black text-slate-900 dark:text-white mb-3 line-clamp-1 group-hover:text-primary transition-colors">
+                                    {{ product.name }}
+                                </h3>
+                            </div>
+
+                            <!-- Pricing Configuration Panel Display Grid -->
+                            <div class="flex items-end justify-between pt-2 border-t border-slate-100 dark:border-slate-900">
+                                <div class="flex flex-col">
+                                    <span class="text-lg font-black text-slate-900 dark:text-white leading-none">
+                                        {{ product.discounted_price|floatformat:0 }} <small class="text-[10px] font-bold opacity-60 uppercase">DA</small>
+                                    </span>
+                                    {% if product.discount %}
+                                    <span class="text-[10px] text-slate-400 line-through font-bold mt-0.5">{{ product.base_price|floatformat:0 }} DA</span>
+                                    {% endif %}
+                                </div>
+                                
+                                <!-- Active Dynamic Stock Badge Panel Component -->
+                                <div class="flex items-center gap-1.5 bg-slate-50 dark:bg-slate-900 px-2 py-1 rounded-xl border border-slate-100 dark:border-slate-800/80">
+                                    <span class="relative flex h-1.5 w-1.5">
+                                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full {% if product.stock > 5 %}bg-green-400{% elif product.stock > 0 %}bg-orange-400{% else %}bg-red-400{% endif %} opacity-75"></span>
+                                        <span class="relative inline-flex rounded-full h-1.5 w-1.5 {% if product.stock > 5 %}bg-green-500{% elif product.stock > 0 %}bg-orange-500{% else %}bg-red-500{% endif %}"></span>
+                                    </span>
+                                    <span class="text-[9px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-tight">
+                                        {{ product.stock }} {% trans "In Stock" %}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Master Base Link Target Integration Anchor -->
+                        <a href="{% url 'stores:product_detail' product.pk %}" class="absolute inset-0 z-0 rounded-[2.5rem]" aria-label="View {{ product.name }} details"></a>
+                    </div>
+                    {% endif %}
+
+                {% if forloop.counter|divisibleby:5 or forloop.last %}
+                    </div> 
+                </div> 
+                {% endif %}
+            {% empty %}
+                <div class="w-full py-12 text-center text-slate-400">
+                    <p>{% trans "No trending products available at the moment." %}</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+</section>
+
+{% endblock %}
+
+{% block extra_js %}
+<!-- Swiper Engine Integration -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        new Swiper('.trending-swiper', {
+            slidesPerView: 1,
+            spaceBetween: 40,
+            speed: 800,
+            grabCursor: true,
+            navigation: { 
+                nextEl: '.trending-next', 
+                prevEl: '.trending-prev' 
+            }
+        });
+    });
+    document.querySelectorAll('[data-color]').forEach(function(el) {
+        el.style.backgroundColor = el.getAttribute('data-color');
+    });
+</script>
+{% endblock %}

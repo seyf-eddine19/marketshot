@@ -1,0 +1,236 @@
+{% extends "stores/base.html" %}
+{% load i18n static %}
+
+{% block title %}{{ store.name }} | {% trans "MarketShot Showcase" %}{% endblock %}
+
+{% block content %}
+<!-- Store Hero Showcase Header Banner Component -->
+<div class="relative bg-white dark:bg-slate-900 transition-colors duration-200">
+    <!-- 1. BANNER WRAPPER -->
+    <div class="h-[320px] md:h-[400px] w-full relative overflow-hidden bg-slate-100 dark:bg-slate-800">
+        {% if store.banner %}
+            <img class="w-full h-full object-cover" src="{{ store.banner.url }}" alt="{{ store.name }} {% trans 'Banner' %}">
+        {% else %}
+            <!-- Premium Fallback Gradient matching MarketShot theme colors -->
+            <div class="w-full h-full bg-gradient-to-r from-blue-600 via-indigo-600 to-orange-500 opacity-90"></div>
+        {% endif %}
+        <!-- Bottom overlay fading softly into the page background color -->
+        <div class="absolute inset-0 bg-gradient-to-t from-slate-50 via-transparent to-transparent dark:from-slate-950"></div>
+    </div>
+
+    <!-- 2. HEADER CONTENT CONTAINER -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-24 relative z-10">
+        <div class="flex flex-col md:flex-row items-center md:items-end text-center md:text-left {% if request.LANGUAGE_CODE == 'ar' %}md:text-right{% endif %} gap-6 pb-8 border-b border-slate-200 dark:border-slate-800">
+            
+            <!-- Store Logo Box -->
+            <div class="w-32 h-32 md:w-44 md:h-44 rounded-[24px] bg-white dark:bg-slate-900 p-4 shadow-xl border border-slate-100 dark:border-slate-800 flex items-center justify-center overflow-hidden shrink-0">
+                {% if store.logo %}
+                    <img class="w-full h-full object-contain rounded-xl" src="{{ store.logo.url }}" alt="{{ store.name }} {% trans 'Logo' %}">
+                {% else %}
+                    <div class="w-full h-full bg-slate-50 dark:bg-slate-800 flex items-center justify-center rounded-xl font-black text-4xl text-indigo-500 font-mono">
+                        {{ store.name|slice:":1" }}
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Store Information Block -->
+            <div class="flex-1 space-y-2 mb-2 w-full">
+                <div class="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-3">
+                    <h1 class="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+                        {{ store.name }}
+                    </h1>
+                    {% if store.is_verified %}
+                        <span class="inline-flex items-center gap-1 px-3 py-1 bg-blue-50 dark:bg-blue-950/50 text-blue-600 dark:text-blue-400 rounded-full text-xs font-semibold border border-blue-200 dark:border-blue-800/60">
+                            <span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">verified</span>
+                            {% trans "Verified Vendor" %}
+                        </span>
+                    {% endif %}
+                </div>
+
+                {% if store.tagline %}
+                    <p class="text-indigo-600 dark:text-indigo-400 font-semibold text-sm">
+                        {{ store.tagline }}
+                    </p>
+                {% endif %}
+
+                {% if store.description %}
+                    <p class="text-slate-600 dark:text-slate-400 max-w-2xl text-sm leading-relaxed mx-auto md:mx-0">
+                        {{ store.description }}
+                    </p>
+                {% endif %}
+
+                <!-- Social Profiles & Context -->
+                <div class="flex flex-wrap items-center justify-center md:justify-start gap-4 pt-2">
+                    <div class="flex gap-4 text-slate-400 dark:text-slate-500">
+                        {% if store.website_url %}
+                            <a class="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors" href="{{ store.website_url }}" target="_blank" title="Website"><span class="material-symbols-outlined text-[20px]">public</span></a>
+                        {% endif %}
+                        {% if store.instagram_url %}
+                            <a class="hover:text-pink-600 transition-colors" href="{{ store.instagram_url }}" target="_blank" title="Instagram"><span class="material-symbols-outlined text-[20px]">photo_camera</span></a>
+                        {% endif %}
+                        {% if store.facebook_url %}
+                            <a class="hover:text-blue-600 transition-colors" href="{{ store.facebook_url }}" target="_blank" title="Facebook"><span class="material-symbols-outlined text-[20px]">video_library</span></a>
+                        {% endif %}
+                        {% if store.linkedin_url %}
+                            <a class="hover:text-blue-500 transition-colors" href="{{ store.linkedin_url }}" target="_blank" title="LinkedIn"><span class="material-symbols-outlined text-[20px]">badge</span></a>
+                        {% endif %}
+                    </div>
+                    
+                    {% if store.website_url or store.instagram_url or store.facebook_url %}
+                        <div class="hidden sm:block h-4 w-[1px] bg-slate-200 dark:bg-slate-800"></div>
+                    {% endif %}
+                    
+                    <span class="text-xs font-medium text-slate-400 dark:text-slate-500">
+                        {% trans "Member since" %} {{ store.created_at|date:"Y" }}
+                    </span>
+                </div>
+            </div>
+
+            <!-- Dynamic CTA Actions Menu -->
+            <div class="flex flex-wrap sm:flex-nowrap gap-3 mb-2 w-full sm:w-auto shrink-0 justify-center">
+                {% if store.watsapp_number %}
+                    <a href="https://wa.me/{{ store.watsapp_number }}" target="_blank"
+                       class="w-full sm:w-auto px-6 py-2.5 bg-green-600 hover:bg-green-700 text-white rounded-xl text-sm font-semibold shadow-sm hover:shadow-md transition-all active:scale-95 flex items-center justify-center gap-2">
+                        <span class="material-symbols-outlined text-[18px]">chat</span>
+                        {% trans "WhatsApp" %}
+                    </a>
+                {% endif %}
+                
+                <button type="button" onclick="toggleFilterDrawer(true)" class="lg:hidden w-full sm:w-auto px-6 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-800 dark:bg-slate-800 dark:hover:bg-slate-700 dark:text-slate-200 rounded-xl text-sm font-semibold border border-slate-200 dark:border-slate-700 transition-all active:scale-95 flex items-center justify-center gap-2">
+                    <span class="material-symbols-outlined text-[18px]">tune</span>
+                    {% trans "Filters" %}
+                </button>
+            </div>
+        </div>
+
+        <!-- 3. LOCAL NAVIGATION TABS CONTROLLER -->
+        <div class="flex gap-8 overflow-x-auto scrollbar-none mt-4 {% if request.LANGUAGE_CODE == 'ar' %}justify-start{% endif %}">
+            <button type="button" class="pb-4 text-indigo-600 dark:text-indigo-400 font-bold border-b-2 border-indigo-600 dark:border-indigo-400 text-sm whitespace-nowrap">
+                {% trans "Products" %}
+            </button>
+            <button type="button" class="pb-4 text-slate-400 dark:text-slate-500 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors text-sm whitespace-nowrap font-medium">
+                {% trans "Reviews" %}
+            </button>
+            <button type="button" class="pb-4 text-slate-400 dark:text-slate-500 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors text-sm whitespace-nowrap font-medium">
+                {% trans "About Store" %}
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Main Workspace Layout Container Grid -->
+<div class="max-w-7xl mx-auto px-4 sm:px-6 py-6 md:py-10">
+    
+    <!-- Centralized Parameter Context Form Mapping -->
+    <form method="get" action="." id="master-filter-form">
+        <!-- Hidden Parameter Inputs for State Sync Maintenance -->
+        <input type="hidden" name="category_id" id="form-category-id" value="{{ request.GET.category_id|default:'' }}">
+        <input type="hidden" name="sort" id="form-sort-id" value="{{ request.GET.sort|default:'newest' }}">
+
+        <!-- MOUNT COMPONENT 1: TOP FILTER BAR -->
+        {% include "stores/components/topbar_filter.html" %}
+
+        <!-- Master Interface Split Layout Context Grid Row -->
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-8 items-start relative">
+            
+            <!-- Mobile Navigation Canvas Drawer Backdrop Mask Item Layer -->
+            <div id="drawer-backdrop" onclick="toggleFilterDrawer(false)" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-40 hidden lg:hidden opacity-0 transition-opacity duration-300"></div>
+
+            <!-- MOUNT COMPONENT 2: SIDEBAR FILTERS -->
+            {% include "stores/components/sidebar_filters.html" %}
+    </form>
+
+        <!-- Product Presentation Workspace Content Column -->
+        <div class="lg:col-span-3 space-y-8">
+            {% if products %}
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                {% for product in products %}
+                    {% include "stores/components/product_card.html" with product=product %}
+                {% endfor %}
+            </div>
+
+            <!-- MOUNT COMPONENT 3: STATE-PRESERVED PAGINATION -->
+            {% include "stores/components/pagination.html" %}
+
+            {% else %}
+            <!-- Fallback Frame Blank Slate Empty State Layout Component -->
+            <div class="text-center py-24 bg-white dark:bg-slate-900 border border-dashed border-slate-200 dark:border-slate-800/80 rounded-3xl p-6 shadow-sm">
+                <span class="material-symbols-outlined text-[48px] text-slate-300 dark:text-slate-700">inventory_2</span>
+                <h3 class="text-sm font-bold mt-3 text-slate-800 dark:text-slate-200">{% trans "No Active Inventory Matches" %}</h3>
+                <p class="text-xs text-slate-400 mt-1 max-w-xs mx-auto">{% trans "There are no products listing inside the targeted filters right now." %}</p>
+                {% if request.GET.urlencode %}
+                    <a href="?{% if request.GET.sort %}sort={{ request.GET.sort }}{% endif %}" class="inline-block mt-4 text-xs bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold px-4 py-2 rounded-xl hover:bg-slate-200 dark:hover:bg-slate-700 transition">
+                        {% trans "Clear Filters" %}
+                    </a>
+                {% endif %}
+            </div>
+            {% endif %}
+        </div>
+
+</div>
+</div>
+
+<!-- Custom Scrollbar Micro Style Rule Injections -->
+<style>
+.custom-scrollbar::-webkit-scrollbar {
+    width: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 10px;
+}
+.dark .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #334155;
+}
+</style>
+
+<!-- Control Automation Script Event Bindings Block -->
+<script>
+function selectCategoryTree(id) {
+    document.getElementById('form-category-id').value = id;
+    document.getElementById('master-filter-form').submit();
+}
+
+function applySorting(value) {
+    document.getElementById('form-sort-id').value = value;
+    document.getElementById('master-filter-form').submit();
+}
+
+function clearSearchInput() {
+    const form = document.getElementById('master-filter-form');
+    const searchInput = form.querySelector('input[name="q"]');
+    if (searchInput) {
+        searchInput.value = '';
+        form.submit();
+    }
+}
+
+function toggleFilterDrawer(isOpen) {
+    const sidebar = document.getElementById('filter-drawer');
+    const backdrop = document.getElementById('drawer-backdrop');
+    
+    if (isOpen) {
+        backdrop.classList.remove('hidden');
+        setTimeout(() => {
+            backdrop.classList.remove('opacity-0');
+            sidebar.classList.remove('-translate-x-full');
+        }, 10);
+        document.body.style.overflow = 'hidden';
+    } else {
+        sidebar.classList.add('-translate-x-full');
+        backdrop.classList.add('opacity-0');
+        document.body.style.overflow = '';
+        setTimeout(() => {
+            backdrop.classList.add('hidden');
+        }, 300);
+    }
+}
+
+document.querySelectorAll('[data-color]').forEach(el => {
+    el.style.backgroundColor = el.dataset.color;
+});
+</script>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends "studio/base.html" %}
+{% load static i18n %}
+
+{% block content %}
+
+<section class="py-20 px-6 bg-background dark:bg-slate-950">
+
+    <div class="max-w-6xl mx-auto">
+
+        <h1 class="text-4xl font-black mb-6 dark:text-white">
+            {% trans "Book Your Studio Session" %}
+        </h1>
+
+        <p class="text-slate-500 mb-10">
+            {% trans "Choose your service and proceed to booking." %}
+        </p>
+
+        <!-- SERVICES -->
+        <div class="grid md:grid-cols-2 gap-6">
+
+            {% for service in services %}
+            <a href="{% url 'studio:booking_create' %}?service={{ service.id }}"
+               class="block p-6 rounded-2xl border bg-white dark:bg-slate-800 hover:shadow-xl transition">
+
+                <div class="flex items-center gap-3 mb-3">
+                    <span class="material-symbols-outlined text-primary">
+                        {{ service.icon }}
+                    </span>
+                    <h3 class="text-xl font-bold dark:text-white">
+                        {{ service.title }}
+                    </h3>
+                </div>
+
+                <p class="text-slate-500 text-sm">
+                    {{ service.description }}
+                </p>
+
+            </a>
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}
