@@ -1,0 +1,328 @@
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    scroll-behavior: smooth;
+    background-color: #FCF9F8;
+    color: #0F172A;
+    -webkit-overflow-scrolling: touch;
+}
+
+.dark body {
+    background-color: #020617;
+    color: #E2E8F0;
+}
+
+.glass-nav {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(12px);
+}
+
+.dark .glass-nav {
+    background: rgba(15, 23, 42, 0.8);
+}
+
+.cta-gradient {
+    background: linear-gradient(135deg, #0052FF 0%, #0044D6 100%);
+    transition: all 0.3s ease;
+}
+
+.cta-gradient:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+.text-gradient {
+    background: linear-gradient(135deg, #0052FF, #FF5C00);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* ========================================
+   SMOOTH SCROLL
+======================================== */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgb(148 163 184 / 0.6);
+    border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgb(100 116 139 / 0.8);
+}
+
+/* Dark mode scrollbar */
+.dark ::-webkit-scrollbar-thumb {
+    background: rgb(71 85 105 / 0.7);
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+    background: rgb(100 116 139 / 0.9);
+}
+
+/* ========================================
+   DASHBOARD THEME
+======================================== */
+
+.glass-header,
+.glass-nav {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+.dark .glass-header,
+.dark .glass-nav {
+    background: rgba(15, 23, 42, 0.85);
+    border-color: rgba(51, 65, 85, 0.5);
+}
+
+.hero-gradient {
+    background: linear-gradient(
+        135deg,
+        #0052FF 0%,
+        #0F172A 150%
+    );
+}
+
+.cta-gradient {
+    background: linear-gradient(
+        135deg,
+        #0052FF 0%,
+        #0044D6 100%
+    );
+    transition: all .3s ease;
+}
+
+.cta-gradient:hover {
+    opacity: .95;
+    transform: translateY(-1px);
+}
+
+.text-gradient {
+    background: linear-gradient(
+        135deg,
+        #0052FF,
+        #FF5C00
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.material-symbols-outlined {
+    font-display: block;
+    font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24;
+}
+
+/* ========================================
+   SIDEBAR
+======================================== */
+
+.sidebar-link {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    padding: .75rem 1rem;
+    border-radius: .75rem;
+    font-size: .875rem;
+    font-weight: 600;
+    color: #64748b;
+    transition: all .2s ease;
+}
+
+.sidebar-link:hover {
+    background: rgba(0, 82, 255, .05);
+    color: #0052FF;
+}
+
+.dark .sidebar-link {
+    color: #94a3b8;
+}
+
+.dark .sidebar-link:hover {
+    color: white;
+}
+
+.sidebar-active {
+    background: #0052FF !important;
+    color: white !important;
+    box-shadow: 0 4px 12px rgba(0, 82, 255, .2);
+}
+
+#sidebar {
+    scrollbar-width: thin;
+    scrollbar-color: rgb(148 163 184 / 0.6) transparent;
+}
+
+.dark #sidebar {
+    scrollbar-color: rgb(71 85 105 / 0.7) transparent;
+}
+/* ========================================
+   FORM SYSTEM
+======================================== */
+
+input[type="text"],
+input[type="url"],
+input[type="email"],
+input[type="number"],
+input[type="password"],
+input[type="search"],
+textarea,
+select {
+    width: 100%;
+    min-height: 48px;
+    padding-inline: 1rem;
+    border-radius: 1rem;
+    border: 1px solid #cbd5e1;
+    background: white;
+    color: #0f172a;
+    font-size: .95rem;
+    font-weight: 500;
+    transition: all .2s ease;
+    outline: none;
+}
+
+.dark input[type="text"],
+.dark input[type="url"],
+.dark input[type="email"],
+.dark input[type="number"],
+.dark input[type="password"],
+.dark input[type="search"],
+.dark textarea,
+.dark select {
+    background: rgb(15 23 42 / .7);
+    border-color: #334155;
+    color: white;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, .12);
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: #94a3b8;
+}
+
+textarea {
+    min-height: 140px;
+    padding: 1rem;
+    resize: vertical;
+    line-height: 1.6;
+}
+
+/* ========================================
+   SELECT
+======================================== */
+
+select {
+    appearance: none;
+    padding-inline-end: 3rem;
+
+    background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%2364748b' viewBox='0 0 20 20'%3E%3Cpath d='M5 7l5 5 5-5H5z'/%3E%3C/svg%3E");
+
+    background-repeat: no-repeat;
+    background-size: 14px;
+    background-position:
+        right 1rem center;
+}
+
+html[dir="rtl"] select {
+    background-position:
+        left 1rem center;
+
+    padding-inline-start: 3rem;
+    padding-inline-end: 1rem;
+}
+
+select[multiple] {
+    min-height: 180px;
+    padding: 1rem;
+    background-image: none;
+}
+
+select[multiple] option {
+    padding: .5rem .75rem;
+    font-weight: 600;
+}
+
+select[multiple] option:checked {
+    background: #2563eb;
+    color: white;
+}
+
+/* ========================================
+   FILE INPUT
+======================================== */
+
+input[type="file"] {
+    width: 100%;
+    font-size: .875rem;
+    color: #64748b;
+}
+
+input[type="file"]::file-selector-button {
+    border: none;
+    background: #2563eb;
+    color: white;
+    padding: .875rem 1.25rem;
+    border-radius: 1rem;
+    margin-inline-end: 1rem;
+    cursor: pointer;
+    font-weight: 700;
+    transition: opacity .2s ease;
+}
+
+input[type="file"]::file-selector-button:hover {
+    opacity: .9;
+}
+
+/* ========================================
+   INPUT WRAPPER
+======================================== */
+
+.input-wrapper input,
+.input-wrapper textarea,
+.input-wrapper select {
+    box-shadow:
+        0 1px 2px rgba(15, 23, 42, .04),
+        0 4px 14px rgba(15, 23, 42, .03);
+}
+
+.dark .input-wrapper input,
+.dark .input-wrapper textarea,
+.dark .input-wrapper select {
+    box-shadow: none;
+}
+
+/* ========================================
+   CONTENT AREA
+======================================== */
+
+.dashboard-content {
+    min-height: calc(100vh - 80px);
+}
+
+@media (min-width: 1024px) {
+    .dashboard-content {
+        margin-inline-start: 18rem; /* w-72 */
+    }
+}

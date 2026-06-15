@@ -1,5 +1,5 @@
 from django.urls import path
-from . import views, views_studio
+from . import views, views_studio, views_accounts
 
 app_name = 'dashboard'
 urlpatterns = [
@@ -46,8 +46,8 @@ urlpatterns = [
     path('ajax/attributes/', views.ajax_attributes_by_type, name='ajax-attributes-by-type'),
 
     # accounts app
-    path('users/', views.DashboardView.as_view(), name='users'),
-    path('users/add/', views.DashboardView.as_view(), name='user-add'),
-    path('users/<int:pk>/edit/', views.DashboardView.as_view(), name='user-edit'),
-    path('users/<int:pk>/delete/', views.DashboardView.as_view(), name='user-delete'),
+    path('users/', views_accounts.UserListView.as_view(), name='user_list'),
+    path('users/add/', views_accounts.UserCreateView.as_view(), name='user_add'),
+    path('users/<int:pk>/edit/', views_accounts.UserUpdateView.as_view(), name='user_edit'),
+    path('users/<int:pk>/delete/', views_accounts.UserDeleteView.as_view(), name='user_delete'),
 ]

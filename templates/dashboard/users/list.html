@@ -1,0 +1,271 @@
+{% extends 'dashboard/base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Manage Users" %}{% endblock %}
+
+{% block content %}
+
+<!-- HEADER -->
+<div class="mb-10 flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
+
+    <div class="space-y-4 flex-1">
+        <nav class="flex items-center gap-2 text-primary font-bold text-xs uppercase tracking-widest">
+            <span class="material-symbols-outlined text-sm">group</span>
+            {% trans "Directory" %}
+        </nav>
+
+        <h1 class="text-4xl lg:text-6xl font-black text-slate-900 dark:text-white tracking-tight">
+            {% trans "User" %}
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-500">
+                {% trans "List" %}
+            </span>
+        </h1>
+
+        <p class="text-slate-500 dark:text-slate-400 max-w-xl text-lg leading-relaxed">
+            {% trans "Manage all platform members, control their application roles, and monitor account verification status." %}
+        </p>
+        
+        <div class="pt-2 flex flex-wrap gap-2">
+            <a href="?{% if request.GET.q %}q={{ request.GET.q }}{% endif %}" class="px-4 py-2 text-xs font-black uppercase tracking-wider rounded-xl transition border {% if not request.GET.role %}bg-slate-900 text-white dark:bg-white dark:text-slate-900 border-transparent{% else %}bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:bg-slate-50{% endif %}">
+                {% trans "All Users" %}
+            </a>
+            <a href="?role=STORE_OWNER{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}" class="px-4 py-2 text-xs font-black uppercase tracking-wider rounded-xl transition border {% if request.GET.role == 'STORE_OWNER' %}bg-slate-900 text-white dark:bg-white dark:text-slate-900 border-transparent{% else %}bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:bg-slate-50{% endif %}">
+                {% trans "Store Owners" %}
+            </a>
+            <a href="?role=PRODUCER{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}" class="px-4 py-2 text-xs font-black uppercase tracking-wider rounded-xl transition border {% if request.GET.role == 'PRODUCER' %}bg-slate-900 text-white dark:bg-white dark:text-slate-900 border-transparent{% else %}bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:bg-slate-50{% endif %}">
+                {% trans "Studio Team" %}
+            </a>
+        </div>
+    </div>
+
+    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-5 shadow-sm min-w-[240px]">
+        <div class="flex items-center gap-4">
+            <div class="w-14 h-14 rounded-2xl bg-primary/10 text-primary flex items-center justify-center">
+                <span class="material-symbols-outlined">group</span>
+            </div>
+            <div>
+                <h3 class="text-3xl font-black leading-none text-slate-900 dark:text-white">
+                    {{ total_users_count|default:"0" }}
+                </h3>
+                <p class="mt-1 text-[10px] uppercase tracking-[0.2em] font-black text-slate-400">
+                    {% trans "Total Users" %}
+                </p>
+            </div>
+        </div>
+        
+        <a href="{% url 'signup' %}" class="h-10 mt-4 px-6 rounded-xl bg-primary text-white font-black flex items-center justify-center gap-2 shadow-lg hover:scale-105 transition w-full text-sm">
+            <span class="material-symbols-outlined text-xl">person_add</span>
+            {% trans "Add New Account" %}
+        </a>
+    </div>
+
+</div>
+
+<!-- SEARCH BAR -->
+<div class="mb-8 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-4 shadow-sm">
+    <form method="get">
+        {% if request.GET.role %}
+            <input type="hidden" name="role" value="{{ request.GET.role }}">
+        {% endif %}
+        
+        <div class="flex flex-col md:flex-row gap-3">
+            <div class="relative flex-1">
+                <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
+                    search
+                </span>
+                <input
+                    type="text"
+                    name="q"
+                    value="{{ request.GET.q|default:'' }}"
+                    placeholder="{% trans 'Search users by name, email, phone, or company...' %}"
+                    class="w-full pl-12 pr-4 py-3 rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 dark:text-white focus:ring-2 focus:ring-primary focus:outline-none"
+                >
+            </div>
+            <button type="submit" class="px-6 py-3 rounded-2xl bg-primary text-white font-bold hover:opacity-90 transition">
+                {% trans "Search" %}
+            </button>
+        </div>
+    </form>
+</div>
+
+<!-- USERS TABLE CONTAINER -->
+<div class="bg-white dark:bg-slate-900 rounded-[2rem] border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+    <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse border-none">
+            <thead>
+                <tr class="border-b border-slate-200 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-900/50 text-xs font-black uppercase tracking-wider text-slate-400">
+                    <th class="px-6 py-4">{% trans "User Identity" %}</th>
+                    <th class="px-6 py-4">{% trans "Role Group" %}</th>
+                    <th class="px-6 py-4">{% trans "Verification" %}</th>
+                    <th class="px-6 py-4">{% trans "Contact & Location" %}</th>
+                    <th class="px-6 py-4">{% trans "Joined Date" %}</th>
+                    <th class="px-6 py-4 text-right">{% trans "Actions" %}</th>
+                </tr>
+            </thead>
+            <tbody id="userTableBody" class="divide-y divide-slate-100 dark:divide-slate-800/60 text-sm">
+                {% for u in users %}
+                <tr class="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors group">
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="flex items-center gap-3">
+                            <div class="h-11 w-11 rounded-2xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 overflow-hidden shrink-0 flex items-center justify-center">
+                                {% if u.profile.avatar %}
+                                    <img src="{{ u.profile.avatar.url }}" alt="{{ u.full_name }}" class="h-full w-full object-cover">
+                                {% else %}
+                                    <span class="font-black text-xs uppercase text-slate-500 dark:text-slate-400">
+                                        {{ u.email|slice:":2" }}
+                                    </span>
+                                {% endif %}
+                            </div>
+                            <div class="flex flex-col">
+                                <span class="font-bold text-slate-900 dark:text-white">
+                                    {{ u.full_name|default:u.username }}
+                                </span>
+                                <span class="text-xs text-slate-400 dark:text-slate-500">{{ u.email }}</span>
+                                {% if u.profile.company_name %}
+                                    <span class="text-[11px] text-primary dark:text-blue-400 font-black uppercase tracking-wider mt-0.5">{{ u.profile.company_name }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </td>
+
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        {% if u.is_admin %}
+                            <span class="inline-flex items-center rounded-lg bg-rose-50 dark:bg-rose-950/30 px-2.5 py-1 text-xs font-bold text-rose-700 dark:text-rose-400 ring-1 ring-inset ring-rose-700/10 dark:ring-rose-400/20">{% trans "Admin" %}</span>
+                        {% elif u.is_producer %}
+                            <span class="inline-flex items-center rounded-lg bg-purple-50 dark:bg-purple-950/30 px-2.5 py-1 text-xs font-bold text-purple-700 dark:text-purple-400 ring-1 ring-inset ring-purple-700/10 dark:ring-purple-400/20">{% trans "Studio Team" %}</span>
+                        {% elif u.is_marketing %}
+                            <span class="inline-flex items-center rounded-lg bg-indigo-50 dark:bg-indigo-950/30 px-2.5 py-1 text-xs font-bold text-indigo-700 dark:text-indigo-400 ring-1 ring-inset ring-indigo-700/10 dark:ring-indigo-400/20">{% trans "Marketing Team" %}</span>
+                        {% elif u.is_store_owner %}
+                            <span class="inline-flex items-center rounded-lg bg-amber-50 dark:bg-amber-950/30 px-2.5 py-1 text-xs font-bold text-amber-700 dark:text-amber-400 ring-1 ring-inset ring-amber-700/10 dark:ring-amber-400/20">{% trans "Store Owner" %}</span>
+                        {% else %}
+                            <span class="inline-flex items-center rounded-lg bg-slate-100 dark:bg-slate-800 px-2.5 py-1 text-xs font-bold text-slate-700 dark:text-slate-300">{% trans "Customer" %}</span>
+                        {% endif %}
+                    </td>
+
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        {% if u.profile.is_verified %}
+                            <div class="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400">
+                                <span class="material-symbols-outlined text-lg font-bold" style="font-variation-settings: 'FILL' 1;">verified</span>
+                                <span class="text-xs font-bold">{% trans "Verified" %}</span>
+                            </div>
+                        {% else %}
+                            <div class="flex items-center gap-1.5 text-slate-400 dark:text-slate-500">
+                                <span class="material-symbols-outlined text-lg">pending</span>
+                                <span class="text-xs font-medium">{% trans "Pending" %}</span>
+                            </div>
+                        {% endif %}
+                    </td>
+
+                    <td class="px-6 py-4">
+                        <div class="flex flex-col text-xs max-w-[200px] truncate">
+                            {% if u.phone %}
+                                <span class="flex items-center gap-1 font-bold text-slate-700 dark:text-slate-300 mb-0.5">
+                                    <span class="material-symbols-outlined text-sm text-slate-400">call</span>
+                                    {{ u.phone }}
+                                </span>
+                            {% endif %}
+                            {% if u.profile.wilaya or u.profile.address %}
+                                <span class="flex items-center gap-1 text-slate-400 dark:text-slate-500">
+                                    <span class="material-symbols-outlined text-sm text-slate-400">location_on</span>
+                                    {% if u.profile.wilaya %}{{ u.profile.wilaya.name }}{% endif %}{% if u.profile.wilaya and u.profile.address %}, {% endif %}{{ u.profile.address|default:"" }}
+                                </span>
+                            {% endif %}
+                        </div>
+                    </td>
+
+                    <td class="px-6 py-4 whitespace-nowrap text-xs text-slate-500 dark:text-slate-400">
+                        <span class="font-bold text-slate-700 dark:text-slate-300">{{ u.profile.created_at|date:"M d, Y" }}</span>
+                        <div class="text-[10px] text-slate-400 dark:text-slate-500 mt-0.5">{{ u.profile.created_at|time:"H:i" }}</div>
+                    </td>
+
+                    <td class="px-6 py-4 whitespace-nowrap text-right">
+                        <div class="flex items-center justify-end gap-1 transition-opacity">
+                            <a href="{% url 'dashboard:user_edit' u.pk %}" class="p-2 text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl transition" title="{% trans 'Edit User' %}">
+                                <span class="material-symbols-outlined text-lg">edit</span>
+                            </a>
+                            <a href="{% url 'dashboard:user_delete' u.pk %}" class="p-2 text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/20 rounded-xl transition" title="{% trans 'Delete User' %}">
+                                <span class="material-symbols-outlined text-lg">delete</span>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6" class="px-6 py-20 text-center">
+                        <div class="w-20 h-20 mx-auto rounded-full bg-primary/10 text-primary flex items-center justify-center mb-6">
+                            <span class="material-symbols-outlined text-4xl">group_off</span>
+                        </div>
+                        <h3 class="text-2xl font-black text-slate-900 dark:text-white">
+                            {% trans "No Users Found" %}
+                        </h3>
+                        <p class="mt-2 text-slate-400 dark:text-slate-500 max-w-sm mx-auto text-sm">
+                            {% trans "There are no users registered matching your selected query filters." %}
+                        </p>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- ENHANCED COMPLETE PAGE NUMBERS PAGINATION -->
+    {% if is_paginated or page_obj %}
+    <div class="px-6 py-4 border-t border-slate-100 dark:border-slate-800/80 bg-slate-50/30 dark:bg-slate-900/20 flex flex-col sm:flex-row items-center justify-between gap-4">
+        
+        <div class="flex flex-col text-xs text-slate-500 dark:text-slate-400 font-bold text-center sm:text-left gap-0.5">
+            <div>
+                {% blocktranslate with start=page_obj.start_index end=page_obj.end_index total=page_obj.paginator.count %}
+                    Showing {{ start }} to {{ end }} of {{ total }} entries
+                {% endblocktranslate %}
+            </div>
+            <div class="text-[11px] text-slate-400 dark:text-slate-500 font-semibold">
+                {% blocktranslate with current=page_obj.number total_pages=page_obj.paginator.num_pages %}
+                    Page {{ current }} of {{ total_pages }}
+                {% endblocktranslate %}
+            </div>
+        </div>
+
+        <div class="flex items-center gap-1">
+            
+            <!-- Chevron Previous -->
+            {% if page_obj.has_previous %}
+                <a href="?page={{ page_obj.previous_page_number }}{% if request.GET.role %}&role={{ request.GET.role }}{% endif %}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}" class="p-1.5 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 bg-white dark:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition mr-1">
+                    <span class="material-symbols-outlined text-lg flex items-center">chevron_left</span>
+                </a>
+            {% else %}
+                <button class="p-1.5 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-300 dark:text-slate-600 cursor-not-allowed mr-1" disabled>
+                    <span class="material-symbols-outlined text-lg flex items-center">chevron_left</span>
+                </button>
+            {% endif %}
+
+            <!-- All Clickable Page Numbers Loop -->
+            {% for page_num in page_obj.paginator.page_range %}
+                {% if page_obj.number == page_num %}
+                    <!-- Active Selected Page Button -->
+                    <span class="px-3 py-1.5 rounded-xl text-xs font-black bg-primary text-white shadow-sm min-w-[34px] text-center">
+                        {{ page_num }}
+                    </span>
+                {% else %}
+                    <!-- Normal Inactive Page Links -->
+                    <a href="?page={{ page_num }}{% if request.GET.role %}&role={{ request.GET.role }}{% endif %}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}" class="px-3 py-1.5 text-xs font-bold rounded-xl border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:text-slate-900 dark:hover:text-white transition min-w-[34px] text-center">
+                        {{ page_num }}
+                    </a>
+                {% endif %}
+            {% endfor %}
+
+            <!-- Chevron Next -->
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}{% if request.GET.role %}&role={{ request.GET.role }}{% endif %}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}" class="p-1.5 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 bg-white dark:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition ml-1">
+                    <span class="material-symbols-outlined text-lg flex items-center">chevron_right</span>
+                </a>
+            {% else %}
+                <button class="p-1.5 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-300 dark:text-slate-600 cursor-not-allowed ml-1" disabled>
+                    <span class="material-symbols-outlined text-lg flex items-center">chevron_right</span>
+                </button>
+            {% endif %}
+            
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

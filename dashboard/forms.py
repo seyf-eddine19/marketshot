@@ -2,6 +2,8 @@ from django import forms
 from django.forms import inlineformset_factory
 from django.utils.translation import gettext_lazy as _
 
+from accounts.models import User, UserProfile
+from stores.management.commands.seed_data import User
 from stores.models import StoreCategory, ProductCategory, Store, Product, ProductImage, ProductAttribute, ProductVariant
 from studio.models import Project, ProjectImage, ProjectImage, Service, Package, PackageFeature, Testimonial, ContactMessage
 
@@ -201,3 +203,42 @@ ProductImageFormSet = inlineformset_factory(
     can_delete=True
 )
 
+# =========================================================
+# ACCOUNTS
+# =========================================================
+class UserUpdateForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ("username", "first_name", "last_name", "first_name_ar", "last_name_ar", "email", "phone", "role", "groups","is_active", "is_staff", "is_superuser")
+
+        widgets = {
+            'username': forms.TextInput(attrs={'class': 'form-control', 'placeholder': _('Username')}),
+            'first_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': _('First Name')}),
+            'last_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': _('Last Name')}),
+            'first_name_ar': forms.TextInput(attrs={'class': 'form-control', 'placeholder': _('First Name (AR)')}),
+            'last_name_ar': forms.TextInput(attrs={'class': 'form-control', 'placeholder': _('Last Name (AR)')}),
+            'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': _('Email')}),
+            'phone': forms.TextInput(attrs={'class': 'form-control', 'placeholder': _('Phone')}),
+            'role': forms.Select(attrs={'class': 'form-control'}),
+            'groups': forms.SelectMultiple(attrs={'class': 'form-control'}),
+            # 'permissions': forms.SelectMultiple(attrs={'class': 'form-control'}),
+            'is_active': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+            'is_staff': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+            'is_superuser': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+        }
+
+class UserProfileForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ("avatar", "bio_ar", "bio_en", "bio_fr", "company_name", "wilaya", "address", "is_verified")
+
+        widgets = {
+            'avatar': forms.ClearableFileInput(attrs={'class': 'form-control-file'}),
+            'bio_ar': forms.Textarea(attrs={'class': 'form-control', 'placeholder': _('Bio (AR)')}),
+            'bio_en': forms.Textarea(attrs={'class': 'form-control', 'placeholder': _('Bio (EN)')}),
+            'bio_fr': forms.Textarea(attrs={'class': 'form-control', 'placeholder': _('Bio (FR)')}),
+            'company_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': _('Company Name')}),
+            'wilaya': forms.Select(attrs={'class': 'form-control'}),
+            'address': forms.Textarea(attrs={'class': 'form-control', 'placeholder': _('Address')}),
+            'is_verified': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+        }

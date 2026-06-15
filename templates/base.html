@@ -1,0 +1,91 @@
+{% load i18n static %}
+{% get_current_language_bidi as LANGUAGE_BIDI %}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}" dir="{% if LANGUAGE_BIDI %}rtl{% else %}ltr{% endif %}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{% block title %}MarketShot{% endblock %}</title>
+
+    <!-- SEO -->
+    <meta name="description" content="MarketShot - Smart marketing and digital media platform">
+    <meta name="theme-color" content="#0052FF">
+    <meta name="color-scheme" content="light dark">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="MarketShot">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="{% static 'img/logo.png' %}">
+
+    {% block extra_meta %}{% endblock %}
+
+    <!-- Favicon -->
+    <link rel="icon" href="{% static 'img/logo.png' %}" type="image/x-icon">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/fonts.css' %}">
+
+    {% block extra_links %}{% endblock %}
+
+    <!-- Tailwind (if CDN/dev only) -->
+    <script src="{% static 'js/tailwind.min.js' %}"></script>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#0052FF",
+                        secondary: "#FF5C00",
+                        tertiary: "#64748B",
+                        background: "#fcf9f8",
+                        "on-background": "#0F172A",
+                        "surface-container-low": "#f6f3f2",
+                        "primary-fixed": "#DBEAFE"
+                    },
+                    borderRadius: {
+                        xl: "1.5rem"
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Dark mode (prevent flash) -->
+    <script>
+        (function () {
+            const theme = localStorage.getItem('color-theme');
+            const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+            if (theme === 'dark' || (!theme && systemDark)) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        })();
+    </script>
+
+    {% block extra_styles %}{% endblock %}
+</head>
+
+<body class="min-h-screen flex flex-col bg-background text-on-background dark:bg-slate-950 dark:text-slate-200">
+    <!-- Navbar -->
+    {% block navbar %}{% endblock %}
+
+    <!-- SIDEBAR -->
+    {% block sidebar %}{% endblock %}
+    <!-- MAIN LAYOUT -->
+    <main class="main mt-[80px]">
+        <!-- CONTENT -->
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    {% block footer %}{% endblock %}
+
+    {% block extra_scripts %}{% endblock %}
+</body>
+</html>

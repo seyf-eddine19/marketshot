@@ -1,0 +1,114 @@
+{% load static i18n %}
+<footer class="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 mt-20 transition-colors">
+    
+    <div class="max-w-7xl mx-auto px-6 py-16 grid grid-cols-1 md:grid-cols-12 gap-12">
+
+        <!-- Brand -->
+        <div class="md:col-span-5 space-y-6">
+            <div class="flex">
+            {% include 'components/logo.html' %}
+
+            </div>
+
+            <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed max-w-md">
+                {% trans "MarketShot combines professional media production, digital marketing services, and an online marketplace to help businesses grow their presence and sales." %}
+            </p>
+        </div>
+
+        <!-- Studio -->
+        <div class="md:col-span-2">
+            <h4 class="font-bold mb-6 dark:text-white">
+                {% trans "Studio" %}
+            </h4>
+
+            <ul class="space-y-3 text-sm text-slate-500 dark:text-slate-400">
+                <li>
+                    <a href="{% url 'studio:home' %}#services" class="hover:text-primary transition-colors">
+                        {% trans "Services" %}
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'studio:home' %}#portfolio" class="hover:text-primary transition-colors">
+                        {% trans "Portfolio" %}
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'studio:home' %}#packages" class="hover:text-primary transition-colors">
+                        {% trans "Packages" %}
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Marketplace -->
+        <div class="md:col-span-2">
+            <h4 class="font-bold mb-6 dark:text-white">
+                {% trans "Marketplace" %}
+            </h4>
+
+            <ul class="space-y-3 text-sm text-slate-500 dark:text-slate-400">
+                <li>
+                    <a href="{% url 'stores:products' %}" class="hover:text-primary transition-colors">
+                        {% trans "Products" %}
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'stores:stores' %}" class="hover:text-primary transition-colors">
+                        {% trans "Stores" %}
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+
+        <!-- Newsletter -->
+        <div class="md:col-span-3">
+            <div class="p-6 bg-slate-50 dark:bg-slate-800 rounded-3xl border border-slate-100 dark:border-slate-700">
+                <h4 class="font-black mb-1">
+                    {% trans "Weekly Digest" %}
+                </h4>
+
+                <p class="text-xs text-slate-500 mb-4">
+                    {% trans "New stores, offers and marketing insights." %}
+                </p>
+
+                <form class="flex gap-2">
+                    <input
+                        type="email"
+                        placeholder="{% trans 'Email' %}"
+                        class="w-full bg-white dark:bg-slate-900 rounded-xl text-xs border-none focus:ring-2 focus:ring-primary/20">
+
+                    <button
+                        type="submit"
+                        class="p-3 bg-primary text-white rounded-xl shadow-lg shadow-primary/20">
+
+                        <span class="material-symbols-outlined text-sm">
+                            send
+                        </span>
+                    </button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="border-t border-slate-100 dark:border-slate-800">
+        <div class="max-w-7xl mx-auto px-6 py-6 flex flex-col md:flex-row justify-between items-center gap-4">
+
+            <p class="text-xs text-slate-400">
+                © {% now "Y" %} MarketShot. {% trans "All rights reserved." %}
+            </p>
+
+            <div class="flex items-center gap-6 text-xs text-slate-400">
+                <span>Tlemcen, Algeria</span>
+                <span>hello@marketshot.com</span>
+            </div>
+
+        </div>
+    </div>
+
+</footer>

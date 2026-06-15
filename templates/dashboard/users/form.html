@@ -1,0 +1,330 @@
+{% extends 'dashboard/base.html' %}
+{% load i18n %}
+
+{% block title %}
+    {% if form.instance.pk %}
+        {% trans "Edit User" %}
+    {% else %}
+        {% trans "Create User" %}
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <div class="mb-10 space-y-4">
+        <nav class="flex items-center gap-2 text-primary font-bold text-xs uppercase tracking-widest">
+            <span class="material-symbols-outlined text-sm">group</span>
+            {% trans "Directory" %}
+        </nav>
+
+        <h1 class="text-4xl lg:text-6xl font-black text-slate-900 dark:text-white tracking-tight">
+            {% if form.instance.pk %}
+                {% trans "Edit" %}
+            {% else %}
+                {% trans "Create" %}
+            {% endif %}
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-500">
+                {% trans "User Account" %}
+            </span>
+        </h1>
+
+        <p class="text-slate-500 dark:text-slate-400 max-w-xl text-lg">
+            {% trans "Manage user account parameters, assign platform privileges, and update profile localized records." %}
+        </p>
+    </div>
+
+    {% if form.non_field_errors or profile_form.non_field_errors %}
+    <div class="mb-8 p-6 rounded-3xl bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-900 text-red-800 dark:text-red-400 space-y-2 shadow-sm">
+        <div class="flex items-center gap-2 font-black text-sm uppercase tracking-wider">
+            <span class="material-symbols-outlined text-xl">error</span>
+            {% trans "Please resolve the following errors:" %}
+        </div>
+        <ul class="list-disc list-inside text-sm space-y-1 ml-1 font-medium">
+            {% for error in form.non_field_errors %}
+                <li>{{ error }}</li>
+            {% endfor %}
+            {% for error in profile_form.non_field_errors %}
+                <li>{{ error }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+
+    <form method="post" enctype="multipart/form-data"
+          class="rounded-[2.5rem] border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-2xl overflow-hidden">
+
+        {% csrf_token %}
+
+        <div class="p-8 lg:p-10 border-b border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/20">
+            <div class="flex items-center gap-5">
+                <div class="w-16 h-16 rounded-2xl bg-primary text-white flex items-center justify-center shadow-lg">
+                    <span class="material-symbols-outlined text-3xl">manage_accounts</span>
+                </div>
+                <div>
+                    <h2 class="text-2xl font-black text-slate-900 dark:text-white">
+                        {% if form.instance.pk %}
+                            {% trans "Update Account Identity" %}
+                        {% else %}
+                            {% trans "New Account Profile" %}
+                        {% endif %}
+                    </h2>
+                    <p class="text-sm text-slate-500 dark:text-slate-400">
+                        {% trans "Configure access controls, contact information, and localization blocks." %}
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="p-8 lg:p-10 space-y-12">
+
+            <div class="space-y-6">
+                <h3 class="text-sm font-black uppercase tracking-wider text-slate-400 dark:text-slate-500 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-base">lock_open</span>
+                    {% trans "Account Core Credentials & Permissions" %}
+                </h3>
+                <hr class="border-slate-100 dark:border-slate-800" />
+                
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                    <div class="space-y-2 md:col-span-2">
+                        <label class="text-sm font-black {% if form.username.errors %}text-red-500{% else %}text-slate-700 dark:text-slate-300{% endif %}">{% trans "Username" %}</label>
+                        {{ form.username }}
+                        {% if form.username.errors %}
+                            <p class="text-xs font-bold text-red-500 mt-1 flex items-center gap-1"><span class="material-symbols-outlined text-xs">error</span> {{ form.username.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                    <div class="space-y-2 md:col-span-2">
+                        <label class="text-sm font-black {% if form.email.errors %}text-red-500{% else %}text-slate-700 dark:text-slate-300{% endif %}">{% trans "Email Address" %}</label>
+                        {{ form.email }}
+                        {% if form.email.errors %}
+                            <p class="text-xs font-bold text-red-500 mt-1 flex items-center gap-1"><span class="material-symbols-outlined text-xs">error</span> {{ form.email.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                    <div class="space-y-2 md:col-span-2">
+                        <label class="text-sm font-black {% if form.phone.errors %}text-red-500{% else %}text-slate-700 dark:text-slate-300{% endif %}">{% trans "Phone Number" %}</label>
+                        {{ form.phone }}
+                        {% if form.phone.errors %}
+                            <p class="text-xs font-bold text-red-500 mt-1 flex items-center gap-1"><span class="material-symbols-outlined text-xs">error</span> {{ form.phone.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                    <div class="space-y-2 md:col-span-2">
+                        <label class="text-sm font-black {% if form.role.errors %}text-red-500{% else %}text-slate-700 dark:text-slate-300{% endif %}">{% trans "User Role" %}</label>
+                        {{ form.role }}
+                        {% if form.role.errors %}
+                            <p class="text-xs font-bold text-red-500 mt-1 flex items-center gap-1"><span class="material-symbols-outlined text-xs">error</span> {{ form.role.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="space-y-6">
+                <h3 class="text-sm font-black uppercase tracking-wider text-slate-400 dark:text-slate-500 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-base">badge</span>
+                    {% trans "Personal Identity Names" %}
+                </h3>
+                <hr class="border-slate-100 dark:border-slate-800" />
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="space-y-2">
+                        <label class="text-sm font-black {% if form.first_name.errors %}text-red-500{% else %}text-slate-700 dark:text-slate-300{% endif %}">{% trans "First Name (Standard)" %}</label>
+                        {{ form.first_name }}
+                        {% if form.first_name.errors %}
+                            <p class="text-xs font-bold text-red-500 mt-1 flex items-center gap-1"><span class="material-symbols-outlined text-xs">error</span> {{ form.first_name.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-sm font-black {% if form.last_name.errors %}text-red-500{% else %}text-slate-700 dark:text-slate-300{% endif %}">{% trans "Last Name (Standard)" %}</label>
+                        {{ form.last_name }}
+                        {% if form.last_name.errors %}
+                            <p class="text-xs font-bold text-red-500 mt-1 flex items-center gap-1"><span class="material-symbols-outlined text-xs">error</span> {{ form.last_name.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-sm font-black {% if form.first_name_ar.errors %}text-red-500{% else %}text-slate-700 dark:text-slate-300{% endif %}">{% trans "First Name (Arabic)" %}</label>
+                        {{ form.first_name_ar }}
+                        {% if form.first_name_ar.errors %}
+                            <p class="text-xs font-bold text-red-500 mt-1 flex items-center gap-1"><span class="material-symbols-outlined text-xs">error</span> {{ form.first_name_ar.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-sm font-black {% if form.last_name_ar.errors %}text-red-500{% else %}text-slate-700 dark:text-slate-300{% endif %}">{% trans "Last Name (Arabic)" %}</label>
+                        {{ form.last_name_ar }}
+                        {% if form.last_name_ar.errors %}
+                            <p class="text-xs font-bold text-red-500 mt-1 flex items-center gap-1"><span class="material-symbols-outlined text-xs">error</span> {{ form.last_name_ar.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="space-y-6">
+                <h3 class="text-sm font-black uppercase tracking-wider text-slate-400 dark:text-slate-500 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-base">admin_panel_settings</span>
+                    {% trans "Groups & Django Object Permissions" %}
+                </h3>
+                <hr class="border-slate-100 dark:border-slate-800" />
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="space-y-2">
+                        <label class="text-sm font-black {% if form.groups.errors %}text-red-500{% else %}text-slate-700 dark:text-slate-300{% endif %}">{% trans "Assigned Group Roles" %}</label>
+                        {{ form.groups }}
+                        {% if form.groups.errors %}
+                            <p class="text-xs font-bold text-red-500 mt-1 flex items-center gap-1"><span class="material-symbols-outlined text-xs">error</span> {{ form.groups.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-sm font-black {% if form.permissions.errors %}text-red-500{% else %}text-slate-700 dark:text-slate-300{% endif %}">{% trans "Explicit Access Permissions" %}</label>
+                        {{ form.permissions }}
+                        {% if form.permissions.errors %}
+                            <p class="text-xs font-bold text-red-500 mt-1 flex items-center gap-1"><span class="material-symbols-outlined text-xs">error</span> {{ form.permissions.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="space-y-6">
+                <h3 class="text-sm font-black uppercase tracking-wider text-slate-400 dark:text-slate-500 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-base">domain</span>
+                    {% trans "Business & Location Details" %}
+                </h3>
+                <hr class="border-slate-100 dark:border-slate-800" />
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="space-y-2">
+                        <label class="text-sm font-black {% if profile_form.company_name.errors %}text-red-500{% else %}text-slate-700 dark:text-slate-300{% endif %}">{% trans "Company / Brand Name" %}</label>
+                        {{ profile_form.company_name }}
+                        {% if profile_form.company_name.errors %}
+                            <p class="text-xs font-bold text-red-500 mt-1 flex items-center gap-1"><span class="material-symbols-outlined text-xs">error</span> {{ profile_form.company_name.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-sm font-black {% if profile_form.wilaya.errors %}text-red-500{% else %}text-slate-700 dark:text-slate-300{% endif %}">{% trans "Wilaya" %}</label>
+                        {{ profile_form.wilaya }}
+                        {% if profile_form.wilaya.errors %}
+                            <p class="text-xs font-bold text-red-500 mt-1 flex items-center gap-1"><span class="material-symbols-outlined text-xs">error</span> {{ profile_form.wilaya.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                    <div class="space-y-2 md:col-span-2">
+                        <label class="text-sm font-black {% if profile_form.address.errors %}text-red-500{% else %}text-slate-700 dark:text-slate-300{% endif %}">{% trans "Physical Address" %}</label>
+                        {{ profile_form.address }}
+                        {% if profile_form.address.errors %}
+                            <p class="text-xs font-bold text-red-500 mt-1 flex items-center gap-1"><span class="material-symbols-outlined text-xs">error</span> {{ profile_form.address.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="space-y-6">
+                <h3 class="text-sm font-black uppercase tracking-wider text-slate-400 dark:text-slate-500 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-base">translate</span>
+                    {% trans "Biography / Studio Shop Descriptions" %}
+                </h3>
+                <hr class="border-slate-100 dark:border-slate-800" />
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="space-y-2">
+                        <label class="text-sm font-black {% if profile_form.bio_en.errors %}text-red-500{% else %}text-slate-700 dark:text-slate-300{% endif %}">{% trans "Bio / Description (English)" %}</label>
+                        {{ profile_form.bio_en }}
+                        {% if profile_form.bio_en.errors %}
+                            <p class="text-xs font-bold text-red-500 mt-1 flex items-center gap-1"><span class="material-symbols-outlined text-xs">error</span> {{ profile_form.bio_en.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-sm font-black {% if profile_form.bio_ar.errors %}text-red-500{% else %}text-slate-700 dark:text-slate-300{% endif %}">{% trans "Bio / Description (Arabic)" %}</label>
+                        {{ profile_form.bio_ar }}
+                        {% if profile_form.bio_ar.errors %}
+                            <p class="text-xs font-bold text-red-500 mt-1 flex items-center gap-1"><span class="material-symbols-outlined text-xs">error</span> {{ profile_form.bio_ar.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                    <div class="space-y-2 md:col-span-2">
+                        <label class="text-sm font-black {% if profile_form.bio_fr.errors %}text-red-500{% else %}text-slate-700 dark:text-slate-300{% endif %}">{% trans "Bio / Description (French)" %}</label>
+                        {{ profile_form.bio_fr }}
+                        {% if profile_form.bio_fr.errors %}
+                            <p class="text-xs font-bold text-red-500 mt-1 flex items-center gap-1"><span class="material-symbols-outlined text-xs">error</span> {{ profile_form.bio_fr.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-start pt-4">
+                
+                <div class="space-y-3 md:col-span-2">
+                    <label class="text-sm font-black flex items-center gap-2 {% if profile_form.avatar.errors %}text-red-500{% else %}text-slate-700 dark:text-slate-300{% endif %}">
+                        <span class="material-symbols-outlined text-primary text-[18px]">account_circle</span>
+                        {% trans "User Avatar Photo" %}
+                    </label>
+                    <div class="rounded-3xl border-2 border-dashed {% if profile_form.avatar.errors %}border-red-300 bg-red-50/10{% else %}border-slate-200 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-800/20{% endif %} p-6 text-center">
+                        <span class="material-symbols-outlined text-4xl {% if profile_form.avatar.errors %}text-red-400{% else %}text-primary{% endif %} mb-2">cloud_upload</span>
+                        <p class="text-xs text-slate-500 mb-3">
+                            {% trans "Upload professional headshot portrait (JPG, PNG, WEBP)" %}
+                        </p>
+                        <div class="text-xs text-slate-600 dark:text-slate-400 overflow-hidden max-w-full">
+                            {{ profile_form.avatar }}
+                        </div>
+                        {% if profile_form.avatar.errors %}
+                            <p class="text-xs font-bold text-red-500 mt-2 flex items-center justify-center gap-1"><span class="material-symbols-outlined text-xs">error</span> {{ profile_form.avatar.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="space-y-3 md:col-span-1 flex flex-col justify-between h-full space-y-4">
+                    <label class="text-sm font-black flex items-center gap-2 text-slate-700 dark:text-slate-300">
+                        <span class="material-symbols-outlined text-primary text-[18px]">settings_accessibility</span>
+                        {% trans "System State Settings" %}
+                    </label>
+                    
+                    <div class="p-6 rounded-3xl border border-slate-200 dark:border-slate-800 bg-slate-50/40 dark:bg-slate-900/40 space-y-4">
+                        <div class="flex items-center justify-between">
+                            <div class="flex flex-col">
+                                <span class="text-xs font-black text-slate-900 dark:text-white">{% trans "Active Status" %}</span>
+                                <span class="text-[10px] text-slate-400">{% trans "Allows login tracking" %}</span>
+                            </div>
+                            {{ form.is_active }}
+                        </div>
+
+                        <div class="flex items-center justify-between border-t border-slate-100 dark:border-slate-800/50 pt-3">
+                            <div class="flex flex-col">
+                                <span class="text-xs font-black text-slate-900 dark:text-white">{% trans "Staff Privilege" %}</span>
+                                <span class="text-[10px] text-slate-400">{% trans "Access admin workspace" %}</span>
+                            </div>
+                            {{ form.is_staff }}
+                        </div>
+
+                        <div class="flex items-center justify-between border-t border-slate-100 dark:border-slate-800/50 pt-3">
+                            <div class="flex flex-col">
+                                <span class="text-xs font-black text-slate-900 dark:text-white">{% trans "Superuser Privilege" %}</span>
+                                <span class="text-[10px] text-slate-400">{% trans "Full system access" %}</span>
+                            </div>
+                            {{ form.is_superuser }}
+                        </div>
+
+                        <div class="flex items-center justify-between border-t border-slate-100 dark:border-slate-800/50 pt-3">
+                            <div class="flex flex-col">
+                                <span class="text-xs font-black text-slate-900 dark:text-white">{% trans "Verified Verified" %}</span>
+                                <span class="text-[10px] text-slate-400">{% trans "Verified Business check" %}</span>
+                            </div>
+                            {{ profile_form.is_verified }}
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="p-8 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between bg-slate-50/30 dark:bg-slate-900/10">
+            <a href="{% url 'dashboard:user_list' %}"
+               class="px-6 py-3 rounded-2xl bg-slate-100 dark:bg-slate-800 text-sm font-black hover:bg-slate-200 dark:hover:bg-slate-700 transition">
+                {% trans "Cancel" %}
+            </a>
+
+            <button type="submit"
+                    class="px-8 py-4 rounded-2xl bg-gradient-to-r from-primary to-blue-700 text-white font-black shadow-lg hover:scale-105 transition flex items-center gap-2">
+                <span class="material-symbols-outlined text-xl">save</span>
+                {% if form.instance.pk %}
+                    {% trans "Update Account" %}
+                {% else %}
+                    {% trans "Create Account" %}
+                {% endif %}
+            </button>
+        </div>
+
+    </form>
+{% endblock %}

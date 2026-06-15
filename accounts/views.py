@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.shortcuts import redirect
 from django.contrib.auth import login
 from django.contrib.auth.views import LoginView, LogoutView
@@ -5,56 +6,76 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView
 from .forms import UserRegistrationForm, UserLoginForm
 
+from django.views.generic import TemplateView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import redirect, render
+from .forms import UserUpdateForm, UserProfileForm
+
+from django.contrib.auth.views import PasswordChangeView, PasswordChangeDoneView
+from django.urls import reverse_lazy
+
+
 class SignUpView(CreateView):
     form_class = UserRegistrationForm
-    success_url = reverse_lazy('login')
     template_name = 'accounts/signup.html'
+    success_url = reverse_lazy('login')
 
     def form_valid(self, form):
-        # Auto-login the user after registration (Optional)
         user = form.save()
         login(self.request, user)
-        return redirect('profile_setup') # Redirect to a setup page or home
+        return redirect('profile')
 
 class CustomLoginView(LoginView):
-    form_class = UserLoginForm
     template_name = 'accounts/login.html'
-    
+    form_class = UserLoginForm
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        messages.success(self.request, "Welcome back 👋")
+        return response
+
     def get_success_url(self):
-        # Logic to redirect based on Role
-        user = self.request.user
-        if user.role == user.Role.ADMIN:
-            return reverse_lazy('admin_dashboard')
-        if user.role == user.Role.PRODUCER:
-            return reverse_lazy('studio_dashboard')
-        return reverse_lazy('home')
+        return reverse_lazy('dashboard:dashboard') 
 
 class CustomLogoutView(LogoutView):
     next_page = reverse_lazy('login')
 
-class ProfileView(CreateView):
-    form_class = UserRegistrationForm  # You can create a separate form for profile setup if needed
-    template_name = 'accounts/profile.html'
-    success_url = reverse_lazy('dashboard')  # Redirect to dashboard after setup
 
-    def get_form(self, *args, **kwargs):
-        form = super().get_form(*args, **kwargs)
-        # Pre-fill the form with existing user data
-        user = self.request.user
-        form.fields['username'].initial = user.username
-        form.fields['email'].initial = user.email
-        form.fields['company_name'].initial = user.company_name
-        form.fields['first_name'].initial = user.first_name
-        form.fields['last_name'].initial = user.last_name
-        return form
+class ProfileView(LoginRequiredMixin, TemplateView):
+    template_name = "accounts/profile.html"
 
-    def form_valid(self, form):
-        # Update the user's profile with the new data
-        user = self.request.user
-        user.username = form.cleaned_data['username']
-        user.email = form.cleaned_data['email']
-        user.company_name = form.cleaned_data['company_name']
-        user.first_name = form.cleaned_data['first_name']
-        user.last_name = form.cleaned_data['last_name']
-        user.save()
-        return super().form_valid(form)
+    def get(self, request, *args, **kwargs):
+        user_form = UserUpdateForm(instance=request.user)
+        profile_form = UserProfileForm(instance=request.user.profile)
+
+        return render(request, self.template_name, {
+            "user_form": user_form,
+            "profile_form": profile_form
+        })
+
+    def post(self, request, *args, **kwargs):
+        user_form = UserUpdateForm(request.POST, instance=request.user)
+        profile_form = UserProfileForm(
+            request.POST,
+            request.FILES,
+            instance=request.user.profile
+        )
+
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            return redirect("profile")
+
+        return render(request, self.template_name, {
+            "user_form": user_form,
+            "profile_form": profile_form
+        })
+
+
+class CustomPasswordChangeView(PasswordChangeView):
+    template_name = "accounts/change_password.html"
+    success_url = reverse_lazy("password_change_done")
+
+
+class CustomPasswordChangeDoneView(PasswordChangeDoneView):
+    template_name = "accounts/change_password_done.html"

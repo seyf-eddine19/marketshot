@@ -4,59 +4,53 @@
 {% block title %}{% trans "Manage Projects" %}{% endblock %}
 
 {% block content %}
-<div class="max-w-7xl mx-auto px-4 lg:px-6">
+<!-- HEADER -->
+<div class="mb-10 flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
+    <div class="space-y-4">
+        <nav class="flex items-center gap-2 text-primary font-bold text-xs uppercase tracking-widest">
+            <span class="material-symbols-outlined text-sm">work</span>
+            {% trans "Projects" %}
+        </nav>
 
-    <!-- HEADER -->
-    <div class="mb-10 flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
+        <h1 class="text-4xl lg:text-6xl font-black text-slate-900 dark:text-white tracking-tight">
+            {% trans "Project" %}
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-500">
+                {% trans "List" %}
+            </span>
+        </h1>
 
-        <div class="space-y-4">
-            <nav class="flex items-center gap-2 text-primary font-bold text-xs uppercase tracking-widest">
-                <span class="material-symbols-outlined text-sm">work</span>
-                {% trans "Projects" %}
-            </nav>
-
-            <h1 class="text-4xl lg:text-6xl font-black text-slate-900 dark:text-white tracking-tight">
-                {% trans "Project" %}
-                <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-500">
-                    {% trans "List" %}
-                </span>
-            </h1>
-
-            <p class="text-slate-500 dark:text-slate-400 max-w-xl text-lg leading-relaxed">
-                {% trans "Manage all your active and archived projects in one place." %}
-            </p>
-        </div>
-
-
-        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl px-4 py-4 shadow-sm">
-            <div class="flex items-center gap-4">
-
-                <div class="w-14 h-14 rounded-2xl bg-primary/10 text-primary flex items-center justify-center">
-                    <span class="material-symbols-outlined">work</span>
-                </div>
-
-                <div>
-                    <h3 class="text-3xl font-black leading-none">
-                        {{ projects.count }}
-                    </h3>
-                    <p class="mt-1 text-[10px] uppercase tracking-[0.2em] font-black text-slate-400">
-                        {% trans "Projects" %}
-                    </p>
-                </div>
-
-            </div>
-            <a href="{% url 'dashboard:project-add' %}"
-            class="h-10 mt-4 px-6 rounded-xl bg-primary text-white font-black flex items-center gap-2 shadow-lg hover:scale-105 transition">
-                <span class="material-symbols-outlined">add</span>
-                {% trans "New Project" %}
-            </a>
-        </div>
-
+        <p class="text-slate-500 dark:text-slate-400 max-w-xl text-lg leading-relaxed">
+            {% trans "Manage all your active and archived projects in one place." %}
+        </p>
     </div>
 
-    <!-- LIST -->
-    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-7">
+    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl px-4 py-4 shadow-sm">
+        <div class="flex items-center gap-4">
 
+            <div class="w-14 h-14 rounded-2xl bg-primary/10 text-primary flex items-center justify-center">
+                <span class="material-symbols-outlined">work</span>
+            </div>
+
+            <div>
+                <h3 class="text-3xl font-black leading-none">
+                    {{ projects.count }}
+                </h3>
+                <p class="mt-1 text-[10px] uppercase tracking-[0.2em] font-black text-slate-400">
+                    {% trans "Projects" %}
+                </p>
+            </div>
+
+        </div>
+        <a href="{% url 'dashboard:project-add' %}"
+        class="h-10 mt-4 px-6 rounded-xl bg-primary text-white font-black flex items-center gap-2 shadow-lg hover:scale-105 transition">
+            <span class="material-symbols-outlined">add</span>
+            {% trans "New Project" %}
+        </a>
+    </div>
+</div>
+
+<!-- LIST -->
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-7">
     {% for project in projects %}
     <div class="group overflow-hidden rounded-[2rem] border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:shadow-2xl hover:shadow-slate-200/50 dark:hover:shadow-black/20 transition-all duration-500 hover:-translate-y-1">
 
@@ -193,6 +187,5 @@
 
     {% endfor %}
 
-    </div>
 </div>
 {% endblock %}

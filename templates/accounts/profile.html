@@ -1,0 +1,289 @@
+{% extends 'dashboard/base.html' %}
+{% load static i18n %}
+
+{% block title %}{% trans "Edit Profile | MarketShot" %}{% endblock %}
+
+{% block content %}
+
+<style>
+    /* Custom Material Design Tokens & Smooth Micro-interactions */
+    .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+
+    .bento-card {
+        background: #ffffff;
+        border-radius: 24px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    /* Standardized form element styling layout injection */
+    .custom-input-field {
+        width: 100%;
+        background-color: #ffffff;
+        border: 1px solid rgba(195, 197, 217, 0.4);
+        border-radius: 0.75rem;
+        padding: 0.75rem 1rem;
+        font-size: 16px;
+        line-height: 24px;
+        transition: all 0.2s ease;
+    }
+
+    .custom-input-field:focus {
+        outline: none !important;
+        box-shadow: 0 0 0 2px rgba(0, 62, 199, 0.2) !important;
+        border-color: #003ec7 !important;
+    }
+</style>
+
+<form method="POST" enctype="multipart/form-data" id="edit-profile-form">
+    {% csrf_token %}
+
+    <header class="flex justify-between items-end mb-10">
+        <div>
+            <h2 class="font-headline-lg text-3xl font-bold text-on-surface tracking-tight">
+                {% trans "Edit Profile" %}
+            </h2>
+            <p class="font-body-md text-outline">
+                {% trans "Manage your profile and public presence." %}
+            </p>
+        </div>
+
+        <div class="flex gap-3">
+            <a href="#" class="px-8 py-2.5 rounded-full border border-outline text-on-surface font-medium hover:bg-surface-container-low transition-all active:scale-95 flex items-center justify-center">
+                {% trans "Cancel" %}
+            </a>
+            <button type="submit" class="px-8 py-2.5 rounded-full bg-primary text-white font-medium shadow-lg shadow-primary/20 hover:opacity-90 transition-all active:scale-95">
+                {% trans "Save Changes" %}
+            </button>
+        </div>
+    </header>
+
+    <div class="grid grid-cols-3 gap-4">
+
+        <div class="col-span-3 md:col-span-1 space-y-4">
+
+            <div class="bento-card p-8 flex flex-col items-center text-center">
+                <div id="avatar-container" class="relative group cursor-pointer mb-6 inline-block">
+                    <div class="w-32 h-32 rounded-full overflow-hidden border-4 border-primary-container">
+                        <img id="avatar-preview" src="{% static 'img/default-avatar.png' %}" alt="Profile Avatar" class="w-full h-full object-cover">
+                    </div>
+                    <div class="absolute inset-0 bg-on-surface/40 rounded-full opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity duration-200">
+                        <span class="material-symbols-outlined text-white text-3xl">photo_camera</span>
+                    </div>
+                    <div class="absolute -bottom-1 -right-1 bg-primary text-white w-8 h-8 rounded-full flex items-center justify-center shadow-md">
+                        <span class="material-symbols-outlined text-sm">edit</span>
+                    </div>
+                    <input type="file" name="avatar" id="id_avatar" class="hidden" accept="image/*">
+                </div>
+
+                <h3 class="font-headline-md text-xl font-bold mb-1">
+                    {{ user.get_full_name|default:user.email }}
+                </h3>
+                <p class="font-body-md text-outline text-sm mb-6">{{ user.role|default:"Vendor Partner" }}</p>
+
+                <div class="w-full pt-6 border-t border-outline-variant/30 space-y-4">
+                    <div class="flex justify-between items-center">
+                        <div class="flex flex-col items-start">
+                            <span class="font-bold text-sm text-on-surface">{% trans "Verified Status" %}</span>
+                            <span class="text-xs text-outline">{% trans "Public badge visibility" %}</span>
+                        </div>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" name="is_verified" class="sr-only peer">
+                            <div class="w-11 h-6 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                        </label>
+                    </div>
+
+                    <div class="flex justify-between items-center">
+                        <div class="flex flex-col items-start">
+                            <span class="font-bold text-sm text-on-surface">{% trans "Active Status" %}</span>
+                            <span class="text-xs text-outline">{% trans "Visible on platforms" %}</span>
+                        </div>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" name="is_active" class="sr-only peer" checked>
+                            <div class="w-11 h-6 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-secondary"></div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bento-card p-8 space-y-4">
+                <h4 class="font-bold text-xs uppercase tracking-widest text-outline flex items-center gap-2 mb-2">
+                    <span class="material-symbols-outlined text-sm">share</span> {% trans "Social Connect" %}
+                </h4>
+
+                <div class="space-y-1.5">
+                    <label class="text-xs font-semibold text-on-surface-variant flex items-center gap-2">
+                        <span class="material-symbols-outlined text-sm">language</span> {% trans "Website" %}
+                    </label>
+                    <input type="url" name="website" placeholder="https://example.com" class="custom-input-field placeholder:text-outline/40">
+                </div>
+
+                <div class="space-y-1.5">
+                    <label class="text-xs font-semibold text-on-surface-variant flex items-center gap-2">
+                        <span class="material-symbols-outlined text-sm">alternate_email</span> {% trans "Instagram" %}
+                    </label>
+                    <input type="text" name="instagram" placeholder="@username" class="custom-input-field placeholder:text-outline/40">
+                </div>
+
+                <div class="space-y-1.5">
+                    <label class="text-xs font-semibold text-on-surface-variant flex items-center gap-2">
+                        <span class="material-symbols-outlined text-sm">work</span> {% trans "LinkedIn" %}
+                    </label>
+                    <input type="url" name="linkedin" placeholder="https://linkedin.com/in/..." class="custom-input-field placeholder:text-outline/40">
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-span-3 md:col-span-2 space-y-4">
+
+            <div class="bento-card p-8">
+                <h4 class="text-xs uppercase tracking-widest text-outline font-bold mb-8 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-lg">person</span> {% trans "Personal Information" %}
+                </h4>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="space-y-1.5">
+                        <label class="text-xs font-semibold text-on-surface-variant">{% trans "First Name" %}</label>
+                        <input type="text" name="first_name" placeholder="First Name" class="custom-input-field">
+                    </div>
+
+                    <div class="space-y-1.5">
+                        <label class="text-xs font-semibold text-on-surface-variant">{% trans "Last Name" %}</label>
+                        <input type="text" name="last_name" placeholder="Last Name" class="custom-input-field">
+                    </div>
+
+                    <div class="space-y-1.5 md:col-span-2">
+                        <label class="text-xs font-semibold text-on-surface-variant">{% trans "Email Address" %}</label>
+                        <input type="email" name="email" placeholder="email@example.com" class="custom-input-field">
+                    </div>
+
+                    <div class="space-y-1.5 md:col-span-2">
+                        <label class="text-xs font-semibold text-on-surface-variant">{% trans "Phone Number" %}</label>
+                        <input type="tel" name="phone" placeholder="+213 (0) ..." class="custom-input-field">
+                    </div>
+
+                    <div class="space-y-1.5 md:col-span-2">
+                        <label class="text-xs font-semibold text-on-surface-variant">{% trans "Wilaya / Region" %}</label>
+                        <select name="wilaya" class="custom-input-field appearance-none bg-no-repeat bg-[right_1rem_center]">
+                            <option value="16">Algiers (16)</option>
+                            <option value="31">Oran (31)</option>
+                            <option value="25">Constantine (25)</option>
+                            <option value="13">Tlemcen (13)</option>
+                        </select>
+                    </div>
+
+                    <div class="space-y-1.5 md:col-span-2">
+                        <label class="text-xs font-semibold text-on-surface-variant">{% trans "Detailed Address" %}</label>
+                        <input type="text" name="address" placeholder="Street layout details..." class="custom-input-field">
+                    </div>
+                </div>
+            </div>
+
+            <div class="bento-card p-8">
+                <div class="flex justify-between items-center mb-8">
+                    <h4 class="text-xs uppercase tracking-widest text-outline font-bold flex items-center gap-2">
+                        <span class="material-symbols-outlined text-lg">translate</span> {% trans "Bio & Descriptions" %}
+                    </h4>
+                    <div class="flex gap-1 bg-surface-container-high p-1 rounded-lg">
+                        <button type="button" class="px-3 py-1 rounded text-xs font-bold bg-white shadow-sm text-primary">EN</button>
+                        <button type="button" class="px-3 py-1 rounded text-xs font-bold text-outline hover:text-on-surface transition-colors">AR</button>
+                    </div>
+                </div>
+
+                <div class="space-y-6">
+                    <div class="space-y-2">
+                        <div class="flex justify-between">
+                            <label class="text-xs font-semibold text-on-surface-variant">{% trans "English Biography (Primary)" %}</label>
+                            <span class="text-[10px] text-outline font-bold uppercase">{% trans "Max 500 chars" %}</span>
+                        </div>
+                        <textarea name="bio_en" rows="4" maxlength="500" placeholder="Tell us about yourself..." class="custom-input-field resize-none rounded-2xl"></textarea>
+                    </div>
+
+                    <div class="space-y-2">
+                        <div class="flex justify-between">
+                            <label class="text-xs font-semibold text-on-surface-variant">{% trans "Arabic Biography (AR)" %}</label>
+                            <span class="text-[10px] text-outline font-bold uppercase">{% trans "Max 500 chars" %}</span>
+                        </div>
+                        <textarea name="bio_ar" rows="3" maxlength="500" dir="rtl" placeholder="اكتب النبذة الشخصية هنا..." class="custom-input-field resize-none rounded-2xl placeholder:text-outline/30"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bento-card p-8 border-t-4 border-error/20">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h4 class="text-error font-bold text-sm uppercase tracking-wider mb-1 flex items-center gap-2">
+                            <span class="material-symbols-outlined text-lg">warning</span>{% trans "Account Management" %}
+                        </h4>
+                        <p class="text-sm text-outline">{% trans "Temporarily deactivate or permanently delete your account profile details." %}</p>
+                    </div>
+
+                    <button type="button" class="px-6 py-2 text-error border border-error/20 rounded-xl font-bold hover:bg-error-container/10 transition-colors">
+                        {% trans "Delete Account" %}
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</form>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        // Form dynamic scaling interaction states
+        const wrappers = document.querySelectorAll('.custom-input-field');
+        wrappers.forEach(input => {
+            input.addEventListener('focus', () => {
+                if (input.parentElement) {
+                    input.parentElement.classList.add('scale-[1.01]');
+                    input.parentElement.style.transition = 'transform 0.2s ease';
+                }
+            });
+            input.addEventListener('blur', () => {
+                if (input.parentElement) {
+                    input.parentElement.classList.remove('scale-[1.01]');
+                }
+            });
+        });
+
+        // Language toggle mock setup visibility triggers
+        const langBtns = document.querySelectorAll('.bg-surface-container-high button');
+        langBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                langBtns.forEach(b => {
+                    b.classList.remove('bg-white', 'shadow-sm', 'text-primary');
+                    b.classList.add('text-outline');
+                });
+                btn.classList.add('bg-white', 'shadow-sm', 'text-primary');
+                btn.classList.remove('text-outline');
+            });
+        });
+
+        // Trigger safe file upload framework handler
+        const avatarInput = document.getElementById("id_avatar");
+        const avatarContainer = document.getElementById("avatar-container");
+        const avatarPreview = document.getElementById("avatar-preview");
+
+        if (avatarContainer && avatarInput) {
+            avatarContainer.addEventListener("click", () => avatarInput.click());
+        }
+
+        if (avatarInput && avatarPreview) {
+            avatarInput.addEventListener("change", (e) => {
+                const file = e.target.files[0];
+                if (!file) return;
+
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    avatarPreview.src = event.target.result;
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+    });
+</script>
+
+{% endblock %}

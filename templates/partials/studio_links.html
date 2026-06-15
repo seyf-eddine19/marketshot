@@ -1,0 +1,9 @@
+{% load i18n %}
+{% with nav_class="text-sm font-semibold text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-white transition-colors" %}
+<a class="{{ nav_class }}" href="{% url 'studio:home' %}">{% trans "Home" %}</a>
+<a class="{{ nav_class }}" href="{% url 'studio:home' %}#services">{% trans "Services" %}</a>
+<a class="{{ nav_class }}" href="{% url 'studio:home' %}#studio">{% trans "Studio" %}</a>
+<a class="{{ nav_class }}" href="{% url 'studio:home' %}#portfolio">{% trans "Portfolio" %}</a>
+<a class="{{ nav_class }}" href="{% url 'studio:home' %}#packages">{% trans "Packages" %}</a>
+<a class="{{ nav_class }}" href="{% url 'studio:home' %}#contact">{% trans "Contact" %}</a>
+{% endwith %}

@@ -1,0 +1,23 @@
+{% extends 'partials/navbar.html' %}
+{% load static i18n %}
+{% block nav_links %}
+    {% include 'partials/stores_links.html' %}
+{% endblock %}
+
+{% block cart_nav_links %}
+    <!-- Cart -->
+    {% if user.is_authenticated %}
+    <a href="{% url 'stores:cart' %}"
+       class="hidden lg:flex p-1.5 items-center justify-center rounded-xl bg-slate-100/50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all border border-slate-200 dark:border-slate-700">
+        <span class="material-symbols-outlined">shopping_cart</span>
+    </a>
+    {% endif %}
+{% endblock %}
+
+{% block mobile_nav_links %}
+    {% include 'partials/stores_links.html' %}
+    <!-- Cart -->
+    {% if user.is_authenticated %}
+    <a class="text-sm font-semibold text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-white transition-colors" href="{% url 'studio:home' %}">{% trans "Home" %}</a>
+    {% endif %}
+{% endblock %}

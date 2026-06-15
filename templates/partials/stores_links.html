@@ -1,0 +1,6 @@
+{% load i18n %}
+{% with nav_class="text-sm font-semibold text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-white transition-colors" %}
+<a class="{{ nav_class }}" href="{% url 'stores:marketplace' %}">{% trans "Home" %}</a>
+<a class="{{ nav_class }}" href="{% url 'stores:products' %}">{% trans "Products" %}</a>
+<a class="{{ nav_class }}" href="{% url 'stores:stores' %}">{% trans "Stores" %}</a>
+{% endwith %}

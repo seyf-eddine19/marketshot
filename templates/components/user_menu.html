@@ -1,0 +1,26 @@
+{% load i18n %}
+{% if user.is_authenticated %}
+    <button id="user-menu-btn" class="w-9 h-9 rounded-full overflow-hidden ring-2 ring-primary/20 transition-transform active:scale-90 flex items-center justify-center">
+        <img src="https://ui-avatars.com/api/?name={{ user.username }}&background=0052FF&color=fff" alt="User">
+    </button>
+    <div id="user-dropdown" class="hidden absolute mt-3 w-52 bg-white dark:bg-slate-900 rounded-xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden py-1 {% if LANGUAGE_CODE == 'ar' %}left-0{% else %}right-0{% endif %} z-50">
+        <div class="px-4 py-3 border-b border-slate-100 dark:border-slate-800">
+            <p class="text-sm font-bold truncate">{{ user.username }}</p>
+            <p class="text-[10px] text-slate-400 truncate">{{ user.email }}</p>
+        </div>
+        <a href="{% url 'dashboard:dashboard' %}" class="flex items-center gap-2 px-4 py-2 text-sm hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"><span class="material-symbols-outlined text-lg">dashboard</span> {% trans "Dashboard" %}</a>
+        <a href="{% url 'profile' %}" class="flex items-center gap-2 px-4 py-2 text-sm hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"><span class="material-symbols-outlined text-lg">person</span> {% trans "Profile" %}</a>
+        <a href="{% url 'change_password' %}" class="flex items-center gap-2 px-4 py-2 text-sm hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"><span class="material-symbols-outlined text-lg">lock</span> {% trans "Change Password" %}</a>
+        <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button type="submit" class="w-full flex items-center gap-2 text-left px-4 py-2 text-sm text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors">
+                <span class="material-symbols-outlined text-lg">logout</span> {% trans "Logout" %}
+            </button>
+        </form>
+    </div>
+{% else %}
+    <div class="hidden lg:flex items-center gap-2 bg-slate-100/50 dark:bg-slate-800 rounded-full border border-slate-200 dark:border-slate-700">
+        <a href="{% url 'login' %}" class="text-xs font-bold text-slate-500 hover:text-primary transition-colors ps-3">{% trans "Login" %}</a>
+        <a href="{% url 'signup' %}" class="px-5 py-2.5 bg-primary text-white rounded-full text-xs font-bold shadow-lg shadow-primary/20 hover:scale-105 transition-all">{% trans "Signup" %}</a>
+    </div>
+{% endif %}

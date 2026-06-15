@@ -1,0 +1,12 @@
+
+.main {
+    min-height: calc(100vh - 80px - 40px);
+    margin-inline-start: 0px;
+    padding: 2rem 1rem;
+}
+@media (min-width: 1024px) {
+    .main {
+        margin-inline-start: 260px;
+        padding: 2rem 1.5rem;
+    }
+}

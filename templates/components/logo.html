@@ -1,0 +1,17 @@
+{% load static i18n %}
+{% with url_name=url_name|default:"studio:home" %}
+<a href="{% url url_name  %}" class="flex items-center gap-1 group shrink-0" dir="ltr">
+{% endwith %}
+    <div class="w-14 h-14 flex items-center justify-center group-hover:rotate-6 transition-transform duration-300">
+        <img src="{% static 'img/logo.png' %}" alt="Marketshot Logo" class="w-full h-full object-contain">
+    </div>
+    <div class="flex flex-col justify-center">
+        <div class="flex items-center">
+            <span class="text-2xl font-black tracking-tighter text-primary">Market</span>
+            <span class="text-2xl font-black tracking-tighter text-secondary">Shot</span>
+        </div>
+        <span class="text-[6px] font-black tracking-[0.25em] text-slate-400 dark:text-slate-500 uppercase leading-none mt-0.5">
+            {% trans "Photography & Digital Marketing" %}
+        </span>
+    </div>
+</a>

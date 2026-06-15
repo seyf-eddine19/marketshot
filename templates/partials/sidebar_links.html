@@ -1,0 +1,87 @@
+{% load i18n %}
+
+{% url 'dashboard:dashboard' as dash %}
+{% url 'dashboard:project-list' as proj %}
+{% url 'dashboard:service-add' as serv %}
+{% url 'dashboard:booking-list' as book %}
+{% url 'dashboard:package-list' as pack %}
+{% url 'dashboard:subscription-list' as sub %}
+{% url 'dashboard:testimonial-list' as test %}
+{% url 'dashboard:contact-list' as contacts %}
+{% url 'dashboard:manage-categories' as cat %}
+{% url 'dashboard:product-list' as prod %}
+{% url 'dashboard:stores' as store %}
+{% url 'dashboard:user_list' as users %}
+
+<!-- DASHBOARD -->
+<a href="{{ dash }}" class="sidebar-link {% if request.path == dash %}sidebar-active{% endif %}">
+    <span class="material-symbols-outlined">dashboard</span>
+    {% trans "Dashboard" %}
+</a>
+
+<div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-4 mt-4 mb-2">
+    {% trans "Studio" %}
+</div>
+
+<a href="{{ proj }}" class="sidebar-link {% if request.path == proj %}sidebar-active{% endif %}">
+    <span class="material-symbols-outlined">gallery_thumbnail</span>
+    {% trans "Projects" %}
+</a>
+
+<a href="{{ serv }}" class="sidebar-link {% if request.path == serv %}sidebar-active{% endif %}">
+    <span class="material-symbols-outlined">design_services</span>
+    {% trans "Services" %}
+</a>
+
+<a href="{{ book }}" class="sidebar-link {% if request.path == book %}sidebar-active{% endif %}">
+    <span class="material-symbols-outlined">event_available</span>
+    {% trans "Bookings" %}
+</a>
+
+<a href="{{ pack }}" class="sidebar-link {% if request.path == pack %}sidebar-active{% endif %}">
+    <span class="material-symbols-outlined">workspace_premium</span>
+    {% trans "Packages" %}
+</a>
+
+<a href="{{ sub }}" class="sidebar-link {% if request.path == sub %}sidebar-active{% endif %}">
+    <span class="material-symbols-outlined">subscriptions</span>
+    {% trans "Subscriptions" %}
+</a>
+
+<a href="{{ test }}" class="sidebar-link {% if request.path == test %}sidebar-active{% endif %}">
+    <span class="material-symbols-outlined">star</span>
+    {% trans "Testimonials" %}
+</a>
+
+<a href="{{ contacts }}" class="sidebar-link {% if request.path == contacts %}sidebar-active{% endif %}">
+    <span class="material-symbols-outlined">contacts</span>
+    {% trans "Contacts" %}
+</a>
+
+<div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-4 mt-4 mb-2">
+    {% trans "Commerce" %}
+</div>
+
+<a href="{{ cat }}" class="sidebar-link {% if request.path == cat %}sidebar-active{% endif %}">
+    <span class="material-symbols-outlined">grid_view</span>
+    {% trans "Categories" %}
+</a>
+
+<a href="{{ prod }}" class="sidebar-link {% if request.path == prod %}sidebar-active{% endif %}">
+    <span class="material-symbols-outlined">inventory_2</span>
+    {% trans "Products" %}
+</a>
+
+<a href="{{ store }}" class="sidebar-link {% if request.path == store %}sidebar-active{% endif %}">
+    <span class="material-symbols-outlined">store</span>
+    {% trans "Stores" %}
+</a>
+
+<div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-4 mt-4 mb-2">
+    {% trans "Settings" %}
+</div>
+
+<a href="{{ users }}" class="sidebar-link {% if request.path == users %}sidebar-active{% endif %}">
+    <span class="material-symbols-outlined">group</span>
+    {% trans "Users" %}
+</a>

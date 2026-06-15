@@ -420,7 +420,7 @@
 
 </section>
 
-<section id="booking" class="py-32 px-6 bg-background dark:bg-slate-950 transition-colors">
+<section id="booking" class="py-32 px-6 transition-colors">
     <div class="max-w-5xl mx-auto rounded-[3rem] hero-gradient p-12 md:p-20 text-center text-white relative overflow-hidden shadow-2xl shadow-primary/20">
         <div class="relative z-10">
             <h2 class="text-4xl md:text-6xl font-black tracking-tighter mb-6">
@@ -441,13 +441,12 @@
             </div>
         </div>
         
-        <div class="absolute top-0 left-0 w-full h-full opacity-20 pointer-events-none">
-            <img alt="{% trans 'Abstract gradient' %}" 
-                 class="w-full h-full object-cover mix-blend-overlay" 
+        <div class="absolute top-0 left-0 w-full h-full bg-slate-950  pointer-events-none">
+            <img alt="Abstract gradient" 
+                 class="w-full h-full object-cover opacity-40" 
                  src="{% static 'img/hero-img-2.png' %}">
         </div>
         
-        <div class="absolute -bottom-24 -right-24 w-64 h-64 bg-white/20 blur-[80px] rounded-full"></div>
     </div>
 </section>
 

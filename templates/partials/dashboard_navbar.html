@@ -1,0 +1,108 @@
+{% load static i18n %}
+<nav class="fixed top-0 w-full z-50 glass-nav border-b border-slate-200/60">
+    <div class="mx-auto px-6 h-20 flex items-center justify-between">
+        
+        <div class="flex items-center gap-10">
+                {% include 'components/logo.html' %}
+            <div class="hidden lg:flex items-center gap-8 border-s border-slate-200 dark:border-slate-800 ps-8">
+                {% block nav_links %}
+                <div class="w-full px-4 md:px-8 flex items-center justify-between">
+                    <!-- Left: Toggle & Title 
+                    <div class="flex items-center gap-4">
+                        <button id="menu-btn" class="lg:hidden w-10 h-10 flex items-center justify-center rounded-xl bg-slate-100 dark:bg-slate-800">
+                            <span class="material-symbols-outlined">menu</span>
+                        </button>
+                        <div class="hidden sm:block">
+                            <span class="text-[10px] text-primary font-bold uppercase tracking-tighter">{% trans "Administration" %}</span>
+                            <h1 class="text-lg font-black dark:text-white leading-none">{% block page_title %}Overview{% endblock %}</h1>
+                        </div>
+                    </div>-->
+
+                    <!-- Center: Global Links (Optional) -->                
+                    <div class="flex items-center gap-1 bg-slate-100/50 dark:bg-slate-800/50 p-1 rounded-full border border-slate-200/50 dark:border-slate-700/50">
+                        <a href="{% url 'studio:home' %}" class="px-5 py-2 text-xs font-bold rounded-xl transition-all hover:bg-white hover:dark:bg-slate-900 hover:shadow-sm hover:text-primary">
+                            {% trans "Studio" %}
+                        </a>
+                        <a href="{% url 'stores:stores' %}" class="px-5 py-2 text-xs font-bold rounded-xl transition-all hover:bg-white hover:dark:bg-slate-900 hover:shadow-sm hover:text-primary">
+                            {% trans "Stores" %}
+                        </a>
+                    </div>
+                </div>
+                {% endblock %}
+            </div>
+        </div>
+
+        <div class="flex items-center gap-4">
+            <div class="hidden lg:flex items-center gap-4">
+                <!-- Language Switcher -->
+                {% include 'components/language_switcher.html' %}
+
+                <!-- Theme Toggle -->
+                {% include 'components/theme_toggle.html' %}
+
+                <!-- Cart -->
+                {% block cart_nav_links %}{% endblock %}
+
+                <!-- User Menu -->
+                <div class="relative hidden lg:block">
+                    {% include 'components/user_menu.html' %}
+                </div>
+            </div>
+
+            <button id="mobile-menu-toggle" class="lg:hidden w-11 h-11 flex items-center justify-center rounded-xl bg-slate-100/50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 active:scale-95 transition-all">
+                <span class="material-symbols-outlined text-[32px]">menu</span>
+            </button>
+        </div>
+    </div>
+
+    <div id="mobile-menu" class="hidden lg:hidden bg-white dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800 shadow-2xl overflow-y-auto max-h-[calc(100vh-200px)] transition-all">
+        <div class="p-6 space-y-6">
+            <nav class="flex flex-col gap-4">
+                {% block mobile_nav_links %}
+                    {% include 'partials/sidebar_links.html' %}
+                {% endblock %}
+
+
+                <a href="{% url 'profile' %}" class="sidebar-link {% if request.path == profile %}sidebar-active{% endif %}">
+                    <span class="material-symbols-outlined">person</span> {% trans "Profile" %}
+                </a>
+
+                <a href="{% url 'change_password' %}" class="sidebar-link {% if request.path == change_password %}sidebar-active{% endif %}">
+                    <span class="material-symbols-outlined">lock</span> {% trans "Change Password" %}
+                </a>
+            </nav>
+
+            <div class="pt-6 border-t border-slate-100 dark:border-slate-800">
+                <div class="flex flex-wrap justify-end items-center gap-4">
+                    <!-- Language Switcher -->
+                    {% include 'components/language_switcher.html' %}
+
+                    <!-- Theme Toggle -->
+                    {% include 'components/theme_toggle.html' with theme_toggle_id="theme-toggle-mobile" %}
+
+                    <!-- Login / Signup or Logout -->
+                    {% if user.is_authenticated %}
+                    <form method="post" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <button type="submit" class="w-full flex items-center gap-2 rounded-full text-left px-4 py-1.5 text-sm text-white bg-red-500 hover:bg-red-500/80 transition-colors">
+                            <span class="material-symbols-outlined text-lg">logout</span> Logout
+                        </button>
+                    </form>
+                    {% else %}
+                    <div class="flex items-center gap-2 bg-slate-100/50 dark:bg-slate-800 rounded-full border border-slate-200 dark:border-slate-700">
+                        <a href="{% url 'login' %}" class="text-xs font-bold text-slate-500 hover:text-primary transition-colors ps-3">Login</a>
+                        <a href="{% url 'signup' %}" class="px-5 py-2.5 bg-primary text-white rounded-full text-xs font-bold shadow-lg shadow-primary/20 hover:scale-105 transition-all">Signup</a>
+                    </div>
+                    {% endif %}
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+
+
+{% block extra_scripts %}
+    <script src="{% static 'js/navbar.js' %}"></script>
+    <script src="{% static 'js/theme_toggle.js' %}"></script>
+{% endblock %}
