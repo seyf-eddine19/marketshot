@@ -4,6 +4,7 @@ from django.utils.translation import gettext_lazy as _
 from django.utils import translation
 from decimal import Decimal
 
+
 # --- 1. GLOBAL INDUSTRY CATEGORIES ---
 class StoreCategory(models.Model):
     """Industry level (e.g., Electronics, Fashion, Furniture)"""
@@ -119,6 +120,51 @@ class Store(models.Model):
     def __str__(self):
         return self.subdomain
 
+
+# --- DELEVERY ---
+class DeliveryCompany(models.Model):
+    name_en = models.CharField(max_length=225, unique=True, verbose_name=_("Name (EN)"))
+    name_ar = models.CharField(max_length=225, verbose_name=_("Name (AR)"))
+    name_fr = models.CharField(max_length=225, verbose_name=_("Name (FR)"))
+
+    logo = models.ImageField(upload_to="delivery_companies/")
+
+    website = models.URLField(blank=True)
+    tracking_url = models.URLField(blank=True)
+
+    api_available = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
+
+    class Meta:
+        verbose_name = _("Delivery Company")
+        verbose_name_plural = _("Delivery Companies")
+
+    @property
+    def name(self):
+        lang = translation.get_language()
+        if lang == "ar":
+            return self.name_ar or self.name_en
+        if lang == "fr":
+            return self.name_fr or self.name_en
+        return self.name_en
+
+    def __str__(self):
+        return self.name
+
+
+class StoreDelivery(models.Model):
+    store = models.ForeignKey(Store, on_delete=models.CASCADE, related_name="delivery_companies")
+    company = models.ForeignKey(DeliveryCompany, on_delete=models.CASCADE, related_name="stores")
+    delivery_price = models.DecimalField(max_digits=10, decimal_places=2, default=0, verbose_name=_("Delivery Price"))
+    free_delivery_from = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True, verbose_name=_("Free Delivery From"))
+
+    is_active = models.BooleanField(default=True)
+    is_default = models.BooleanField(default=False)
+
+    class Meta:
+        unique_together = ("store", "company")
+
+
 # --- 4. ATTRIBUTE TYPES (Fixed List + Others) --
 class ProductAttribute(models.Model):
     """
@@ -202,7 +248,7 @@ class Product(models.Model):
     
     base_price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name=_("Base Price"))
     discount = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True, verbose_name=_("Discount %"))
-    main_image = models.ImageField(upload_to='products/main/', verbose_name=_("Main Image"))
+    main_image = models.ImageField(upload_to='products/main/', default="img/logo.png", verbose_name=_("Main Image"))
 
     is_active = models.BooleanField(default=True, verbose_name=_("Is Active"))
     is_featured = models.BooleanField(default=False, verbose_name=_("Is Featured"))
@@ -331,6 +377,9 @@ class ProductVariant(models.Model):
         verbose_name = _("Product Variant")
         verbose_name_plural = _("Product Variants")
 
+    @property
+    def final_price(self):
+        return self.price_override or self.product.discounted_price
 
     def __str__(self):
         vals = " / ".join([v.value_en for v in self.attribute_values.all()])
@@ -363,6 +412,8 @@ class ProductReview(models.Model):
         ordering=["-created_at"]
 
 # --- 8. THE ORDER ---
+import uuid
+
 class Order(models.Model):
     class Status(models.TextChoices):
         PENDING = 'PENDING', _('Pending')
@@ -372,6 +423,8 @@ class Order(models.Model):
         DELIVERED = 'DELIVERED', _('Delivered')
         CANCELLED = 'CANCELLED', _('Cancelled')
         REFUNDED = 'REFUNDED', _('Refunded')
+
+    # order_number = models.CharField(max_length=30, unique=True, blank=True, editable=False, verbose_name=_("Order Number"))
 
     customer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='orders', verbose_name=_("Customer"))
     store = models.ForeignKey(Store, on_delete=models.CASCADE, related_name='orders', verbose_name=_("Store"))
@@ -386,14 +439,26 @@ class Order(models.Model):
         verbose_name = _("Order")
         verbose_name_plural = _("Orders")
 
+
+    def save(self, *args, **kwargs):
+        if not self.order_number:
+            self.order_number = f"ORD-{uuid.uuid4().hex[:10].upper()}"
+
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return f"Order #{self.id} - {self.customer}"
-    
+
+
 # --- 9. ORDER ITEMS (Products within an Order) ---
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='items', verbose_name=_("Order"))
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='ordered_items', verbose_name=_("Product"))
     variant = models.ForeignKey(ProductVariant, on_delete=models.SET_NULL, null=True, blank=True, verbose_name=_("Product Variant"))
+    
+    # product_name = models.CharField(max_length=255, verbose_name=_("Product Name at purchase time"))
+    # variant_description = models.CharField(max_length=255, blank=True, null=True, verbose_name=_("Variant Description"))
+
     quantity = models.PositiveIntegerField(default=1, verbose_name=_("Quantity"))
     price = models.DecimalField(max_digits=10,decimal_places=2, verbose_name=_("Price at purchase time"))
 
@@ -408,27 +473,44 @@ class OrderItem(models.Model):
         return f"{self.product.name_en} x {self.quantity}"
 
 
-class ShippingAddress(models.Model):
-    order = models.OneToOneField(Order, on_delete=models.CASCADE, related_name='shipping_address')
+class CustomerAddress(models.Model):
+    customer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="addresses")
 
     full_name = models.CharField(max_length=255, verbose_name=_("Full Name"))
     phone = models.CharField(max_length=20, verbose_name=_("Phone"))
 
+
+    wilaya = models.ForeignKey("accounts.Wilaya", on_delete=models.PROTECT)
     address = models.CharField(max_length=255, verbose_name=_("Address"))
-    city = models.CharField(max_length=100, verbose_name=_("City"))
-    state = models.CharField(max_length=100, blank=True, null=True, verbose_name=_("State"))
     postal_code = models.CharField(max_length=20, blank=True, null=True, verbose_name=_("Postal Code"))
     country = models.CharField(max_length=100, default="Algeria", verbose_name=_("Country"))
+
+    is_default = models.BooleanField(default=False, verbose_name=_("Is Default"))
 
     created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Created At"))
     updated_at = models.DateTimeField(auto_now=True, verbose_name=_("Updated At"))
 
     class Meta:
-        verbose_name = _("Shipping Address")
-        verbose_name_plural = _("Shipping Addresses")
+        verbose_name = _("Address")
+        verbose_name_plural = _("Addresses")
 
     def __str__(self):
-        return f"{self.full_name} - {self.city}"
+        return f"{self.full_name} - {self.wilaya.name}| {self.postal_code}"
+
+class OrderShippingAddress(models.Model):
+    order = models.OneToOneField(Order, on_delete=models.CASCADE, related_name="shipping_address", verbose_name=_("Order"))
+
+    full_name = models.CharField(max_length=255, verbose_name=_("Full Name"))
+    phone = models.CharField(max_length=20, verbose_name=_("Phone"))
+
+    wilaya= models.CharField(max_length=100, verbose_name=_("Wilaya"))
+    address = models.CharField(max_length=255, verbose_name=_("Address"))
+    postal_code = models.CharField(max_length=20, blank=True, null=True, verbose_name=_("Postal Code"))
+    country = models.CharField(max_length=100, default="Algeria", verbose_name=_("Country"))
+
+    class Meta:
+        verbose_name = _("Shipping Address")
+        verbose_name_plural = _("Shipping Addresses")
 
 class Payment(models.Model):
     class Method(models.TextChoices):
@@ -469,3 +551,101 @@ class OrderStatusHistory(models.Model):
 
     def __str__(self):
         return f"{self.order.id} - {self.status}"
+    
+
+# Cart
+class Cart(models.Model):
+    customer = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="cart", verbose_name=_("Customer"))
+
+    class meta:
+        verbose_name = _("Cart")
+        verbose_name_plural = _("Carts")
+
+    @property
+    def total(self):
+        return sum(item.total_price for item in self.items.all())
+
+    def add_item(self, product, attributes=None, quantity=1):
+
+        attributes = attributes or []
+
+        # Find same product + same attributes
+        for item in self.items.filter(product=product):
+
+            current_attrs = set(
+                item.attribute_values.values_list(
+                    "id",
+                    flat=True
+                )
+            )
+
+            new_attrs = set(
+                attributes
+            )
+
+
+            if current_attrs == new_attrs:
+
+                item.quantity += quantity
+                item.save()
+
+                return item
+
+
+        # create new cart item
+        item = CartItem.objects.create(
+            cart=self,
+            product=product,
+            quantity=quantity
+        )
+
+
+        if attributes:
+            item.attribute_values.set(
+                attributes
+            )
+
+
+        return item
+    
+
+class CartItem(models.Model):
+    cart = models.ForeignKey(Cart, on_delete=models.CASCADE, related_name="items", verbose_name=_("Cart"))
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name=_("Product"))
+    attribute_values = models.ManyToManyField(ProductAttribute, blank=True, related_name="cart_items", verbose_name=_("Selected Attributes"))
+    quantity = models.PositiveIntegerField(default=1, verbose_name=_("Quantity"))
+
+    class Meta:
+        verbose_name = _("Cart Item")
+        verbose_name_plural = _("Cart Items")
+
+    def get_variant(self):
+        """  Find matching product variant """
+        selected = self.attribute_values.all()
+        for variant in self.product.variants.prefetch_related("attribute_values"):
+            variant_attrs = set(
+                variant.attribute_values.values_list(
+                    "id",
+                    flat=True
+                )
+            )
+            item_attrs = set(
+                selected.values_list(
+                    "id",
+                    flat=True
+                )
+            )
+            if variant_attrs == item_attrs:
+                return variant
+        return None
+    
+    @property
+    def unit_price(self):
+        variant = self.get_variant()
+        if variant:
+            return variant.final_price
+        return self.product.discounted_price
+
+    @property
+    def total_price(self):
+        return self.unit_price * self.quantity

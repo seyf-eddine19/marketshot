@@ -166,7 +166,7 @@ class Package(models.Model):
         verbose_name = _("Package")
         verbose_name_plural = _("Packages")
         ordering = ["order", "created_at"]
-
+        
     @property
     def title(self):
         lang = translation.get_language()
@@ -180,6 +180,19 @@ class Package(models.Model):
         if lang == 'ar': return self.description_ar or self.description_en
         if lang == 'fr': return self.description_fr or self.description_en
         return self.description_en
+
+    @property
+    def get_current_price(self):
+        """يحسب السعر بعد الخصم المئوي"""
+        if self.base_price and self.discount and self.discount > 0:
+            discount_amount = self.base_price * (self.discount / Decimal('100'))
+            return self.base_price - discount_amount
+        return self.base_price
+
+    @property
+    def has_discount(self):
+        """التحقق من وجود خصم صالح وصحيح"""
+        return self.discount and self.discount > 0
 
     def get_price(self, duration='monthly'):
         base_price = self.base_price or Decimal('0')

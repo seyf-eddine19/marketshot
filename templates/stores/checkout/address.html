@@ -1,0 +1,100 @@
+{% extends "stores/base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Shipping Address" %} | MarketShot{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-6 py-12">
+
+    <div class="mb-10">
+        <h1 class="text-3xl font-extrabold text-slate-900 dark:text-white">
+            {% trans "Shipping Address" %}
+        </h1>
+        <p class="text-slate-500 mt-2">
+            {% trans "Enter your delivery information." %}
+        </p>
+    </div>
+
+    <form method="post"
+          class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 space-y-5">
+
+        {% csrf_token %}
+
+        <div>
+            <label class="block text-sm font-bold mb-2">
+                {% trans "Full Name" %}
+            </label>
+
+            <input type="text"
+                   name="full_name"
+                   required
+                   class="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-transparent px-4 py-3">
+        </div>
+
+        <div>
+            <label class="block text-sm font-bold mb-2">
+                {% trans "Phone Number" %}
+            </label>
+
+            <input type="text"
+                   name="phone"
+                   required
+                   class="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-transparent px-4 py-3">
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-4">
+
+            <div>
+                <label class="block text-sm font-bold mb-2">
+                    {% trans "Wilaya" %}
+                </label>
+
+                <input type="text"
+                       name="wilaya"
+                       required
+                       class="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-transparent px-4 py-3">
+            </div>
+
+            <div>
+                <label class="block text-sm font-bold mb-2">
+                    {% trans "City" %}
+                </label>
+
+                <input type="text"
+                       name="city"
+                       required
+                       class="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-transparent px-4 py-3">
+            </div>
+
+        </div>
+
+        <div>
+            <label class="block text-sm font-bold mb-2">
+                {% trans "Address" %}
+            </label>
+
+            <textarea name="address"
+                      rows="4"
+                      required
+                      class="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-transparent px-4 py-3"></textarea>
+        </div>
+
+        <div>
+            <label class="block text-sm font-bold mb-2">
+                {% trans "Notes" %}
+            </label>
+
+            <textarea name="notes"
+                      rows="3"
+                      class="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-transparent px-4 py-3"></textarea>
+        </div>
+
+        <button type="submit"
+                class="w-full h-14 cta-gradient text-white rounded-xl font-extrabold">
+            {% trans "Continue to Payment" %}
+        </button>
+
+    </form>
+
+</div>
+{% endblock %}

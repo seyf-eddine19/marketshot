@@ -79,57 +79,193 @@
                 {% endif %}
             </div>
 
-            <form method="post" action="{% url 'stores:product_detail' product.id %}" class="space-y-4">
-                {% csrf_token %}
-                
-                {% regroup attributes by category as attr_list %}
-                {% for cat in attr_list %}
-                    <div class="space-y-1.5">
-                        <label class="text-xs font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500 block">
-                            {{ cat.list.0.display_label }}
-                        </label>
-                        <div class="flex flex-wrap gap-2">
-                            {% for attr in cat.list %}
-                                {% if attr.category == 'COLOR' %}
-                                    <label class="relative cursor-pointer select-none">
-                                        <input type="radio" name="attr_{{ cat.grouper }}" value="{{ attr.id }}" class="peer sr-only" required>
-                                        <div class="w-9 h-9 rounded-full border-[3px] border-white dark:border-slate-900 shadow-sm ring-1 ring-slate-200 dark:ring-slate-700 peer-checked:ring-primary peer-checked:ring-2 transition-all hover:scale-105" data-color="{{ attr.color_code|default:'#cccccc' }}" title="{{ attr.value }}"></div>
-                                        <span class="sr-only">{{ attr.value }}</span>
-                                    </label>
-                                {% else %}
-                                    <label class="cursor-pointer select-none">
-                                        <input type="radio" name="attr_{{ cat.grouper }}" value="{{ attr.id }}" class="peer sr-only" required>
-                                        <div class="px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-bold text-xs hover:border-primary/50 peer-checked:bg-primary peer-checked:text-white peer-checked:border-primary transition-all text-center min-w-[60px]">
-                                            {{ attr.value }}
-                                        </div>
-                                    </label>
-                                {% endif %}
-                            {% endfor %}
-                        </div>
-                    </div>
-                {% endfor %}
 
-                <div class="space-y-1.5">
-                    <label class="text-xs font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500 block">{% trans "Quantity" %}</label>
-                    <div class="flex items-center bg-slate-100 dark:bg-slate-800 rounded-lg px-2 py-0.5 h-11 w-32 justify-between border border-slate-200/50 dark:border-slate-700/50 shadow-inner">
-                        <button type="button" onclick="changeQty(-1)" class="w-7 h-7 flex items-center justify-center rounded-md hover:bg-white dark:hover:bg-slate-700 hover:shadow-sm transition-colors text-slate-770 dark:text-slate-300">
-                            <span class="material-symbols-outlined text-[16px] font-bold">remove</span>
-                        </button>
-                        <input type="number" id="quantity" name="quantity" value="1" min="1" class="w-8 bg-transparent border-none text-center font-extrabold text-base focus:ring-0 focus:outline-none text-slate-900 dark:text-white">
-                        <button type="button" onclick="changeQty(1)" class="w-7 h-7 flex items-center justify-center rounded-md hover:bg-white dark:hover:bg-slate-700 hover:shadow-sm transition-colors text-slate-700 dark:text-slate-300">
-                            <span class="material-symbols-outlined text-[16px] font-bold">add</span>
-                        </button>
-                    </div>
-                </div>
+<form method="post"
+      action="{% url 'stores:cart_add' product.id %}"
+      class="space-y-4">
 
-                <div class="pt-2">
-                    <button type="submit" class="w-full h-14 cta-gradient text-white rounded-xl font-extrabold text-sm uppercase tracking-wider hover:shadow-lg hover:shadow-primary/20 active:scale-[0.99] transition-all flex items-center justify-center gap-2">
-                        <span class="material-symbols-outlined text-[20px]">shopping_cart</span>
-                        {% translate "Add to Cart" %}
-                    </button>
-                </div>
-            </form>
-            
+{% csrf_token %}
+
+<input type="hidden" 
+       name="attribute_values" 
+       id="selected_attributes">
+{% regroup attributes by category as attr_groups %}
+
+
+{% for group in attr_groups %}
+
+<div class="space-y-2 attribute-group"
+     data-category="{{ group.grouper }}">
+
+
+<label class="
+text-xs font-bold uppercase tracking-widest 
+text-slate-400 dark:text-slate-500 block">
+
+{{ group.list.0.display_label }}
+
+</label>
+
+
+
+<div class="flex flex-wrap gap-2">
+
+
+{% for attr in group.list %}
+
+
+<label class="cursor-pointer select-none attribute-option"
+       data-attribute="{{ group.grouper }}"
+       data-id="{{ attr.id }}">
+
+
+
+<input type="radio"
+       name="attr_{{ group.grouper }}"
+       value="{{ attr.id }}"
+       class="variant-option peer sr-only"
+       required>
+
+
+
+{% if attr.category == "COLOR" %}
+
+
+<div
+class="
+w-9 h-9 rounded-full
+border-[3px]
+border-white
+dark:border-slate-900
+ring-1
+ring-slate-300
+peer-checked:ring-primary
+peer-checked:ring-2
+transition
+hover:scale-105"
+data-color="{{ attr.color_code|default:'#ccc' }}">
+
+</div>
+
+
+
+{% else %}
+
+
+
+<div
+class="
+px-4 py-2 rounded-lg
+border
+border-slate-200
+dark:border-slate-700
+text-xs font-bold
+peer-checked:bg-primary
+peer-checked:text-white
+transition">
+
+{{ attr.value }}
+
+</div>
+
+
+{% endif %}
+
+
+
+</label>
+
+
+
+{% endfor %}
+
+
+</div>
+
+</div>
+
+
+{% endfor %}
+
+
+
+
+<!-- quantity -->
+
+<div class="space-y-2">
+
+<label class="text-xs font-bold uppercase tracking-widest text-slate-400">
+
+{% trans "Quantity" %}
+
+</label>
+
+
+<div class="
+flex items-center
+bg-slate-100
+dark:bg-slate-800
+rounded-lg
+w-32
+h-11
+justify-between
+px-2">
+
+
+<button type="button"
+onclick="changeQty(-1)">
+-
+</button>
+
+
+<input
+id="quantity"
+name="quantity"
+value="1"
+min="1"
+type="number"
+class="w-10 bg-transparent border-none text-center">
+
+
+<button type="button"
+onclick="changeQty(1)">
++
+</button>
+
+
+</div>
+
+</div>
+
+
+
+
+<button type="submit"
+class="
+w-full
+h-14
+cta-gradient
+text-white
+rounded-xl
+font-extrabold
+uppercase
+flex
+items-center
+justify-center
+gap-2">
+
+<span class="material-symbols-outlined">
+shopping_cart
+</span>
+
+{% translate "Add to Cart" %}
+
+</button>
+
+
+
+</form>
+
             <div class="pt-4 border-t border-slate-200 dark:border-slate-800 grid grid-cols-2 gap-3">
                 <div class="flex gap-2 items-center">
                     <div class="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-primary shrink-0">
@@ -229,59 +365,150 @@
     </div>
 </div>
 
+
+
 <script>
-    function updateMainImage(thumb) {
-        document.getElementById('main-display-image').src = thumb.src;
-        
-        document.querySelectorAll('.thumbnail-wrapper').forEach(el => {
-            el.classList.remove('border-primary', 'border-2', 'thumbnail-active');
-            el.classList.add('border', 'border-slate-100', 'dark:border-slate-800');
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    // colors
+    document.querySelectorAll("[data-color]").forEach(el => {el.style.backgroundColor = el.dataset.color;});
+
+    const options = document.querySelectorAll(".variant-option");
+    const labels = document.querySelectorAll(".attribute-option");
+    const hidden = document.getElementById("selected_attributes");
+
+    const csrf = document.querySelector("[name=csrfmiddlewaretoken]").value;
+
+    function getSelected(){
+        let attrs = [];
+        document.querySelectorAll(".variant-option:checked").forEach(input=>{
+            attrs.push(parseInt(input.value));
         });
-        
-        const currentWrapper = thumb.parentElement;
-        currentWrapper.classList.remove('border', 'border-slate-100', 'dark:border-slate-800');
-        currentWrapper.classList.add('border-2', 'border-primary', 'thumbnail-active');
+        return attrs;
     }
 
-    function changeQty(amt) {
-        const input = document.getElementById('quantity');
-        let newVal = parseInt(input.value) + amt;
-        if (isNaN(newVal) || newVal < 1) newVal = 1;
-        input.value = newVal;
+    function updateHidden(){
+        hidden.value = getSelected().join(",");
     }
 
-    // Dynamic Client-side Switcher for Description vs Review Panes
-    function switchContentTab(tabIdentifier) {
-        // 1. Hide all text viewport panels cleanly
-        document.querySelectorAll('.tab-pane-element').forEach(pane => {
-            pane.classList.remove('block');
-            pane.classList.add('hidden');
+    function updateVariants(){
+        let selected = getSelected();
+        updateHidden();
+
+        fetch(
+        "{% url 'stores:get_variant' product.id %}",
+        {
+            method:"POST",
+            headers:{
+
+                "X-CSRFToken":csrf,
+                "Content-Type":"application/json"
+            },
+
+            body:JSON.stringify({
+                attributes:selected
+            })
+        })
+
+        .then(res=>res.json())
+        .then(data=>{
+            if(!data.attributes)
+                return;
+                
+            options.forEach(input=>{
+                const id = parseInt(input.value);
+                const label = input.closest("label");
+
+                // available
+                if(data.attributes.includes(id)){
+                    input.disabled=false;
+                    label.style.opacity="1";
+                }
+
+                // unavailable
+                else{
+                    input.disabled=true;
+                    label.style.opacity="0.35";
+                    // remove invalid selected
+                    if(input.checked){
+                        input.checked=false;
+                    }
+                }
+            });
+            updateHidden();
         });
-        
-        // 2. Clear out active stylistic configurations from headers
-        const tabs = [document.getElementById('tab-btn-description'), document.getElementById('tab-btn-reviews')];
-        tabs.forEach(tab => {
-            if (tab) {
-                tab.classList.remove('border-primary', 'text-primary', 'font-extrabold');
-                tab.classList.add('border-transparent', 'text-slate-400', 'dark:text-slate-500', 'font-bold');
+    }
+
+    labels.forEach(label=>{
+        label.addEventListener(
+        "click",
+        function(e){
+            const input = this.querySelector(".variant-option");
+
+            // allow unselect
+            if(input.checked){
+                e.preventDefault();
+                input.checked=false;
+                updateVariants();
+                return;
             }
-        });
 
-        // 3. Mount target active panel view and highlight heading
-        document.getElementById(`pane-${tabIdentifier}`).classList.remove('hidden');
-        document.getElementById(`pane-${tabIdentifier}`).classList.add('block');
-        
-        const targetBtn = document.getElementById(`tab-btn-${tabIdentifier}`);
-        targetBtn.classList.remove('border-transparent', 'text-slate-400', 'dark:text-slate-500', 'font-bold');
-        targetBtn.classList.add('border-primary', 'text-primary', 'font-extrabold');
-    }
-
-    document.addEventListener("DOMContentLoaded", function() {
-        document.querySelectorAll('[data-color]').forEach(el => {
-            if(el.dataset.color) {
-                el.style.backgroundColor = el.dataset.color;
-            }
+            // normal radio behavior
+            input.checked=true;
+            updateVariants();
         });
     });
+
+    // first state
+    updateVariants();
+
+    // block add without all attrs
+    const form = document.querySelector("form");
+
+    form.addEventListener("submit", function(e){
+        const groups = document.querySelectorAll(".attribute-group");
+        let missing=false;
+
+        groups.forEach(group=>{
+            const checked = group.querySelector(".variant-option:checked");
+            if(!checked){
+                missing=true;
+                group.classList.add(
+                    "ring-2",
+                    "ring-red-500",
+                    "rounded-lg",
+                    "p-2"
+                );
+            }
+
+            else{
+                group.classList.remove(
+                    "ring-2",
+                    "ring-red-500",
+                    "rounded-lg",
+                    "p-2"
+                );
+            }
+        });
+
+        if(missing){
+            e.preventDefault();
+            alert("Please select all options");
+            return;
+        }
+
+        updateHidden();
+    });
+});
+
+function changeQty(value){
+    let input = document.getElementById("quantity");
+    let qty = parseInt(input.value)+value;
+
+    if(qty < 1) qty=1;
+    input.value=qty;
+}
 </script>
 {% endblock %}
+

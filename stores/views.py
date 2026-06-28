@@ -1,16 +1,18 @@
 import random
-
+from django.utils.translation import gettext_lazy as _
 from django.shortcuts import get_object_or_404, render, redirect
 from django.views.generic import TemplateView, ListView, DetailView, View
 from django.db.models import Q, F, Avg, Count, Prefetch, ExpressionWrapper, DecimalField, Min, Max
 from django.contrib import messages
 from .models import (
     Store, StoreCategory, Product, ProductCategory, ProductAttribute, ProductVariant, 
-    Order, OrderItem, ShippingAddress, Payment
+    Order, OrderItem, Payment
 )
 
 class MarketplaceView(TemplateView):
     template_name = "stores/index.html"
+    paginate_by = 30
+
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -31,7 +33,7 @@ class MarketplaceView(TemplateView):
             .select_related(
                 "store"
             )
-        )
+        )[:6]
 
         # Categories
         context["categories"] = (
@@ -395,75 +397,712 @@ class ProductDetailView(DetailView):
 
         return context
 
-class CheckoutView(View):
+
+
+import json
+from django.http import JsonResponse
+
+class GetVariantView(View):
+    def post(self, request, product_id):
+        data = json.loads(request.body)
+        attrs = set(map(int, data.get("attributes", [])))
+        variants = ProductVariant.objects.filter(product_id=product_id).prefetch_related("attribute_values")
+
+        for variant in variants:
+            variant_attrs = set(
+                variant.attribute_values.values_list(
+                    "id",
+                    flat=True
+                )
+            )
+
+            if variant_attrs == attrs:
+                return JsonResponse({
+                    "variant_id": variant.id,
+                    "price": str(variant.final_price),
+                    "stock": variant.stock
+                })
+
+        return JsonResponse({
+            "variant_id": variant.id,
+            "price": str(variant.final_price),
+            "stock": variant.stock,
+            "attributes": list(
+                ProductAttribute.objects.filter(
+                    variant_combos__in=ProductVariant.objects.filter(product_id=product_id)
+                ).values_list(
+                    "id", flat=True
+                ).distinct())
+        })
+
+class GetVariantView(View):
+
+    def post(self, request, product_id):
+
+        data = json.loads(request.body)
+
+        attrs = data.get("attributes", [])
+
+        attrs = [int(x) for x in attrs]
+
+
+        variants = (
+            ProductVariant.objects
+            .filter(
+                product_id=product_id,
+                attribute_values__id__in=attrs
+            )
+            .annotate(
+                matched=Count("attribute_values")
+            )
+            .filter(
+                matched=len(attrs)
+            )
+            .prefetch_related("attribute_values")
+        )
+
+
+        variant = variants.first()
+
+
+        if not variant:
+            return JsonResponse({
+                "variant_id": None,
+                "attributes": []
+            })
+
+
+        available = []
+
+        for v in ProductVariant.objects.filter(
+            product_id=product_id
+        ).prefetch_related("attribute_values"):
+
+
+            # check compatibility
+
+            selected=set(attrs)
+
+            variant_attrs=set(
+                v.attribute_values.values_list(
+                    "id",
+                    flat=True
+                )
+            )
+
+
+            if selected.issubset(variant_attrs):
+
+                available.extend(
+                    list(variant_attrs)
+                )
+
+
+        return JsonResponse({
+
+            "variant_id":variant.id,
+
+            "price":
+                str(variant.final_price),
+
+            "stock":
+                variant.stock,
+
+            "attributes":
+                list(set(available))
+        })
+
+from django.contrib.auth.mixins import LoginRequiredMixin
+
+
+from .models import (
+    Cart,
+    CartItem,
+    Product,
+    ProductVariant
+)
+
+
+# =========================
+# Helper
+# =========================
+def get_user_cart(user):
+    cart, created = Cart.objects.get_or_create(
+        customer=user
+    )
+    return cart
+
+
+# =========================
+# Cart Detail
+# =========================
+class CartDetailView(LoginRequiredMixin, View):
+
     def get(self, request):
-        # Assuming you have a cart session or utility
-        cart = request.session.get('cart', {})
-        if not cart:
-            messages.warning(request, "Your cart is empty.")
-            return redirect('stores:products')
-            
-        return render(request, 'stores/checkout.html')
+        cart = get_user_cart(request.user)
+
+        items = (
+            cart.items
+            .select_related(
+                "product",
+                "product__store"
+            )
+            .prefetch_related(
+                "attribute_values"
+            )
+        )
+
+        return render(
+            request,
+            "stores/cart/detail.html",
+            {
+                "cart": cart,
+                "items": items
+            }
+        )
+
+
+# =========================
+# Add product without variant
+# =========================
+class CartAddView(LoginRequiredMixin, View):
+    def post(self, request, product_id):
+        product = get_object_or_404(Product, id=product_id, is_active=True)
+        cart = get_user_cart(request.user)
+
+        item, created = CartItem.objects.get_or_create(
+            cart=cart, product=product, variant=None,
+            defaults={
+                "quantity":1
+            }
+        )
+
+        if not created:
+            item.quantity += 1
+            item.save()
+
+        messages.success(request, _("Product added to cart"))
+        return redirect("stores:cart")
+
+class CartAddView(LoginRequiredMixin, View):
+    def post(self, request, product_id):
+        product = get_object_or_404(Product, id=product_id, is_active=True)
+        cart = get_user_cart(request.user)
+        quantity = int(request.POST.get("quantity", 1))
+        attribute_ids = request.POST.getlist("attributes")
+
+        item = CartItem.objects.create(cart=cart, product=product, quantity=quantity)
+        if attribute_ids:
+            attributes = ProductAttribute.objects.filter(id__in=attribute_ids)
+            item.attribute_values.set(attributes)
+
+        messages.success(
+            request,
+            _("Product added to cart")
+        )
+
+
+        return redirect(
+            "stores:cart"
+        )
+
+class CartAddView(LoginRequiredMixin, View):
+
+    def post(self, request, product_id):
+
+        product = get_object_or_404(
+            Product,
+            id=product_id,
+            is_active=True
+        )
+
+
+        cart = get_user_cart(request.user)
+
+
+        quantity = int(
+            request.POST.get(
+                "quantity",
+                1
+            )
+        )
+
+
+        attribute_ids = request.POST.getlist(
+            "attributes"
+        )
+
+
+        attributes = ProductAttribute.objects.filter(
+            id__in=attribute_ids
+        )
+
+
+        cart.add_item(
+            product=product,
+            attributes=attributes,
+            quantity=quantity
+        )
+
+
+        messages.success(
+            request,
+            _("Product added to cart")
+        )
+
+
+        return redirect("stores:cart")
+
+
+class CartAddView(LoginRequiredMixin, View):
+
+    def post(self, request, product_id):
+
+        if not request.user.is_authenticated:
+            return redirect(f"/accounts/login/?next=/product/{product_id}/")
+
+        product = get_object_or_404(
+            Product,
+            id=product_id,
+            is_active=True
+        )
+
+
+        cart=get_user_cart(request.user)
+
+
+        quantity=int(
+            request.POST.get(
+                "quantity",
+                1
+            )
+        )
+
+
+        attrs_string = request.POST.get(
+            "attribute_values",
+            ""
+        )
+
+
+        attrs = [
+            int(x)
+            for x in attrs_string.split(",")
+            if x
+        ]
+
+
+        # find existing item with same attrs
+
+        item=None
+
+
+        for cart_item in cart.items.prefetch_related(
+            "attribute_values"
+        ):
+
+
+            current=set(
+                cart_item.attribute_values.values_list(
+                    "id",
+                    flat=True
+                )
+            )
+
+
+            if current == set(attrs):
+
+                item=cart_item
+                break
+
+
+
+        if item:
+
+            item.quantity += quantity
+            item.save()
+
+
+
+        else:
+
+            item=CartItem.objects.create(
+                cart=cart,
+                product=product,
+                quantity=quantity
+            )
+
+
+            if attrs:
+
+                item.attribute_values.set(attrs)
+
+
+
+        messages.success(
+            request,
+            _("Product added to cart")
+        )
+
+
+        return redirect(
+            "stores:cart"
+        )
+
+from django.shortcuts import redirect
+
+class CartAddView1(LoginRequiredMixin, View):
+
+    def post(self, request, product_id):
+
+        product = get_object_or_404(
+            Product,
+            id=product_id,
+            is_active=True
+        )
+
+        cart = get_user_cart(request.user)
+
+        quantity = int(request.POST.get("quantity", 1))
+
+        attrs_string = request.POST.get("attribute_values", "")
+        attrs = [int(x) for x in attrs_string.split(",") if x]
+
+        item = None
+
+        for cart_item in cart.items.prefetch_related("attribute_values"):
+            current = set(cart_item.attribute_values.values_list("id", flat=True))
+
+            if current == set(attrs):
+                item = cart_item
+                break
+
+        if item:
+            item.quantity += quantity
+            item.save()
+        else:
+            item = CartItem.objects.create(
+                cart=cart,
+                product=product,
+                quantity=quantity
+            )
+            if attrs:
+                item.attribute_values.set(attrs)
+
+        messages.success(request, _("Product added to cart"))
+
+        # 👇 مهم جدًا
+        next_url = request.GET.get("next")
+
+        if next_url:
+            return redirect(next_url)
+
+        return redirect("stores:cart")
+
+class CartAddView(View):
+
+    def post(self, request, product_id):
+
+        if not request.user.is_authenticated:
+            return redirect(f"/accounts/login/?next=/product/{product_id}/")
+
+        product = get_object_or_404(
+            Product,
+            id=product_id,
+            is_active=True
+        )
+
+        cart = get_user_cart(request.user)
+
+        quantity = int(request.POST.get("quantity", 1))
+
+        attrs_string = request.POST.get("attribute_values", "")
+        attrs = [int(x) for x in attrs_string.split(",") if x]
+
+        item = None
+
+        for cart_item in cart.items.prefetch_related("attribute_values"):
+            current = set(cart_item.attribute_values.values_list("id", flat=True))
+
+            if current == set(attrs):
+                item = cart_item
+                break
+
+        if item:
+            item.quantity += quantity
+            item.save()
+        else:
+            item = CartItem.objects.create(
+                cart=cart,
+                product=product,
+                quantity=quantity
+            )
+            if attrs:
+                item.attribute_values.set(attrs)
+
+        messages.success(request, _("Product added to cart"))
+
+        return redirect("stores:cart")
+# =========================
+# Add product with variant
+# =========================
+class CartAddVariantView(LoginRequiredMixin, View):
+    def post(self, request, product_id, variant_id):
+        product = get_object_or_404(Product, id=product_id, is_active=True)
+        variant = get_object_or_404(ProductVariant, id=variant_id, product=product)
+        cart = get_user_cart(request.user)
+
+        item, created = CartItem.objects.get_or_create(
+            cart=cart, product=product, variant=variant,
+            defaults={
+                "quantity":1
+            }
+        )
+
+        if not created:
+            item.quantity += 1
+            item.save()
+
+        messages.success(request, _("Variant added to cart"))
+        return redirect("stores:cart")
+
+
+# =========================
+# Update quantity
+# =========================
+class CartUpdateView(LoginRequiredMixin, View):
+    def post(self, request, item_id):
+        cart = get_user_cart(request.user)
+        item = get_object_or_404(CartItem, id=item_id, cart=cart)
+        quantity = int(request.POST.get("quantity", 1))
+
+        if quantity <= 0:
+            item.delete()
+
+        else:
+            item.quantity = quantity
+            item.save()
+
+        messages.success(request, _(""))
+        return redirect("stores:cart")
+
+
+# =========================
+# Remove item
+# =========================
+class CartRemoveView(LoginRequiredMixin, View):
+    def post(self, request, item_id):
+        cart = get_user_cart(request.user)
+        item = get_object_or_404(CartItem, id=item_id, cart=cart)
+        item.delete()
+
+        messages.success(request, _("Item removed"))
+        return redirect("stores:cart")
+
+
+class CheckoutView(LoginRequiredMixin, View):
+
+    def get(self, request):
+        cart = get_user_cart(request.user)
+        if not cart.items.exists():
+            messages.error(request, _("Your cart is empty."))
+            return redirect("stores:cart")
+        return redirect("stores:checkout_address") 
+    
+
+class CheckoutAddressView(LoginRequiredMixin, TemplateView):
+    template_name = "stores/checkout/address.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["cart"] = get_user_cart(self.request.user)
+        return context
 
     def post(self, request):
-        # 1. Basic Validation
-        full_name = request.POST.get('full_name')
-        phone = request.POST.get('phone')
-        address_text = request.POST.get('address')
-        city = request.POST.get('city')
-        payment_method = request.POST.get('payment_method', 'CASH')
+        request.session["checkout_address"] = {
+            "full_name":
+            request.POST.get(
+                "full_name"
+            ),
 
-        # 2. Create the Order object
-        # Note: 'store' is derived from the products in the cart
-        # For simplicity, assuming one store per order here
+            "phone":
+            request.POST.get(
+                "phone"
+            ),
+
+            "wilaya":
+            request.POST.get(
+                "wilaya"
+            ),
+
+            "city":
+            request.POST.get(
+                "city"
+            ),
+
+            "address":
+            request.POST.get(
+                "address"
+            ),
+
+            "notes":
+            request.POST.get(
+                "notes"
+            ),
+        }
+
+        return redirect("stores:checkout_payment")
+
+
+class CheckoutPaymentView(LoginRequiredMixin, TemplateView):
+    template_name = "stores/checkout/payment.html"
+
+    def dispatch(
+        self,
+        request,
+        *args,
+        **kwargs
+    ):
+
+        if not request.session.get(
+            "checkout_address"
+        ):
+
+            return redirect(
+                "stores:checkout_address"
+            )
+
+        return super().dispatch(
+            request,
+            *args,
+            **kwargs
+        )
+
+
+    def post(
+        self,
+        request
+    ):
+
+        request.session[
+            "checkout_payment"
+        ] = request.POST.get(
+            "payment_method"
+        )
+
+        return redirect(
+            "stores:checkout_confirm"
+        )
+    
+
+from django.db import transaction
+
+
+class OrderCreateView(
+    LoginRequiredMixin,
+    View
+):
+
+    @transaction.atomic
+    def post(
+        self,
+        request
+    ):
+
+        cart = get_user_cart(
+            request.user
+        )
+
+        if not cart.items.exists():
+
+            messages.error(
+                request,
+                _("Your cart is empty.")
+            )
+
+            return redirect(
+                "stores:cart"
+            )
+
+
+        address_data = request.session.get(
+            "checkout_address"
+        )
+
+        payment_method = request.session.get(
+            "checkout_payment"
+        )
+
+
+        if not address_data:
+
+            return redirect(
+                "stores:checkout_address"
+            )
+
+
+        if not payment_method:
+
+            return redirect(
+                "stores:checkout_payment"
+            )
+
+
         order = Order.objects.create(
             customer=request.user,
-            store_id=request.POST.get('store_id'), # Hidden input in form
-            status=Order.Status.PENDING,
-            total_price=0 # Will update after items
+            full_name=address_data["full_name"],
+            phone=address_data["phone"],
+            wilaya=address_data["wilaya"],
+            city=address_data["city"],
+            address=address_data["address"],
+            notes=address_data["notes"],
+            payment_method=payment_method,
+            total_amount=cart.total_price,
+            status="PENDING"
         )
 
-        # 3. Create Shipping Address
-        ShippingAddress.objects.create(
-            order=order,
-            full_name=full_name,
-            phone=phone,
-            address=address_text,
-            city=city
-        )
 
-        # 4. Create Order Items and Calculate Total
-        total = 0
-        cart = request.session.get('cart', {})
-        
-        for variant_id, item_data in cart.items():
-            variant = get_object_or_404(ProductVariant, id=variant_id)
-            price = variant.price_override or variant.product.discounted_price
-            qty = item_data['quantity']
-            
-            OrderItem.objects.create(
+        for item in cart.items.prefetch_related(
+            "attribute_values"
+        ):
+
+            order_item = OrderItem.objects.create(
                 order=order,
-                product=variant.product,
-                variant=variant,
-                quantity=qty,
-                price=price
+                product=item.product,
+                quantity=item.quantity,
+                unit_price=item.product.discounted_price,
+                total_price=(
+                    item.product.discounted_price
+                    * item.quantity
+                )
             )
-            total += (price * qty)
 
-        # 5. Finalize Order & Payment record
-        order.total_price = total
-        order.save()
+            order_item.attribute_values.set(
+                item.attribute_values.all()
+            )
 
-        Payment.objects.create(
-            order=order,
-            method=payment_method,
-            status=Payment.Status.PENDING
+
+        cart.items.all().delete()
+
+
+        request.session.pop(
+            "checkout_address",
+            None
         )
 
-        # 6. Clear Cart
-        request.session['cart'] = {}
-        
-        messages.success(request, f"Order #{order.id} placed successfully!")
-        return redirect('stores:order_confirmation', order_id=order.id)
-    
-    
+        request.session.pop(
+            "checkout_payment",
+            None
+        )
+
+
+        messages.success(
+            request,
+            _("Order created successfully.")
+        )
+
+        return redirect(
+            "stores:order_detail",
+            order.pk
+        )
+

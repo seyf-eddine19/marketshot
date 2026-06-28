@@ -3,8 +3,9 @@ from django.utils.translation import gettext_lazy as _
 from .models import (
     StoreCategory, ProductCategory, Store, 
     ProductAttribute, Product, ProductReview, ProductVariant, 
-    ProductImage, Order, OrderItem, ShippingAddress, 
-    Payment, OrderStatusHistory
+    ProductImage, Order, OrderItem, CustomerAddress, OrderShippingAddress, 
+    Payment, OrderStatusHistory,
+    Cart, CartItem
 )
 
 # --- 1. INLINES ---
@@ -35,6 +36,11 @@ class StatusHistoryInline(admin.TabularInline):
     model = OrderStatusHistory
     extra = 0
     readonly_fields = ('created_at',)
+
+class CartItemInline(admin.StackedInline):
+    model = CartItem
+    extra = 0
+
 
 # --- 2. ADMIN CLASSES ---
 
@@ -93,9 +99,19 @@ class PaymentAdmin(admin.ModelAdmin):
     list_display = ('order', 'method', 'status', 'created_at')
     list_filter = ('method', 'status')
 
-@admin.register(ShippingAddress)
-class ShippingAddressAdmin(admin.ModelAdmin):
-    list_display = ('full_name', 'city', 'phone', 'order')
+@admin.register(OrderShippingAddress)
+class OrderShippingAddressAdmin(admin.ModelAdmin):
+    list_display = ('full_name', 'wilaya', 'phone', 'order')
+
+@admin.register(CustomerAddress)
+class CustomerAddressAdmin(admin.ModelAdmin):
+    list_display = ('full_name', 'wilaya', 'phone', 'customer')
+
+
+@admin.register(Cart)
+class CartAdmin(admin.ModelAdmin):
+    list_display = ('customer',)
+    inlines = [CartItemInline]
 
 # Simple registration for remaining items
 admin.site.register(ProductVariant)

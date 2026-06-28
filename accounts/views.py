@@ -31,12 +31,47 @@ class CustomLoginView(LoginView):
 
     def form_valid(self, form):
         response = super().form_valid(form)
-        messages.success(self.request, "Welcome back 👋")
+        # messages.success(self.request, "Welcome back 👋")
         return response
 
-    def get_success_url(self):
-        return reverse_lazy('dashboard:dashboard') 
+    # def get_success_url(self):
+    #     return reverse_lazy('dashboard:dashboard') 
 
+class CustomLoginView(LoginView):
+    template_name = 'accounts/login.html'
+    form_class = UserLoginForm
+
+    def form_valid(self, form):
+        login(self.request, form.get_user())
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return self.get_redirect_url() or self.request.POST.get('next') or '/'
+    
+from django.utils.http import url_has_allowed_host_and_scheme
+
+
+class CustomLoginView1(LoginView):
+    template_name = 'accounts/login.html'
+    form_class = UserLoginForm
+
+    def form_valid(self, form):
+        messages.success(self.request, "Welcome back 👋")
+        return super().form_valid(form)
+
+    def get_success_url(self):
+
+        url = self.get_redirect_url()
+
+        if url and url_has_allowed_host_and_scheme(
+            url,
+            allowed_hosts={self.request.get_host()},
+            require_https=self.request.is_secure(),
+        ):
+            return url
+
+        return self.request.get_full_path()
+    
 class CustomLogoutView(LogoutView):
     next_page = reverse_lazy('login')
 

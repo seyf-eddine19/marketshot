@@ -109,9 +109,9 @@
             </div>
         {% endif %}
 
-        <form method="post" class="space-y-5 mt-6">
+        <form method="post" action="" class="space-y-5 mt-6">
             {% csrf_token %}
-            
+            <!-- <input type="hidden" name="next" value="{{ request.GET.next|default:request.get_full_path }}"> -->
             <div class="space-y-1.5 text-start">
                 <label for="id_username" class="text-xs font-bold tracking-wide uppercase text-slate-600 dark:text-slate-400 block px-0.5">
                     {% trans "Email Address" %}

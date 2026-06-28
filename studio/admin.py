@@ -37,7 +37,7 @@ class PackageFeatureInline(admin.TabularInline):
 
 @admin.register(Package)
 class PackageAdmin(admin.ModelAdmin):
-    list_display = ('title', 'base_price', 'discount', 'is_active', 'created_at')
+    list_display = ('title', 'base_price', 'discount', 'get_price', 'is_active', 'created_at')
     search_fields = ('title_ar', 'title_en', 'title_fr', 'description_ar', 'description_en', 'description_fr')
     list_filter = ('is_active', 'is_highlighted', 'created_at')
     inlines = [PackageFeatureInline]

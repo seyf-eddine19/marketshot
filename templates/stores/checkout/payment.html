@@ -1,0 +1,65 @@
+{% extends "stores/base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Payment Method" %} | MarketShot{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-6 py-12">
+
+    <h1 class="text-3xl font-extrabold mb-8">
+        {% trans "Payment Method" %}
+    </h1>
+
+    <form method="post"
+          class="space-y-4">
+
+        {% csrf_token %}
+
+        <label class="block">
+            <input type="radio"
+                   name="payment_method"
+                   value="COD"
+                   checked
+                   class="peer hidden">
+
+            <div class="p-5 rounded-2xl border border-slate-200 dark:border-slate-800 peer-checked:border-primary peer-checked:bg-primary/5 transition">
+
+                <div class="font-bold">
+                    {% trans "Cash on Delivery" %}
+                </div>
+
+                <div class="text-sm text-slate-500 mt-1">
+                    {% trans "Pay when your order arrives." %}
+                </div>
+
+            </div>
+        </label>
+
+        <label class="block">
+            <input type="radio"
+                   name="payment_method"
+                   value="BANK"
+                   class="peer hidden">
+
+            <div class="p-5 rounded-2xl border border-slate-200 dark:border-slate-800 peer-checked:border-primary peer-checked:bg-primary/5 transition">
+
+                <div class="font-bold">
+                    {% trans "Bank Transfer" %}
+                </div>
+
+                <div class="text-sm text-slate-500 mt-1">
+                    {% trans "Transfer before shipment." %}
+                </div>
+
+            </div>
+        </label>
+
+        <button type="submit"
+                class="w-full h-14 cta-gradient text-white rounded-xl font-extrabold">
+            {% trans "Review Order" %}
+        </button>
+
+    </form>
+
+</div>
+{% endblock %}

@@ -10,3 +10,161 @@
         padding: 2rem 1.5rem;
     }
 }
+
+
+
+/* ========================================
+   FORM SYSTEM
+======================================== */
+
+input[type="text"],
+input[type="url"],
+input[type="email"],
+input[type="number"],
+input[type="password"],
+input[type="search"],
+textarea,
+select {
+    width: 100%;
+    min-height: 48px;
+    padding-inline: 1rem;
+    border-radius: 1rem;
+    border: 1px solid #cbd5e1;
+    background: white;
+    color: #0f172a;
+    font-size: .95rem;
+    font-weight: 500;
+    transition: all .2s ease;
+    outline: none;
+}
+
+.dark input[type="text"],
+.dark input[type="url"],
+.dark input[type="email"],
+.dark input[type="number"],
+.dark input[type="password"],
+.dark input[type="search"],
+.dark textarea,
+.dark select {
+    background: rgb(15 23 42 / .7);
+    border-color: #334155;
+    color: white;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, .12);
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: #94a3b8;
+}
+
+textarea {
+    min-height: 140px;
+    padding: 1rem;
+    resize: vertical;
+    line-height: 1.6;
+}
+
+/* ========================================
+   SELECT
+======================================== */
+
+select {
+    appearance: none;
+    padding-inline-end: 3rem;
+
+    background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%2364748b' viewBox='0 0 20 20'%3E%3Cpath d='M5 7l5 5 5-5H5z'/%3E%3C/svg%3E");
+
+    background-repeat: no-repeat;
+    background-size: 14px;
+    background-position:
+        right 1rem center;
+}
+
+html[dir="rtl"] select {
+    background-position:
+        left 1rem center;
+
+    padding-inline-start: 3rem;
+    padding-inline-end: 1rem;
+}
+
+select[multiple] {
+    min-height: 180px;
+    padding: 1rem;
+    background-image: none;
+}
+
+select[multiple] option {
+    padding: .5rem .75rem;
+    font-weight: 600;
+}
+
+select[multiple] option:checked {
+    background: #2563eb;
+    color: white;
+}
+
+/* ========================================
+   FILE INPUT
+======================================== */
+
+input[type="file"] {
+    width: 100%;
+    font-size: .875rem;
+    color: #64748b;
+}
+
+input[type="file"]::file-selector-button {
+    border: none;
+    background: #2563eb;
+    color: white;
+    padding: .875rem 1.25rem;
+    border-radius: 1rem;
+    margin-inline-end: 1rem;
+    cursor: pointer;
+    font-weight: 700;
+    transition: opacity .2s ease;
+}
+
+input[type="file"]::file-selector-button:hover {
+    opacity: .9;
+}
+
+/* ========================================
+   INPUT WRAPPER
+======================================== */
+
+.input-wrapper input,
+.input-wrapper textarea,
+.input-wrapper select {
+    box-shadow:
+        0 1px 2px rgba(15, 23, 42, .04),
+        0 4px 14px rgba(15, 23, 42, .03);
+}
+
+.dark .input-wrapper input,
+.dark .input-wrapper textarea,
+.dark .input-wrapper select {
+    box-shadow: none;
+}
+
+/* ========================================
+   CONTENT AREA
+======================================== */
+
+.dashboard-content {
+    min-height: calc(100vh - 80px);
+}
+
+@media (min-width: 1024px) {
+    .dashboard-content {
+        margin-inline-start: 18rem; /* w-72 */
+    }
+}

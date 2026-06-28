@@ -257,17 +257,28 @@
                 </p>
 
                 <!-- Price -->
-                <div class="text-4xl font-black mb-6 {% if package.is_highlighted %}text-primary{% else %}dark:text-white{% endif %}">
-                    
-                    {% if package.base_price %}
-                        ${{ package.get_price|floatformat:0 }}
-                        <span class="text-sm font-medium text-tertiary">
-                            /{% trans "month" %}
+                <div class="mb-6 flex flex-wrap items-baseline gap-3">
+    
+                    {% if package.base_price and package.base_price > 0 %}
+                        <span class="text-4xl font-black {% if package.is_highlighted %}text-primary{% else %}dark:text-white{% endif %}">
+                            {{ package.get_current_price|floatformat:0 }} {% if LANGUAGE_BIDI %}د.ج{% else %}DA{% endif %}
                         </span>
+
+                        {% if package.has_discount %}
+                            <span class="text-lg font-medium text-slate-400 line-through dark:text-slate-500">
+                                {{ package.base_price|floatformat:0 }} {% if LANGUAGE_BIDI %}د.ج{% else %}DA{% endif %}
+                            </span>
+
+                            <span class="inline-flex items-center px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-500 text-xs font-bold">
+                                -{{ package.discount|floatformat:0 }}%
+                            </span>
+                        {% endif %}
+
                     {% else %}
-                        {% trans "Custom" %}
+                        <span class="text-4xl font-black {% if package.is_highlighted %}text-primary{% else %}dark:text-white{% endif %}">
+                            {% trans "Custom" %}
+                        </span>
                     {% endif %}
-                    
                 </div>
 
                 <!-- Features -->
@@ -452,13 +463,11 @@
 
 <section id="contact" class="py-32 px-6 bg-background dark:bg-slate-950 overflow-hidden relative">
 
-    <!-- Background effects -->
     <div class="absolute top-0 right-0 w-96 h-96 bg-primary/10 blur-[140px] rounded-full"></div>
     <div class="absolute bottom-0 left-0 w-96 h-96 bg-secondary/10 blur-[140px] rounded-full"></div>
 
     <div class="max-w-7xl mx-auto relative z-10">
 
-        <!-- Header -->
         <div class="text-center mb-20">
             <div class="inline-flex items-center px-4 py-1.5 rounded-full bg-primary/10 text-primary text-xs font-bold tracking-widest uppercase mb-6">
                 {% trans "Contact Us" %}
@@ -473,13 +482,11 @@
             </p>
         </div>
 
-        <div class="grid lg:grid-cols-5 gap-10">
+        <div class="grid lg:grid-cols-5 gap-10 items-stretch">
 
-            <!-- Contact Info -->
             <div class="lg:col-span-2 space-y-6">
 
                 <div class="p-8 rounded-3xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700">
-
                     <div class="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mb-6">
                         <span class="material-symbols-outlined text-primary text-3xl">
                             mail
@@ -493,11 +500,9 @@
                     <p class="text-tertiary dark:text-slate-400">
                         hello@marketshot.com
                     </p>
-
                 </div>
 
                 <div class="p-8 rounded-3xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700">
-
                     <div class="w-14 h-14 rounded-2xl bg-secondary/10 flex items-center justify-center mb-6">
                         <span class="material-symbols-outlined text-secondary text-3xl">
                             call
@@ -511,11 +516,9 @@
                     <p class="text-tertiary dark:text-slate-400">
                         +213 XXX XX XX XX
                     </p>
-
                 </div>
 
                 <div class="p-8 rounded-3xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700">
-
                     <div class="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mb-6">
                         <span class="material-symbols-outlined text-primary text-3xl">
                             location_on
@@ -529,99 +532,84 @@
                     <p class="text-tertiary dark:text-slate-400">
                         {% trans "Tlemcen, Algeria" %}
                     </p>
-
                 </div>
 
             </div>
 
-            <!-- Contact Form -->
             <div class="lg:col-span-3">
+                <div class="h-full p-10 rounded-[2rem] bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 shadow-xl flex flex-col justify-between">
 
-                <div class="p-10 rounded-[2rem] bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 shadow-xl">
-
-                    <form method="POST">
-
+                    <form method="POST" class="h-full flex flex-col justify-between">
                         {% csrf_token %}
 
-                        <div class="grid md:grid-cols-2 gap-6 mb-6">
+                        <div>
+                            <div class="grid md:grid-cols-2 gap-6 mb-6">
+                                <div>
+                                    <label class="block mb-2 text-sm font-bold dark:text-white">
+                                        {% trans "Name" %}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        name="name"
+                                        required
+                                        class="w-full px-5 py-4 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 focus:border-primary outline-none dark:text-white"
+                                        placeholder="{% trans 'Your name' %}"
+                                    >
+                                </div>
 
-                            <div>
+                                <div>
+                                    <label class="block mb-2 text-sm font-bold dark:text-white">
+                                        {% trans "Email" %}
+                                    </label>
+                                    <input
+                                        type="email"
+                                        name="email"
+                                        required
+                                        class="w-full px-5 py-4 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 focus:border-primary outline-none dark:text-white"
+                                        placeholder="{% trans 'Your email' %}"
+                                    >
+                                </div>
+                            </div>
+
+                            <div class="mb-6">
                                 <label class="block mb-2 text-sm font-bold dark:text-white">
-                                    {% trans "Name" %}
+                                    {% trans "Subject" %}
                                 </label>
-
                                 <input
                                     type="text"
-                                    name="name"
+                                    name="subject"
                                     required
                                     class="w-full px-5 py-4 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 focus:border-primary outline-none dark:text-white"
-                                    placeholder="{% trans 'Your name' %}"
+                                    placeholder="{% trans 'Project subject' %}"
                                 >
                             </div>
 
-                            <div>
+                            <div class="mb-8">
                                 <label class="block mb-2 text-sm font-bold dark:text-white">
-                                    {% trans "Email" %}
+                                    {% trans "Message" %}
                                 </label>
-
-                                <input
-                                    type="email"
-                                    name="email"
+                                <textarea
+                                    rows="8"
+                                    name="message"
                                     required
-                                    class="w-full px-5 py-4 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 focus:border-primary outline-none dark:text-white"
-                                    placeholder="{% trans 'Your email' %}"
-                                >
+                                    class="w-full h-full px-5 py-4 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 focus:border-primary outline-none dark:text-white"
+                                    placeholder="{% trans 'Tell us about your project...' %}"
+                                ></textarea>
                             </div>
-
-                        </div>
-
-                        <div class="mb-6">
-
-                            <label class="block mb-2 text-sm font-bold dark:text-white">
-                                {% trans "Subject" %}
-                            </label>
-
-                            <input
-                                type="text"
-                                name="subject"
-                                required
-                                class="w-full px-5 py-4 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 focus:border-primary outline-none dark:text-white"
-                                placeholder="{% trans 'Project subject' %}"
-                            >
-
-                        </div>
-
-                        <div class="mb-8">
-
-                            <label class="block mb-2 text-sm font-bold dark:text-white">
-                                {% trans "Message" %}
-                            </label>
-
-                            <textarea
-                                rows="6"
-                                name="message"
-                                required
-                                class="w-full px-5 py-4 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 focus:border-primary outline-none dark:text-white"
-                                placeholder="{% trans 'Tell us about your project...' %}"
-                            ></textarea>
-
                         </div>
 
                         <button
                             type="submit"
-                            class="w-full py-4 rounded-xl cta-gradient text-white font-bold shadow-xl shadow-primary/20 hover:scale-[1.01] transition-transform"
+                            class="w-full py-4 rounded-xl cta-gradient text-white font-bold shadow-xl shadow-primary/20 hover:scale-[1.01] transition-transform mt-auto"
                         >
                             {% trans "Send Message" %}
                         </button>
-
                     </form>
 
                 </div>
-
             </div>
 
         </div>
-
     </div>
 
 </section>

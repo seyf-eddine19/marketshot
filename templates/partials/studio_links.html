@@ -2,8 +2,19 @@
 {% with nav_class="text-sm font-semibold text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-white transition-colors" %}
 <a class="{{ nav_class }}" href="{% url 'studio:home' %}">{% trans "Home" %}</a>
 <a class="{{ nav_class }}" href="{% url 'studio:home' %}#services">{% trans "Services" %}</a>
-<a class="{{ nav_class }}" href="{% url 'studio:home' %}#studio">{% trans "Studio" %}</a>
 <a class="{{ nav_class }}" href="{% url 'studio:home' %}#portfolio">{% trans "Portfolio" %}</a>
+<a class="{{ nav_class }}" href="{% url 'studio:home' %}#studio">{% trans "Studio" %}</a>
 <a class="{{ nav_class }}" href="{% url 'studio:home' %}#packages">{% trans "Packages" %}</a>
 <a class="{{ nav_class }}" href="{% url 'studio:home' %}#contact">{% trans "Contact" %}</a>
 {% endwith %}
+<div class="ms-1 ps-2 flex flex justify-end rtl:justify-start justify-end border-slate-200 dark:border-slate-800 w-full">
+    <a
+        href="{% url 'stores:marketplace' %}"
+        class="flex items-center gap-2 px-4 h-10 rounded-xl bg-primary text-white text-sm font-bold shadow-lg shadow-primary/20 hover:bg-primary/80 transition-all"
+    >
+        <span class="material-symbols-outlined text-[18px]">storefront</span>
+        {% trans "Stores" %}
+    </a>
+</div>
+
+
