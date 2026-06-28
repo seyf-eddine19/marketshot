@@ -900,6 +900,45 @@ class CartRemoveView(LoginRequiredMixin, View):
         return redirect("stores:cart")
 
 
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
+from django.utils.translation import gettext as _
+from django.views import View
+from django.contrib.auth.mixins import LoginRequiredMixin
+
+
+class CartUpdateView(LoginRequiredMixin, View):
+    def post(self, request, item_id):
+        cart = get_user_cart(request.user)
+        item = get_object_or_404(CartItem, id=item_id, cart=cart)
+
+        quantity = max(1, int(request.POST.get("quantity", 1)))
+
+        item.quantity = quantity
+        item.save()
+
+        return JsonResponse({
+            "success": True,
+            "quantity": item.quantity,
+            "item_total": float(item.total),
+            "cart_total": float(cart.total),
+            "cart_count": cart.items.count(),
+        })
+
+
+class CartRemoveView(LoginRequiredMixin, View):
+    def post(self, request, item_id):
+        cart = get_user_cart(request.user)
+        item = get_object_or_404(CartItem, id=item_id, cart=cart)
+
+        item.delete()
+
+        return JsonResponse({
+            "success": True,
+            "cart_total": float(cart.total),
+            "cart_count": cart.items.count(),
+        })
+
 class CheckoutView(LoginRequiredMixin, View):
 
     def get(self, request):

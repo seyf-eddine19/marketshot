@@ -1,338 +1,437 @@
-{% extends 'stores/base.html' %}
+{% extends "stores/base.html" %}
 {% load i18n %}
 
 {% block title %}
-{% trans "Shopping Cart" %}
+    {% trans "Shopping Cart" %}
 {% endblock %}
-
 
 {% block content %}
 
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
 
-<!-- HEADER -->
-<div class="mb-10 flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
+    <!-- Header -->
+    <div class="mb-10 flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
 
-    <div class="space-y-4">
+        <div class="space-y-4">
 
-        <nav class="flex items-center gap-2 text-primary font-bold text-xs uppercase tracking-widest">
-            <span class="material-symbols-outlined text-sm">
-                shopping_cart
-            </span>
+            <nav class="flex items-center gap-2 text-primary font-bold text-xs uppercase tracking-widest">
+                <span class="material-symbols-outlined">shopping_cart</span>
+                {% trans "Marketplace" %}
+            </nav>
 
-            {% trans "Marketplace" %}
-        </nav>
+            <h1 class="text-4xl lg:text-6xl font-black text-slate-900 dark:text-white">
+                {% trans "Shopping" %}
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-500">
+                    {% trans "Cart" %}
+                </span>
+            </h1>
 
+            <p class="text-lg text-slate-500 dark:text-slate-400">
+                {% trans "Review your selected products before checkout." %}
+            </p>
 
-        <h1 class="text-4xl lg:text-6xl font-black text-slate-900 dark:text-white">
+        </div>
 
-            {% trans "Shopping" %}
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-5 shadow-sm">
 
-            <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-500">
-                {% trans "Cart" %}
-            </span>
+            <div class="flex items-center gap-4">
 
-        </h1>
+                <div class="w-14 h-14 rounded-2xl bg-primary/10 text-primary flex items-center justify-center">
+                    <span class="material-symbols-outlined">
+                        inventory_2
+                    </span>
+                </div>
 
+                <div>
 
-        <p class="text-slate-500 dark:text-slate-400 text-lg">
+                    <h3 id="cart-count" class="text-3xl font-black">
+                        {{ cart.items.count }}
+                    </h3>
 
-            {% trans "Review your selected products before checkout." %}
+                    <p class="text-xs uppercase font-black text-slate-400">
+                        {% trans "Items" %}
+                    </p>
 
-        </p>
+                </div>
+
+            </div>
+
+        </div>
 
     </div>
 
 
+    <div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
 
-    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-5 shadow-sm">
+        <!-- Items -->
+        <div id="cart-items" class="xl:col-span-2 space-y-5">
 
-        <div class="flex items-center gap-4">
+            {% for item in cart.items.all %}
 
+            <div
+                id="cart-item-{{ item.id }}"
+                class="bg-white dark:bg-slate-900 rounded-[2rem] border border-slate-200 dark:border-slate-800 p-6 shadow-sm">
 
-            <div class="w-14 h-14 rounded-2xl bg-primary/10 text-primary flex items-center justify-center">
+                <div class="flex flex-col md:flex-row gap-6">
 
-                <span class="material-symbols-outlined">
-                    inventory_2
+                    <a href="{% url 'stores:product_detail' item.product.pk %}">
+                        <div class="w-32 h-32 rounded-3xl overflow-hidden bg-slate-100 dark:bg-slate-800">
+
+                            <img
+                                src="{{ item.product.main_image.url }}"
+                                alt="{{ item.product.name }}"
+                                class="w-full h-full object-cover">
+
+                        </div>
+                    </a>
+
+                    <div class="flex-1">
+
+                        <h3 class="text-xl font-black text-slate-900 dark:text-white">
+                            {{ item.product.name }}
+                        </h3>
+
+                        <div class="mt-3 flex flex-wrap items-center gap-2">
+
+                            {% for attr in item.attribute_values.all %}
+
+                                {% if attr.category == "COLOR" %}
+
+                                    <div
+                                        class="w-8 h-8 rounded-full border-[3px] border-white dark:border-slate-900 ring-1 ring-slate-300"
+                                        style="background-color: {{ attr.color_code|default:'#ccc' }};"
+                                        title="{{ attr.display_label }}: {{ attr.value }}">
+                                    </div>
+
+                                {% else %}
+
+                                    <span class="px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-700 text-xs font-bold">
+                                        {{ attr.value }}
+                                    </span>
+
+                                {% endif %}
+
+                            {% empty %}
+
+                                <span class="text-xs text-slate-400">
+                                    {% trans "No attributes" %}
+                                </span>
+
+                            {% endfor %}
+
+                        </div>
+
+                        <div class="mt-6 flex flex-wrap items-center justify-between gap-5">
+
+                            <div>
+
+                                <div class="text-primary text-2xl font-black">
+
+                                    <span id="item-total-{{ item.id }}">
+                                        {{ item.total }}
+                                    </span>
+
+                                    <span class="text-sm">
+                                        DA
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                            <div class="flex items-center gap-3">
+
+                                <div class="flex items-center justify-between w-32 h-11 rounded-xl bg-slate-100 dark:bg-slate-800 px-2">
+
+                                    <button
+                                        type="button"
+                                        class="font-black text-lg hover:text-primary"
+                                        onclick="changeQty({{ item.id }}, -1)">
+
+                                        −
+
+                                    </button>
+
+                                    <input
+                                        id="qty-{{ item.id }}"
+                                        value="{{ item.quantity }}"
+                                        readonly
+                                        class="w-10 bg-transparent border-none text-center">
+
+                                    <button
+                                        type="button"
+                                        class="font-black text-lg hover:text-primary"
+                                        onclick="changeQty({{ item.id }}, 1)">
+
+                                        +
+
+                                    </button>
+
+                                </div>
+
+                                <button
+                                    type="button"
+                                    onclick="removeItem({{ item.id }})"
+                                    class="w-11 h-11 rounded-xl bg-red-50 text-red-500 hover:bg-red-500 hover:text-white transition">
+
+                                    <span class="material-symbols-outlined">
+                                        delete
+                                    </span>
+
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            {% empty %}
+
+            <div id="empty-cart"
+                 class="rounded-[3rem] border-2 border-dashed p-20 text-center">
+
+                <span class="material-symbols-outlined text-6xl text-primary">
+                    shopping_cart_off
                 </span>
 
-            </div>
+                <h2 class="text-3xl font-black mt-5">
+                    {% trans "Your cart is empty" %}
+                </h2>
 
+                <a
+                    href="{% url 'stores:products' %}"
+                    class="inline-flex mt-6 px-8 py-3 rounded-2xl bg-primary text-white font-black">
 
-            <div>
+                    {% trans "Browse Products" %}
 
-                <h3 class="text-3xl font-black">
-
-                    {{ cart.items.count }}
-
-                </h3>
-
-
-                <p class="text-xs uppercase font-black text-slate-400">
-
-                    {% trans "Items" %}
-
-                </p>
-
+                </a>
 
             </div>
 
+            {% endfor %}
 
         </div>
+        
+        <!-- Order Summary -->
+        <div>
 
+            <div class="sticky top-8 bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-200 dark:border-slate-800 p-8 shadow-xl">
+
+                <h2 class="text-2xl font-black mb-8">
+                    {% trans "Order Summary" %}
+                </h2>
+
+                <div class="space-y-5">
+
+                    <div class="flex items-center justify-between">
+
+                        <span class="text-slate-500 dark:text-slate-400">
+                            {% trans "Items" %}
+                        </span>
+
+                        <span
+                            id="summary-count"
+                            class="font-black">
+                            {{ cart.items.count }}
+                        </span>
+
+                    </div>
+
+                    <div class="flex items-center justify-between">
+
+                        <span class="text-slate-500 dark:text-slate-400">
+                            {% trans "Subtotal" %}
+                        </span>
+
+                        <span class="font-black">
+
+                            <span id="summary-subtotal">
+                                {{ cart.total }}
+                            </span>
+
+                            DA
+
+                        </span>
+
+                    </div>
+
+                    <div class="border-t border-slate-200 dark:border-slate-800 pt-5 flex items-center justify-between">
+
+                        <span class="text-lg font-black">
+                            {% trans "Total" %}
+                        </span>
+
+                        <span class="text-primary text-3xl font-black">
+
+                            <span id="summary-total">
+                                {{ cart.total }}
+                            </span>
+
+                            DA
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+                <a
+                    href="{% url 'stores:checkout' %}"
+                    class="mt-8 h-14 rounded-2xl bg-primary hover:bg-primary/90 text-white font-black flex items-center justify-center gap-2 transition">
+
+                    <span class="material-symbols-outlined">
+                        payments
+                    </span>
+
+                    {% trans "Checkout" %}
+
+                </a>
+
+            </div>
+
+        </div>
 
     </div>
 
-
 </div>
 
+<script>
 
+const csrftoken = "{{ csrf_token }}";
 
 
-<!-- CART -->
+function updateSummary(data) {
 
-<div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
+    document.getElementById("cart-count").textContent = data.cart_count;
+    document.getElementById("summary-count").textContent = data.cart_count;
 
+    document.getElementById("summary-subtotal").textContent = data.cart_total;
+    document.getElementById("summary-total").textContent = data.cart_total;
 
+}
 
-<!-- ITEMS -->
+async function changeQty(itemId, change) {
+    const qtyInput = document.getElementById(`qty-${itemId}`);
+    let qty = parseInt(qtyInput.value);
 
-<div class="xl:col-span-2 space-y-5">
+    qty += change;
+    qtyInput.value=qty;
 
+    if (qty <= 0) {
+        removeItem(itemId);
+        return;
+    }
 
-{% for item in cart.items.all %}
+    try {
 
+        const response = await fetch(
+            "{% url 'stores:cart_update' 0 %}".replace("/0/", `/${itemId}/`),
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                    "X-CSRFToken": csrftoken,
+                    "X-Requested-With": "XMLHttpRequest",
+                },
+                body: new URLSearchParams({
+                    quantity: qty
+                })
+            }
+        );
 
+        const data = await response.json();
 
-<div class="bg-white dark:bg-slate-900 rounded-[2rem] border border-slate-200 dark:border-slate-800 p-6 shadow-sm">
+        if (!data.success) return;
 
+        qtyInput.value = data.quantity;
 
-<div class="flex flex-col md:flex-row gap-6">
+        document.getElementById(`item-total-${itemId}`).textContent =
+            data.item_total;
 
+        updateSummary(data);
 
+    }
 
-<!-- IMAGE -->
-<a href="{% url 'stores:product_detail' item.product.pk %}">
-<div class="w-32 h-32 rounded-3xl overflow-hidden bg-slate-100 dark:bg-slate-800">
-    <img src="{{ item.product.main_image.url }}" class="w-full h-full object-cover">
-</div>
-</a>
-<!-- INFO -->
-<div class="flex-1">
-    <h3 class="text-xl font-black text-slate-900 dark:text-white">{{ item.product.name }}</h3>
-    <p class="text-sm text-slate-400 mt-2">{% for attr in item.attribute_values.all %} {{ attr }} {% endfor %}</p>
-    <div class="mt-4 flex items-center justify-between">
-        <div>
-            <span class="text-primary font-black text-xl">{{ item.product.discounted_price }}</span>
-            <span class="text-xs text-slate-400">DA</span>
-        </div>
+    catch (error) {
 
+        console.error(error);
 
+    }
 
+}
 
 
-<form method="post"
-action="{% url 'stores:cart_update' item.id %}"
-class="flex items-center gap-2">
 
+async function removeItem(itemId) {
 
-{% csrf_token %}
+    if (!confirm("{% trans 'Remove this product?' %}")) {
+        return;
+    }
 
+    try {
 
-<input 
-name="quantity"
-type="number"
-min="1"
-value="{{ item.quantity }}"
-class="w-20 rounded-xl border-slate-200 dark:border-slate-700 dark:bg-slate-800">
+        const response = await fetch(
+            "{% url 'stores:cart_remove' 0 %}".replace("/0/", `/${itemId}/`),
+            {
+                method: "POST",
+                headers: {
+                    "X-CSRFToken": csrftoken,
+                    "X-Requested-With": "XMLHttpRequest",
+                }
+            }
+        );
 
+        const data = await response.json();
 
-<button
-class="px-4 py-2 rounded-xl bg-primary text-white font-bold">
+        if (!data.success) return;
 
-{% trans "Update" %}
+        document.getElementById(`cart-item-${itemId}`).remove();
 
-</button>
+        updateSummary(data);
 
+        if (data.cart_count === 0) {
 
-</form>
+            document.getElementById("cart-items").innerHTML = `
 
+                <div class="rounded-[3rem] border-2 border-dashed p-20 text-center">
 
+                    <span class="material-symbols-outlined text-6xl text-primary">
+                        shopping_cart_off
+                    </span>
 
-</div>
+                    <h2 class="text-3xl font-black mt-5">
+                        {% trans "Your cart is empty" %}
+                    </h2>
 
+                    <a
+                        href="{% url 'stores:products' %}"
+                        class="inline-flex mt-6 px-8 py-3 rounded-2xl bg-primary text-white font-black">
 
+                        {% trans "Browse Products" %}
 
-</div>
+                    </a>
 
+                </div>
 
+            `;
 
+        }
 
+    }
 
-<div>
+    catch (error) {
 
+        console.error(error);
 
-<a href="{% url 'stores:cart_remove' item.id %}"
+    }
 
-class="w-12 h-12 rounded-2xl bg-red-50 text-red-500 flex items-center justify-center">
+}
 
-
-<span class="material-symbols-outlined">
-delete
-</span>
-
-
-</a>
-
-
-
-</div>
-
-
-
-</div>
-
-
-</div>
-
-
-
-{% empty %}
-
-
-
-<div class="rounded-[3rem] border-2 border-dashed p-20 text-center">
-
-
-<span class="material-symbols-outlined text-6xl text-primary">
-
-shopping_cart_off
-
-</span>
-
-
-<h2 class="text-3xl font-black mt-5">
-
-{% trans "Your cart is empty" %}
-
-</h2>
-
-
-<a href="{% url 'stores:products' %}"
-
-class="inline-flex mt-6 px-8 py-3 rounded-2xl bg-primary text-white font-black">
-
-{% trans "Browse Products" %}
-
-</a>
-
-
-</div>
-
-
-{% endfor %}
-
-
-
-</div>
-
-
-
-
-
-<!-- SUMMARY -->
-
-<div>
-
-
-
-<div class="sticky top-8 bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-200 dark:border-slate-800 p-8 shadow-xl">
-
-
-<h2 class="text-2xl font-black mb-8">
-
-{% trans "Order Summary" %}
-
-</h2>
-
-
-
-<div class="flex justify-between mb-4">
-
-<span class="text-slate-400">
-
-{% trans "Subtotal" %}
-
-</span>
-
-
-<span class="font-black">
-
-{{ cart.total }}
-
-DA
-
-</span>
-
-
-</div>
-
-
-
-
-<div class="border-t pt-5 mt-5 flex justify-between">
-
-
-<span class="font-black">
-
-{% trans "Total" %}
-
-</span>
-
-
-<span class="text-primary text-3xl font-black">
-
-{{ cart.total }}
-
-DA
-
-</span>
-
-
-</div>
-
-
-
-
-
-<a href="#"
-
-class="mt-8 h-14 rounded-2xl bg-primary text-white font-black flex items-center justify-center gap-2">
-
-
-<span class="material-symbols-outlined">
-
-payments
-
-</span>
-
-
-{% trans "Checkout" %}
-
-</a>
-
-
-
-</div>
-
-
-
-</div>
-
-
-
-
-</div>
-
+</script>
 
 {% endblock %}
