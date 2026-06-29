@@ -71,12 +71,6 @@ class BookingCreateView(CreateView):
         messages.success(self.request, "Booking created successfully!")
         return super().form_valid(form)
     
-    from django.views.generic import TemplateView
-from .models import Service, Package
-
-
-class BookingCreateView(TemplateView):
-    template_name = "studio/booking_form.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -89,3 +83,115 @@ class BookingCreateView(TemplateView):
         context["selected_package"] = context["packages"].first()
 
         return context
+    
+
+from django import forms
+from .models import Booking
+
+
+class BookingForm(forms.ModelForm):
+
+    class Meta:
+        model = Booking
+
+        fields = ["service","booking_date", "booking_time", "duration", "location", "notes",]# "package", 
+
+        widgets = {
+            "service": forms.HiddenInput(),
+            # "package": forms.HiddenInput(),
+            "booking_date": forms.HiddenInput(),
+            "booking_time": forms.HiddenInput(),
+            "duration": forms.NumberInput(attrs={"min": 30,"step": 30,}),
+            "location": forms.TextInput(attrs={"placeholder": "Location (optional)"}),
+            "notes": forms.Textarea(attrs={"rows": 4,"placeholder": "Additional notes..."}),
+        }
+
+from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import redirect
+from django.urls import reverse_lazy
+from django.views.generic import CreateView
+
+from .models import Booking, Package, Service
+
+
+class BookingCreateView(LoginRequiredMixin, CreateView):
+
+    model = Booking
+
+    form_class = BookingForm
+
+    template_name = "studio/booking.html"
+
+    success_url = reverse_lazy("studio:booking")
+
+    login_url = "login"
+
+    redirect_field_name = "next"
+
+    def get_services(self):
+        return Service.objects.filter(
+            is_active=True, booking=True
+        ).order_by(
+            "order",
+            "created_at",
+        )
+
+    def get_packages(self):
+        return (
+            Package.objects.filter(
+                is_active=True
+            )
+            .prefetch_related("features")
+            .order_by(
+                "order",
+                "created_at",
+            )
+        )
+
+    def get_context_data(self, **kwargs):
+
+        context = super().get_context_data(**kwargs)
+
+        services = self.get_services()
+        # packages = self.get_packages()
+
+        context["services"] = services
+        # context["packages"] = packages
+        context["calendar_days"] = range(1, 32)
+        service_id = (
+            self.request.POST.get("service")
+            or self.request.GET.get("service")
+        )
+
+        package_id = (
+            self.request.POST.get("package")
+            or self.request.GET.get("package")
+        )
+
+        context["selected_service"] = (
+            services.filter(pk=service_id).first()
+            if service_id
+            else services.first()
+        )
+
+        # context["selected_package"] = (
+        #     packages.filter(pk=package_id).first()
+        #     if package_id
+        #     else packages.first()
+        # )
+
+        return context
+
+    def form_valid(self, form):
+        booking = form.save(commit=False)
+        booking.user = self.request.user
+        booking.save()
+
+        messages.success(self.request, "Your booking has been submitted successfully.")
+        return redirect(self.get_success_url())
+
+    def form_invalid(self, form):
+        messages.error(self.request,"Please correct the errors below.")
+        return super().form_invalid(form)
+

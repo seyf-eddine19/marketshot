@@ -1,7 +1,9 @@
+from django.conf import settings
 from django.db import models
 from django.utils import translation, timezone
 from django.utils.translation import gettext_lazy as _
 from django.core.validators import FileExtensionValidator
+from django.core.exceptions import ValidationError
 from decimal import Decimal
 
 from accounts.models import User
@@ -111,8 +113,12 @@ class Service(models.Model):
     icon = models.CharField(max_length=50, choices=ICON_CHOICES, default="photo_camera", verbose_name=_("Icon"))
     color_class = models.CharField(max_length=50, choices=COLOR_CHOICES, default="primary", verbose_name=_("Color"))
 
+    base_price = models.DecimalField(max_digits=12, decimal_places=2, verbose_name=_("Base Price"))
+
     is_active = models.BooleanField(default=True, verbose_name=_("Is Active"))
     order = models.IntegerField(default=0, verbose_name=_("Display Order"))
+
+    booking = models.BooleanField(default=True, verbose_name=_("can book it"))
 
     created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Created At"))
 
@@ -308,6 +314,15 @@ class Booking(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Created At"))
     updated_at = models.DateTimeField(auto_now=True, verbose_name=_("Updated At"))
 
+    # package = models.ForeignKey(
+    #     Package,
+    #     on_delete=models.SET_NULL,
+    #     related_name="bookings",
+    #     null=True,
+    #     blank=True,
+    #     verbose_name=_("Package"),
+    # )
+
     class Meta:
         verbose_name = _("Booking")
         verbose_name_plural = _("Bookings")
@@ -319,5 +334,65 @@ class Booking(models.Model):
         booking_datetime = datetime.combine(self.booking_date, self.booking_time)
         return booking_datetime < datetime.now()
 
+
+    def clean(self):
+        super().clean()
+        if self.booking_date < timezone.localdate():
+            raise ValidationError(
+                {
+                    "booking_date": _(
+                        "Booking date cannot be in the past."
+                    )
+                }
+            )
+
+        if self.duration <= 0:
+            raise ValidationError(
+                {
+                    "duration": _(
+                        "Duration must be greater than zero."
+                    )
+                }
+            )
+
+    def calculate_total_price(self):
+        if self.package:
+            return self.package.get_current_price
+        return Decimal("0.00")
+
+    def save(self, *args, **kwargs):
+        self.total_price = self.calculate_total_price()
+        super().save(*args, **kwargs)
+
+    @property
+    def booking_datetime(self):
+        return timezone.make_aware(
+            timezone.datetime.combine(
+                self.booking_date,
+                self.booking_time,
+            )
+        )
+
+    @property
+    def is_past(self):
+        return self.booking_datetime < timezone.now()
+
+    @property
+    def status_color(self):
+        colors = {
+            "pending": "warning",
+            "confirmed": "primary",
+            "in_progress": "secondary",
+            "completed": "success",
+            "cancelled": "error",
+        }
+
+        return colors.get(self.status, "secondary")
+
     def __str__(self):
-        return (f"{self.user.username} - {self.service.title} ({self.booking_date})")
+        package = self.package.title if self.package else _("No Package")
+        return (
+            f"{self.user} | "
+            f"{self.service.title} | "
+            f"{self.booking_date}"
+        )

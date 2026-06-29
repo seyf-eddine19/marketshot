@@ -27,9 +27,10 @@ class ContactMessageAdmin(admin.ModelAdmin):
 
 @admin.register(Service)
 class ServiceAdmin(admin.ModelAdmin):
-    list_display = ('title', 'icon', 'color_class', 'order')
+    list_display = ('title', 'icon', 'color_class', 'order', 'base_price', 'booking')
     search_fields = ('title', 'title_ar', 'title_fr', 'description', 'description_ar', 'description_fr')
     list_filter = ('color_class',)
+    list_editable = ('base_price', 'booking')
 
 class PackageFeatureInline(admin.TabularInline):
     model = PackageFeature

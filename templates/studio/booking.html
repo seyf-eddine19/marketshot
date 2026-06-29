@@ -1,47 +1,447 @@
 {% extends "studio/base.html" %}
-{% load static i18n %}
+{% load static %}
 
 {% block content %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
 
-<section class="py-20 px-6 bg-background dark:bg-slate-950">
+    <section class="relative overflow-hidden rounded-[32px] border border-outline-variant/20 bg-gradient-to-br from-primary/10 via-surface to-secondary/5">
+        <div class="absolute -top-32 -right-24 h-80 w-80 rounded-full bg-primary/10 blur-3xl"></div>
+        <div class="absolute -bottom-32 -left-24 h-80 w-80 rounded-full bg-secondary/10 blur-3xl"></div>
 
-    <div class="max-w-6xl mx-auto">
+        <div class="relative z-10 px-10 py-14 lg:px-16">
+            <span class="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 text-sm font-semibold text-primary">
+                <span class="material-symbols-outlined text-lg">photo_camera</span>
+                Premium Studio Booking
+            </span>
 
-        <h1 class="text-4xl font-black mb-6 dark:text-white">
-            {% trans "Book Your Studio Session" %}
-        </h1>
+            <h1 class="mt-6 text-5xl lg:text-6xl font-black tracking-tight text-on-background">
+                Book Your <span class="text-primary">Production Experience</span>
+            </h1>
 
-        <p class="text-slate-500 mb-10">
-            {% trans "Choose your service and proceed to booking." %}
-        </p>
+            <p class="mt-6 max-w-3xl text-lg leading-8 text-on-surface-variant">
+                Reserve one of our premium production studios, select your preferred package, choose a convenient date, and customize every detail before checkout.
+            </p>
 
-        <!-- SERVICES -->
-        <div class="grid md:grid-cols-2 gap-6">
-
-            {% for service in services %}
-            <a href="{% url 'studio:booking_create' %}?service={{ service.id }}"
-               class="block p-6 rounded-2xl border bg-white dark:bg-slate-800 hover:shadow-xl transition">
-
-                <div class="flex items-center gap-3 mb-3">
-                    <span class="material-symbols-outlined text-primary">
-                        {{ service.icon }}
-                    </span>
-                    <h3 class="text-xl font-bold dark:text-white">
-                        {{ service.title }}
-                    </h3>
+            <div class="mt-10 flex flex-wrap gap-4">
+                <div class="rounded-2xl bg-surface-container px-5 py-4 shadow-sm">
+                    <div class="text-2xl font-bold">{{ services|length }}</div>
+                    <div class="text-sm text-on-surface-variant">Studios</div>
                 </div>
-
-                <p class="text-slate-500 text-sm">
-                    {{ service.description }}
-                </p>
-
-            </a>
-            {% endfor %}
-
+                <div class="rounded-2xl bg-surface-container px-5 py-4 shadow-sm">
+                    <div class="text-2xl font-bold">24/7</div>
+                    <div class="text-sm text-on-surface-variant">Support</div>
+                </div>
+            </div>
         </div>
+    </section>
 
-    </div>
+    <section class="mt-12">
+        <div class="rounded-3xl border bg-surface-container-lowest p-8 shadow-sm">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div class="flex items-center gap-4">
+                    <div class="h-12 w-12 rounded-full bg-primary text-white flex items-center justify-center">
+                        <span class="material-symbols-outlined">photo_camera</span>
+                    </div>
+                    <div>
+                        <div class="text-xs uppercase tracking-widest text-primary font-bold">Step 1</div>
+                        <div class="font-semibold">Studio</div>
+                    </div>
+                </div>
+                <div class="flex items-center gap-4">
+                    <div class="h-12 w-12 rounded-full bg-primary text-white flex items-center justify-center">
+                        <span class="material-symbols-outlined">calendar_month</span>
+                    </div>
+                    <div>
+                        <div class="text-xs uppercase tracking-widest text-primary font-bold">Step 2</div>
+                        <div class="font-semibold">Schedule</div>
+                    </div>
+                </div>
+                <div class="flex items-center gap-4">
+                    <div class="h-12 w-12 rounded-full bg-primary text-white flex items-center justify-center">
+                        <span class="material-symbols-outlined">inventory_2</span>
+                    </div>
+                    <div>
+                        <div class="text-xs uppercase tracking-widest text-primary font-bold">Step 3</div>
+                        <div class="font-semibold">Package</div>
+                    </div>
+                </div>
+                <div class="flex items-center gap-4 opacity-60">
+                    <div class="h-12 w-12 rounded-full bg-surface-container flex items-center justify-center">
+                        <span class="material-symbols-outlined">payments</span>
+                    </div>
+                    <div>
+                        <div class="text-xs uppercase tracking-widest">Step 4</div>
+                        <div class="font-semibold">Checkout</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-</section>
+    <form method="post" id="booking-submission-form" class="mt-12">
+        {% csrf_token %}
+        
+        {{ form.service }}
+        {{ form.package }}
+        {{ form.booking_date }}
+        {{ form.booking_time }}
 
+        {% if form.errors %}
+        <div class="mb-8 p-4 rounded-2xl bg-red-50 border border-red-200 text-red-700 text-sm">
+            <strong>Please fix the errors highlighted below.</strong>
+        </div>
+        {% endif %}
+
+        <div class="grid xl:grid-cols-12 gap-10">
+            <div class="xl:col-span-8 space-y-16">
+                
+                <section id="step-studio">
+                    <div class="mb-8">
+                        <div class="text-sm uppercase tracking-widest text-primary font-semibold">Step One</div>
+                        <h2 class="mt-2 text-3xl font-bold">Choose Your Studio</h2>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 relative gap-8">
+                        {% for service in services %}
+                       <div onclick="selectStudio('{{ service.pk }}', '{{ service.title|escapejs }}', '{{ service.base_price }}')"
+                            id="studio-card-{{ service.pk }}"
+                            data-price="{{ service.base_price }}"
+
+                             class="studio-card  bg-white dark:bg-slate-800  group overflow-hidden rounded-[28px] bg-surface-container-lowest border transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl cursor-pointer
+                             {% if selected_service and service.id == selected_service.id %} border-primary ring-2 ring-primary shadow-xl {% else %} border-outline-variant/30 hover:border-primary/30 {% endif %}">
+                            
+                            <div class="p-7">
+                                <div class="flex justify-between items-start gap-4">
+                                    <div>
+                                        <h3 class="text-2xl font-bold">{{ service.title }}</h3>
+                                        <p class="mt-2 text-on-surface-variant leading-7">{{ service.description|truncatechars:120 }}</p>
+                                    </div>
+                                    <span class="material-symbols-outlined text-{{ service.color_class|default:'primary' }} text-3xl">{{ service.icon }}</span>
+                                </div>
+                                <div class="mt-8 flex items-center justify-between">
+                                    <div>
+                                        <div class="text-sm text-on-surface-variant">Starting From</div>
+                                        <div class="text-3xl font-black text-primary">{{ service.base_price }} DA</div>
+                                    </div>
+                                    <button type="button" class="studio-btn rounded-2xl px-6 py-3 font-semibold transition {% if selected_service and service.id == selected_service.id %} kinetic-gradient text-white shadow-lg {% else %} border hover:border-primary hover:bg-primary/5 {% endif %}">
+                                        {% if selected_service and service.id == selected_service.id %}Selected{% else %}Select{% endif %}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+
+                    </div>
+                    
+                </section>
+
+                <section id="step-datetime">
+                    <div class="mb-8">
+                        <div class="text-sm uppercase tracking-widest text-primary font-semibold">Step Two</div>
+                        <h2 class="mt-2 text-3xl font-bold">Choose Date & Time</h2>
+                        <p class="mt-2 text-on-surface-variant">Select the preferred shooting day and an available session.</p>
+                    </div>
+
+                    <div class="grid lg:grid-cols-12 gap-8">
+                        <div class="lg:col-span-7 rounded-[28px] border bg-surface-container-lowest shadow-sm p-6">
+                            <div class="flex items-center justify-between mb-6">
+                                <button type="button" class="h-10 w-10 rounded-xl border hover:bg-primary/5 flex items-center justify-center"><span class="material-symbols-outlined">chevron_left</span></button>
+                                <div class="text-center">
+                                    <h3 class="text-xl font-bold">October 2026</h3>
+                                </div>
+                                <button type="button" class="h-10 w-10 rounded-xl border hover:bg-primary/5 flex items-center justify-center"><span class="material-symbols-outlined">chevron_right</span></button>
+                            </div>
+                            <div class="grid grid-cols-7 gap-2 text-center text-xs font-semibold mb-2">
+                                <div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div><div>Sun</div>
+                            </div>
+                            <div class="grid grid-cols-7 gap-2">
+                                {% for day in calendar_days %}
+                                <button type="button" onclick="selectDate('2026-10-{{ day|stringformat:'02d' }}', '{{ day }}')" id="date-cell-{{ day }}" class="date-cell aspect-square rounded-xl border text-sm font-medium transition-all hover:border-primary hover:bg-primary/5">
+                                    {{ day }}
+                                </button>
+                                {% endfor %}
+                            </div>
+                        </div>
+
+                        <div class="lg:col-span-5 rounded-[28px] border bg-surface-container-lowest p-6 shadow-sm">
+                            <div class="flex items-center gap-3 mb-6">
+                                <span class="material-symbols-outlined text-primary">schedule</span>
+                                <div class="font-bold">Available Slots</div>
+                            </div>
+                            <div class="grid gap-3">
+                                <button type="button" onclick="selectTime('09:00:00', '09:00')" id="time-slot-0900" class="time-slot flex items-center justify-between rounded-xl border p-4 hover:border-primary hover:bg-primary/5 transition">
+                                    <span class="font-semibold">09:00</span><span class="text-xs text-green-600">Available</span>
+                                </button>
+                                <button type="button" onclick="selectTime('10:00:00', '10:00')" id="time-slot-1000" class="time-slot flex items-center justify-between rounded-xl border p-4 hover:border-primary hover:bg-primary/5 transition">
+                                    <span class="font-semibold">10:00</span><span class="text-xs text-green-600">Available</span>
+                                </button>
+                                <button type="button" onclick="selectTime('11:00:00', '11:00')" id="time-slot-1100" class="time-slot flex items-center justify-between rounded-xl border p-4 hover:border-primary hover:bg-primary/5 transition">
+                                    <span class="font-semibold">11:00</span><span class="text-xs text-green-600">Available</span>
+                                </button>
+                                <button type="button" onclick="selectTime('13:00:00', '13:00 ')" id="time-slot-1300" class="time-slot flex items-center justify-between rounded-xl border p-4 hover:border-primary hover:bg-primary/5 transition">
+                                    <span class="font-semibold">13:00 </span><span class="text-xs text-green-600">Available</span>
+                                </button>
+                                <button type="button" onclick="selectTime('14:00:00', '14:00 ')" id="time-slot-1400" class="time-slot flex items-center justify-between rounded-xl border p-4 hover:border-primary hover:bg-primary/5 transition">
+                                    <span class="font-semibold">14:00 </span><span class="text-xs text-green-600">Available</span>
+                                </button>
+                                <button type="button" onclick="selectTime('15:00:00', '15:00 ')" id="time-slot-1500" class="time-slot flex items-center justify-between rounded-xl border p-4 hover:border-primary hover:bg-primary/5 transition">
+                                    <span class="font-semibold">15:00 </span><span class="text-xs text-green-600">Available</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+
+            <aside class="xl:col-span-4">
+                <div class="sticky top-24 space-y-6">
+                    <div class="rounded-[30px] border bg-white shadow-2xl overflow-hidden">
+                        <div class="bg-gradient-to-r from-primary to-secondary px-8 py-6 text-white">
+                            <div class="text-sm uppercase tracking-widest opacity-80">Final Step</div>
+                            <h2 class="mt-1 text-2xl font-bold">Booking Details</h2>
+                        </div>
+
+                        <div class="p-8 space-y-5">
+                            <div class="flex justify-between text-sm">
+                                <span class="text-on-surface-variant">Studio</span>
+                                <span id="summary-studio" class="font-semibold text-right">{{ selected_service.title|default:"Not Selected" }}</span>
+                            </div>
+                            <!-- <div class="flex justify-between text-sm">
+                                <span class="text-on-surface-variant">Package</span>
+                                <span id="summary-package" class="font-semibold text-right">{{ selected_package.title|default:"Not Selected" }}</span>
+                            </div> -->
+                            <div class="flex justify-between text-sm">
+                                <span class="text-on-surface-variant">Date</span>
+                                <span id="summary-date" class="font-semibold text-right">—</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-on-surface-variant">Time</span>
+                                <span id="summary-time" class="font-semibold text-right">—</span>
+                            </div>
+
+                            <hr class="border-outline-variant/30">
+
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-xs font-bold uppercase tracking-wider mb-2 text-on-surface-variant">Duration (Minutes)</label>
+                                    {{ form.duration }}
+                                    {% if form.duration.errors %}<p class="text-xs text-red-600 mt-1">{{ form.duration.errors.0 }}</p>{% endif %}
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold uppercase tracking-wider mb-2 text-on-surface-variant">Location Context</label>
+                                    {{ form.location }}
+                                    {% if form.location.errors %}<p class="text-xs text-red-600 mt-1">{{ form.location.errors.0 }}</p>{% endif %}
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold uppercase tracking-wider mb-2 text-on-surface-variant">Notes / Requirements</label>
+                                    {{ form.notes }}
+                                    {% if form.notes.errors %}<p class="text-xs text-red-600 mt-1">{{ form.notes.errors.0 }}</p>{% endif %}
+                                </div>
+                            </div>
+
+                            <div class="border-t pt-4 mt-2">
+                                <div class="flex justify-between items-baseline text-xl font-bold">
+                                    <span>Total Price</span>
+                                    <span id="summary-total" class="text-primary text-2xl font-black">0 DA</span>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="w-full rounded-2xl kinetic-gradient py-4 font-bold text-white transition hover:scale-[1.02] shadow-lg flex items-center justify-center gap-2">
+                                Confirm Booking <span class="material-symbols-outlined text-base">arrow_forward</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </form>
+</div>
+
+<style>
+    /* Clean up input styles injected natively by form components */
+    input[type="number"], input[type="text"], textarea {
+        width: 100%;
+        border-radius: 1rem;
+        border: 1px solid rgba(var(--text-on-surface-variant), 0.2);
+        padding: 0.75rem 1rem;
+        background-color: var(--md-sys-color-surface);
+        font-size: 0.95rem;
+    }
+    input:focus, textarea:focus {
+        outline: none;
+        border-color: var(--md-sys-color-primary, #6750A4);
+        box-shadow: 0 0 0 2px rgba(103, 80, 164, 0.2);
+    }
+    .kinetic-gradient {
+        background: linear-gradient(135deg, #6750A4, #3B82F6);
+    }
+</style>
+
+<script>
+let selectedPrice = 0;
+
+const serviceInput = document.getElementById("id_service");
+const dateInput = document.getElementById("id_booking_date");
+const timeInput = document.getElementById("id_booking_time");
+const durationInput = document.getElementById("id_duration");
+
+const summaryStudio = document.getElementById("summary-studio");
+const summaryDate = document.getElementById("summary-date");
+const summaryTime = document.getElementById("summary-time");
+const summaryTotal = document.getElementById("summary-total");
+
+
+function updateTotal() {
+
+    let duration = parseInt(durationInput.value);
+
+    if (isNaN(duration) || duration <= 0) {
+        duration = 60;
+    }
+
+    const total = selectedPrice * (duration / 60);
+
+    summaryTotal.innerText =
+        total.toLocaleString(undefined, {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        }) + " DA";
+}
+
+
+
+function selectStudio(id, title, price) {
+
+    serviceInput.value = id;
+
+    summaryStudio.innerText = title;
+
+    selectedPrice = parseFloat(price) || 0;
+
+    document.querySelectorAll(".studio-card").forEach(card => {
+
+        card.classList.remove(
+            "border-primary",
+            "ring-2",
+            "ring-primary",
+            "shadow-xl"
+        );
+
+        const btn = card.querySelector(".studio-btn");
+
+        btn.innerText = "Select";
+
+        btn.className =
+            "studio-btn rounded-2xl px-6 py-3 font-semibold transition border hover:border-primary hover:bg-primary/5";
+
+    });
+
+
+    const card = document.getElementById("studio-card-" + id);
+
+    card.classList.add(
+        "border-primary",
+        "ring-2",
+        "ring-primary",
+        "shadow-xl"
+    );
+
+    const btn = card.querySelector(".studio-btn");
+
+    btn.innerText = "Selected";
+
+    btn.className =
+        "studio-btn rounded-2xl px-6 py-3 font-semibold transition kinetic-gradient text-white shadow-lg";
+
+    updateTotal();
+}
+
+
+
+function selectDate(rawDate, day) {
+
+    dateInput.value = rawDate;
+
+    summaryDate.innerText = rawDate;
+
+    document.querySelectorAll(".date-cell").forEach(cell => {
+
+        cell.classList.remove(
+            "bg-primary",
+            "text-white",
+            "border-primary"
+        );
+
+    });
+
+    document
+        .getElementById("date-cell-" + day)
+        .classList.add(
+            "bg-primary",
+            "text-white",
+            "border-primary"
+        );
+
+}
+
+
+
+function selectTime(button, rawTime, label) {
+
+    timeInput.value = rawTime;
+
+    summaryTime.innerText = label;
+
+    document.querySelectorAll(".time-slot").forEach(slot => {
+
+        slot.className =
+            "time-slot flex items-center justify-between rounded-xl border p-4 hover:border-primary hover:bg-primary/5 transition";
+
+        const status = slot.querySelector("span:last-child");
+
+        status.innerText = "Available";
+
+        status.className =
+            "text-xs text-green-600";
+
+    });
+
+
+    button.className =
+        "time-slot kinetic-gradient text-white rounded-xl shadow-xl flex items-center justify-between p-4";
+
+    const status = button.querySelector("span:last-child");
+
+    status.innerText = "Selected";
+
+    status.className =
+        "text-xs opacity-90";
+
+}
+
+
+
+if (durationInput) {
+
+    durationInput.addEventListener("input", updateTotal);
+
+}
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const selectedCard = document.querySelector(".studio-card.border-primary");
+
+    if (selectedCard) {
+
+        selectedPrice = parseFloat(selectedCard.dataset.price) || 0;
+
+    }
+
+    updateTotal();
+
+});
+</script>
 {% endblock %}
