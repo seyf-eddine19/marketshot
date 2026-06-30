@@ -1329,6 +1329,7 @@ class CartDetailView(LoginRequiredMixin, View):
                 + grand_delivery
             ),
         }
+        context['recent_orders'] = Order.objects.filter(customer=request.user).order_by('-created_at')[:3]
 
         return render(
             request,
@@ -1656,7 +1657,7 @@ class CheckoutView(LoginRequiredMixin, View):
         data["cart"].items.all().delete()
 
         messages.success(request, _("Your orders have been successfully placed."))
-        return redirect("stores:orders")
+        return redirect("stores:cart")
     
 
 from django.http import JsonResponse

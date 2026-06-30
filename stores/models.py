@@ -425,7 +425,7 @@ class Order(models.Model):
         CANCELLED = 'CANCELLED', _('Cancelled')
         REFUNDED = 'REFUNDED', _('Refunded')
 
-    # order_number = models.CharField(max_length=30, unique=True, blank=True, editable=False, verbose_name=_("Order Number"))
+    order_number = models.CharField(max_length=30, unique=True, blank=True, editable=False, verbose_name=_("Order Number"))
 
     customer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='orders', verbose_name=_("Customer"))
     store = models.ForeignKey(Store, on_delete=models.CASCADE, related_name='orders', verbose_name=_("Store"))
