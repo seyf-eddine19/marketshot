@@ -271,7 +271,7 @@ class PackageCreateView(CreateView):
     model = Package
     form_class = PackageForm
     template_name = "dashboard/studio/packages/form.html"
-    success_url = reverse_lazy("dashboard:packages")
+    success_url = reverse_lazy("dashboard:package-list")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -298,7 +298,7 @@ class PackageUpdateView(UpdateView):
     model = Package
     form_class = PackageForm
     template_name = "dashboard/studio/packages/form.html"
-    success_url = reverse_lazy("dashboard:packages")
+    success_url = reverse_lazy("dashboard:package-list")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -324,7 +324,7 @@ class PackageUpdateView(UpdateView):
 class PackageDeleteView(DeleteView):
     model = Package
     template_name = "dashboard/studio/packages/delete.html"
-    success_url = reverse_lazy("dashboard:packages")
+    success_url = reverse_lazy("dashboard:package-list")
 
     def delete(self, request, *args, **kwargs):
         messages.success(self.request, _("Package deleted successfully."))

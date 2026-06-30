@@ -223,7 +223,7 @@
         <!-- FOOTER -->
         <div class="p-8 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
 
-            <a href="{% url 'dashboard:packages' %}"
+            <a href="{% url 'dashboard:package-list' %}"
                class="px-6 py-3 rounded-2xl bg-slate-100 dark:bg-slate-800 text-sm font-black">
                 {% trans "Cancel" %}
             </a>
@@ -245,7 +245,7 @@
 
 </div>
 {% endblock %}
-{% block extra_js %}
+{% block extra_scripts %}
 <script>
 document.addEventListener("DOMContentLoaded", function () {
 

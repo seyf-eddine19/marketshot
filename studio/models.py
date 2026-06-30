@@ -356,8 +356,8 @@ class Booking(models.Model):
             )
 
     def calculate_total_price(self):
-        if self.package:
-            return self.package.get_current_price
+        # if self.package:
+        #     return self.package.get_current_price
         return Decimal("0.00")
 
     def save(self, *args, **kwargs):
@@ -390,7 +390,7 @@ class Booking(models.Model):
         return colors.get(self.status, "secondary")
 
     def __str__(self):
-        package = self.package.title if self.package else _("No Package")
+        # package = self.package.title if self.package else _("No Package")
         return (
             f"{self.user} | "
             f"{self.service.title} | "

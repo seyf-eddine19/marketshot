@@ -89,6 +89,11 @@ class Store(models.Model):
     class Meta:
         verbose_name = _("Store")
         verbose_name_plural = _("Stores")
+        ordering = ('-updated_at',)
+
+    @property
+    def products_count(self):
+        return self.products.filter(is_active=True, variants__stock__gt=0).distinct().count()
 
     @property
     def name(self):
@@ -113,10 +118,6 @@ class Store(models.Model):
         if lang == 'fr': return self.description_fr or self.description_en
         return self.description_en
     
-    @property
-    def products_count(self):
-        return self.products.filter(is_active=True, variants__stock__gt=0).distinct().count()
-
     def __str__(self):
         return self.subdomain
 
@@ -429,6 +430,14 @@ class Order(models.Model):
     customer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='orders', verbose_name=_("Customer"))
     store = models.ForeignKey(Store, on_delete=models.CASCADE, related_name='orders', verbose_name=_("Store"))
     status = models.CharField(max_length=20, choices=Status.choices, default=Status.PENDING, verbose_name=_("Order Status"))
+
+    # Shipping
+    delivery_company = models.ForeignKey( DeliveryCompany, on_delete=models.PROTECT, null=True, blank=True, related_name="orders", verbose_name=_('Delivery Company'))
+    delivery_price = models.DecimalField( max_digits=10, decimal_places=2, default=0, verbose_name=_('Delivery Price'))
+
+    # Prices
+    subtotal = models.DecimalField( max_digits=12, decimal_places=2, default=0, verbose_name=_('Sub Total'))
+
     total_price = models.DecimalField(max_digits=12, decimal_places=2, verbose_name=_("Total Price"))
     notes = models.TextField(blank=True, null=True, verbose_name=_("Notes"))
 
@@ -556,6 +565,7 @@ class OrderStatusHistory(models.Model):
 # Cart
 class Cart(models.Model):
     customer = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="cart", verbose_name=_("Customer"))
+    
 
     class meta:
         verbose_name = _("Cart")
@@ -563,7 +573,7 @@ class Cart(models.Model):
 
     @property
     def total(self):
-        return sum(item.total_price for item in self.items.all())
+        return sum(item.total_price for item in self.items.all())+600
 
     def add_item(self, product, attributes=None, quantity=1):
 
@@ -649,3 +659,12 @@ class CartItem(models.Model):
     @property
     def total_price(self):
         return self.unit_price * self.quantity
+    
+
+    @property
+    def total_price(self):
+        price = self.product.discounted_price if hasattr(self.product, 'discounted_price') else self.product.price
+        return price * self.quantity
+
+    def __str__(self):
+        return f"{self.product.name} ({self.quantity})"

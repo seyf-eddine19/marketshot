@@ -94,11 +94,12 @@ class BookingForm(forms.ModelForm):
     class Meta:
         model = Booking
 
-        fields = ["service","booking_date", "booking_time", "duration", "location", "notes",]# "package", 
+        fields = ["service","booking_date", "booking_time", "duration", "location", "notes",]
+        # "package", 
 
+            # "package": forms.HiddenInput(),
         widgets = {
             "service": forms.HiddenInput(),
-            # "package": forms.HiddenInput(),
             "booking_date": forms.HiddenInput(),
             "booking_time": forms.HiddenInput(),
             "duration": forms.NumberInput(attrs={"min": 30,"step": 30,}),
@@ -123,7 +124,7 @@ class BookingCreateView(LoginRequiredMixin, CreateView):
 
     template_name = "studio/booking.html"
 
-    success_url = reverse_lazy("studio:booking")
+    success_url = reverse_lazy("studio:home")
 
     login_url = "login"
 
@@ -189,7 +190,7 @@ class BookingCreateView(LoginRequiredMixin, CreateView):
         booking.save()
 
         messages.success(self.request, "Your booking has been submitted successfully.")
-        return redirect(self.get_success_url())
+        return super().form_invalid(form)
 
     def form_invalid(self, form):
         messages.error(self.request,"Please correct the errors below.")

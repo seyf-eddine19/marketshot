@@ -3,12 +3,13 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
+#: .\stores\views.py:886
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-03 19:46+0100\n"
+"POT-Creation-Date: 2026-06-29 15:44+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,285 +20,335 @@ msgstr ""
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
 
-#: .\accounts\forms.py:9 .\accounts\models.py:11 .\stores\models.py:55
+#: .\accounts\forms.py:8 .\accounts\models.py:11 .\stores\models.py:56
+#: .\templates\dashboard\products\list.html:138
 #: .\templates\dashboard\stores\form.html:72
+#: .\templates\dashboard\users\list.html:139
 msgid "Store Owner"
 msgstr "مالك المتجر"
 
-#: .\accounts\forms.py:9 .\accounts\models.py:12 .\stores\models.py:355
-#: .\stores\models.py:376 .\templates\dashboard\studio\bookings\list.html:57
-#: .\templates\dashboard\studio\bookings\list.html:88
+#: .\accounts\forms.py:8 .\accounts\models.py:12 .\stores\models.py:405
+#: .\stores\models.py:430 .\stores\models.py:559
+#: .\templates\dashboard\products\list.html:140
+#: .\templates\dashboard\studio\bookings\list.html:55
+#: .\templates\dashboard\studio\bookings\list.html:86
+#: .\templates\dashboard\users\list.html:141
 msgid "Customer"
 msgstr "العميل"
 
-#: .\accounts\forms.py:10
+#: .\accounts\forms.py:9
 msgid "Register as"
 msgstr "التالتسجيل كـ"
 
-#: .\accounts\forms.py:18
-msgid "Username"
-msgstr "اسم المستخدم"
-
-#: .\accounts\forms.py:19
-msgid "Password"
-msgstr "كلمة المرور"
-
-#: .\accounts\models.py:8
+#: .\accounts\models.py:8 .\templates\dashboard\products\list.html:132
+#: .\templates\dashboard\users\list.html:133
 msgid "Admin"
 msgstr "مدير"
 
-#: .\accounts\models.py:9
+#: .\accounts\models.py:9 .\templates\dashboard\products\list.html:36
+#: .\templates\dashboard\products\list.html:134
+#: .\templates\dashboard\users\list.html:36
+#: .\templates\dashboard\users\list.html:135
 msgid "Studio Team"
 msgstr "فريق الاستوديو"
 
-#: .\accounts\models.py:10
+#: .\accounts\models.py:10 .\templates\dashboard\products\list.html:136
+#: .\templates\dashboard\users\list.html:137
 msgid "Marketing Team"
 msgstr "فريق التسويق"
 
-#: .\accounts\models.py:14
+#: .\accounts\models.py:15 .\templates\accounts\login.html:117
+#: .\templates\accounts\profile.html:159 .\templates\accounts\signup.html:184
+#: .\templates\dashboard\users\form.html:95
+#, fuzzy
+#| msgid "Address"
+msgid "Email Address"
+msgstr "العنوان"
+
+#: .\accounts\models.py:16 .\templates\accounts\profile.html:164
+#: .\templates\accounts\signup.html:198
+#: .\templates\dashboard\users\form.html:102
+#: .\templates\stores\checkout\address.html:36
+msgid "Phone Number"
+msgstr ""
+
+#: .\accounts\models.py:17 .\templates\dashboard\users\form.html:109
 msgid "User Role"
 msgstr "دور المستخدم"
 
-#: .\accounts\models.py:17
+#: .\accounts\models.py:20 .\dashboard\forms.py:218
 msgid "First Name (AR)"
 msgstr "الاسم الأول (عربي)"
 
-#: .\accounts\models.py:18
+#: .\accounts\models.py:21 .\dashboard\forms.py:219
 msgid "Last Name (AR)"
 msgstr "اسم العائلة (عربي)"
 
-#: .\accounts\models.py:21
-msgid "Company Name"
-msgstr "اسم الشركة"
+#: .\accounts\models.py:27 .\studio\models.py:255 .\studio\models.py:305
+#: .\templates\dashboard\products\list.html:18
+#: .\templates\dashboard\users\list.html:18
+msgid "User"
+msgstr "المستخدم"
 
-#: .\accounts\models.py:41
+#: .\accounts\models.py:28 .\templates\partials\sidebar_links.html:86
+msgid "Users"
+msgstr "المستخدمين"
+
+#: .\accounts\models.py:80
+msgid "Avatar"
+msgstr ""
+
+#: .\accounts\models.py:83 .\dashboard\forms.py:238
 msgid "Bio (EN)"
 msgstr "نبذة تعريفية (إنجليزي)"
 
-#: .\accounts\models.py:42
+#: .\accounts\models.py:84 .\dashboard\forms.py:237
 msgid "Bio (AR)"
 msgstr "نبذة تعريفية (عربي)"
 
-#: .\accounts\models.py:43
+#: .\accounts\models.py:85 .\dashboard\forms.py:239
 msgid "Bio (FR)"
 msgstr "نبذة تعريفية (فرنسي)"
 
-#: .\accounts\models.py:46
-msgid "City (EN)"
-msgstr "المدينة (إنجليزي)"
+#: .\accounts\models.py:88 .\dashboard\forms.py:240
+msgid "Company Name"
+msgstr "اسم الشركة"
 
-#: .\accounts\models.py:47
-msgid "City (AR)"
-msgstr "المدينة (عربي)"
+#: .\accounts\models.py:89 .\stores\models.py:507
+#: .\templates\dashboard\users\form.html:198
+#: .\templates\stores\checkout\address.html:49
+msgid "Wilaya"
+msgstr ""
 
-#: .\accounts\models.py:48
-msgid "City (FR)"
-msgstr "المدينة (فرنسي)"
-
-#: .\accounts\models.py:50 .\stores\models.py:417
+#: .\accounts\models.py:90 .\dashboard\forms.py:242 .\stores\models.py:485
+#: .\stores\models.py:495 .\stores\models.py:508
+#: .\templates\stores\checkout\address.html:73
 msgid "Address"
 msgstr "العنوان"
 
-#: .\accounts\models.py:53
-msgid "Website"
-msgstr "الموقع الإلكتروني"
-
-#: .\accounts\models.py:54
-msgid "Instagram"
-msgstr "إنستغرام"
-
-#: .\accounts\models.py:55
-msgid "LinkedIn"
-msgstr "لينكد إن"
-
-#: .\accounts\models.py:58
+#: .\accounts\models.py:93
 msgid "Verified Account"
 msgstr "حساب موثق"
 
-#: .\accounts\models.py:59
-msgid "Active Account"
-msgstr "حساب نشط"
-
-#: .\accounts\models.py:61 .\stores\models.py:85 .\stores\models.py:162
-#: .\stores\models.py:212 .\stores\models.py:358 .\stores\models.py:382
-#: .\stores\models.py:400 .\stores\models.py:423 .\stores\models.py:450
-#: .\stores\models.py:464 .\studio\models.py:20 .\studio\models.py:58
-#: .\studio\models.py:76 .\studio\models.py:117 .\studio\models.py:162
-#: .\studio\models.py:246 .\studio\models.py:295
+#: .\accounts\models.py:95 .\stores\models.py:86 .\stores\models.py:209
+#: .\stores\models.py:259 .\stores\models.py:408 .\stores\models.py:436
+#: .\stores\models.py:466 .\stores\models.py:491 .\stores\models.py:533
+#: .\stores\models.py:547 .\studio\models.py:22 .\studio\models.py:60
+#: .\studio\models.py:78 .\studio\models.py:123 .\studio\models.py:168
+#: .\studio\models.py:265 .\studio\models.py:314
 msgid "Created At"
 msgstr "تاريخ الإنشاء"
 
-#: .\accounts\models.py:62 .\stores\models.py:86 .\stores\models.py:163
-#: .\stores\models.py:213 .\stores\models.py:383 .\stores\models.py:401
-#: .\stores\models.py:424 .\studio\models.py:163 .\studio\models.py:247
-#: .\studio\models.py:296
+#: .\accounts\models.py:96 .\stores\models.py:87 .\stores\models.py:210
+#: .\stores\models.py:260 .\stores\models.py:437 .\stores\models.py:467
+#: .\stores\models.py:492 .\studio\models.py:169 .\studio\models.py:266
+#: .\studio\models.py:315
 msgid "Updated At"
 msgstr "تاريخ التحديث"
 
-#: .\dashboard\forms.py:51 .\dashboard\forms.py:63
-#: .\templates\dashboard\manage_categories.html:137
+#: .\accounts\models.py:99
+#, fuzzy
+#| msgid "User profile"
+msgid "User Profile"
+msgstr "ملف المستخدم"
+
+#: .\accounts\models.py:100
+#, fuzzy
+#| msgid "User profile"
+msgid "User Profiles"
+msgstr "ملف المستخدم"
+
+#: .\dashboard\forms.py:53 .\dashboard\forms.py:65
+#: .\templates\dashboard\manage_categories.html:133
 msgid "English Name"
 msgstr "الاسم بالإنجليزية"
 
-#: .\dashboard\forms.py:52 .\dashboard\forms.py:64
-#: .\templates\dashboard\manage_categories.html:155
+#: .\dashboard\forms.py:54 .\dashboard\forms.py:66
+#: .\templates\dashboard\manage_categories.html:151
 msgid "Arabic Name"
 msgstr "الاسم بالعربية"
 
-#: .\dashboard\forms.py:53 .\dashboard\forms.py:65
-#: .\templates\dashboard\manage_categories.html:173
+#: .\dashboard\forms.py:55 .\dashboard\forms.py:67
+#: .\templates\dashboard\manage_categories.html:169
 msgid "French Name"
 msgstr "الاسم بالفرنسية"
 
-#: .\dashboard\forms.py:54 .\templates\dashboard\manage_categories.html:191
+#: .\dashboard\forms.py:56 .\templates\dashboard\manage_categories.html:187
 msgid "Slug"
 msgstr "المعرّف المختصر"
 
-#: .\dashboard\forms.py:91 .\stores\models.py:57
+#: .\dashboard\forms.py:93 .\stores\models.py:58
 #: .\templates\dashboard\stores\form.html:89
 msgid "Subdomain"
 msgstr "النطاق الفرعي"
 
-#: .\dashboard\forms.py:92 .\stores\models.py:62
+#: .\dashboard\forms.py:94 .\stores\models.py:63
 msgid "Store Name (EN)"
 msgstr "اسم المتجر (إنجليزي)"
 
-#: .\dashboard\forms.py:93 .\stores\models.py:63
+#: .\dashboard\forms.py:95 .\stores\models.py:64
 msgid "Store Name (AR)"
 msgstr "اسم المتجر (عربي)"
 
-#: .\dashboard\forms.py:94 .\stores\models.py:64
+#: .\dashboard\forms.py:96 .\stores\models.py:65
 msgid "Store Name (FR)"
 msgstr "اسم المتجر (فرنسي)"
 
-#: .\dashboard\forms.py:95
+#: .\dashboard\forms.py:97
 msgid "Store Description (EN)"
 msgstr "وصف المتجر (إنجليزي)"
 
-#: .\dashboard\forms.py:96
+#: .\dashboard\forms.py:98
 msgid "Store Description (AR)"
 msgstr "وصف المتجر (عربي)"
 
-#: .\dashboard\forms.py:97
+#: .\dashboard\forms.py:99
 msgid "Store Description (FR)"
 msgstr "وصف المتجر (فرنسي)"
 
-#: .\dashboard\forms.py:98 .\stores\models.py:70
+#: .\dashboard\forms.py:100 .\stores\models.py:71
 msgid "Tagline (EN)"
 msgstr "الشعار التعريفي (إنجليزي)"
 
-#: .\dashboard\forms.py:99 .\stores\models.py:71
+#: .\dashboard\forms.py:101 .\stores\models.py:72
 msgid "Tagline (AR)"
 msgstr "الشعار التعريفي (عربي)"
 
-#: .\dashboard\forms.py:100 .\stores\models.py:72
+#: .\dashboard\forms.py:102 .\stores\models.py:73
 msgid "Tagline (FR)"
 msgstr "الشعار التعريفي (فرنسي)"
 
-#: .\dashboard\forms.py:103 .\stores\models.py:78
+#: .\dashboard\forms.py:105 .\stores\models.py:79
 msgid "WhatsApp Number"
 msgstr "رقم واتساب"
 
-#: .\dashboard\forms.py:104 .\stores\models.py:79
+#: .\dashboard\forms.py:106 .\stores\models.py:80
 msgid "Facebook URL"
 msgstr "رابط فيسبوك"
 
-#: .\dashboard\forms.py:105 .\stores\models.py:80
+#: .\dashboard\forms.py:107 .\stores\models.py:81
 msgid "Instagram URL"
 msgstr "رابط إنستغرام"
 
-#: .\dashboard\forms.py:106 .\stores\models.py:81
+#: .\dashboard\forms.py:108 .\stores\models.py:82
 msgid "Twitter URL"
 msgstr "رابط تويتر"
 
-#: .\dashboard\forms.py:107 .\stores\models.py:82
+#: .\dashboard\forms.py:109 .\stores\models.py:83
 msgid "LinkedIn URL"
 msgstr "رابط لينكد إن"
 
-#: .\dashboard\forms.py:108 .\stores\models.py:83
+#: .\dashboard\forms.py:110 .\stores\models.py:84
 msgid "Website URL"
 msgstr "رابط الموقع الإلكتروني"
 
-#: .\dashboard\forms.py:129 .\stores\models.py:195
+#: .\dashboard\forms.py:131 .\stores\models.py:242
 msgid "Product Name (EN)"
 msgstr "اسم المنتج (إنجليزي)"
 
-#: .\dashboard\forms.py:130 .\stores\models.py:196
+#: .\dashboard\forms.py:132 .\stores\models.py:243
 msgid "Product Name (AR)"
 msgstr "اسم المنتج (عربي)"
 
-#: .\dashboard\forms.py:131 .\stores\models.py:197
+#: .\dashboard\forms.py:133 .\stores\models.py:244
 msgid "Product Name (FR)"
 msgstr "اسم المنتج (فرنسي)"
 
-#: .\dashboard\forms.py:132 .\stores\models.py:199
+#: .\dashboard\forms.py:134 .\stores\models.py:246
 msgid "Product Description (EN)"
 msgstr "وصف المنتج (إنجليزي)"
 
-#: .\dashboard\forms.py:133 .\stores\models.py:200
+#: .\dashboard\forms.py:135 .\stores\models.py:247
 msgid "Product Description (AR)"
 msgstr "وصف المنتج (عربي)"
 
-#: .\dashboard\forms.py:134 .\stores\models.py:201
+#: .\dashboard\forms.py:136 .\stores\models.py:248
 msgid "Product Description (FR)"
 msgstr "وصف المنتج (فرنسي)"
 
-#: .\dashboard\forms.py:135 .\stores\models.py:203 .\studio\models.py:154
-#: .\templates\dashboard\products\form.html:257
+#: .\dashboard\forms.py:137 .\stores\models.py:250 .\studio\models.py:116
+#: .\studio\models.py:160 .\templates\dashboard\products\form.html:257
 #: .\templates\dashboard\studio\packages\form.html:127
 msgid "Base Price"
 msgstr "السعر الأساسي"
 
-#: .\dashboard\forms.py:136 .\stores\models.py:204
+#: .\dashboard\forms.py:138 .\stores\models.py:251
 msgid "Discount %"
 msgstr "نسبة الخصم %"
 
-#: .\dashboard\forms.py:150 .\stores\models.py:326
+#: .\dashboard\forms.py:152 .\stores\models.py:373
 #: .\templates\dashboard\products\form.html:159
 msgid "Price Override"
 msgstr "تعديل السعر"
 
-#: .\dashboard\forms.py:151
+#: .\dashboard\forms.py:153
 msgid "Stock Quantity"
 msgstr "الكمية في المخزن"
 
-#: .\dashboard\forms.py:152 .\stores\models.py:328
+#: .\dashboard\forms.py:154 .\stores\models.py:375
 #: .\templates\dashboard\products\form.html:151
 msgid "SKU"
 msgstr "وحدة إدارة المخزون (SKU)"
 
-#: .\dashboard\forms.py:162 .\stores\models.py:343
+#: .\dashboard\forms.py:164 .\stores\models.py:393
 #: .\templates\dashboard\products\form.html:226
 msgid "Alt Text"
 msgstr "النص البديل"
 
-#: .\dashboard\forms.py:178
+#: .\dashboard\forms.py:180
 msgid "Label (EN)"
 msgstr "التصنيف (إنجليزي)"
 
-#: .\dashboard\forms.py:179
+#: .\dashboard\forms.py:181
 msgid "Label (AR)"
 msgstr "التصنيف (عربي)"
 
-#: .\dashboard\forms.py:180
+#: .\dashboard\forms.py:182
 msgid "Label (FR)"
 msgstr "التصنيف (فرنسي)"
 
-#: .\dashboard\forms.py:181 .\stores\models.py:151
+#: .\dashboard\forms.py:183 .\stores\models.py:198
 msgid "Value (EN)"
 msgstr "القيمة (إنجليزي)"
 
-#: .\dashboard\forms.py:182 .\stores\models.py:152
+#: .\dashboard\forms.py:184 .\stores\models.py:199
 msgid "Value (AR)"
 msgstr "القيمة (عربي)"
 
-#: .\dashboard\forms.py:183 .\stores\models.py:153
+#: .\dashboard\forms.py:185 .\stores\models.py:200
 msgid "Value (FR)"
 msgstr "القيمة (فرنسي)"
 
-#: .\dashboard\forms.py:184
+#: .\dashboard\forms.py:186
 msgid "Color Code (Hex)"
 msgstr "رمز اللون (Hex)"
+
+#: .\dashboard\forms.py:215 .\templates\dashboard\users\form.html:88
+msgid "Username"
+msgstr "اسم المستخدم"
+
+#: .\dashboard\forms.py:216 .\templates\accounts\profile.html:149
+#: .\templates\accounts\signup.html:127
+#, fuzzy
+#| msgid "First Name (AR)"
+msgid "First Name"
+msgstr "الاسم الأول (عربي)"
+
+#: .\dashboard\forms.py:217 .\templates\accounts\profile.html:154
+#: .\templates\accounts\signup.html:140
+#, fuzzy
+#| msgid "Last Name (AR)"
+msgid "Last Name"
+msgstr "اسم العائلة (عربي)"
+
+#: .\dashboard\forms.py:220 .\studio\models.py:73
+#: .\templates\partials\footer.html:81 .\templates\studio\index.html:562
+msgid "Email"
+msgstr "البريد الإلكتروني"
+
+#: .\dashboard\forms.py:221 .\stores\models.py:481 .\stores\models.py:505
+msgid "Phone"
+msgstr "الهاتف"
 
 #: .\dashboard\views.py:55
 msgid "Category updated successfully!"
@@ -310,6 +361,24 @@ msgstr "تم إنشاء الفئة الجديدة بنجاح!"
 #: .\dashboard\views.py:61
 msgid "Please correct the errors below."
 msgstr "يرجى تصحيح الأخطاء أدناه."
+
+#: .\dashboard\views_accounts.py:82
+#, fuzzy
+#| msgid "Service created successfully."
+msgid "User account and profile created successfully."
+msgstr "تم إنشاء الخدمة بنجاح."
+
+#: .\dashboard\views_accounts.py:115
+#, fuzzy
+#| msgid "Project updated successfully."
+msgid "User settings updated successfully."
+msgstr "تم تحديث المشروع بنجاح."
+
+#: .\dashboard\views_accounts.py:127
+#, fuzzy
+#| msgid "New category created successfully!"
+msgid "User database records purged successfully."
+msgstr "تم إنشاء الفئة الجديدة بنجاح!"
 
 #: .\dashboard\views_studio.py:159
 msgid "Project created successfully."
@@ -379,232 +448,257 @@ msgstr "الإنجليزية"
 msgid "French"
 msgstr "الفرنسية"
 
-#: .\stores\admin.py:57
+#: .\stores\admin.py:64
 msgid "Identity"
 msgstr "الهوية"
 
-#: .\stores\admin.py:58
+#: .\stores\admin.py:65
 msgid "Localization EN"
 msgstr "الترجمة الإنجليزية"
 
-#: .\stores\admin.py:59
+#: .\stores\admin.py:66
 msgid "Localization AR"
 msgstr "الترجمة العربية"
 
-#: .\stores\admin.py:60
+#: .\stores\admin.py:67
 msgid "Localization FR"
 msgstr "الترجمة الفرنسية"
 
-#: .\stores\admin.py:61
+#: .\stores\admin.py:68
 msgid "Social & Contact"
 msgstr "التواصل الاجتماعي والاتصال"
 
-#: .\stores\admin.py:62 .\studio\models.py:243 .\studio\models.py:294
+#: .\stores\admin.py:69 .\studio\models.py:262 .\studio\models.py:313
 #: .\templates\dashboard\products\form.html:284
 #: .\templates\dashboard\stores\form.html:286
-#: .\templates\dashboard\studio\bookings\list.html:91
+#: .\templates\dashboard\studio\bookings\list.html:89
 msgid "Status"
 msgstr "الحالة"
 
-#: .\stores\admin.py:78
+#: .\stores\admin.py:85
 msgid "General Info"
 msgstr "معلومات عامة"
 
-#: .\stores\admin.py:79
+#: .\stores\admin.py:86
 msgid "Names"
 msgstr "الأسماء"
 
-#: .\stores\admin.py:80 .\templates\dashboard\products\form.html:254
+#: .\stores\admin.py:87 .\templates\dashboard\products\form.html:254
 #: .\templates\dashboard\studio\packages\list.html:19
 msgid "Pricing"
 msgstr "التسعير"
 
-#: .\stores\admin.py:81
+#: .\stores\admin.py:88
 msgid "Flags"
 msgstr "العلامات"
 
-#: .\stores\models.py:10 .\stores\models.py:34
+#: .\stores\models.py:11 .\stores\models.py:35 .\stores\models.py:127
 #: .\templates\dashboard\products\form.html:81
 #: .\templates\dashboard\stores\form.html:107
 msgid "Name (EN)"
 msgstr "الاسم (إنجليزي)"
 
-#: .\stores\models.py:11 .\stores\models.py:35
+#: .\stores\models.py:12 .\stores\models.py:36 .\stores\models.py:128
 #: .\templates\dashboard\products\form.html:85
 #: .\templates\dashboard\stores\form.html:112
 msgid "Name (AR)"
 msgstr "الاسم (عربي)"
 
-#: .\stores\models.py:12 .\stores\models.py:36
+#: .\stores\models.py:13 .\stores\models.py:37 .\stores\models.py:129
 #: .\templates\dashboard\products\form.html:89
 #: .\templates\dashboard\stores\form.html:117
 msgid "Name (FR)"
 msgstr "الاسم (فرنسي)"
 
-#: .\stores\models.py:13 .\stores\models.py:37
+#: .\stores\models.py:14 .\stores\models.py:38
 msgid "Icon Image"
 msgstr "صورة الأيقونة"
 
-#: .\stores\models.py:17
+#: .\stores\models.py:18
 msgid "Store Category"
 msgstr "فئة المتجر"
 
-#: .\stores\models.py:40 .\stores\models.py:193
+#: .\stores\models.py:41 .\stores\models.py:240
 msgid "Product Category"
 msgstr "فئة المنتج"
 
-#: .\stores\models.py:41
+#: .\stores\models.py:42
 msgid "Product Categories"
 msgstr "فئات المنتجات"
 
-#: .\stores\models.py:56 .\templates\dashboard\manage_categories.html:42
+#: .\stores\models.py:57 .\templates\dashboard\manage_categories.html:38
 msgid "Store Categories"
 msgstr "فئات المتاجر"
 
-#: .\stores\models.py:59 .\templates\dashboard\stores\form.html:143
+#: .\stores\models.py:60 .\templates\dashboard\stores\form.html:143
 msgid "Store Logo"
 msgstr "شعار المتجر"
 
-#: .\stores\models.py:60 .\templates\dashboard\stores\form.html:178
+#: .\stores\models.py:61 .\templates\dashboard\stores\form.html:178
 msgid "Store Banner"
 msgstr "لافته المتجر (البانر)"
 
-#: .\stores\models.py:66 .\templates\dashboard\products\form.html:96
+#: .\stores\models.py:67 .\templates\dashboard\products\form.html:96
 msgid "Description (EN)"
 msgstr "الوصف (إنجليزي)"
 
-#: .\stores\models.py:67 .\templates\dashboard\products\form.html:100
+#: .\stores\models.py:68 .\templates\dashboard\products\form.html:100
 msgid "Description (AR)"
 msgstr "الوصف (عربي)"
 
-#: .\stores\models.py:68 .\templates\dashboard\products\form.html:104
+#: .\stores\models.py:69 .\templates\dashboard\products\form.html:104
 msgid "Description (FR)"
 msgstr "الوصف (فرنسي)"
 
-#: .\stores\models.py:74
+#: .\stores\models.py:75
 msgid "Is Verified"
 msgstr "موثق"
 
-#: .\stores\models.py:75 .\stores\models.py:207 .\studio\models.py:57
-#: .\studio\models.py:114 .\studio\models.py:161
+#: .\stores\models.py:76 .\stores\models.py:254 .\studio\models.py:59
+#: .\studio\models.py:118 .\studio\models.py:167
 msgid "Is Active"
 msgstr "نشط"
 
-#: .\stores\models.py:76 .\stores\models.py:208
+#: .\stores\models.py:77 .\stores\models.py:255
 msgid "Is Featured"
 msgstr "مميز"
 
-#: .\stores\models.py:89 .\stores\models.py:192 .\stores\models.py:377
-#: .\templates\dashboard\manage_categories.html:21
+#: .\stores\models.py:90 .\stores\models.py:239 .\stores\models.py:431
+#: .\templates\dashboard\manage_categories.html:17
 #: .\templates\dashboard\products\form.html:70
 msgid "Store"
 msgstr "المتجر"
 
-#: .\stores\models.py:90 .\templates\dashboard\base.html:289
-#: .\templates\dashboard\base.html:333 .\templates\dashboard\stores\list.html:4
+#: .\stores\models.py:91 .\templates\dashboard\stores\list.html:4
 #: .\templates\dashboard\stores\list.html:21
-#: .\templates\stores\store_list.html:12 .\templates\studio\base.html:180
+#: .\templates\partials\dashboard_navbar.html:27
+#: .\templates\partials\footer.html:60
+#: .\templates\partials\sidebar_links.html:77
+#: .\templates\partials\stores_links.html:5
+#: .\templates\partials\studio_links.html:16
+#: .\templates\stores\store_list.html:12
 msgid "Stores"
 msgstr "المتاجر"
 
-#: .\stores\models.py:129 .\studio\models.py:112
+#: .\stores\models.py:140
+#, fuzzy
+#| msgid "Delivery"
+msgid "Delivery Company"
+msgstr "التوصيل"
+
+#: .\stores\models.py:141
+#, fuzzy
+#| msgid "Delivery"
+msgid "Delivery Companies"
+msgstr "التوصيل"
+
+#: .\stores\models.py:159
+#, fuzzy
+#| msgid "Delivery"
+msgid "Delivery Price"
+msgstr "التوصيل"
+
+#: .\stores\models.py:160
+#, fuzzy
+#| msgid "Delivery"
+msgid "Free Delivery From"
+msgstr "التوصيل"
+
+#: .\stores\models.py:176 .\studio\models.py:114
 #: .\templates\dashboard\products\form.html:332
 #: .\templates\dashboard\studio\services\manage.html:230
 msgid "Color"
 msgstr "الون"
 
-#: .\stores\models.py:130 .\templates\dashboard\products\form.html:333
+#: .\stores\models.py:177 .\templates\dashboard\products\form.html:333
 msgid "Size"
 msgstr "المقاس"
 
-#: .\stores\models.py:131 .\templates\dashboard\products\form.html:334
+#: .\stores\models.py:178 .\templates\dashboard\products\form.html:334
 msgid "Material"
 msgstr "المادة"
 
-#: .\stores\models.py:132 .\templates\dashboard\products\form.html:335
+#: .\stores\models.py:179 .\templates\dashboard\products\form.html:335
 msgid "Storage"
 msgstr "السعة التخزينية"
 
-#: .\stores\models.py:133
+#: .\stores\models.py:180
 msgid "Voltage"
 msgstr "الجهد الكهربائي"
 
-#: .\stores\models.py:134
+#: .\stores\models.py:181
 msgid "Other"
 msgstr "أخرى"
 
-#: .\stores\models.py:141
+#: .\stores\models.py:188
 msgid "Attribute Category"
 msgstr "فئة الخاصية"
 
-#: .\stores\models.py:146
+#: .\stores\models.py:193
 msgid "Custom Label (EN)"
 msgstr "تسمية مخصصة (إنجليزي)"
 
-#: .\stores\models.py:147
+#: .\stores\models.py:194
 msgid "Custom Label (AR)"
 msgstr "تسمية مخصصة (عربي)"
 
-#: .\stores\models.py:148
+#: .\stores\models.py:195
 msgid "Custom Label (FR)"
 msgstr "تسمية مخصصة (فرنسي)"
 
-#: .\stores\models.py:160
+#: .\stores\models.py:207
 msgid "HEX Code e.g. #000000 (Only for Colors)"
 msgstr "رمز HEX مثل #000000 (للألوان فقط)"
 
-#: .\stores\models.py:160
+#: .\stores\models.py:207
 msgid "Color HEX Code"
 msgstr "رمز HEX للون"
 
-#: .\stores\models.py:166
+#: .\stores\models.py:213
 msgid "Product Attribute"
 msgstr "خاصية المنتج"
 
-#: .\stores\models.py:167
+#: .\stores\models.py:214
 msgid "Product Attributes"
 msgstr "خصائص المنتجات"
 
-#: .\stores\models.py:205 .\studio\models.py:19
+#: .\stores\models.py:252 .\studio\models.py:21
 #: .\templates\dashboard\products\form.html:269
 #: .\templates\dashboard\studio\projects\form.html:127
 msgid "Main Image"
 msgstr "الصورة الرئيسية"
 
-#: .\stores\models.py:209
+#: .\stores\models.py:256
 msgid "Is New Arrival"
 msgstr "وصل حديثاً"
 
-#: .\stores\models.py:210
+#: .\stores\models.py:257
 msgid "Is On Sale"
 msgstr "معروض للبيع/تخفيض"
 
-#: .\stores\models.py:216 .\stores\models.py:341 .\stores\models.py:354
-#: .\stores\models.py:395
+#: .\stores\models.py:263 .\stores\models.py:391 .\stores\models.py:404
+#: .\stores\models.py:457 .\stores\models.py:615
 msgid "Product"
 msgstr "المنتج"
 
-#: .\stores\models.py:217 .\templates\dashboard\base.html:286
-#: .\templates\dashboard\products\list.html:4
-#: .\templates\dashboard\products\list.html:19
-#: .\templates\dashboard\products\list.html:44
+#: .\stores\models.py:264 .\templates\partials\footer.html:54
+#: .\templates\partials\sidebar_links.html:72
+#: .\templates\partials\stores_links.html:4
 #: .\templates\stores\components\store_card.html:80
 #: .\templates\stores\store_detail.html:109
 msgid "Products"
 msgstr "المنتجات"
 
-#: .\stores\models.py:301
+#: .\stores\models.py:348
 msgid "Sale"
 msgstr "تخفيض"
 
-#: .\stores\models.py:306 .\templates\dashboard\products\detail.html:66
-#: .\templates\dashboard\products\list.html:120
+#: .\stores\models.py:353 .\templates\dashboard\products\detail.html:66
 msgid "New"
 msgstr "جديد"
 
-#: .\stores\models.py:311 .\templates\dashboard\products\detail.html:58
+#: .\stores\models.py:358 .\templates\dashboard\products\detail.html:58
 #: .\templates\dashboard\products\form.html:290
-#: .\templates\dashboard\products\list.html:113
 #: .\templates\dashboard\stores\form.html:303
 #: .\templates\dashboard\stores\list.html:155
 #: .\templates\dashboard\studio\packages\form.html:154
@@ -612,437 +706,501 @@ msgstr "جديد"
 msgid "Featured"
 msgstr "مميز"
 
-#: .\stores\models.py:322
+#: .\stores\models.py:369
 msgid "Base Product"
 msgstr "المنتج الأساسي"
 
-#: .\stores\models.py:324
+#: .\stores\models.py:371
 msgid "Attribute Values"
 msgstr "قيم الخصائص"
 
-#: .\stores\models.py:327 .\templates\dashboard\products\form.html:155
-#: .\templates\dashboard\products\list.html:193
+#: .\stores\models.py:374 .\templates\dashboard\products\form.html:155
 msgid "Stock"
 msgstr "المخزون"
 
-#: .\stores\models.py:331 .\stores\models.py:396
+#: .\stores\models.py:378 .\stores\models.py:458
 msgid "Product Variant"
 msgstr "نوع المنتج"
 
-#: .\stores\models.py:332
+#: .\stores\models.py:379
 msgid "Product Variants"
 msgstr "أنواع المنتجات"
 
-#: .\stores\models.py:342 .\studio\models.py:46
+#: .\stores\models.py:392 .\studio\models.py:48
 #: .\templates\dashboard\products\form.html:222
 msgid "Image"
 msgstr "الصورة"
 
-#: .\stores\models.py:346
+#: .\stores\models.py:396
 msgid "Product Image"
 msgstr "صورة المنتج"
 
-#: .\stores\models.py:347
+#: .\stores\models.py:397
 msgid "Product Images"
 msgstr "صور المنتج"
 
-#: .\stores\models.py:356 .\studio\models.py:56
+#: .\stores\models.py:406 .\studio\models.py:58
 msgid "Rating"
 msgstr "التقييم"
 
-#: .\stores\models.py:356 .\studio\models.py:56
+#: .\stores\models.py:406 .\studio\models.py:58
 msgid "Rating from 1 to 5"
 msgstr "التقييم من 1 إلى 5"
 
-#: .\stores\models.py:357
+#: .\stores\models.py:407
 msgid "Comment"
 msgstr "تعليق"
 
-#: .\stores\models.py:361
+#: .\stores\models.py:411
 msgid "Product Review"
 msgstr "مراجعة المنتج"
 
-#: .\stores\models.py:362
+#: .\stores\models.py:412
 msgid "Product Reviews"
 msgstr "مراجعات المنتج"
 
-#: .\stores\models.py:368 .\stores\models.py:441 .\studio\models.py:279
-#: .\templates\dashboard\dashboard.html:80
-#: .\templates\dashboard\studio\bookings\list.html:113
+#: .\stores\models.py:420 .\stores\models.py:524 .\studio\models.py:298
+#: .\templates\dashboard\dashboard.html:78
+#: .\templates\dashboard\products\list.html:153
+#: .\templates\dashboard\studio\bookings\list.html:111
+#: .\templates\dashboard\users\list.html:154
 msgid "Pending"
 msgstr "قيد الانتظار"
 
-#: .\stores\models.py:369 .\studio\models.py:280
-#: .\templates\dashboard\studio\bookings\list.html:111
+#: .\stores\models.py:421 .\studio\models.py:299
+#: .\templates\dashboard\studio\bookings\list.html:109
 msgid "Confirmed"
 msgstr "تم التأكيد"
 
-#: .\stores\models.py:370
+#: .\stores\models.py:422
 msgid "Processing"
 msgstr "قيد المعالجة"
 
-#: .\stores\models.py:371
+#: .\stores\models.py:423
 msgid "Shipped"
 msgstr "تم الشحن"
 
-#: .\stores\models.py:372
+#: .\stores\models.py:424
 msgid "Delivered"
 msgstr "تم التوصيل"
 
-#: .\stores\models.py:373 .\studio\models.py:232 .\studio\models.py:283
-#: .\templates\dashboard\studio\bookings\list.html:115
+#: .\stores\models.py:425 .\studio\models.py:251 .\studio\models.py:302
+#: .\templates\dashboard\studio\bookings\list.html:113
 msgid "Cancelled"
 msgstr "ملغي"
 
-#: .\stores\models.py:374
+#: .\stores\models.py:426
 msgid "Refunded"
 msgstr "تم المسترجع"
 
-#: .\stores\models.py:378 .\stores\models.py:461
+#: .\stores\models.py:432 .\stores\models.py:544
 msgid "Order Status"
 msgstr "حالة الطلب"
 
-#: .\stores\models.py:379 .\studio\models.py:292
+#: .\stores\models.py:433 .\studio\models.py:311
 msgid "Total Price"
 msgstr "السعر الإجمالي"
 
-#: .\stores\models.py:380 .\studio\models.py:293
-#: .\templates\dashboard\studio\bookings\list.html:72
+#: .\stores\models.py:434 .\studio\models.py:312
+#: .\templates\dashboard\studio\bookings\list.html:70
+#: .\templates\stores\checkout\address.html:84
 msgid "Notes"
 msgstr "ملاحظات"
 
-#: .\stores\models.py:386 .\stores\models.py:394 .\stores\models.py:445
-#: .\stores\models.py:460 .\templates\dashboard\studio\services\manage.html:242
+#: .\stores\models.py:440 .\stores\models.py:456 .\stores\models.py:502
+#: .\stores\models.py:528 .\stores\models.py:543
+#: .\templates\dashboard\studio\services\manage.html:242
 msgid "Order"
 msgstr "الطلب"
 
-#: .\stores\models.py:387
+#: .\stores\models.py:441
 msgid "Orders"
 msgstr "الطلبات"
 
-#: .\stores\models.py:397 .\templates\stores\product_detail.html:113
+#: .\stores\models.py:463 .\stores\models.py:617
+#: .\templates\stores\product_detail.html:199
 msgid "Quantity"
 msgstr "الكمية"
 
-#: .\stores\models.py:398
+#: .\stores\models.py:464
 msgid "Price at purchase time"
 msgstr "السعر عند الشراء"
 
-#: .\stores\models.py:404
+#: .\stores\models.py:470
 msgid "Order Item"
 msgstr "عنصر الطلب"
 
-#: .\stores\models.py:405
+#: .\stores\models.py:471
 msgid "Order Items"
 msgstr "عناصر الطلب"
 
-#: .\stores\models.py:414
+#: .\stores\models.py:480 .\stores\models.py:504
+#: .\templates\stores\checkout\address.html:25
 msgid "Full Name"
 msgstr "الاسم الكامل"
 
-#: .\stores\models.py:415
-msgid "Phone"
-msgstr "الهاتف"
-
-#: .\stores\models.py:418
-msgid "City"
-msgstr "المدينة"
-
-#: .\stores\models.py:419
-msgid "State"
-msgstr "الولاية / المقاطعة"
-
-#: .\stores\models.py:420
+#: .\stores\models.py:486 .\stores\models.py:509
 msgid "Postal Code"
 msgstr "الرمز البريدي"
 
-#: .\stores\models.py:421
+#: .\stores\models.py:487 .\stores\models.py:510
 msgid "Country"
 msgstr "البلد"
 
-#: .\stores\models.py:427 .\templates\stores\checkout.html:9
+#: .\stores\models.py:489
+msgid "Is Default"
+msgstr ""
+
+#: .\stores\models.py:496
+#, fuzzy
+#| msgid "Address"
+msgid "Addresses"
+msgstr "العنوان"
+
+#: .\stores\models.py:513 .\templates\stores\checkout.html:9
+#: .\templates\stores\checkout\address.html:4
+#: .\templates\stores\checkout\address.html:11
 msgid "Shipping Address"
 msgstr "عنوان الشحن"
 
-#: .\stores\models.py:428
+#: .\stores\models.py:514
 msgid "Shipping Addresses"
 msgstr "عناوين الشحن"
 
-#: .\stores\models.py:435
+#: .\stores\models.py:518 .\templates\stores\checkout\payment.html:28
 msgid "Cash on Delivery"
 msgstr "الدفع عند الاستلام"
 
-#: .\stores\models.py:436
+#: .\stores\models.py:519
 msgid "Card"
 msgstr "البطاقة البنكية"
 
-#: .\stores\models.py:437
+#: .\stores\models.py:520
 msgid "CCP"
 msgstr "الحساب البريدي الجاري (CCP)"
 
-#: .\stores\models.py:438
+#: .\stores\models.py:521
 msgid "BaridiMob"
 msgstr "بريدي موب"
 
-#: .\stores\models.py:442
+#: .\stores\models.py:525
 msgid "Paid"
 msgstr "مدفوع"
 
-#: .\stores\models.py:443
+#: .\stores\models.py:526
 msgid "Failed"
 msgstr "فاشل"
 
-#: .\stores\models.py:446 .\templates\stores\checkout.html:22
+#: .\stores\models.py:529 .\templates\stores\checkout.html:22
+#: .\templates\stores\checkout\payment.html:4
+#: .\templates\stores\checkout\payment.html:10
 msgid "Payment Method"
 msgstr "طريقة الدفع"
 
-#: .\stores\models.py:447
+#: .\stores\models.py:530
 msgid "Payment Status"
 msgstr "حالة الدفع"
 
-#: .\stores\models.py:448
+#: .\stores\models.py:531
 msgid "Transaction ID"
 msgstr "رقم المعاملة"
 
-#: .\stores\models.py:453
+#: .\stores\models.py:536
 msgid "Payment"
 msgstr "الدفع"
 
-#: .\stores\models.py:454
+#: .\stores\models.py:537
 msgid "Payments"
 msgstr "المدفوعات"
 
-#: .\stores\models.py:462
+#: .\stores\models.py:545
 msgid "Note"
 msgstr "ملاحظة"
 
-#: .\stores\models.py:467
+#: .\stores\models.py:550
 msgid "Order Status History"
 msgstr "سجل حالة الطلب"
 
-#: .\stores\models.py:468
+#: .\stores\models.py:551
 msgid "Order Status Histories"
 msgstr "سجلات حالة الطلبات"
 
-#: .\studio\models.py:11 .\studio\models.py:103 .\studio\models.py:146
+#: .\stores\models.py:562 .\stores\models.py:614
+#: .\templates\stores\cart\detail.html:25
+msgid "Cart"
+msgstr ""
+
+#: .\stores\models.py:563
+msgid "Carts"
+msgstr ""
+
+#: .\stores\models.py:616
+#, fuzzy
+#| msgid "Product Attributes"
+msgid "Selected Attributes"
+msgstr "خصائص المنتجات"
+
+#: .\stores\models.py:620
+#, fuzzy
+#| msgid "Order Item"
+msgid "Cart Item"
+msgstr "عنصر الطلب"
+
+#: .\stores\models.py:621
+#, fuzzy
+#| msgid "Order Items"
+msgid "Cart Items"
+msgstr "عناصر الطلب"
+
+#: .\stores\views.py:584 .\stores\views.py:601 .\stores\views.py:650
+#: .\stores\views.py:744 .\stores\views.py:792 .\stores\views.py:843
+#, fuzzy
+#| msgid "Product Category"
+msgid "Product added to cart"
+msgstr "فئة المنتج"
+
+#: .\stores\views.py:866
+msgid "Variant added to cart"
+msgstr ""
+
+#: .\stores\views.py:899
+msgid "Item removed"
+msgstr ""
+
+#: .\stores\views.py:947 .\stores\views.py:1059
+msgid "Your cart is empty."
+msgstr ""
+
+#: .\stores\views.py:1140
+#, fuzzy
+#| msgid "Project created successfully."
+msgid "Order created successfully."
+msgstr "تم إنشاء المشروع بنجاح."
+
+#: .\studio\models.py:13 .\studio\models.py:105 .\studio\models.py:152
 #: .\templates\dashboard\studio\packages\form.html:90
 #: .\templates\dashboard\studio\projects\form.html:89
 msgid "Title (Arabic)"
 msgstr "العنوان (عربي)"
 
-#: .\studio\models.py:12 .\studio\models.py:104 .\studio\models.py:147
+#: .\studio\models.py:14 .\studio\models.py:106 .\studio\models.py:153
 #: .\templates\dashboard\studio\packages\form.html:85
 #: .\templates\dashboard\studio\projects\form.html:84
 msgid "Title (English)"
 msgstr "العنوان (إنجليزي)"
 
-#: .\studio\models.py:13 .\studio\models.py:105 .\studio\models.py:148
+#: .\studio\models.py:15 .\studio\models.py:107 .\studio\models.py:154
 #: .\templates\dashboard\studio\packages\form.html:95
 #: .\templates\dashboard\studio\projects\form.html:94
 msgid "Title (French)"
 msgstr "العنوان (فرنسي)"
 
-#: .\studio\models.py:15 .\studio\models.py:107 .\studio\models.py:150
+#: .\studio\models.py:17 .\studio\models.py:109 .\studio\models.py:156
 #: .\templates\dashboard\studio\packages\form.html:111
 #: .\templates\dashboard\studio\projects\form.html:110
 msgid "Description (Arabic)"
 msgstr "الوصف (عربي)"
 
-#: .\studio\models.py:16 .\studio\models.py:108 .\studio\models.py:151
+#: .\studio\models.py:18 .\studio\models.py:110 .\studio\models.py:157
 #: .\templates\dashboard\studio\packages\form.html:106
 #: .\templates\dashboard\studio\projects\form.html:105
 msgid "Description (English)"
 msgstr "الوصف (إنجليزي)"
 
-#: .\studio\models.py:17 .\studio\models.py:109 .\studio\models.py:152
+#: .\studio\models.py:19 .\studio\models.py:111 .\studio\models.py:158
 #: .\templates\dashboard\studio\packages\form.html:116
 #: .\templates\dashboard\studio\projects\form.html:115
 msgid "Description (French)"
 msgstr "الوصف (فرنسي)"
 
-#: .\studio\models.py:23 .\studio\models.py:45
+#: .\studio\models.py:25 .\studio\models.py:47
 #: .\templates\dashboard\studio\projects\form.html:31
-#: .\templates\dashboard\studio\projects\list.html:19
+#: .\templates\dashboard\studio\projects\list.html:16
 #: .\templates\studio\index.html:148
 msgid "Project"
 msgstr "المشروع"
 
-#: .\studio\models.py:24 .\templates\dashboard\base.html:259
-#: .\templates\dashboard\studio\projects\form.html:19
-#: .\templates\dashboard\studio\projects\list.html:15
-#: .\templates\dashboard\studio\projects\list.html:43
+#: .\studio\models.py:26 .\templates\dashboard\studio\projects\form.html:19
+#: .\templates\dashboard\studio\projects\list.html:12
+#: .\templates\dashboard\studio\projects\list.html:39
+#: .\templates\partials\sidebar_links.html:28
 msgid "Projects"
 msgstr "المشاريع"
 
-#: .\studio\models.py:47
+#: .\studio\models.py:49
 msgid "Caption"
 msgstr "التعليق التوضيحي"
 
-#: .\studio\models.py:54 .\templates\dashboard\studio\testimonials\list.html:24
-#: .\templates\studio\index.html:398
+#: .\studio\models.py:56 .\templates\dashboard\studio\testimonials\list.html:24
+#: .\templates\studio\index.html:409
 msgid "Client"
 msgstr "العميل"
 
-#: .\studio\models.py:55
+#: .\studio\models.py:57
 msgid "Feedback"
 msgstr "الآراء والملاحظات"
 
-#: .\studio\models.py:61
+#: .\studio\models.py:63
 msgid "Testimonial"
 msgstr "توصية / شهادة عميل"
 
-#: .\studio\models.py:62 .\templates\dashboard\base.html:274
-#: .\templates\dashboard\studio\testimonials\list.html:5
+#: .\studio\models.py:64 .\templates\dashboard\studio\testimonials\list.html:5
 #: .\templates\dashboard\studio\testimonials\list.html:28
+#: .\templates\partials\sidebar_links.html:53
 msgid "Testimonials"
 msgstr "آراء العملاء"
 
-#: .\studio\models.py:70 .\templates\studio\index.html:551
+#: .\studio\models.py:72 .\templates\studio\index.html:549
 msgid "Name"
 msgstr "الاسم"
 
-#: .\studio\models.py:71 .\templates\studio\index.html:565
-msgid "Email"
-msgstr "البريد الإلكتروني"
-
-#: .\studio\models.py:72 .\templates\studio\index.html:582
+#: .\studio\models.py:74 .\templates\studio\index.html:576
 msgid "Subject"
 msgstr "الموضوع"
 
-#: .\studio\models.py:73 .\templates\studio\index.html:598
+#: .\studio\models.py:75 .\templates\studio\index.html:589
 msgid "Message"
 msgstr "الرسالة"
 
-#: .\studio\models.py:75
+#: .\studio\models.py:77
 msgid "Is Read"
 msgstr "مقروء"
 
-#: .\studio\models.py:87
+#: .\studio\models.py:89
 msgid "Photography"
 msgstr "التصوير الفوتوغرافي"
 
-#: .\studio\models.py:88
+#: .\studio\models.py:90
 msgid "Video"
 msgstr "الفيديو"
 
-#: .\studio\models.py:89
+#: .\studio\models.py:91
 msgid "UGC"
 msgstr "المحتوى المصنوع من المستخدمين (UGC)"
 
-#: .\studio\models.py:90
+#: .\studio\models.py:92
 msgid "Marketing"
 msgstr "التسويق"
 
-#: .\studio\models.py:91
+#: .\studio\models.py:93
 msgid "Design"
 msgstr "التصميم"
 
-#: .\studio\models.py:92
+#: .\studio\models.py:94
 msgid "Voice Over"
 msgstr "التعليق الصوتي"
 
-#: .\studio\models.py:93
+#: .\studio\models.py:95
 msgid "Field Shooting"
 msgstr "التصوير الميداني"
 
-#: .\studio\models.py:94
+#: .\studio\models.py:96
 msgid "Studio Rental"
 msgstr "تأجير الاستوديو"
 
-#: .\studio\models.py:95 .\templates\studio\base.html:176
+#: .\studio\models.py:97
 msgid "Platform"
 msgstr "المنصة"
 
-#: .\studio\models.py:99
+#: .\studio\models.py:101
 msgid "Primary"
 msgstr "أساسي"
 
-#: .\studio\models.py:100
+#: .\studio\models.py:102
 msgid "Secondary"
 msgstr "ثانوي"
 
-#: .\studio\models.py:111 .\templates\dashboard\studio\services\manage.html:217
+#: .\studio\models.py:113 .\templates\dashboard\studio\services\manage.html:217
 msgid "Icon"
 msgstr "الأيقونة"
 
-#: .\studio\models.py:115 .\studio\models.py:160
+#: .\studio\models.py:119 .\studio\models.py:166
 #: .\templates\dashboard\studio\packages\form.html:137
 msgid "Display Order"
 msgstr "ترتيب العرض"
 
-#: .\studio\models.py:120 .\studio\models.py:287
-#: .\templates\dashboard\studio\bookings\list.html:61
-#: .\templates\dashboard\studio\bookings\list.html:89
+#: .\studio\models.py:121
+msgid "can book it"
+msgstr ""
+
+#: .\studio\models.py:126 .\studio\models.py:306
+#: .\templates\dashboard\studio\bookings\list.html:59
+#: .\templates\dashboard\studio\bookings\list.html:87
 msgid "Service"
 msgstr "الخدمة"
 
-#: .\studio\models.py:121 .\templates\dashboard\base.html:262
+#: .\studio\models.py:127 .\templates\components\stores_links.html:4
+#: .\templates\components\studio_links.html:4
 #: .\templates\dashboard\studio\services\manage.html:24
-#: .\templates\studio\base.html:78 .\templates\studio\base.html:118
-#: .\templates\studio\base.html:178
+#: .\templates\partials\footer.html:27
+#: .\templates\partials\sidebar_links.html:33
+#: .\templates\partials\studio_links.html:4
 msgid "Services"
 msgstr "الخدمات"
 
-#: .\studio\models.py:155
+#: .\studio\models.py:161
 msgid "Discount"
 msgstr "خصم"
 
-#: .\studio\models.py:157
+#: .\studio\models.py:163
 msgid "Is Highlighted"
 msgstr "مميز / مبرز"
 
-#: .\studio\models.py:158 .\templates\dashboard\studio\packages\form.html:142
+#: .\studio\models.py:164 .\templates\dashboard\studio\packages\form.html:142
 msgid "Button Link"
 msgstr "رابط الزر"
 
-#: .\studio\models.py:166 .\studio\models.py:237
+#: .\studio\models.py:172 .\studio\models.py:256
 #: .\templates\dashboard\studio\packages\form.html:32
 msgid "Package"
 msgstr "الباقة"
 
-#: .\studio\models.py:167 .\templates\dashboard\base.html:268
+#: .\studio\models.py:173 .\templates\components\stores_links.html:7
+#: .\templates\components\studio_links.html:7
 #: .\templates\dashboard\studio\packages\form.html:20
 #: .\templates\dashboard\studio\packages\list.html:4
 #: .\templates\dashboard\studio\packages\list.html:15
 #: .\templates\dashboard\studio\packages\list.html:21
 #: .\templates\dashboard\studio\packages\list.html:43
-#: .\templates\studio\base.html:81 .\templates\studio\base.html:119
+#: .\templates\partials\footer.html:39
+#: .\templates\partials\sidebar_links.html:43
+#: .\templates\partials\studio_links.html:7
 msgid "Packages"
 msgstr "الباقات"
 
-#: .\studio\models.py:198
+#: .\studio\models.py:217
 msgid "Text (Arabic)"
 msgstr "النص (عربي)"
 
-#: .\studio\models.py:199
+#: .\studio\models.py:218
 msgid "Text (English)"
 msgstr "النص (إنجليزي)"
 
-#: .\studio\models.py:200
+#: .\studio\models.py:219
 msgid "Text (French)"
 msgstr "النص (فرنسي)"
 
-#: .\studio\models.py:202
+#: .\studio\models.py:221
 msgid "Is Included"
 msgstr "مشمول"
 
-#: .\studio\models.py:205
+#: .\studio\models.py:224
 msgid "Package Feature"
 msgstr "ميزة الباقة"
 
-#: .\studio\models.py:206
+#: .\studio\models.py:225
 msgid "Package Features"
 msgstr "ميزات الباقات"
 
-#: .\studio\models.py:225
+#: .\studio\models.py:244
 msgid "Monthly"
 msgstr "شهرياً"
 
-#: .\studio\models.py:226
+#: .\studio\models.py:245
 msgid "Yearly"
 msgstr "سنوياً"
 
-#: .\studio\models.py:230 .\templates\dashboard\products\form.html:289
+#: .\studio\models.py:249 .\templates\dashboard\products\form.html:289
 #: .\templates\dashboard\stores\form.html:293
 #: .\templates\dashboard\studio\packages\form.html:159
 #: .\templates\dashboard\studio\packages\list.html:134
@@ -1051,133 +1209,362 @@ msgstr "سنوياً"
 msgid "Active"
 msgstr "نشط"
 
-#: .\studio\models.py:231
+#: .\studio\models.py:250
 msgid "Paused"
 msgstr "موقوف مؤقتاً"
 
-#: .\studio\models.py:233
+#: .\studio\models.py:252
 msgid "Expired"
 msgstr "منتهي الصلاحية"
 
-#: .\studio\models.py:236 .\studio\models.py:286
-msgid "User"
-msgstr "المستخدم"
-
-#: .\studio\models.py:239
+#: .\studio\models.py:258
 msgid "Start Date"
 msgstr "تاريخ البدء"
 
-#: .\studio\models.py:240
+#: .\studio\models.py:259
 msgid "End Date"
 msgstr "تاريخ الانتهاء"
 
-#: .\studio\models.py:242
+#: .\studio\models.py:261
 #: .\templates\dashboard\studio\subscriptions\list.html:103
 msgid "Duration"
 msgstr "المدة"
 
-#: .\studio\models.py:245
+#: .\studio\models.py:264
 #: .\templates\dashboard\studio\subscriptions\list.html:129
 msgid "Auto Renew"
 msgstr "تجديد تلقائي"
 
-#: .\studio\models.py:250
+#: .\studio\models.py:269
 msgid "Subscription"
 msgstr "الاشتراك"
 
-#: .\studio\models.py:251 .\templates\dashboard\base.html:271
+#: .\studio\models.py:270
 #: .\templates\dashboard\studio\subscriptions\list.html:4
 #: .\templates\dashboard\studio\subscriptions\list.html:19
+#: .\templates\partials\sidebar_links.html:48
 msgid "Subscriptions"
 msgstr "الاشتراكات"
 
-#: .\studio\models.py:281
+#: .\studio\models.py:300
 msgid "In Progress"
 msgstr "قيد التنفيذ"
 
-#: .\studio\models.py:282
+#: .\studio\models.py:301
 msgid "Completed"
 msgstr "مكتمل"
 
-#: .\studio\models.py:288
+#: .\studio\models.py:307
 msgid "Booking Date"
 msgstr "تاريخ الحجز"
 
-#: .\studio\models.py:289
+#: .\studio\models.py:308
 msgid "Booking Time"
 msgstr "وقت الحجز"
 
-#: .\studio\models.py:290
+#: .\studio\models.py:309
 msgid "Duration (Minutes)"
 msgstr "المدة (بالدقائق)"
 
-#: .\studio\models.py:291 .\templates\studio\index.html:527
+#: .\studio\models.py:310 .\templates\studio\index.html:529
 msgid "Location"
 msgstr "الموقع"
 
-#: .\studio\models.py:299 .\templates\dashboard\studio\bookings\list.html:17
+#: .\studio\models.py:327 .\templates\dashboard\studio\bookings\list.html:15
 msgid "Booking"
 msgstr "الحجز"
 
-#: .\studio\models.py:300 .\templates\dashboard\base.html:265
+#: .\studio\models.py:328 .\templates\partials\sidebar_links.html:38
 msgid "Bookings"
 msgstr "الحجوزات"
+
+#: .\studio\models.py:344
+msgid "Booking date cannot be in the past."
+msgstr ""
+
+#: .\studio\models.py:353
+msgid "Duration must be greater than zero."
+msgstr ""
 
 #: .\studio\views.py:29
 msgid "Your message has been sent successfully."
 msgstr "تم إرسال رسالتك بنجاح."
 
-#: .\templates\dashboard\base.html:234 .\templates\stores\base.html:81
-msgid "Creative Ecosystem"
-msgstr "النظام الإبداعي المتكامل"
+#: .\templates\accounts\change_password_done.html:10
+#, fuzzy
+#| msgid "Category updated successfully!"
+msgid "Password Updated Successfully"
+msgstr "تم تحديث الفئة بنجاح!"
 
-#: .\templates\dashboard\base.html:255
-msgid "Dashboard"
-msgstr "لوحة التحكم"
+#: .\templates\accounts\change_password_done.html:14
+#, fuzzy
+#| msgid "Studio Dashboard"
+msgid "Back to Dashboard"
+msgstr "لوحة تحكم الاستوديو"
 
-#: .\templates\dashboard\base.html:257 .\templates\dashboard\base.html:330
-#: .\templates\dashboard\dashboard.html:17 .\templates\stores\base.html:90
-#: .\templates\studio\base.html:79 .\templates\studio\base.html:121
+#: .\templates\accounts\login.html:4 .\templates\components\user_menu.html:23
+msgid "Login"
+msgstr ""
+
+#: .\templates\accounts\login.html:58
+msgid "Welcome Back"
+msgstr ""
+
+#: .\templates\accounts\login.html:73 .\templates\accounts\signup.html:75
+#: .\templates\components\logo.html:14
+msgid "Photography & Digital Marketing"
+msgstr "التصوير الفوتوغرافي والتسويق الرقمي"
+
+#: .\templates\accounts\login.html:132 .\templates\accounts\signup.html:212
+msgid "Password"
+msgstr "كلمة المرور"
+
+#: .\templates\accounts\login.html:135
+msgid "Forgot?"
+msgstr ""
+
+#: .\templates\accounts\login.html:155 .\templates\accounts\signup.html:254
+#, fuzzy
+#| msgid "Signed in as"
+msgid "Sign In"
+msgstr "تم تسجيل الدخول باسم"
+
+#: .\templates\accounts\login.html:160
+msgid "Don't have an account?"
+msgstr ""
+
+#: .\templates\accounts\login.html:162
+#, fuzzy
+#| msgid "Create Product"
+msgid "Create an account"
+msgstr "إنشاء منتج"
+
+#: .\templates\accounts\profile.html:4
+#, fuzzy
+#| msgid "with MarketShot"
+msgid "Edit Profile | MarketShot"
+msgstr "مع ماركت شوت"
+
+#: .\templates\accounts\profile.html:46
+#, fuzzy
+#| msgid "Edit Project"
+msgid "Edit Profile"
+msgstr "تعديل المشروع"
+
+#: .\templates\accounts\profile.html:49
+msgid "Manage your profile and public presence."
+msgstr ""
+
+#: .\templates\accounts\profile.html:55
+#: .\templates\dashboard\products\delete.html:53
+#: .\templates\dashboard\products\form.html:386
+#: .\templates\dashboard\stores\delete.html:51
+#: .\templates\dashboard\studio\packages\form.html:228
+#: .\templates\dashboard\studio\projects\form.html:154
+#: .\templates\dashboard\users\form.html:315
+msgid "Cancel"
+msgstr "إلغاء"
+
+#: .\templates\accounts\profile.html:58
+msgid "Save Changes"
+msgstr ""
+
+#: .\templates\accounts\profile.html:89
+#, fuzzy
+#| msgid "Verified"
+msgid "Verified Status"
+msgstr "موثق"
+
+#: .\templates\accounts\profile.html:90
+msgid "Public badge visibility"
+msgstr ""
+
+#: .\templates\accounts\profile.html:100
+#: .\templates\dashboard\users\form.html:276
+#, fuzzy
+#| msgid "Store Status"
+msgid "Active Status"
+msgstr "حالة المتجر"
+
+#: .\templates\accounts\profile.html:101
+#, fuzzy
+#| msgid "Visit Our Platform"
+msgid "Visible on platforms"
+msgstr "قم بزيارة منصتنا"
+
+#: .\templates\accounts\profile.html:113
+#, fuzzy
+#| msgid "Social & Contact"
+msgid "Social Connect"
+msgstr "التواصل الاجتماعي والاتصال"
+
+#: .\templates\accounts\profile.html:118
+msgid "Website"
+msgstr "الموقع الإلكتروني"
+
+#: .\templates\accounts\profile.html:125
+msgid "Instagram"
+msgstr "إنستغرام"
+
+#: .\templates\accounts\profile.html:132
+msgid "LinkedIn"
+msgstr "لينكد إن"
+
+#: .\templates\accounts\profile.html:144
+#, fuzzy
+#| msgid "Product Information"
+msgid "Personal Information"
+msgstr "معلومات المنتج"
+
+#: .\templates\accounts\profile.html:169
+msgid "Wilaya / Region"
+msgstr ""
+
+#: .\templates\accounts\profile.html:179
+#, fuzzy
+#| msgid "Address"
+msgid "Detailed Address"
+msgstr "العنوان"
+
+#: .\templates\accounts\profile.html:188
+#, fuzzy
+#| msgid "Description"
+msgid "Bio & Descriptions"
+msgstr "الوصف"
+
+#: .\templates\accounts\profile.html:199
+msgid "English Biography (Primary)"
+msgstr ""
+
+#: .\templates\accounts\profile.html:200 .\templates\accounts\profile.html:208
+msgid "Max 500 chars"
+msgstr ""
+
+#: .\templates\accounts\profile.html:207
+msgid "Arabic Biography (AR)"
+msgstr ""
+
+#: .\templates\accounts\profile.html:219
+#, fuzzy
+#| msgid "Studio Management"
+msgid "Account Management"
+msgstr "إدارة الاستوديو"
+
+#: .\templates\accounts\profile.html:221
+msgid ""
+"Temporarily deactivate or permanently delete your account profile details."
+msgstr ""
+
+#: .\templates\accounts\profile.html:225
+#, fuzzy
+#| msgid "Active Account"
+msgid "Delete Account"
+msgstr "حساب نشط"
+
+#: .\templates\accounts\signup.html:4
+msgid "Sign Up"
+msgstr ""
+
+#: .\templates\accounts\signup.html:83 .\templates\accounts\signup.html:247
+#: .\templates\dashboard\users\form.html:324
+#, fuzzy
+#| msgid "Created At"
+msgid "Create Account"
+msgstr "تاريخ الإنشاء"
+
+#: .\templates\accounts\signup.html:86
+#, fuzzy
+#| msgid "MarketShot | Creative Production & Digital Marketing"
+msgid "Join MarketShot to orchestrate production operations."
+msgstr "ماركت شوت | الإنتاج الإبداعي والتسويق الرقمي"
+
+#: .\templates\accounts\signup.html:112
+#, fuzzy
+#| msgid "Register as"
+msgid "Register As"
+msgstr "التالتسجيل كـ"
+
+#: .\templates\accounts\signup.html:134
+msgid "e.g., Seyf"
+msgstr ""
+
+#: .\templates\accounts\signup.html:147
+msgid "e.g., Abdellaoui"
+msgstr ""
+
+#: .\templates\accounts\signup.html:229
+#, fuzzy
+#| msgid "Password"
+msgid "Confirm Password"
+msgstr "كلمة المرور"
+
+#: .\templates\accounts\signup.html:252
+msgid "Already have an account?"
+msgstr ""
+
+#: .\templates\components\stores_links.html:3
+#: .\templates\components\studio_links.html:3
+#: .\templates\partials\stores_links.html:3
+#: .\templates\partials\stores_navbar.html:21
+#: .\templates\partials\studio_links.html:3
+#: .\templates\stores\product_detail.html:10
+#: .\templates\studio\pages\services.html:4
+msgid "Home"
+msgstr "الرئيسية"
+
+#: .\templates\components\stores_links.html:5
+#: .\templates\components\studio_links.html:5
+#: .\templates\dashboard\dashboard.html:15
+#: .\templates\partials\dashboard_navbar.html:24
+#: .\templates\partials\footer.html:21
+#: .\templates\partials\sidebar_links.html:23
+#: .\templates\partials\studio_links.html:6
 msgid "Studio"
 msgstr "الاستوديو"
 
-#: .\templates\dashboard\base.html:277
-msgid "Contacts"
-msgstr "جهات الاتصال"
+#: .\templates\components\stores_links.html:6
+#: .\templates\components\studio_links.html:6
+#: .\templates\partials\footer.html:33 .\templates\partials\studio_links.html:5
+msgid "Portfolio"
+msgstr "معرض الأعمال"
 
-#: .\templates\dashboard\base.html:280
-msgid "Commerce"
-msgstr "التجارة"
+#: .\templates\components\stores_links.html:8
+#: .\templates\components\studio_links.html:8
+#: .\templates\dashboard\studio\contacts\list.html:19
+#: .\templates\partials\studio_links.html:8
+msgid "Contact"
+msgstr "اتصل بنا"
 
-#: .\templates\dashboard\base.html:283
-#: .\templates\dashboard\manage_categories.html:21
-#: .\templates\dashboard\stores\form.html:274
-#: .\templates\stores\components\sidebar_filters.html:28
-msgid "Categories"
-msgstr "الفئات"
+#: .\templates\components\user_menu.html:11 .\templates\dashboard\base.html:3
+#: .\templates\partials\navbar.html:43
+#: .\templates\partials\sidebar_links.html:19
+msgid "Dashboard"
+msgstr "لوحة التحكم"
 
-#: .\templates\dashboard\base.html:292
-msgid "Settings"
-msgstr "الإعدادات"
+#: .\templates\components\user_menu.html:12
+#: .\templates\partials\dashboard_navbar.html:67
+#: .\templates\partials\navbar.html:48
+#, fuzzy
+#| msgid "User profile"
+msgid "Profile"
+msgstr "ملف المستخدم"
 
-#: .\templates\dashboard\base.html:295
-msgid "Users"
-msgstr "المستخدمين"
+#: .\templates\components\user_menu.html:13
+#: .\templates\partials\dashboard_navbar.html:71
+#, fuzzy
+#| msgid "Password"
+msgid "Change Password"
+msgstr "كلمة المرور"
 
-#: .\templates\dashboard\base.html:303
+#: .\templates\components\user_menu.html:17
 msgid "Logout"
 msgstr "تسجيل الخروج"
 
-#: .\templates\dashboard\base.html:322
-#: .\templates\dashboard\manage_categories.html:18
-msgid "Administration"
-msgstr "الإدارة"
+#: .\templates\components\user_menu.html:24
+msgid "Signup"
+msgstr ""
 
-#: .\templates\dashboard\base.html:368
-msgid "Signed in as"
-msgstr "تم تسجيل الدخول باسم"
-
-#: .\templates\dashboard\base.html:394
+#: .\templates\dashboard\base.html:21 .\templates\partials\footer.html:103
 msgid "All rights reserved."
 msgstr "جميع الحقوق محفوظة."
 
@@ -1185,90 +1572,91 @@ msgstr "جميع الحقوق محفوظة."
 msgid "Studio Dashboard"
 msgstr "لوحة تحكم الاستوديو"
 
-#: .\templates\dashboard\dashboard.html:14
+#: .\templates\dashboard\dashboard.html:12
 msgid "Analytics Center"
 msgstr "مركز التحليلات"
 
-#: .\templates\dashboard\dashboard.html:19
+#: .\templates\dashboard\dashboard.html:17
 msgid "Pulse"
 msgstr "نبض الاستوديو"
 
-#: .\templates\dashboard\dashboard.html:23
+#: .\templates\dashboard\dashboard.html:21
 msgid "Real-time overview of your projects, bookings, and studio health."
 msgstr "نظرة عامة فورية على مشاريعك، حجوزاتك، وحالة الاستوديو."
 
-#: .\templates\dashboard\dashboard.html:35
+#: .\templates\dashboard\dashboard.html:33
 msgid "Total Revenue"
 msgstr "إجمالي الإيرادات"
 
-#: .\templates\dashboard\dashboard.html:48
+#: .\templates\dashboard\dashboard.html:46
 msgid "Active Fleet"
 msgstr "المشاريع الجارية"
 
-#: .\templates\dashboard\dashboard.html:50
+#: .\templates\dashboard\dashboard.html:48
 msgid "Total Projects managed"
 msgstr "إجمالي المشاريع المدارة"
 
-#: .\templates\dashboard\dashboard.html:62
+#: .\templates\dashboard\dashboard.html:60
 msgid "Catalog"
 msgstr "الكتالوج"
 
-#: .\templates\dashboard\dashboard.html:64
+#: .\templates\dashboard\dashboard.html:62
 msgid "Live studio services"
 msgstr "خدمات الاستوديو المتاحة"
 
-#: .\templates\dashboard\dashboard.html:76
-#: .\templates\dashboard\studio\bookings\list.html:32
+#: .\templates\dashboard\dashboard.html:74
+#: .\templates\dashboard\studio\bookings\list.html:30
 msgid "Reservations"
 msgstr "الحجوزات"
 
-#: .\templates\dashboard\dashboard.html:99
+#: .\templates\dashboard\dashboard.html:97
 msgid "Schedule"
 msgstr "الجدول الزمني"
 
-#: .\templates\dashboard\dashboard.html:100
+#: .\templates\dashboard\dashboard.html:98
 msgid "Next 7 Days"
 msgstr "الـ 7 أيام القادمة"
 
-#: .\templates\dashboard\dashboard.html:122
+#: .\templates\dashboard\dashboard.html:120
 msgid "No upcoming bookings"
 msgstr "لا توجد حجوزات قادمة"
 
-#: .\templates\dashboard\dashboard.html:131
+#: .\templates\dashboard\dashboard.html:129
 msgid "Recent Works"
 msgstr "الأعمال الأخيرة"
 
-#: .\templates\dashboard\dashboard.html:132
+#: .\templates\dashboard\dashboard.html:130
 msgid "View Gallery"
 msgstr "عرض المعرض"
 
-#: .\templates\dashboard\dashboard.html:143
+#: .\templates\dashboard\dashboard.html:141
 msgid "Studio Project"
 msgstr "مشروع استوديو"
 
-#: .\templates\dashboard\dashboard.html:157
+#: .\templates\dashboard\dashboard.html:155
 msgid "Memberships"
 msgstr "العضويات"
 
-#: .\templates\dashboard\dashboard.html:161
+#: .\templates\dashboard\dashboard.html:159
 msgid "Total Active"
 msgstr "إجمالي النشط"
 
-#: .\templates\dashboard\dashboard.html:168
+#: .\templates\dashboard\dashboard.html:166
 msgid "Retention"
 msgstr "نسبة الاحتفاظ بالعملاء"
 
-#: .\templates\dashboard\dashboard.html:169
+#: .\templates\dashboard\dashboard.html:167
 #: .\templates\dashboard\studio\subscriptions\list.html:30
-#: .\templates\stores\checkout.html:74
+#: .\templates\stores\cart\detail.html:266 .\templates\stores\checkout.html:74
+#: .\templates\stores\checkout\confirm.html:66
 msgid "Total"
 msgstr "الإجمالي"
 
-#: .\templates\dashboard\dashboard.html:176
+#: .\templates\dashboard\dashboard.html:174
 msgid "Top Services"
 msgstr "أعلى الخدمات طلباً"
 
-#: .\templates\dashboard\dashboard.html:195
+#: .\templates\dashboard\dashboard.html:193
 msgid "Inbox"
 msgstr "صندوق الوارد"
 
@@ -1276,95 +1664,107 @@ msgstr "صندوق الوارد"
 msgid "Manage Categories"
 msgstr "إدارة الفئات"
 
-#: .\templates\dashboard\manage_categories.html:24
+#: .\templates\dashboard\manage_categories.html:14
+#: .\templates\partials\dashboard_navbar.html:16
+msgid "Administration"
+msgstr "الإدارة"
+
+#: .\templates\dashboard\manage_categories.html:17
+#: .\templates\dashboard\stores\form.html:274
+#: .\templates\partials\sidebar_links.html:67
+#: .\templates\stores\components\sidebar_filters.html:28
+msgid "Categories"
+msgstr "الفئات"
+
+#: .\templates\dashboard\manage_categories.html:20
 msgid ""
 "Define your marketplace structure. Organize how users discover stores and "
 "products."
 msgstr ""
 "حدد هيكل السوق الخاص بك. نظّم طريقة اكتشاف المستخدمين للمتاجر والمنتجات."
 
-#: .\templates\dashboard\manage_categories.html:53
+#: .\templates\dashboard\manage_categories.html:49
 #: .\templates\dashboard\studio\services\manage.html:73
 msgid "Edit Mode"
 msgstr "وضع التعديل"
 
-#: .\templates\dashboard\manage_categories.html:53
+#: .\templates\dashboard\manage_categories.html:49
 msgid "New Entry"
 msgstr "إدخال جديد"
 
-#: .\templates\dashboard\manage_categories.html:93
-#: .\templates\dashboard\manage_categories.html:357
+#: .\templates\dashboard\manage_categories.html:89
+#: .\templates\dashboard\manage_categories.html:353
 msgid "Update Category"
 msgstr "تحديث الفئة"
 
-#: .\templates\dashboard\manage_categories.html:95
+#: .\templates\dashboard\manage_categories.html:91
 msgid "Create New Category"
 msgstr "إنشاء فئة جديدة"
 
-#: .\templates\dashboard\manage_categories.html:100
+#: .\templates\dashboard\manage_categories.html:96
 msgid "Configure category names, visuals and linked product types."
 msgstr "تكوين أسماء الفئات، المرئيات، وأنواع المنتجات المرتبطة."
 
-#: .\templates\dashboard\manage_categories.html:110
+#: .\templates\dashboard\manage_categories.html:106
 #: .\templates\dashboard\stores\form.html:55
 #: .\templates\dashboard\studio\services\manage.html:155
 msgid "Cancel Editing"
 msgstr "إلغاء التعديل"
 
-#: .\templates\dashboard\manage_categories.html:211
+#: .\templates\dashboard\manage_categories.html:207
 msgid "Product Subcategories"
 msgstr "الفئات الفرعية للمنتجات"
 
-#: .\templates\dashboard\manage_categories.html:215
+#: .\templates\dashboard\manage_categories.html:211
 msgid "Add product types linked to this store category."
 msgstr "إضافة أنواع المنتجات المرتبطة بفئة المتجر هذه."
 
-#: .\templates\dashboard\manage_categories.html:227
+#: .\templates\dashboard\manage_categories.html:223
 msgid "Add Subcategory"
 msgstr "إضافة فئة فرعية"
 
-#: .\templates\dashboard\manage_categories.html:247
+#: .\templates\dashboard\manage_categories.html:243
 #: .\templates\dashboard\studio\packages\form.html:206
 msgid "Delete"
 msgstr "حذف"
 
-#: .\templates\dashboard\manage_categories.html:263
+#: .\templates\dashboard\manage_categories.html:259
 msgid "Subcategory"
 msgstr "فئة فرعية"
 
-#: .\templates\dashboard\manage_categories.html:267
+#: .\templates\dashboard\manage_categories.html:263
 msgid "Product classification"
 msgstr "تصنيف المنتج"
 
-#: .\templates\dashboard\manage_categories.html:317
+#: .\templates\dashboard\manage_categories.html:313
 msgid "Category Icon"
 msgstr "أيقونة الفئة"
 
-#: .\templates\dashboard\manage_categories.html:336
+#: .\templates\dashboard\manage_categories.html:332
 msgid "Upload Icon"
 msgstr "رفع أيقونة"
 
-#: .\templates\dashboard\manage_categories.html:340
+#: .\templates\dashboard\manage_categories.html:336
 msgid "Recommended size 512x512px"
 msgstr "الحجم الموصى به 512x512 بكسل"
 
-#: .\templates\dashboard\manage_categories.html:359
+#: .\templates\dashboard\manage_categories.html:355
 msgid "Create Category"
 msgstr "إنشاء فئة"
 
-#: .\templates\dashboard\manage_categories.html:429
+#: .\templates\dashboard\manage_categories.html:425
 msgid "Delete category?"
 msgstr "حذف الفئة؟"
 
-#: .\templates\dashboard\manage_categories.html:449
+#: .\templates\dashboard\manage_categories.html:445
 msgid "Subcategories"
 msgstr "فئات فرعية"
 
-#: .\templates\dashboard\manage_categories.html:483
+#: .\templates\dashboard\manage_categories.html:479
 msgid "No Categories Yet"
 msgstr "لا توجد فئات بعد"
 
-#: .\templates\dashboard\manage_categories.html:487
+#: .\templates\dashboard\manage_categories.html:483
 msgid ""
 "Start building your marketplace structure by creating your first category."
 msgstr "ابدأ في بناء هيكل سوقك عبر إنشاء فئتك الأولى."
@@ -1386,14 +1786,6 @@ msgstr "هل أنت متأكد من رغبتك في حذف هذا المتجر؟
 msgid "Yes, Delete"
 msgstr "نعم، احذف"
 
-#: .\templates\dashboard\products\delete.html:53
-#: .\templates\dashboard\products\form.html:386
-#: .\templates\dashboard\stores\delete.html:51
-#: .\templates\dashboard\studio\packages\form.html:228
-#: .\templates\dashboard\studio\projects\form.html:154
-msgid "Cancel"
-msgstr "إلغاء"
-
 #: .\templates\dashboard\products\detail.html:105
 #: .\templates\stores\product_detail.html:63
 msgid "reviews"
@@ -1405,13 +1797,12 @@ msgstr "العناصر المتوفرة في المخزن"
 
 #: .\templates\dashboard\products\detail.html:184
 #: .\templates\dashboard\stores\form.html:209
-#: .\templates\stores\product_detail.html:160
+#: .\templates\stores\product_detail.html:296
 msgid "Description"
 msgstr "الوصف"
 
 #: .\templates\dashboard\products\detail.html:203
 #: .\templates\dashboard\products\form.html:118
-#: .\templates\dashboard\products\list.html:212
 msgid "Variants"
 msgstr "الأنواع والموديلات"
 
@@ -1555,51 +1946,150 @@ msgstr "إنشاء قيمة جديدة"
 msgid "Please insert a valid value spec."
 msgstr "يرجى إدخال مواصفة قيمة صالحة."
 
-#: .\templates\dashboard\products\list.html:15
-msgid "Catalog Management"
-msgstr "إدارة الكتالوج"
+#: .\templates\dashboard\products\list.html:4
+#: .\templates\dashboard\users\list.html:4
+#, fuzzy
+#| msgid "Manage Services"
+msgid "Manage Users"
+msgstr "إدارة الخدمات"
 
-#: .\templates\dashboard\products\list.html:23
+#: .\templates\dashboard\products\list.html:14
+#: .\templates\dashboard\users\form.html:16
+#: .\templates\dashboard\users\list.html:14
+msgid "Directory"
+msgstr ""
+
+#: .\templates\dashboard\products\list.html:20
+#: .\templates\dashboard\studio\projects\list.html:18
+#: .\templates\dashboard\users\list.html:20
+msgid "List"
+msgstr "قائمة"
+
+#: .\templates\dashboard\products\list.html:25
 msgid ""
-"Manage inventory, variants, pricing and product catalog across all stores."
-msgstr "إدارة المخزون، والأنواع، والتسعير وكتالوج المنتجات لجميع المتاجر."
+"Manage all your platform members, control their application roles, and "
+"monitor account verification status."
+msgstr ""
 
-#: .\templates\dashboard\products\list.html:72
-msgid "Search products..."
-msgstr "البحث عن المنتجات..."
+#: .\templates\dashboard\products\list.html:30
+#: .\templates\dashboard\users\list.html:30
+#, fuzzy
+#| msgid "Users"
+msgid "All Users"
+msgstr "المستخدمين"
 
-#: .\templates\dashboard\products\list.html:80
+#: .\templates\dashboard\products\list.html:33
+#: .\templates\dashboard\users\list.html:33
+#, fuzzy
+#| msgid "Store Owner"
+msgid "Store Owners"
+msgstr "مالك المتجر"
+
+#: .\templates\dashboard\products\list.html:51
+#: .\templates\dashboard\users\list.html:51
+#, fuzzy
+#| msgid "Total Messages"
+msgid "Total Users"
+msgstr "إجمالي الرسائل"
+
+#: .\templates\dashboard\products\list.html:58
+#: .\templates\dashboard\users\list.html:58
+#, fuzzy
+#| msgid "Active Account"
+msgid "Add New Account"
+msgstr "حساب نشط"
+
+#: .\templates\dashboard\products\list.html:79
+msgid "Search users by name, email, or company..."
+msgstr ""
+
+#: .\templates\dashboard\products\list.html:84
 #: .\templates\dashboard\stores\list.html:97
+#: .\templates\dashboard\users\list.html:85
 msgid "Search"
 msgstr "بحث"
 
-#: .\templates\dashboard\products\list.html:232
-msgid "Available Colors"
-msgstr "الألوان المتاحة"
+#: .\templates\dashboard\products\list.html:95
+#: .\templates\dashboard\users\list.html:97
+#, fuzzy
+#| msgid "Identity"
+msgid "User Identity"
+msgstr "الهوية"
 
-#: .\templates\dashboard\products\list.html:280
-msgid "Gallery Images"
-msgstr "صور المعرض"
+#: .\templates\dashboard\products\list.html:96
+#: .\templates\dashboard\users\list.html:98
+msgid "Role Group"
+msgstr ""
 
-#: .\templates\dashboard\products\list.html:321
-msgid "No Products Found"
-msgstr "لم يتم العثور على منتجات"
+#: .\templates\dashboard\products\list.html:97
+#: .\templates\dashboard\users\list.html:99
+#, fuzzy
+#| msgid "Verified Account"
+msgid "Verification"
+msgstr "حساب موثق"
 
-#: .\templates\dashboard\products\list.html:326
-msgid "No products currently exist in the catalog."
-msgstr "لا توجد منتجات حالياً في الكتالوج."
+#: .\templates\dashboard\products\list.html:98
+#: .\templates\dashboard\users\list.html:100
+#, fuzzy
+#| msgid "Location"
+msgid "Contact & Location"
+msgstr "الموقع"
 
-#: .\templates\dashboard\products\list.html:347
-#: .\templates\dashboard\stores\list.html:352
-#: .\templates\stores\components\pagination.html:18
-msgid "Previous"
-msgstr "السابق"
+#: .\templates\dashboard\products\list.html:99
+#: .\templates\dashboard\users\list.html:101
+#, fuzzy
+#| msgid "End Date"
+msgid "Joined Date"
+msgstr "تاريخ الانتهاء"
 
-#: .\templates\dashboard\products\list.html:364
-#: .\templates\dashboard\stores\list.html:369
-#: .\templates\stores\components\pagination.html:26
-msgid "Next"
-msgstr "التالي"
+#: .\templates\dashboard\products\list.html:100
+#: .\templates\dashboard\studio\bookings\list.html:90
+#: .\templates\dashboard\users\list.html:102
+msgid "Actions"
+msgstr "الإجراءات"
+
+#: .\templates\dashboard\products\list.html:148
+#: .\templates\dashboard\stores\form.html:298
+#: .\templates\dashboard\stores\list.html:142
+#: .\templates\dashboard\users\list.html:149
+msgid "Verified"
+msgstr "موثق"
+
+#: .\templates\dashboard\products\list.html:182
+#: .\templates\dashboard\users\form.html:6
+#: .\templates\dashboard\users\list.html:183
+#, fuzzy
+#| msgid "Edit Mode"
+msgid "Edit User"
+msgstr "وضع التعديل"
+
+#: .\templates\dashboard\products\list.html:185
+#: .\templates\dashboard\users\list.html:186
+#, fuzzy
+#| msgid "Delete"
+msgid "Delete User"
+msgstr "حذف"
+
+#: .\templates\dashboard\products\list.html:198
+#: .\templates\dashboard\users\list.html:199
+#, fuzzy
+#| msgid "No Stores Found"
+msgid "No Users Found"
+msgstr "لم يتم العثور على متاجر"
+
+#: .\templates\dashboard\products\list.html:201
+#: .\templates\dashboard\users\list.html:202
+msgid "There are no users registered matching your selected query filters."
+msgstr ""
+
+#: .\templates\dashboard\products\list.html:213
+#: .\templates\dashboard\users\list.html:217
+#, python-format
+msgid ""
+"\n"
+"                    Showing %(start)s to %(end)s of %(total)s entries\n"
+"                "
+msgstr ""
 
 #: .\templates\dashboard\stores\form.html:4
 msgid "Store Form"
@@ -1642,11 +2132,6 @@ msgstr "الشعار اللفظي / التعريفي"
 msgid "Social Links"
 msgstr "روابط التواصل الاجتماعي"
 
-#: .\templates\dashboard\stores\form.html:298
-#: .\templates\dashboard\stores\list.html:142
-msgid "Verified"
-msgstr "موثق"
-
 #: .\templates\dashboard\stores\form.html:315
 msgid "Save Store"
 msgstr "حفظ المتجر"
@@ -1687,43 +2172,49 @@ msgstr "لم يتم العثور على متاجر"
 msgid "Try changing filters or create a new store."
 msgstr "حاول تغيير الفلاتر أو إنشاء متجر جديد."
 
+#: .\templates\dashboard\stores\list.html:352
+#: .\templates\stores\components\pagination.html:18
+msgid "Previous"
+msgstr "السابق"
+
+#: .\templates\dashboard\stores\list.html:369
+#: .\templates\stores\components\pagination.html:26
+msgid "Next"
+msgstr "التالي"
+
 #: .\templates\dashboard\studio\bookings\list.html:4
 msgid "Bookings Calendar"
 msgstr "تقويم الحجوزات"
 
-#: .\templates\dashboard\studio\bookings\list.html:14
+#: .\templates\dashboard\studio\bookings\list.html:12
 msgid "Studio Management"
 msgstr "إدارة الاستوديو"
 
-#: .\templates\dashboard\studio\bookings\list.html:18
+#: .\templates\dashboard\studio\bookings\list.html:16
 msgid "Calendar"
 msgstr "التقويم"
 
-#: .\templates\dashboard\studio\bookings\list.html:21
+#: .\templates\dashboard\studio\bookings\list.html:19
 msgid "Manage your schedule and client sessions for"
 msgstr "إدارة جدولك الزمني وجلسات العملاء لـ"
 
-#: .\templates\dashboard\studio\bookings\list.html:48
+#: .\templates\dashboard\studio\bookings\list.html:46
 msgid "Reservation Details"
 msgstr "تفاصيل الحجز"
 
-#: .\templates\dashboard\studio\bookings\list.html:67
+#: .\templates\dashboard\studio\bookings\list.html:65
 msgid "Appointment Date & Time"
 msgstr "تاريخ ووقت الموعد"
 
-#: .\templates\dashboard\studio\bookings\list.html:82
+#: .\templates\dashboard\studio\bookings\list.html:80
 msgid "All Bookings"
 msgstr "كل الحجوزات"
 
-#: .\templates\dashboard\studio\bookings\list.html:90
+#: .\templates\dashboard\studio\bookings\list.html:88
 msgid "Date & Time"
 msgstr "التاريخ والوقت"
 
-#: .\templates\dashboard\studio\bookings\list.html:92
-msgid "Actions"
-msgstr "الإجراءات"
-
-#: .\templates\dashboard\studio\bookings\list.html:127
+#: .\templates\dashboard\studio\bookings\list.html:125
 msgid "No bookings found."
 msgstr "لم يتم العثور على حجوزات."
 
@@ -1735,12 +2226,6 @@ msgstr "الرسائل"
 #: .\templates\dashboard\studio\contacts\list.html:16
 msgid "Communication Center"
 msgstr "مركز الاتصالات"
-
-#: .\templates\dashboard\studio\contacts\list.html:19
-#: .\templates\studio\base.html:82 .\templates\studio\base.html:122
-#: .\templates\studio\base.html:184
-msgid "Contact"
-msgstr "اتصل بنا"
 
 #: .\templates\dashboard\studio\contacts\list.html:25
 msgid "Manage, review, and toggle the read status of client inquiries."
@@ -1795,11 +2280,13 @@ msgstr "إنشاء باقة"
 
 #: .\templates\dashboard\studio\packages\form.html:26
 #: .\templates\dashboard\studio\projects\form.html:25
+#: .\templates\dashboard\users\form.html:21
 msgid "Edit"
 msgstr "تعديل"
 
 #: .\templates\dashboard\studio\packages\form.html:28
 #: .\templates\dashboard\studio\projects\form.html:27
+#: .\templates\dashboard\users\form.html:23
 msgid "Create"
 msgstr "إنشاء"
 
@@ -1838,7 +2325,6 @@ msgid "Manage subscription packages and pricing plans."
 msgstr "إدارة باقات الاشتراك وخطط التسعير."
 
 #: .\templates\dashboard\studio\packages\list.html:100
-#: .\templates\studio\index.html:265
 msgid "month"
 msgstr "شهر"
 
@@ -1877,7 +2363,7 @@ msgid "Update Project"
 msgstr "تحديث المشروع"
 
 #: .\templates\dashboard\studio\projects\form.html:63
-#: .\templates\dashboard\studio\projects\list.html:51
+#: .\templates\dashboard\studio\projects\list.html:47
 msgid "New Project"
 msgstr "مشروع جديد"
 
@@ -1893,27 +2379,23 @@ msgstr "رفع صورة غلاف المشروع (JPG, PNG, WEBP)"
 msgid "Manage Projects"
 msgstr "إدارة المشاريع"
 
-#: .\templates\dashboard\studio\projects\list.html:21
-msgid "List"
-msgstr "قائمة"
-
-#: .\templates\dashboard\studio\projects\list.html:26
+#: .\templates\dashboard\studio\projects\list.html:23
 msgid "Manage all your active and archived projects in one place."
 msgstr "إدارة جميع مشاريعك النشطة والمؤرشفة في مكان واحد."
 
-#: .\templates\dashboard\studio\projects\list.html:125
+#: .\templates\dashboard\studio\projects\list.html:119
 msgid "No description available"
 msgstr "لا يوجد وصف متاح"
 
-#: .\templates\dashboard\studio\projects\list.html:141
+#: .\templates\dashboard\studio\projects\list.html:135
 msgid "Images"
 msgstr "الصور"
 
-#: .\templates\dashboard\studio\projects\list.html:185
+#: .\templates\dashboard\studio\projects\list.html:179
 msgid "No Projects Yet"
 msgstr "لا توجد مشاريع بعد"
 
-#: .\templates\dashboard\studio\projects\list.html:189
+#: .\templates\dashboard\studio\projects\list.html:183
 msgid "Create your first project to start building your portfolio."
 msgstr "أنشئ مشروعك الأول للبدء في بناء معرض أعمالك."
 
@@ -2024,7 +2506,7 @@ msgid "Monitor customer reviews and ratings."
 msgstr "مراقبة مراجعات وتقييمات العملاء."
 
 #: .\templates\dashboard\studio\testimonials\list.html:62
-#: .\templates\stores\product_detail.html:163
+#: .\templates\stores\product_detail.html:299
 #: .\templates\stores\store_detail.html:112
 msgid "Reviews"
 msgstr "المراجعات"
@@ -2037,52 +2519,281 @@ msgstr "مخفي"
 msgid "No testimonials found."
 msgstr "لم يتم العثور على آراء عملاء."
 
-#: .\templates\stores\base.html:93 .\templates\stores\base.html:181
-#: .\templates\stores\store_list.html:4
-msgid "Explore Stores"
-msgstr "استكشف المتاجر"
+#: .\templates\dashboard\users\form.html:8
+#, fuzzy
+#| msgid "Create Service"
+msgid "Create User"
+msgstr "إنشاء خدمة"
 
-#: .\templates\stores\base.html:102
-msgid "Search..."
-msgstr "بحث..."
+#: .\templates\dashboard\users\form.html:26
+#, fuzzy
+#| msgid "Verified Account"
+msgid "User Account"
+msgstr "حساب موثق"
 
-#: .\templates\stores\base.html:178 .\templates\stores\product_detail.html:10
-#: .\templates\studio\base.html:77 .\templates\studio\base.html:117
-#: .\templates\studio\pages\services.html:4
-msgid "Home"
-msgstr "الرئيسية"
-
-#: .\templates\stores\base.html:218 .\templates\studio\base.html:70
-#: .\templates\studio\base.html:166
-msgid "Photography & Digital Marketing"
-msgstr "التصوير الفوتوغرافي والتسويق الرقمي"
-
-#: .\templates\stores\base.html:224
+#: .\templates\dashboard\users\form.html:31
 msgid ""
-"Empowering local businesses through digital transformation and professional "
-"visual identity."
+"Manage user account parameters, assign platform privileges, and update "
+"profile localized records."
 msgstr ""
-"تمكين الشركات المحلية من خلال التحول الرقمي والهوية البصرية الاحترافية."
 
-#: .\templates\stores\base.html:229
-msgid "Navigation"
-msgstr "التصفح"
+#: .\templates\dashboard\users\form.html:39
+msgid "Please resolve the following errors:"
+msgstr ""
 
-#: .\templates\stores\base.html:231
-msgid "How it works"
-msgstr "كيف يعمل"
+#: .\templates\dashboard\users\form.html:65
+msgid "Update Account Identity"
+msgstr ""
 
-#: .\templates\stores\base.html:232
-msgid "Browse Categories"
-msgstr "تصفح الفئات"
+#: .\templates\dashboard\users\form.html:67
+msgid "New Account Profile"
+msgstr ""
 
-#: .\templates\stores\base.html:238
+#: .\templates\dashboard\users\form.html:71
+msgid ""
+"Configure access controls, contact information, and localization blocks."
+msgstr ""
+
+#: .\templates\dashboard\users\form.html:82
+msgid "Account Core Credentials & Permissions"
+msgstr ""
+
+#: .\templates\dashboard\users\form.html:121
+msgid "Personal Identity Names"
+msgstr ""
+
+#: .\templates\dashboard\users\form.html:127
+#, fuzzy
+#| msgid "First Name (AR)"
+msgid "First Name (Standard)"
+msgstr "الاسم الأول (عربي)"
+
+#: .\templates\dashboard\users\form.html:134
+#, fuzzy
+#| msgid "Last Name (AR)"
+msgid "Last Name (Standard)"
+msgstr "اسم العائلة (عربي)"
+
+#: .\templates\dashboard\users\form.html:141
+#, fuzzy
+#| msgid "First Name (AR)"
+msgid "First Name (Arabic)"
+msgstr "الاسم الأول (عربي)"
+
+#: .\templates\dashboard\users\form.html:148
+#, fuzzy
+#| msgid "Last Name (AR)"
+msgid "Last Name (Arabic)"
+msgstr "اسم العائلة (عربي)"
+
+#: .\templates\dashboard\users\form.html:160
+msgid "Groups & Django Object Permissions"
+msgstr ""
+
+#: .\templates\dashboard\users\form.html:166
+msgid "Assigned Group Roles"
+msgstr ""
+
+#: .\templates\dashboard\users\form.html:173
+msgid "Explicit Access Permissions"
+msgstr ""
+
+#: .\templates\dashboard\users\form.html:185
+#, fuzzy
+#| msgid "Reservation Details"
+msgid "Business & Location Details"
+msgstr "تفاصيل الحجز"
+
+#: .\templates\dashboard\users\form.html:191
+#, fuzzy
+#| msgid "Company Name"
+msgid "Company / Brand Name"
+msgstr "اسم الشركة"
+
+#: .\templates\dashboard\users\form.html:205
+#, fuzzy
+#| msgid "Shipping Address"
+msgid "Physical Address"
+msgstr "عنوان الشحن"
+
+#: .\templates\dashboard\users\form.html:217
+msgid "Biography / Studio Shop Descriptions"
+msgstr ""
+
+#: .\templates\dashboard\users\form.html:223
+#, fuzzy
+#| msgid "Description (English)"
+msgid "Bio / Description (English)"
+msgstr "الوصف (إنجليزي)"
+
+#: .\templates\dashboard\users\form.html:230
+#, fuzzy
+#| msgid "Description (Arabic)"
+msgid "Bio / Description (Arabic)"
+msgstr "الوصف (عربي)"
+
+#: .\templates\dashboard\users\form.html:237
+#, fuzzy
+#| msgid "Description (French)"
+msgid "Bio / Description (French)"
+msgstr "الوصف (فرنسي)"
+
+#: .\templates\dashboard\users\form.html:251
+msgid "User Avatar Photo"
+msgstr ""
+
+#: .\templates\dashboard\users\form.html:256
+#, fuzzy
+#| msgid "Upload project cover image (JPG, PNG, WEBP)"
+msgid "Upload professional headshot portrait (JPG, PNG, WEBP)"
+msgstr "رفع صورة غلاف المشروع (JPG, PNG, WEBP)"
+
+#: .\templates\dashboard\users\form.html:270
+msgid "System State Settings"
+msgstr ""
+
+#: .\templates\dashboard\users\form.html:277
+msgid "Allows login tracking"
+msgstr ""
+
+#: .\templates\dashboard\users\form.html:284
+msgid "Staff Privilege"
+msgstr ""
+
+#: .\templates\dashboard\users\form.html:285
+msgid "Access admin workspace"
+msgstr ""
+
+#: .\templates\dashboard\users\form.html:292
+msgid "Superuser Privilege"
+msgstr ""
+
+#: .\templates\dashboard\users\form.html:293
+msgid "Full system access"
+msgstr ""
+
+#: .\templates\dashboard\users\form.html:300
+#, fuzzy
+#| msgid "Verified Vendor"
+msgid "Verified Verified"
+msgstr "بائع موثق"
+
+#: .\templates\dashboard\users\form.html:301
+msgid "Verified Business check"
+msgstr ""
+
+#: .\templates\dashboard\users\form.html:322
+#, fuzzy
+#| msgid "Updated At"
+msgid "Update Account"
+msgstr "تاريخ التحديث"
+
+#: .\templates\dashboard\users\list.html:25
+msgid ""
+"Manage all platform members, control their application roles, and monitor "
+"account verification status."
+msgstr ""
+
+#: .\templates\dashboard\users\list.html:80
+msgid "Search users by name, email, phone, or company..."
+msgstr ""
+
+#: .\templates\dashboard\users\list.html:222
+#, python-format
+msgid ""
+"\n"
+"                    Page %(current)s of %(total_pages)s\n"
+"                "
+msgstr ""
+
+#: .\templates\partials\footer.html:14
+msgid ""
+"MarketShot combines professional media production, digital marketing "
+"services, and an online marketplace to help businesses grow their presence "
+"and sales."
+msgstr ""
+
+#: .\templates\partials\footer.html:48 .\templates\stores\cart\detail.html:19
+msgid "Marketplace"
+msgstr "السوق الرقمي"
+
+#: .\templates\partials\footer.html:71
 msgid "Weekly Digest"
 msgstr "الملخص الأسبوعي"
 
-#: .\templates\stores\base.html:239
-msgid "New stores and tips in your inbox."
-msgstr "متاجر جديدة ونصائح في صندوق بريدك."
+#: .\templates\partials\footer.html:75
+msgid "New stores, offers and marketing insights."
+msgstr ""
+
+#: .\templates\partials\sidebar_links.html:58
+msgid "Contacts"
+msgstr "جهات الاتصال"
+
+#: .\templates\partials\sidebar_links.html:62
+msgid "Commerce"
+msgstr "التجارة"
+
+#: .\templates\partials\sidebar_links.html:81
+msgid "Settings"
+msgstr "الإعدادات"
+
+#: .\templates\stores\cart\detail.html:5
+#, fuzzy
+#| msgid "Shooting area"
+msgid "Shopping Cart"
+msgstr "منطقة التصوير"
+
+#: .\templates\stores\cart\detail.html:23
+#, fuzzy
+#| msgid "Shipping"
+msgid "Shopping"
+msgstr "الشحن"
+
+#: .\templates\stores\cart\detail.html:30
+msgid "Review your selected products before checkout."
+msgstr ""
+
+#: .\templates\stores\cart\detail.html:52
+#: .\templates\stores\cart\detail.html:234
+#: .\templates\stores\checkout\confirm.html:20
+msgid "Items"
+msgstr "عناصر"
+
+#: .\templates\stores\cart\detail.html:117
+#, fuzzy
+#| msgid "Product Attributes"
+msgid "No attributes"
+msgstr "خصائص المنتجات"
+
+#: .\templates\stores\cart\detail.html:203
+#: .\templates\stores\cart\detail.html:408
+msgid "Your cart is empty"
+msgstr ""
+
+#: .\templates\stores\cart\detail.html:210
+#: .\templates\stores\cart\detail.html:415
+#, fuzzy
+#| msgid "Base Product"
+msgid "Browse Products"
+msgstr "المنتج الأساسي"
+
+#: .\templates\stores\cart\detail.html:226 .\templates\stores\checkout.html:44
+#: .\templates\stores\checkout\confirm.html:52
+msgid "Order Summary"
+msgstr "ملخص الطلب"
+
+#: .\templates\stores\cart\detail.html:248 .\templates\stores\checkout.html:66
+#: .\templates\stores\checkout\confirm.html:56
+msgid "Subtotal"
+msgstr "المجموع الفرعي"
+
+#: .\templates\stores\cart\detail.html:291
+msgid "Checkout"
+msgstr ""
+
+#: .\templates\stores\cart\detail.html:372
+msgid "Remove this product?"
+msgstr ""
 
 #: .\templates\stores\checkout.html:2
 msgid "Complete Your Order"
@@ -2092,15 +2803,8 @@ msgstr "أكمل طلبك"
 msgid "Cash"
 msgstr "نقداً"
 
-#: .\templates\stores\checkout.html:44
-msgid "Order Summary"
-msgstr "ملخص الطلب"
-
-#: .\templates\stores\checkout.html:66
-msgid "Subtotal"
-msgstr "المجموع الفرعي"
-
 #: .\templates\stores\checkout.html:70
+#: .\templates\stores\checkout\confirm.html:61
 msgid "Shipping"
 msgstr "الشحن"
 
@@ -2109,8 +2813,46 @@ msgid "Calculated next"
 msgstr "يُحسب في الخطوة التالية"
 
 #: .\templates\stores\checkout.html:80
+#: .\templates\stores\checkout\confirm.html:78
 msgid "Place Order"
 msgstr "تأكيد الطلب"
+
+#: .\templates\stores\checkout\address.html:14
+msgid "Enter your delivery information."
+msgstr ""
+
+#: .\templates\stores\checkout\address.html:60
+msgid "City"
+msgstr "المدينة"
+
+#: .\templates\stores\checkout\address.html:94
+msgid "Continue to Payment"
+msgstr ""
+
+#: .\templates\stores\checkout\confirm.html:4
+#: .\templates\stores\checkout\confirm.html:10
+#, fuzzy
+#| msgid "Confirmed"
+msgid "Confirm Order"
+msgstr "تم التأكيد"
+
+#: .\templates\stores\checkout\payment.html:32
+msgid "Pay when your order arrives."
+msgstr ""
+
+#: .\templates\stores\checkout\payment.html:47
+msgid "Bank Transfer"
+msgstr ""
+
+#: .\templates\stores\checkout\payment.html:51
+msgid "Transfer before shipment."
+msgstr ""
+
+#: .\templates\stores\checkout\payment.html:59
+#, fuzzy
+#| msgid "Reviews"
+msgid "Review Order"
+msgstr "المراجعات"
 
 #: .\templates\stores\components\pagination.html:8
 msgid "Showing page"
@@ -2120,13 +2862,11 @@ msgstr "عرض الصفحة"
 msgid "of"
 msgstr "من"
 
-#: .\templates\stores\components\product_card.html:44
-#: .\templates\stores\index.html:211 .\templates\stores\index.html:295
-msgid "Quick Add"
-msgstr "إضافة سريعة"
+#: .\templates\stores\components\product_card.html:45
+msgid "Show Details"
+msgstr ""
 
-#: .\templates\stores\components\product_card.html:95
-#: .\templates\stores\index.html:240 .\templates\stores\index.html:346
+#: .\templates\stores\components\product_card.html:96
 msgid "In Stock"
 msgstr "متوفر"
 
@@ -2268,59 +3008,43 @@ msgstr "لا توجد منتجات مدرجة ضمن الفلاتر المحدد
 msgid "Clear Filters"
 msgstr "مسح الفلاتر"
 
-#: .\templates\stores\index.html:132
-msgid "Curated Selection"
-msgstr "تشكيلة مختارة بعناية"
-
-#: .\templates\stores\index.html:133
-msgid "Trending Now"
-msgstr "رائج الآن"
-
-#: .\templates\stores\index.html:168
-msgid "BEST SELLER"
-msgstr "الأكثر مبيعاً"
-
-#: .\templates\stores\index.html:363
-msgid "No trending products available at the moment."
-msgstr "لا توجد منتجات رائجة متاحة حالياً."
-
 #: .\templates\stores\product_detail.html:53
 msgid "Sold by"
 msgstr "تباع بواسطة"
 
-#: .\templates\stores\product_detail.html:128
+#: .\templates\stores\product_detail.html:261
 msgid "Add to Cart"
 msgstr "أضف إلى السلة"
 
-#: .\templates\stores\product_detail.html:139
+#: .\templates\stores\product_detail.html:275
 msgid "Delivery"
 msgstr "التوصيل"
 
-#: .\templates\stores\product_detail.html:140
+#: .\templates\stores\product_detail.html:276
 msgid "58 States"
 msgstr "58 ولاية"
 
-#: .\templates\stores\product_detail.html:149
+#: .\templates\stores\product_detail.html:285
 msgid "Warranty"
 msgstr "الضمان"
 
-#: .\templates\stores\product_detail.html:150
+#: .\templates\stores\product_detail.html:286
 msgid "Authentic Gear"
 msgstr "معدات أصليّة"
 
-#: .\templates\stores\product_detail.html:175
+#: .\templates\stores\product_detail.html:311
 msgid "No description available."
 msgstr "لا يوجد وصف متاح."
 
-#: .\templates\stores\product_detail.html:208
+#: .\templates\stores\product_detail.html:344
 msgid "No customer stories submitted for this item yet."
 msgstr "لا توجد تجارب عملاء مرسلة لهذا المنتج بعد."
 
-#: .\templates\stores\product_detail.html:216
+#: .\templates\stores\product_detail.html:352
 msgid "Related Products"
 msgstr "منتجات ذات صلة"
 
-#: .\templates\stores\product_detail.html:226
+#: .\templates\stores\product_detail.html:362
 msgid "No related premium gear found in this category."
 msgstr "لم يتم العثور على معدات مميزة ذات صلة في هذه الفئة."
 
@@ -2348,6 +3072,10 @@ msgstr "الفلاتر"
 #: .\templates\stores\store_detail.html:115
 msgid "About Store"
 msgstr "حول المتجر"
+
+#: .\templates\stores\store_list.html:4
+msgid "Explore Stores"
+msgstr "استكشف المتاجر"
 
 #: .\templates\stores\store_list.html:12
 msgid "Discover"
@@ -2399,27 +3127,6 @@ msgstr "لم يتم تحديد موقع متاجر مطابقة"
 #: .\templates\stores\store_list.html:157
 msgid "Try modifying search parameters or clearing filters."
 msgstr "حاول تعديل معايير البحث أو مسح الفلاتر."
-
-#: .\templates\studio\base.html:80 .\templates\studio\base.html:120
-#: .\templates\studio\base.html:179
-msgid "Portfolio"
-msgstr "معرض الأعمال"
-
-#: .\templates\studio\base.html:172
-msgid ""
-"The creative ecosystem for brands that want to lead the market through high-"
-"end production and performance marketing."
-msgstr ""
-"النظام الإبداعي المتكامل للعلامات التجارية التي ترغب في قيادة السوق من خلال "
-"الإنتاج الراقي والتسويق القائم على الأداء."
-
-#: .\templates\studio\booking.html:11
-msgid "Book Your Studio Session"
-msgstr "احجز جلستك في الاستوديو"
-
-#: .\templates\studio\booking.html:15
-msgid "Choose your service and proceed to booking."
-msgstr "اختر خدمتك وتابع لإتمام الحجز."
 
 #: .\templates\studio\index.html:4
 msgid "MarketShot | Creative Production & Digital Marketing"
@@ -2581,39 +3288,39 @@ msgstr "اختر مستوى الإنتاج المناسب لمرحلة نمو ع
 msgid "Most Popular"
 msgstr "الأكثر شعبية"
 
-#: .\templates\studio\index.html:268
+#: .\templates\studio\index.html:279
 msgid "Custom"
 msgstr "مخصص"
 
-#: .\templates\studio\index.html:321
+#: .\templates\studio\index.html:332
 msgid "Select Growth"
 msgstr "اختر خطة النمو"
 
-#: .\templates\studio\index.html:323
+#: .\templates\studio\index.html:334
 msgid "Choose Starter"
 msgstr "اختر خطة البداية"
 
-#: .\templates\studio\index.html:325
+#: .\templates\studio\index.html:336
 msgid "Custom Quote"
 msgstr "طلب تسعيرة مخصصة"
 
-#: .\templates\studio\index.html:347
+#: .\templates\studio\index.html:358
 msgid "Client Testimonials"
 msgstr "آراء وتوصيات العملاء"
 
-#: .\templates\studio\index.html:351
+#: .\templates\studio\index.html:362
 msgid "See what our clients say about working with MarketShot."
 msgstr "شاهد ماذا يقول عملاؤنا عن العمل مع ماركت شوت."
 
-#: .\templates\studio\index.html:411
+#: .\templates\studio\index.html:422
 msgid "No testimonials available yet."
 msgstr "لا توجد آراء عملاء متاحة بعد."
 
-#: .\templates\studio\index.html:427
+#: .\templates\studio\index.html:438
 msgid "Ready to scale your legacy?"
 msgstr "جاهز لتوسيع آفاق إرثك التجاري؟"
 
-#: .\templates\studio\index.html:430
+#: .\templates\studio\index.html:441
 msgid ""
 "Let's build something extraordinary together. Book your discovery session "
 "today and transform your brand's digital presence."
@@ -2621,58 +3328,143 @@ msgstr ""
 "لنَبنِ شيئاً استثنائياً معاً. احجز جلستك الاستكشافية اليوم وحوّل الحضور الرقمي "
 "لعلامتك التجارية."
 
-#: .\templates\studio\index.html:435
+#: .\templates\studio\index.html:446
 msgid "Book a Session"
 msgstr "احجز جلسة"
 
-#: .\templates\studio\index.html:439 .\templates\studio\index.html:465
+#: .\templates\studio\index.html:450 .\templates\studio\index.html:473
 msgid "Contact Us"
 msgstr "اتصل بنا"
 
-#: .\templates\studio\index.html:445
-msgid "Abstract gradient"
-msgstr "تدرج تجريدي"
-
-#: .\templates\studio\index.html:469
+#: .\templates\studio\index.html:477
 msgid "Let's build something amazing"
 msgstr "فلنصنع شيئاً مذهلاً"
 
-#: .\templates\studio\index.html:473
+#: .\templates\studio\index.html:481
 msgid ""
 "Have a project in mind? Send us a message and our team will get back to you."
 msgstr "هل لديك مشروع في ذهنك؟ أرسل لنا رسالة وسيقوم فريقنا بالرد عليك."
 
-#: .\templates\studio\index.html:491
+#: .\templates\studio\index.html:497
 msgid "Email Us"
 msgstr "راسلنا بريدياً"
 
-#: .\templates\studio\index.html:509
+#: .\templates\studio\index.html:513
 msgid "Call Us"
 msgstr "اتصل بنا هاتفياً"
 
-#: .\templates\studio\index.html:531
+#: .\templates\studio\index.html:533
 msgid "Tlemcen, Algeria"
 msgstr "تلمسان، الجزائر"
 
-#: .\templates\studio\index.html:559
+#: .\templates\studio\index.html:556
 msgid "Your name"
 msgstr "اسمك"
 
-#: .\templates\studio\index.html:573
+#: .\templates\studio\index.html:569
 msgid "Your email"
 msgstr "بريدك الإلكتروني"
 
-#: .\templates\studio\index.html:590
+#: .\templates\studio\index.html:583
 msgid "Project subject"
 msgstr "موضوع المشروع"
 
-#: .\templates\studio\index.html:606
+#: .\templates\studio\index.html:596
 msgid "Tell us about your project..."
 msgstr "أخبرنا عن مشروعك..."
 
-#: .\templates\studio\index.html:615
+#: .\templates\studio\index.html:605
 msgid "Send Message"
 msgstr "إرسال الرسالة"
+
+#~ msgid "City (EN)"
+#~ msgstr "المدينة (إنجليزي)"
+
+#~ msgid "City (AR)"
+#~ msgstr "المدينة (عربي)"
+
+#~ msgid "City (FR)"
+#~ msgstr "المدينة (فرنسي)"
+
+#~ msgid "State"
+#~ msgstr "الولاية / المقاطعة"
+
+#~ msgid "Creative Ecosystem"
+#~ msgstr "النظام الإبداعي المتكامل"
+
+#~ msgid "Catalog Management"
+#~ msgstr "إدارة الكتالوج"
+
+#~ msgid ""
+#~ "Manage inventory, variants, pricing and product catalog across all stores."
+#~ msgstr "إدارة المخزون، والأنواع، والتسعير وكتالوج المنتجات لجميع المتاجر."
+
+#~ msgid "Search products..."
+#~ msgstr "البحث عن المنتجات..."
+
+#~ msgid "Available Colors"
+#~ msgstr "الألوان المتاحة"
+
+#~ msgid "Gallery Images"
+#~ msgstr "صور المعرض"
+
+#~ msgid "No Products Found"
+#~ msgstr "لم يتم العثور على منتجات"
+
+#~ msgid "No products currently exist in the catalog."
+#~ msgstr "لا توجد منتجات حالياً في الكتالوج."
+
+#~ msgid "Search..."
+#~ msgstr "بحث..."
+
+#~ msgid ""
+#~ "Empowering local businesses through digital transformation and "
+#~ "professional visual identity."
+#~ msgstr ""
+#~ "تمكين الشركات المحلية من خلال التحول الرقمي والهوية البصرية الاحترافية."
+
+#~ msgid "Navigation"
+#~ msgstr "التصفح"
+
+#~ msgid "How it works"
+#~ msgstr "كيف يعمل"
+
+#~ msgid "Browse Categories"
+#~ msgstr "تصفح الفئات"
+
+#~ msgid "New stores and tips in your inbox."
+#~ msgstr "متاجر جديدة ونصائح في صندوق بريدك."
+
+#~ msgid "Quick Add"
+#~ msgstr "إضافة سريعة"
+
+#~ msgid "Curated Selection"
+#~ msgstr "تشكيلة مختارة بعناية"
+
+#~ msgid "Trending Now"
+#~ msgstr "رائج الآن"
+
+#~ msgid "BEST SELLER"
+#~ msgstr "الأكثر مبيعاً"
+
+#~ msgid "No trending products available at the moment."
+#~ msgstr "لا توجد منتجات رائجة متاحة حالياً."
+
+#~ msgid ""
+#~ "The creative ecosystem for brands that want to lead the market through "
+#~ "high-end production and performance marketing."
+#~ msgstr ""
+#~ "النظام الإبداعي المتكامل للعلامات التجارية التي ترغب في قيادة السوق من "
+#~ "خلال الإنتاج الراقي والتسويق القائم على الأداء."
+
+#~ msgid "Book Your Studio Session"
+#~ msgstr "احجز جلستك في الاستوديو"
+
+#~ msgid "Choose your service and proceed to booking."
+#~ msgstr "اختر خدمتك وتابع لإتمام الحجز."
+
+#~ msgid "Abstract gradient"
+#~ msgstr "تدرج تجريدي"
 
 #~ msgid "MarketShot | All-in-One Creative Production & Marketing"
 #~ msgstr "ماركت شوت | الإنتاج الإبداعي والتسويق المتكامل"
@@ -2686,9 +3478,6 @@ msgstr "إرسال الرسالة"
 #~ msgid "Dominate the Market"
 #~ msgstr "سيطر على السوق"
 
-#~ msgid "with MarketShot"
-#~ msgstr "مع ماركت شوت"
-
 #~ msgid ""
 #~ "We solve your visual and marketing challenges. From professional studio "
 #~ "shoots to high-converting ad campaigns and our exclusive digital showcase "
@@ -2700,9 +3489,6 @@ msgstr "إرسال الرسالة"
 
 #~ msgid "Start Your Project"
 #~ msgstr "ابدأ مشروعك"
-
-#~ msgid "Visit Our Platform"
-#~ msgstr "قم بزيارة منصتنا"
 
 #~ msgid "MarketShot Studio"
 #~ msgstr "استوديو ماركت شوت"
@@ -2843,9 +3629,6 @@ msgstr "إرسال الرسالة"
 #~ msgid "Studio gear"
 #~ msgstr "معدات الاستوديو"
 
-#~ msgid "Shooting area"
-#~ msgstr "منطقة التصوير"
-
 #~ msgid "Post-production"
 #~ msgstr "ما بعد الإنتاج / المونتاج"
 
@@ -2888,9 +3671,6 @@ msgstr "إرسال الرسالة"
 
 #~ msgid "Toggle Theme"
 #~ msgstr "تبديل المظهر"
-
-#~ msgid "User profile"
-#~ msgstr "ملف المستخدم"
 
 #~ msgid "Luxury interior"
 #~ msgstr "تصميم داخلي فاخر"
@@ -3009,9 +3789,6 @@ msgstr "إرسال الرسالة"
 #~ "نربط بين الهواة المتميزين وأفضل صانعي البوتيكات في العالم من خلال تجربة "
 #~ "رقمية سلسة."
 
-#~ msgid "Marketplace"
-#~ msgstr "السوق الرقمي"
-
 #~ msgid "Curated categories"
 #~ msgstr "فئات مختارة"
 
@@ -3050,9 +3827,6 @@ msgstr "إرسال الرسالة"
 
 #~ msgid "Found"
 #~ msgstr "تم العثور على"
-
-#~ msgid "Items"
-#~ msgstr "عناصر"
 
 #~ msgid "High-End Marketplace"
 #~ msgstr "سوق المنتجات الفاخرة"

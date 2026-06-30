@@ -24,8 +24,11 @@ urlpatterns = [
     path("cart/", views.CartDetailView.as_view(), name="cart"),
     path("cart/add/<int:product_id>/", views.CartAddView.as_view(), name="cart_add"),
     path("cart/add/<int:product_id>/<int:variant_id>/", views.CartAddVariantView.as_view(), name="cart_add_variant"),
-    path("cart/update/<int:item_id>/", views.CartUpdateView.as_view(), name="cart_update"),
-    path("cart/remove/<int:item_id>/", views.CartRemoveView.as_view(), name="cart_remove"),
+    # path("cart/update/<int:item_id>/", views.CartUpdateView.as_view(), name="cart_update"),
+    # path("cart/remove/<int:item_id>/", views.CartRemoveView.as_view(), name="cart_remove"),
+    
+    path('cart/update/<int:item_id>/', views.cart_update, name='cart_update'),
+    path('cart/remove/<int:item_id>/', views.cart_remove, name='cart_remove'),
 
     # Checkout
     path("checkout/", views.CheckoutView.as_view(), name="checkout"),

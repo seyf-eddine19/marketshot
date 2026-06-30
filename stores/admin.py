@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
 from .models import (
-    StoreCategory, ProductCategory, Store, 
+    StoreCategory, ProductCategory, Store, StoreDelivery, DeliveryCompany,
     ProductAttribute, Product, ProductReview, ProductVariant, 
     ProductImage, Order, OrderItem, CustomerAddress, OrderShippingAddress, 
     Payment, OrderStatusHistory,
@@ -42,6 +42,10 @@ class CartItemInline(admin.StackedInline):
     extra = 0
 
 
+class StoreDeliveryInline(admin.StackedInline):
+    model = StoreDelivery
+    extra = 0
+
 # --- 2. ADMIN CLASSES ---
 
 @admin.register(StoreCategory)
@@ -59,6 +63,7 @@ class StoreAdmin(admin.ModelAdmin):
     list_display = ('subdomain', 'owner', 'is_active', 'is_verified', 'created_at')
     list_filter = ('is_active', 'is_verified', 'categories')
     search_fields = ('subdomain', 'name_en', 'owner__username')
+    list_editable = ('is_active', 'is_verified',)
     fieldsets = (
         (_('Identity'), {'fields': ('owner', 'categories', 'subdomain', 'logo', 'banner')}),
         (_('Localization EN'), {'fields': ('name_en', 'tagline_en', 'description_en')}),
@@ -67,7 +72,11 @@ class StoreAdmin(admin.ModelAdmin):
         (_('Social & Contact'), {'fields': ('watsapp_number', 'facebook_url', 'instagram_url', 'website_url')}),
         (_('Status'), {'fields': ('is_active', 'is_verified', 'is_featured')}),
     )
-    inlines = [ProductInline]
+    inlines = [StoreDeliveryInline, ProductInline]
+
+@admin.register(DeliveryCompany)
+class DeliveryCompanyAdmin(admin.ModelAdmin):
+    list_display = ('is_active',)
 
 @admin.register(ProductAttribute)
 class ProductAttributeAdmin(admin.ModelAdmin):

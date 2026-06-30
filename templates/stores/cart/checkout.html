@@ -1,0 +1,279 @@
+{% extends "stores/base.html" %}
+{% load i18n %}
+
+{% block title %}
+    {% trans "Checkout & Payment" %} | MarketShot
+{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <div class="mb-10 flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
+        <div class="space-y-4">
+            <nav class="flex items-center gap-2 text-primary font-bold text-xs uppercase tracking-widest">
+                <span class="material-symbols-outlined">shield_with_heart</span>
+                {% trans "Secure Checkout" %}
+            </nav>
+            <h1 class="text-4xl lg:text-6xl font-black text-slate-900 dark:text-white">
+                {% trans "Review &" %}
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-500">
+                    {% trans "Pay" %}
+                </span>
+            </h1>
+            <p class="text-lg text-slate-500 dark:text-slate-400">
+                {% trans "Please verify your vendor shipments and fill out delivery details." %}
+            </p>
+        </div>
+
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-5 shadow-sm">
+            <div class="flex items-center gap-4">
+                <div class="w-14 h-14 rounded-2xl bg-primary/10 text-primary flex items-center justify-center">
+                    <span class="material-symbols-outlined">inventory_2</span>
+                </div>
+                <div>
+                    <h3 class="text-3xl font-black text-slate-900 dark:text-white">
+                        {{ grand_items }}
+                    </h3>
+                    <p class="text-xs uppercase font-black text-slate-400">
+                        {% trans "Total Items" %}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <form id="checkout-form" method="post" action="{% url 'stores:checkout' %}">
+        {% csrf_token %}
+
+        <div class="grid grid-cols-1 xl:grid-cols-3 gap-8 items-start">
+            
+            <div class="xl:col-span-2 space-y-4">
+                
+                {% for group in stores %}
+                <div class="space-y-2">
+                    <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-2">
+                        <div class="flex items-center gap-2">
+                            <span class="material-symbols-outlined text-slate-400">storefront</span>
+                            <h3 class="text-lg font-black text-slate-800 dark:text-slate-200">{{ group.store.name }}</h3>
+                        </div>
+                        <span class="text-xs font-bold text-slate-400 dark:text-slate-500">
+                            {% trans "Carrier" %}: {{ group.delivery_company.name|default:_("Direct Store Delivery") }}
+                        </span>
+                    </div>
+
+                    <div class="flex gap-4 overflow-x-auto pb-2 pt-1 scrollbar-thin scrollbar-thumb-slate-200 dark:scrollbar-thumb-slate-800 snap-x snap-mandatory">
+                        {% for item in group.items %}
+                        <div class="w-72 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-4 shadow-sm flex-shrink-0 snap-start flex gap-3 items-center">
+                            <div class="w-16 h-16 rounded-xl overflow-hidden bg-slate-100 dark:bg-slate-800 flex-shrink-0">
+                                <img src="{{ item.product.main_image.url }}" alt="" class="w-full h-full object-cover">
+                            </div>
+
+                            <div class="flex-1 min-w-0 flex flex-col justify-between h-full">
+                                <div>
+                                    <h4 class="font-bold text-slate-900 dark:text-white text-sm truncate" title="{{ item.product.name }}">
+                                        {{ item.product.name }}
+                                    </h4>
+                                    <div class="flex items-center gap-1.5 mt-1">
+                                        {% for attr in item.attribute_values.all %}
+                                            {% if attr.category == "COLOR" %}
+                                                <div class="w-4 h-4 rounded-full border border-white dark:border-slate-900 ring-1 ring-slate-300" style="background-color: {{ attr.color_code|default:'#ccc' }};"></div>
+                                            {% else %}
+                                                <span class="text-[10px] font-bold text-slate-500 dark:text-slate-400">{{ attr.value }}</span>
+                                            {% endif %}
+                                        {% empty %}
+                                            <span class="text-[10px] text-slate-400 dark:text-slate-500">{% trans "Standard" %}</span>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+
+                                <div class="flex items-center justify-between mt-2 pt-1 border-t border-slate-50 dark:border-slate-800/40">
+                                    <span class="text-[11px] font-medium text-slate-400 dark:text-slate-500">
+                                        {% trans "Qty" %}: <strong class="text-slate-700 dark:text-slate-300 font-extrabold">{{ item.quantity }}</strong>
+                                    </span>
+                                    <div class="text-primary text-sm font-black">
+                                        {{ item.total_price }} <span class="text-[10px] font-bold">DA</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="bg-slate-50 dark:bg-slate-900/60 rounded-2xl p-2 px-4 border border-slate-200/80 dark:border-slate-800/80 flex justify-between items-center text-sm">
+                        <div class="space-x-4 space-x-reverse text-slate-500 dark:text-slate-400">
+                            <span>{% trans "Subtotal" %}: <strong class="text-slate-900 dark:text-white">{{ group.subtotal }} DA</strong></span>
+                            <span>{% trans "Shipping" %}: <strong class="text-slate-900 dark:text-white">600 DA</strong></span>
+                            <!-- <span>{% trans "Shipping" %}: <strong class="text-slate-900 dark:text-white">{{ group.delivery_price }} DA</strong></span> -->
+                        </div>
+                        <div class="text-right">
+                            <span class="text-xs text-slate-400 block">{% trans "Package Total" %}</span>
+                            <strong class="text-primary text-lg font-black">{{ group.total }} DA</strong>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+
+
+                <div class="bg-white dark:bg-slate-900 rounded-[2.5rem] p-8 border border-slate-200 dark:border-slate-800 shadow-sm space-y-6">
+                    <div class="flex items-center gap-2.5 pb-4 border-b border-slate-200 dark:border-slate-800">
+                        <span class="material-symbols-outlined text-primary">person_pin_circle</span>
+                        <h3 class="text-xl font-black text-slate-900 dark:text-white">{% trans "Shipping Address & Recipient Details" %}</h3>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="space-y-2">
+                            <label class="block text-xs font-black text-slate-500 dark:text-slate-400 uppercase tracking-wider">{% trans "Full Name of Recipient" %} *</label>
+                            <input type="text" id="full_name" name="full_name" required value="{{ default_address.full_name|default:'' }}" class="w-full bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-2xl px-4 py-3.5 text-sm font-semibold text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="block text-xs font-black text-slate-500 dark:text-slate-400 uppercase tracking-wider">{% trans "Phone Number for Delivery" %} *</label>
+                            <input type="tel" id="phone" name="phone" required value="{{ default_address.phone|default:'' }}" class="w-full bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-2xl px-4 py-3.5 text-sm font-semibold text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition text-left" placeholder="05xxxxxxxx">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="md:col-span-1 space-y-2">
+                            <label class="block text-xs font-black text-slate-500 dark:text-slate-400 uppercase tracking-wider">{% trans "State / Wilaya" %} *</label>
+                            <input type="text" id="wilaya" name="wilaya" required value="{{ default_address.wilaya.name|default:'' }}" placeholder="{% trans 'e.g., Sidi Bel Abbès' %}" class="w-full bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-2xl px-4 py-3.5 text-sm font-semibold text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition">
+                        </div>
+                        <div class="md:col-span-2 space-y-2">
+                            <label class="block text-xs font-black text-slate-500 dark:text-slate-400 uppercase tracking-wider">{% trans "Detailed Street Address" %} *</label>
+                            <input type="text" id="address" name="address" required value="{{ default_address.address|default:'' }}" placeholder="{% trans 'Street name, neighborhood, house number...' %}" class="w-full bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-2xl px-4 py-3.5 text-sm font-semibold text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition">
+                        </div>
+                    </div>
+
+                    <div class="space-y-2">
+                        <label class="block text-xs font-black text-slate-500 dark:text-slate-400 uppercase tracking-wider">{% trans "Additional Delivery Instructions (Optional)" %}</label>
+                        <textarea id="notes" name="notes" rows="3" placeholder="{% trans 'Any specific notes for couriers or preferred delivery timings...' %}" class="w-full bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-2xl px-4 py-3 text-sm font-semibold text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition resize-none"></textarea>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="space-y-6 xl:sticky xl:top-8">
+                
+                <div class="bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-200 dark:border-slate-800 p-6 shadow-sm space-y-4">
+                    <h3 class="text-sm font-black text-slate-800 dark:text-slate-200 flex items-center gap-2 pb-2 border-b border-slate-100 dark:border-slate-800/60">
+                        <span class="material-symbols-outlined text-slate-400 text-lg">payments</span>
+                        {% trans "Payment Method" %}
+                    </h3>
+                    <div class="space-y-2.5">
+                        <label class="flex items-center gap-3 bg-slate-50 dark:bg-slate-800/40 px-4 py-3.5 rounded-2xl border-2 border-primary cursor-pointer transition text-xs font-bold text-slate-900 dark:text-white">
+                            <input type="radio" name="payment_method" value="CASH" checked class="w-4 h-4 text-primary focus:ring-0 accent-primary">
+                            <span>{% trans "Cash on Delivery (COD)" %}</span>
+                        </label>
+                        
+                        <label class="flex items-center gap-3 bg-slate-50/50 dark:bg-slate-800/10 px-4 py-3.5 rounded-2xl border border-slate-200 dark:border-slate-800 opacity-40 cursor-not-allowed text-xs font-bold text-slate-400">
+                            <input type="radio" disabled class="w-4 h-4 text-slate-300 dark:text-slate-700">
+                            <span class="flex items-center justify-between w-full">
+                                <span>{% trans "Edahabia Card / CIB" %}</span>
+                                <span class="bg-slate-200 dark:bg-slate-800 text-slate-500 text-[10px] px-2 py-0.5 rounded font-black">{% trans "Soon" %}</span>
+                            </span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-200 dark:border-slate-800 p-8 shadow-xl space-y-6">
+                    <h2 class="text-2xl font-black text-slate-900 dark:text-white">{% trans "Order Invoice Summary" %}</h2>
+                    
+                    <div class="space-y-4 text-sm font-medium text-slate-500 dark:text-slate-400">
+                        <div class="flex items-center justify-between">
+                            <span>{% trans "Items Gross Subtotal" %}</span>
+                            <span class="font-black text-slate-900 dark:text-white">{{ grand_subtotal }} DA</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span>{% trans "Total Parcels Shipping Fee" %}</span>
+                            <span class="font-black text-slate-900 dark:text-white">{{ grand_delivery }} DA</span>
+                        </div>
+                        
+                        <div class="border-t border-slate-200 dark:border-slate-800 pt-5 mt-2 flex flex-col items-start justify-between gap-1">
+                            <div class="text-base font-black text-slate-900 dark:text-white w-full">{% trans "Grand Total Net" %}</div>
+                            <div class="w-full text-right">
+                                <span class="text-primary text-3xl font-black">{{ grand_total }}</span> 
+                                <span class="text-sm font-black text-primary">DA</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" id="submit-btn" class="w-full h-14 rounded-2xl bg-primary hover:bg-primary/90 text-white font-black flex items-center justify-center gap-2 transition shadow-lg shadow-primary/20 text-sm disabled:opacity-50 disabled:cursor-not-allowed">
+                        <span id="btn-icon" class="material-symbols-outlined text-lg">lock</span> 
+                        <span id="btn-text">{% trans "Confirm & Place Order Now" %}</span>
+                    </button>
+                    
+                    <div class="text-[11px] text-slate-400 dark:text-slate-500 text-center flex items-center justify-center gap-1">
+                        <span class="material-symbols-outlined text-sm text-emerald-500">verified_user</span>
+                        <span>{% trans "Encrypted data protection layer enabled" %}</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const form = document.getElementById("checkout-form");
+    const submitBtn = document.getElementById("submit-btn");
+    const btnText = document.getElementById("btn-text");
+    const btnIcon = document.getElementById("btn-icon");
+    const phoneInput = document.getElementById("phone");
+
+    // 1. Algerian Phone Number Real-time Formatter & Clean Validation
+    phoneInput.addEventListener("input", function(e) {
+        // Allow only numeric elements
+        let num = e.target.value.replace(/\D/g, "");
+        
+        // Retain only valid length for Algerian operations (e.g. 05, 06, 07 plus 8 numbers)
+        if (num.length > 10) {
+            num = num.substring(0, 10);
+        }
+        e.target.value = num;
+    });
+
+    // 2. Client-side Form Verification before Pipeline Handshake
+    form.addEventListener("submit", function(e) {
+        let isValid = true;
+        
+        // Basic check for Algerian mobile telephone systems structure length
+        const phoneVal = phoneInput.value.trim();
+        if (phoneVal.length < 9 || phoneVal.length > 10) {
+            isValid = false;
+            phoneInput.classList.add("border-red-500", "focus:ring-red-500/20");
+            phoneInput.focus();
+            alert("{% trans 'Please present a valid local phone contact number (05/06/07xxxxxxxx).' %}");
+            e.preventDefault();
+            return false;
+        } else {
+            phoneInput.classList.remove("border-red-500", "focus:ring-red-500/20");
+        }
+
+        // 3. Prevent Double Form Submission Vulnerabilities and update button state
+        if (isValid) {
+            // Lock submission interface node to prevent multiple database instances
+            submitBtn.disabled = true;
+            submitBtn.classList.add("bg-slate-400", "dark:bg-slate-700");
+            submitBtn.classList.remove("bg-primary", "hover:bg-primary/90");
+            
+            // Visual dynamic loading status response
+            btnIcon.textContent = "hourglass_top";
+            btnIcon.classList.add("animate-spin");
+            btnText.textContent = "{% trans 'Processing Order...' %}";
+        }
+    });
+
+    // Reset native style rules instantly upon change input actions
+    const dynamicFields = ["full_name", "wilaya", "address"];
+    dynamicFields.forEach(fieldId => {
+        const inputNode = document.getElementById(fieldId);
+        if (inputNode) {
+            inputNode.addEventListener("input", function() {
+                if(this.value.trim() !== "") {
+                    this.classList.remove("border-red-500");
+                }
+            });
+        }
+    });
+});
+</script>
+{% endblock %}

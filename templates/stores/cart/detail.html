@@ -6,329 +6,196 @@
 {% endblock %}
 
 {% block content %}
-
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
 
-    <!-- Header -->
     <div class="mb-10 flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
-
         <div class="space-y-4">
-
             <nav class="flex items-center gap-2 text-primary font-bold text-xs uppercase tracking-widest">
                 <span class="material-symbols-outlined">shopping_cart</span>
                 {% trans "Marketplace" %}
             </nav>
-
             <h1 class="text-4xl lg:text-6xl font-black text-slate-900 dark:text-white">
                 {% trans "Shopping" %}
                 <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-500">
                     {% trans "Cart" %}
                 </span>
             </h1>
-
             <p class="text-lg text-slate-500 dark:text-slate-400">
                 {% trans "Review your selected products before checkout." %}
             </p>
-
         </div>
 
         <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-5 shadow-sm">
-
             <div class="flex items-center gap-4">
-
                 <div class="w-14 h-14 rounded-2xl bg-primary/10 text-primary flex items-center justify-center">
-                    <span class="material-symbols-outlined">
-                        inventory_2
-                    </span>
+                    <span class="material-symbols-outlined">inventory_2</span>
                 </div>
-
                 <div>
-
-                    <h3 id="cart-count" class="text-3xl font-black">
-                        {{ cart.items.count }}
+                    <h3 id="cart-count" class="text-3xl font-black text-slate-900 dark:text-white">
+                        {{ grand_items|default:cart.items.count }}
                     </h3>
-
                     <p class="text-xs uppercase font-black text-slate-400">
                         {% trans "Items" %}
                     </p>
-
                 </div>
-
             </div>
-
         </div>
-
     </div>
 
+    <div id="empty-cart" class="{% if stores %}hidden{% endif %} rounded-[3rem] border-2 border-dashed p-20 text-center border-slate-200 dark:border-slate-800">
+        <span class="material-symbols-outlined text-6xl text-primary">shopping_cart_off</span>
+        <h2 class="text-3xl font-black mt-5 text-slate-900 dark:text-white">{% trans "Your cart is empty" %}</h2>
+        <a href="{% url 'stores:products' %}" class="inline-flex mt-6 px-8 py-3 rounded-2xl bg-primary text-white font-black hover:bg-primary/90 transition">
+            {% trans "Browse Products" %}
+        </a>
+    </div>
 
-    <div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
+    {% if stores %}
+    <div id="cart-content-wrapper" class="grid grid-cols-1 xl:grid-cols-3 gap-8">
+        
+        <div id="cart-items" class="xl:col-span-2 space-y-8">
+            {% for group in stores %}
+            <div id="store-group-{{ group.store.id }}" class="space-y-4">
+                <div class="flex items-center gap-2 border-b border-slate-200 dark:border-slate-800 pb-2">
+                    <span class="material-symbols-outlined text-slate-400">storefront</span>
+                    <h3 class="text-lg font-black text-slate-800 dark:text-slate-200">{{ group.store.name }}</h3>
+                </div>
 
-        <!-- Items -->
-        <div id="cart-items" class="xl:col-span-2 space-y-5">
+                <div class="space-y-4">
+                    {% for item in group.items %}
+                    <div id="cart-item-{{ item.id }}" data-store-id="{{ group.store.id }}" class="bg-white dark:bg-slate-900 rounded-[2rem] border border-slate-200 dark:border-slate-800 p-6 shadow-sm">
+                        <div class="flex flex-col md:flex-row gap-6">
+                            <a href="{% url 'stores:product_detail' item.product.pk %}">
+                                <div class="w-32 h-32 rounded-3xl overflow-hidden bg-slate-100 dark:bg-slate-800 flex-shrink-0">
+                                    <img src="{{ item.product.main_image.url }}" alt="" class="w-full h-full object-cover">
+                                </div>
+                            </a>
 
-            {% for item in cart.items.all %}
+                            <div class="flex-1 flex flex-col justify-between">
+                                <div>
+                                    <h3 class="text-xl font-black text-slate-900 dark:text-white">{{ item.product.name }}</h3>
+                                    <div class="mt-3 flex flex-wrap items-center gap-2">
+                                        {% for attr in item.attribute_values.all %}
+                                            {% if attr.category == "COLOR" %}
+                                                <div class="w-8 h-8 rounded-full border-[3px] border-white dark:border-slate-900 ring-1 ring-slate-300" style="background-color: {{ attr.color_code|default:'#ccc' }};" title="{{ attr.value }}"></div>
+                                            {% else %}
+                                                <span class="px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-700 dark:text-slate-300">{{ attr.value }}</span>
+                                            {% endif %}
+                                        {% empty %}
+                                            <span class="text-xs text-slate-400">{% trans "Standard Options" %}</span>
+                                        {% endfor %}
+                                    </div>
+                                </div>
 
-            <div
-                id="cart-item-{{ item.id }}"
-                class="bg-white dark:bg-slate-900 rounded-[2rem] border border-slate-200 dark:border-slate-800 p-6 shadow-sm">
-
-                <div class="flex flex-col md:flex-row gap-6">
-
-                    <a href="{% url 'stores:product_detail' item.product.pk %}">
-                        <div class="w-32 h-32 rounded-3xl overflow-hidden bg-slate-100 dark:bg-slate-800">
-
-                            <img
-                                src="{{ item.product.main_image.url }}"
-                                alt="{{ item.product.name }}"
-                                class="w-full h-full object-cover">
-
-                        </div>
-                    </a>
-
-                    <div class="flex-1">
-
-                        <h3 class="text-xl font-black text-slate-900 dark:text-white">
-                            {{ item.product.name }}
-                        </h3>
-
-                        <div class="mt-3 flex flex-wrap items-center gap-2">
-
-                            {% for attr in item.attribute_values.all %}
-
-                                {% if attr.category == "COLOR" %}
-
-                                    <div
-                                        class="w-8 h-8 rounded-full border-[3px] border-white dark:border-slate-900 ring-1 ring-slate-300"
-                                        style="background-color: {{ attr.color_code|default:'#ccc' }};"
-                                        title="{{ attr.display_label }}: {{ attr.value }}">
+                                <div class="mt-6 flex flex-wrap items-center justify-between gap-5">
+                                    <div>
+                                        <div class="text-primary text-2xl font-black">
+                                            <span id="item-total-{{ item.id }}">{{ item.total_price }}</span> <span class="text-sm">DA</span>
+                                        </div>
+                                        
+                                        <div class="text-xs text-slate-400 dark:text-slate-500 mt-1">
+                                            <span id="unit-price-{{ item.id }}" data-price="{% if item.product.discounted_price %}{{ item.product.discounted_price }}{% else %}{{ item.product.price }}{% endif %}">
+                                                {% if item.product.discounted_price %}{{ item.product.discounted_price }}{% else %}{{ item.product.price }}{% endif %}
+                                            </span> DA 
+                                            × 
+                                            <span id="unit-qty-{{ item.id }}">{{ item.quantity }}</span>
+                                        </div>
                                     </div>
 
-                                {% else %}
-
-                                    <span class="px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-700 text-xs font-bold">
-                                        {{ attr.value }}
-                                    </span>
-
-                                {% endif %}
-
-                            {% empty %}
-
-                                <span class="text-xs text-slate-400">
-                                    {% trans "No attributes" %}
-                                </span>
-
-                            {% endfor %}
-
-                        </div>
-
-                        <div class="mt-6 flex flex-wrap items-center justify-between gap-5">
-
-                            <div>
-
-                                <div class="text-primary text-2xl font-black">
-
-                                    <span id="item-total-{{ item.id }}">
-                                        {{ item.total }}
-                                    </span>
-
-                                    <span class="text-sm">
-                                        DA
-                                    </span>
-
+                                    <div class="flex items-center gap-3">
+                                        <div class="flex items-center justify-between w-32 h-11 rounded-xl bg-slate-100 dark:bg-slate-800 px-2">
+                                            <button type="button" class="font-black text-lg hover:text-primary dark:text-slate-400" onclick="changeQty({{ item.id }}, -1)">−</button>
+                                            <input id="qty-{{ item.id }}" value="{{ item.quantity }}" readonly class="w-10 bg-transparent border-none text-center font-bold dark:text-white">
+                                            <button type="button" class="font-black text-lg hover:text-primary dark:text-slate-400" onclick="changeQty({{ item.id }}, 1)">+</button>
+                                        </div>
+                                        <button type="button" onclick="removeItem({{ item.id }})" class="w-11 h-11 rounded-xl bg-red-50 dark:bg-red-950/30 text-red-500 hover:bg-red-500 hover:text-white flex items-center justify-center transition">
+                                            <span class="material-symbols-outlined">delete</span>
+                                        </button>
+                                    </div>
                                 </div>
-
                             </div>
-
-                            <div class="flex items-center gap-3">
-
-                                <div class="flex items-center justify-between w-32 h-11 rounded-xl bg-slate-100 dark:bg-slate-800 px-2">
-
-                                    <button
-                                        type="button"
-                                        class="font-black text-lg hover:text-primary"
-                                        onclick="changeQty({{ item.id }}, -1)">
-
-                                        −
-
-                                    </button>
-
-                                    <input
-                                        id="qty-{{ item.id }}"
-                                        value="{{ item.quantity }}"
-                                        readonly
-                                        class="w-10 bg-transparent border-none text-center">
-
-                                    <button
-                                        type="button"
-                                        class="font-black text-lg hover:text-primary"
-                                        onclick="changeQty({{ item.id }}, 1)">
-
-                                        +
-
-                                    </button>
-
-                                </div>
-
-                                <button
-                                    type="button"
-                                    onclick="removeItem({{ item.id }})"
-                                    class="w-11 h-11 rounded-xl bg-red-50 text-red-500 hover:bg-red-500 hover:text-white transition">
-
-                                    <span class="material-symbols-outlined">
-                                        delete
-                                    </span>
-
-                                </button>
-
-                            </div>
-
                         </div>
-
                     </div>
-
+                    {% endfor %}
                 </div>
 
+                <div class="bg-slate-50 dark:bg-slate-900/60 rounded-2xl p-4 border border-slate-200/80 dark:border-slate-800/80 flex justify-between items-center text-sm">
+                    <div class="space-x-4 space-x-reverse text-slate-500 dark:text-slate-400">
+                        <span>{% trans "Subtotal" %}: <strong id="store-subtotal-{{ group.store.id }}" class="text-slate-900 dark:text-white">{{ group.subtotal }} DA</strong></span>
+                        <span>{% trans "Delivery" %}: <strong id="store-delivery-{{ group.store.id }}" class="text-slate-900 dark:text-white">600 DA</strong></span>
+                    </div>
+                    <div>
+                        <span class="text-xs text-slate-400 block text-left">{% trans "Store Total" %}</span>
+                        <strong class="text-primary text-lg font-black"><span id="store-total-{{ group.store.id }}">{{ group.total }}</span> DA</strong>
+                    </div>
+                </div>
             </div>
-
-            {% empty %}
-
-            <div id="empty-cart"
-                 class="rounded-[3rem] border-2 border-dashed p-20 text-center">
-
-                <span class="material-symbols-outlined text-6xl text-primary">
-                    shopping_cart_off
-                </span>
-
-                <h2 class="text-3xl font-black mt-5">
-                    {% trans "Your cart is empty" %}
-                </h2>
-
-                <a
-                    href="{% url 'stores:products' %}"
-                    class="inline-flex mt-6 px-8 py-3 rounded-2xl bg-primary text-white font-black">
-
-                    {% trans "Browse Products" %}
-
-                </a>
-
-            </div>
-
             {% endfor %}
-
         </div>
-        
-        <!-- Order Summary -->
+
         <div>
-
-            <div class="sticky top-8 bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-200 dark:border-slate-800 p-8 shadow-xl">
-
-                <h2 class="text-2xl font-black mb-8">
-                    {% trans "Order Summary" %}
-                </h2>
-
-                <div class="space-y-5">
-
+            <div class="sticky top-8 bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-200 dark:border-slate-800 p-8 shadow-xl space-y-6">
+                <h2 class="text-2xl font-black text-slate-900 dark:text-white">{% trans "Order Summary" %}</h2>
+                <div class="space-y-4 text-sm">
                     <div class="flex items-center justify-between">
-
-                        <span class="text-slate-500 dark:text-slate-400">
-                            {% trans "Items" %}
-                        </span>
-
-                        <span
-                            id="summary-count"
-                            class="font-black">
-                            {{ cart.items.count }}
-                        </span>
-
+                        <span class="text-slate-500 dark:text-slate-400">{% trans "Items" %}</span>
+                        <span id="summary-count" class="font-black dark:text-white">{{ grand_items }}</span>
                     </div>
-
                     <div class="flex items-center justify-between">
-
-                        <span class="text-slate-500 dark:text-slate-400">
-                            {% trans "Subtotal" %}
-                        </span>
-
-                        <span class="font-black">
-
-                            <span id="summary-subtotal">
-                                {{ cart.total }}
-                            </span>
-
-                            DA
-
-                        </span>
-
+                        <span class="text-slate-500 dark:text-slate-400">{% trans "Subtotal" %}</span>
+                        <span class="font-black dark:text-white"><span id="summary-subtotal">{{ grand_subtotal }}</span> DA</span>
                     </div>
-
-                    <div class="border-t border-slate-200 dark:border-slate-800 pt-5 flex items-center justify-between">
-
-                        <span class="text-lg font-black">
-                            {% trans "Total" %}
-                        </span>
-
-                        <span class="text-primary text-3xl font-black">
-
-                            <span id="summary-total">
-                                {{ cart.total }}
-                            </span>
-
-                            DA
-
-                        </span>
-
+                    <div class="flex items-center justify-between">
+                        <span class="text-slate-500 dark:text-slate-400">{% trans "Delivery Total" %}</span>
+                        <span class="font-black dark:text-white"><span id="summary-delivery">{{ grand_delivery }}</span> DA</span>
                     </div>
-
+                    <div class="border-t border-slate-200 dark:border-slate-800 pt-5 flex flex-col items-center justify-between">
+                        <div class="text-lg font-black dark:text-white w-full">{% trans "Total" %}</div>
+                        <span class="text-primary text-3xl font-black"><span id="summary-total">{{ grand_total }}</span> DA</span>
+                    </div>
                 </div>
-
-                <a
-                    href="{% url 'stores:checkout' %}"
-                    class="mt-8 h-14 rounded-2xl bg-primary hover:bg-primary/90 text-white font-black flex items-center justify-center gap-2 transition">
-
-                    <span class="material-symbols-outlined">
-                        payments
-                    </span>
-
-                    {% trans "Checkout" %}
-
+                <a href="{% url 'stores:checkout' %}" class="w-full h-14 rounded-2xl bg-primary hover:bg-primary/90 text-white font-black flex items-center justify-center gap-2 transition shadow-lg shadow-primary/20">
+                    <span class="material-symbols-outlined">payments</span> {% trans "Checkout" %}
                 </a>
-
             </div>
-
         </div>
-
     </div>
-
+    {% endif %}
 </div>
 
 <script>
-
 const csrftoken = "{{ csrf_token }}";
 
-
 function updateSummary(data) {
+    document.getElementById("cart-count").textContent = data.grand_items;
+    document.getElementById("summary-count").textContent = data.grand_items;
+    document.getElementById("summary-subtotal").textContent = data.grand_subtotal;
+    document.getElementById("summary-delivery").textContent = data.grand_delivery;
+    document.getElementById("summary-total").textContent = data.grand_total;
 
-    document.getElementById("cart-count").textContent = data.cart_count;
-    document.getElementById("summary-count").textContent = data.cart_count;
-
-    document.getElementById("summary-subtotal").textContent = data.cart_total;
-    document.getElementById("summary-total").textContent = data.cart_total;
-
+    if (data.stores_updates) {
+        data.stores_updates.forEach(store => {
+            const sub = document.getElementById(`store-subtotal-${store.id}`);
+            const del = document.getElementById(`store-delivery-${store.id}`);
+            const tot = document.getElementById(`store-total-${store.id}`);
+            if (sub) sub.textContent = `${store.subtotal} DA`;
+            if (del) del.textContent = `600 DA`;
+            if (tot) tot.textContent = store.total;
+        });
+    }
 }
 
-async function changeQty(itemId, change) {
+async function changeQty1(itemId, change) {
     const qtyInput = document.getElementById(`qty-${itemId}`);
-    let qty = parseInt(qtyInput.value);
-
-    qty += change;
-    qtyInput.value=qty;
+    let qty = parseInt(qtyInput.value) + change;
 
     if (qty <= 0) {
         removeItem(itemId);
         return;
     }
+    qtyInput.value = qty;
 
     try {
-
         const response = await fetch(
             "{% url 'stores:cart_update' 0 %}".replace("/0/", `/${itemId}/`),
             {
@@ -338,100 +205,95 @@ async function changeQty(itemId, change) {
                     "X-CSRFToken": csrftoken,
                     "X-Requested-With": "XMLHttpRequest",
                 },
-                body: new URLSearchParams({
-                    quantity: qty
-                })
+                body: new URLSearchParams({ quantity: qty })
             }
         );
-
+        
         const data = await response.json();
-
-        if (!data.success) return;
-
-        qtyInput.value = data.quantity;
-
-        document.getElementById(`item-total-${itemId}`).textContent =
-            data.item_total;
-
-        updateSummary(data);
-
-    }
-
-    catch (error) {
-
-        console.error(error);
-
-    }
-
+        if (data.success) {
+            if (data.removed) {
+                document.getElementById(`cart-item-${itemId}`).remove();
+            } else {
+                document.getElementById(`item-total-${itemId}`).textContent = data.item_total;
+            }
+            updateSummary(data);
+        }
+    } catch (e) { console.error(e); }
 }
 
+async function changeQty(itemId, change) {
+    const qtyInput = document.getElementById(`qty-${itemId}`);
+    let qty = parseInt(qtyInput.value) + change;
+
+    if (qty <= 0) {
+        removeItem(itemId);
+        return;
+    }
+    qtyInput.value = qty;
+
+    try {
+        const response = await fetch(
+            "{% url 'stores:cart_update' 0 %}".replace("/0/", `/${itemId}/`),
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                    "X-CSRFToken": csrftoken,
+                    "X-Requested-With": "XMLHttpRequest",
+                },
+                body: new URLSearchParams({ quantity: qty })
+            }
+        );
+        
+        const data = await response.json();
+        if (data.success) {
+            if (data.removed) {
+                document.getElementById(`cart-item-${itemId}`).remove();
+            } else {
+                // 1. Update total price for the item
+                document.getElementById(`item-total-${itemId}`).textContent = data.item_total;
+                
+                // 2. Update dynamic unit quantity counter multiplier indicator
+                const unitQtyIndicator = document.getElementById(`unit-qty-${itemId}`);
+                if (unitQtyIndicator) {
+                    unitQtyIndicator.textContent = data.quantity;
+                }
+            }
+            updateSummary(data);
+        }
+    } catch (e) { console.error(e); }
+}
+changeQty(30, 1)
+changeQty(30, -1)
 
 
 async function removeItem(itemId) {
-
-    if (!confirm("{% trans 'Remove this product?' %}")) {
-        return;
-    }
+    if (!confirm("{% trans 'Remove this product?' %}")) return;
+    const itemEl = document.getElementById(`cart-item-${itemId}`);
+    const storeId = itemEl.getAttribute('data-store-id');
 
     try {
-
         const response = await fetch(
             "{% url 'stores:cart_remove' 0 %}".replace("/0/", `/${itemId}/`),
             {
                 method: "POST",
-                headers: {
-                    "X-CSRFToken": csrftoken,
-                    "X-Requested-With": "XMLHttpRequest",
-                }
+                headers: { "X-CSRFToken": csrftoken, "X-Requested-With": "XMLHttpRequest" }
             }
         );
-
         const data = await response.json();
-
-        if (!data.success) return;
-
-        document.getElementById(`cart-item-${itemId}`).remove();
-
-        updateSummary(data);
-
-        if (data.cart_count === 0) {
-
-            document.getElementById("cart-items").innerHTML = `
-
-                <div class="rounded-[3rem] border-2 border-dashed p-20 text-center">
-
-                    <span class="material-symbols-outlined text-6xl text-primary">
-                        shopping_cart_off
-                    </span>
-
-                    <h2 class="text-3xl font-black mt-5">
-                        {% trans "Your cart is empty" %}
-                    </h2>
-
-                    <a
-                        href="{% url 'stores:products' %}"
-                        class="inline-flex mt-6 px-8 py-3 rounded-2xl bg-primary text-white font-black">
-
-                        {% trans "Browse Products" %}
-
-                    </a>
-
-                </div>
-
-            `;
-
+        if (data.success) {
+            itemEl.remove();
+            const remainingStoreItems = document.querySelectorAll(`[data-store-id="${storeId}"]`);
+            if (remainingStoreItems.length === 0) {
+                document.getElementById(`store-group-${storeId}`).remove();
+            }
+            updateSummary(data);
+            if (data.grand_items === 0) {
+                document.getElementById("cart-content-wrapper").remove();
+                document.getElementById("empty-cart").classList.remove("hidden");
+            }
         }
-
-    }
-
-    catch (error) {
-
-        console.error(error);
-
-    }
-
+    } catch (e) { console.error(e); }
 }
-
 </script>
-
 {% endblock %}

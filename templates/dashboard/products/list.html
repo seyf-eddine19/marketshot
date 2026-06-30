@@ -212,7 +212,7 @@
             <span class="text-xs text-slate-500 dark:text-slate-400 font-bold">
                 {% blocktranslate with start=page_obj.start_index end=page_obj.end_index total=page_obj.paginator.count %}
                     Showing {{ start }} to {{ end }} of {{ total }} entries
-                {% blocktranslate %}
+                {% endblocktranslate %}
             </span>
             <div class="flex items-center gap-1.5">
                 {% if page_obj.has_previous %}
